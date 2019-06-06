@@ -6,22 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://garywu520.github.io/blog">
-  <title>Shell编程之Bash循环 | Hexo</title>
+  <title>Shell编程之Bash循环 | Gary Wu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="for循环 for循环的基本语法：  123456for i in item1 item2 ... itemNdo   command1  command2  ...done">
 <meta name="keywords" content="高级运维,shell,break,for循环,while循环,until循环,select循环">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Shell编程之Bash循环">
 <meta property="og:url" content="https://garywu520.github.io/blog/2017/07/24/Shell编程之Bash循环/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Gary Wu">
 <meta property="og:description" content="for循环 for循环的基本语法：  123456for i in item1 item2 ... itemNdo   command1  command2  ...done">
-<meta property="og:locale" content="default">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2017-08-29T12:47:27.835Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Shell编程之Bash循环">
 <meta name="twitter:description" content="for循环 for循环的基本语法：  123456for i in item1 item2 ... itemNdo   command1  command2  ...done">
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="Gary Wu" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -47,12 +47,14 @@
 <div class="overlay" style="background: #4d4d4d"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
-		<a href="/blog/" class="profilepic">
-			<img src="https://raw.githubusercontent.com/discant520/garywu/master/images/touxiang.jpg" class="js-avatar">
+		<a href="/blog" class="profilepic">
+			<img src="http://pics0.baidu.com/feed/bd315c6034a85edf5f5b8bff8cf9cf27df54754d.png?token=c9857ef7ee73e1ffc14d3e3c4e9e3be3&amp;s=1E5207CAC64234F44988148A0300B090" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/blog/">John Doe</a></h1>
+		  <h1 class="header-author"><a href="/blog">Gary Wu</a></h1>
 		</hgroup>
+		
+		<p class="header-subtitle">运维架构师 - 从入门到放弃</p>
 		
 
 		<nav class="header-menu">
@@ -106,11 +108,13 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="https://raw.githubusercontent.com/discant520/garywu/master/images/touxiang.jpg" class="js-avatar">
+				<img src="http://pics0.baidu.com/feed/bd315c6034a85edf5f5b8bff8cf9cf27df54754d.png?token=c9857ef7ee73e1ffc14d3e3c4e9e3be3&amp;s=1E5207CAC64234F44988148A0300B090" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">John Doe</h1>
+			  <h1 class="header-author js-header-author">Gary Wu</h1>
 			</hgroup>
+			
+			<p class="header-subtitle"><i class="icon icon-quo-left"></i>运维架构师 - 从入门到放弃<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -188,44 +192,44 @@
         <h4 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h4><blockquote>
 <p>for循环的基本语法：</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">for i in item1 item2 ... itemN</span><br><span class="line">do </span><br><span class="line">  command1</span><br><span class="line">  command2</span><br><span class="line">  ...</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> item1 item2 <span class="built_in">..</span>. itemN</span><br><span class="line"><span class="keyword">do</span> </span><br><span class="line">  command1</span><br><span class="line">  command2</span><br><span class="line">  <span class="built_in">..</span>.</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
 
 <a id="more"></a>
 
 <p>在for循环中，每次指定列表中的新值被赋予变量i后，for循环都会执行一次，它将重复运行do和done之间的所有语句，直到条件不满足时为止。</p>
 <p>实例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">要求：</span><br><span class="line">①找到已经开启服务   chkconfig --list|grep 3:on</span><br><span class="line">②需要开机自启的服务  crond sshd network rsyslog sysstat</span><br><span class="line">③for循环执行  chkconfig 服务名 off</span><br><span class="line"></span><br><span class="line">[root@oldboy202 scripts]#vim services.sh</span><br><span class="line">#/bin/bash</span><br><span class="line">services=`chkconfig --list|grep 3:on |egrep -v &quot;crond|sshd|network|rsyslog|sysstat&quot; |awk &apos;&#123;print $1&#125;&apos;`          #把服务名称通过筛选然后定义一个变量；最后需要反引号进行括起来</span><br><span class="line"></span><br><span class="line">for i in $services     #把服务名称列表变量赋值给i变量</span><br><span class="line">do </span><br><span class="line">  chkconfig $i off     #调用i变量</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">注：变量中如果包含单引号和双引号，那么此变量需要使用反引号括起来，否则会报错。</span><br></pre></td></tr></table></figure>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">要求：</span><br><span class="line">①找到已经开启服务   chkconfig --list|grep <span class="number">3</span><span class="symbol">:on</span></span><br><span class="line">②需要开机自启的服务  crond sshd network rsyslog sysstat</span><br><span class="line">③<span class="keyword">for</span>循环执行  chkconfig 服务名 off</span><br><span class="line"></span><br><span class="line">[root<span class="variable">@oldboy202</span> scripts]<span class="comment">#vim services.sh</span></span><br><span class="line"><span class="comment">#/bin/bash</span></span><br><span class="line">services=`chkconfig --list|grep <span class="number">3</span><span class="symbol">:on</span> |egrep -v <span class="string">"crond|sshd|network|rsyslog|sysstat"</span> |awk <span class="string">'&#123;print $1&#125;'</span>`          <span class="comment">#把服务名称通过筛选然后定义一个变量；最后需要反引号进行括起来</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="variable">$services</span>     <span class="comment">#把服务名称列表变量赋值给i变量</span></span><br><span class="line"><span class="keyword">do</span> </span><br><span class="line">  chkconfig <span class="variable">$i</span> off     <span class="comment">#调用i变量</span></span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">注：变量中如果包含单引号和双引号，那么此变量需要使用反引号括起来，否则会报错。</span><br></pre></td></tr></table></figure>
 
 <p>for循环练习1：批量创建10个用户，设置并显示用户随机密码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">vim useradd.sh</span><br><span class="line">#/bin/bash</span><br><span class="line"></span><br><span class="line">for i in &#123;1..5&#125;           #定义序列并将其赋值给变量i</span><br><span class="line">  do</span><br><span class="line">    useradd gary$i        #创建用户</span><br><span class="line">    pass=`echo $RANDOM|md5sum|cut -c 1-8`   #生成随机密码，并将此赋值给变量pass</span><br><span class="line">    echo $pass |passwd --stdin gary$i       #为用户设置随机密码</span><br><span class="line">    echo $pass                              #显示用户随机密码</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">#################################################################</span><br><span class="line">执行结果：</span><br><span class="line">[root@oldboy202 scripts]# sh useradd.sh </span><br><span class="line">useradd: user &apos;gary1&apos; already exists</span><br><span class="line">Changing password for user gary1.</span><br><span class="line">passwd: all authentication tokens updated successfully.</span><br><span class="line">47608eed</span><br><span class="line">useradd: user &apos;gary2&apos; already exists</span><br><span class="line">Changing password for user gary2.</span><br><span class="line">passwd: all authentication tokens updated successfully.</span><br><span class="line">5c50971b</span><br><span class="line">useradd: user &apos;gary3&apos; already exists</span><br><span class="line">Changing password for user gary3.</span><br><span class="line">passwd: all authentication tokens updated successfully.</span><br><span class="line">2997217d</span><br><span class="line">useradd: user &apos;gary4&apos; already exists</span><br><span class="line">Changing password for user gary4.</span><br><span class="line">passwd: all authentication tokens updated successfully.</span><br><span class="line">eefdc4c3</span><br><span class="line"></span><br><span class="line">注：echo $RANDOM|md5sum|cut -c 1-8可以生成5位随机数字，然后使用md5sum加密，最后通过cut命令获取8位字符</span><br></pre></td></tr></table></figure>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">vim useradd.sh</span><br><span class="line">#/bin/bash</span><br><span class="line"></span><br><span class="line">for i <span class="keyword">in</span> &#123;<span class="number">1.</span><span class="number">.5</span>&#125;           #定义序列并将其赋值给变量i</span><br><span class="line">  do</span><br><span class="line">    useradd gary$i        #创建用户</span><br><span class="line">    pass=`echo $RANDOM|md5sum|cut -c <span class="number">1</span><span class="number">-8</span>`   #生成随机密码，并将此赋值给变量pass</span><br><span class="line">    echo $pass |passwd --stdin gary$i       #为用户设置随机密码</span><br><span class="line">    echo $pass                              #显示用户随机密码</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">#################################################################</span><br><span class="line">执行结果：</span><br><span class="line">[root@oldboy202 scripts]# sh useradd.sh </span><br><span class="line">useradd: user <span class="string">'gary1'</span> already exists</span><br><span class="line">Changing password for user gary1.</span><br><span class="line">passwd: all authentication tokens updated successfully.</span><br><span class="line"><span class="number">47608</span>eed</span><br><span class="line">useradd: user <span class="string">'gary2'</span> already exists</span><br><span class="line">Changing password for user gary2.</span><br><span class="line">passwd: all authentication tokens updated successfully.</span><br><span class="line"><span class="number">5</span>c50971b</span><br><span class="line">useradd: user <span class="string">'gary3'</span> already exists</span><br><span class="line">Changing password for user gary3.</span><br><span class="line">passwd: all authentication tokens updated successfully.</span><br><span class="line"><span class="number">2997217</span>d</span><br><span class="line">useradd: user <span class="string">'gary4'</span> already exists</span><br><span class="line">Changing password for user gary4.</span><br><span class="line">passwd: all authentication tokens updated successfully.</span><br><span class="line">eefdc4c3</span><br><span class="line"></span><br><span class="line">注：echo $RANDOM|md5sum|cut -c <span class="number">1</span><span class="number">-8</span>可以生成<span class="number">5</span>位随机数字，然后使用md5sum加密，最后通过cut命令获取<span class="number">8</span>位字符</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">扩展：批量删除用户</span><br><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">for i in &#123;1..10&#125;</span><br><span class="line">do</span><br><span class="line">   userdel -r stu$i</span><br><span class="line">   exit 0</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">扩展：批量删除用户</span><br><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> &#123;1..10&#125;</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">   userdel -r stu<span class="variable">$i</span></span><br><span class="line">   <span class="built_in">exit</span> 0</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
 
 <p>for循环练习2：打印操作系统名称</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">for linux in Redhat CentOS Gentoo Suse Fedora</span><br><span class="line">  do</span><br><span class="line">    echo &quot;The os is: $linux&quot;  </span><br><span class="line"></span><br><span class="line">  done</span><br><span class="line"></span><br><span class="line">############################################## </span><br><span class="line">执行结果：</span><br><span class="line">[root@oldboy202 ~]# sh linux.sh </span><br><span class="line">The os is: Redhat</span><br><span class="line">The os is: CentOS</span><br><span class="line">The os is: Gentoo</span><br><span class="line">The os is: Suse</span><br><span class="line">The os is: Fedora</span><br></pre></td></tr></table></figure>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">for linux <span class="keyword">in</span> Redhat CentOS Gentoo Suse Fedora</span><br><span class="line">  do</span><br><span class="line">    echo <span class="string">"The os is: $linux"</span>  </span><br><span class="line"></span><br><span class="line">  done</span><br><span class="line"></span><br><span class="line">############################################## </span><br><span class="line">执行结果：</span><br><span class="line">[root@oldboy202 ~]# sh linux.sh </span><br><span class="line">The os is: Redhat</span><br><span class="line">The os is: CentOS</span><br><span class="line">The os is: Gentoo</span><br><span class="line">The os is: Suse</span><br><span class="line">The os is: Fedora</span><br></pre></td></tr></table></figure>
 
 <p>for循环案例3：如果文件存在，则打印此文件，否则打印一个错误信息。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">vim file_check.conf</span><br><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">filenames=&quot;/etc/yp.conf /etc/passwd /etc/shadow /etc/gary.conf&quot;</span><br><span class="line">for file in $filenames</span><br><span class="line">  do</span><br><span class="line">    [[ -f $file ]] &amp;&amp; echo &quot;$file&quot; || echo &quot;Error: $file file not find&quot;     </span><br><span class="line"></span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">########################################</span><br><span class="line">执行结果</span><br><span class="line">[root@oldboy202 ~]# sh file_check.sh </span><br><span class="line">Error: /etc/yp.conf file not find</span><br><span class="line">/etc/passwd</span><br><span class="line">/etc/shadow</span><br><span class="line">Error: /etc/gary.conf file not find</span><br></pre></td></tr></table></figure>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">vim file_check.conf</span><br><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">filenames=<span class="string">"/etc/yp.conf /etc/passwd /etc/shadow /etc/gary.conf"</span></span><br><span class="line">for file <span class="keyword">in</span> $filenames</span><br><span class="line">  do</span><br><span class="line">    [[ -f $file ]] &amp;&amp; echo <span class="string">"$file"</span> || echo <span class="string">"Error: $file file not find"</span>     </span><br><span class="line"></span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">########################################</span><br><span class="line">执行结果</span><br><span class="line">[root@oldboy202 ~]# sh file_check.sh </span><br><span class="line">Error: /etc/yp.conf file not find</span><br><span class="line">/etc/passwd</span><br><span class="line">/etc/shadow</span><br><span class="line">Error: /etc/gary.conf file not find</span><br></pre></td></tr></table></figure>
 
 <p>for 循环案例4：使用命令替换的for循环实例</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@oldboy202 ~]# vim change.sh</span><br><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">for file in `ls /tmp/*`            #把命令结果赋值给file变量；注：命令外是反引号</span><br><span class="line">  do</span><br><span class="line">  echo $file                       #调用file变量</span><br><span class="line"></span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">###########################################</span><br><span class="line">执行结果：</span><br><span class="line">[root@oldboy202 ~]# sh change.sh </span><br><span class="line">Printing file list in /tmp dirctory:</span><br><span class="line">ls /tmp/etc-services-2017-07-05_18.tar.gz /tmp/oldboy.txt /tmp/swap_1000M /tmp/tar.log</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@oldboy202 ~]<span class="comment"># vim change.sh</span></span><br><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> `ls /tmp/*`            <span class="comment">#把命令结果赋值给file变量；注：命令外是反引号</span></span><br><span class="line">  <span class="keyword">do</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="variable">$file</span>                       <span class="comment">#调用file变量</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment">###########################################</span></span><br><span class="line">执行结果：</span><br><span class="line">[root@oldboy202 ~]<span class="comment"># sh change.sh </span></span><br><span class="line">Printing file list <span class="keyword">in</span> /tmp dirctory:</span><br><span class="line">ls /tmp/etc-services-2017-07-05_18.tar.gz /tmp/oldboy.txt /tmp/swap_1000M /tmp/tar.log</span><br></pre></td></tr></table></figure>
 
 <p>案例5：for语句倒计时脚本-生成序列</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">预备知识：</span><br><span class="line">seq 1 10   seq命令用于生成序列</span><br><span class="line">seq -w 10 -1 1  生成倒序数字（每次减一）；-w命令自动使用0补全；</span><br><span class="line">echo -n 意思是不换行</span><br><span class="line">echo -e参数是支持特殊字符</span><br><span class="line">/b 退一格</span><br><span class="line">##########################################################</span><br><span class="line">[root@oldboy202 scripts]# vim daojishi.sh</span><br><span class="line">#/bin/bash</span><br><span class="line">for i in `seq -w 10 -1 1`</span><br><span class="line">  do</span><br><span class="line">   echo -ne &quot;\b\b$i&quot;   #此处需要使用双引号括起来，单引号会报错，因为单引号所见即所得</span><br><span class="line">   sleep 1</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">预备知识：</span><br><span class="line">seq <span class="number">1</span> <span class="number">10</span>   seq命令用于生成序列</span><br><span class="line">seq -w <span class="number">10</span> <span class="number">-1</span> <span class="number">1</span>  生成倒序数字（每次减一）；-w命令自动使用<span class="number">0</span>补全；</span><br><span class="line">echo -n 意思是不换行</span><br><span class="line">echo -e参数是支持特殊字符</span><br><span class="line">/b 退一格</span><br><span class="line">##########################################################</span><br><span class="line">[root@oldboy202 scripts]# vim daojishi.sh</span><br><span class="line">#/bin/bash</span><br><span class="line">for i <span class="keyword">in</span> `seq -w <span class="number">10</span> <span class="number">-1</span> <span class="number">1</span>`</span><br><span class="line">  do</span><br><span class="line">   echo -ne <span class="string">"\b\b$i"</span>   #此处需要使用双引号括起来，单引号会报错，因为单引号所见即所得</span><br><span class="line">   sleep <span class="number">1</span></span><br><span class="line">done</span><br></pre></td></tr></table></figure>
 
 <h4 id="while循环"><a href="#while循环" class="headerlink" title="while循环"></a>while循环</h4><blockquote>
 <p>while循环用于重复的执行一个命令列表。语法如下：</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">while [ 条件 ]</span><br><span class="line">do</span><br><span class="line">   command1</span><br><span class="line">   command2</span><br><span class="line">   ...</span><br><span class="line">   commandN</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">即，当条件CONDITION为真时，command1...commandN命令将被执行。</span><br></pre></td></tr></table></figure>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">while [ 条件 ]</span><br><span class="line">do</span><br><span class="line">   <span class="keyword">command</span>1</span><br><span class="line">   <span class="keyword">command</span>2</span><br><span class="line">   <span class="string">...</span></span><br><span class="line">   <span class="keyword">command</span>N</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">即，当条件CONDITION为真时，<span class="keyword">command</span>1.<span class="string">..commandN</span>命令将被执行。</span><br></pre></td></tr></table></figure>
 
 <p>实例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">declare -i var     #定义var为整型变量，目的是让变量值进行加减乘除等计算</span><br><span class="line">var=1</span><br><span class="line">while [[ $var -le 3 ]]   </span><br><span class="line">   do</span><br><span class="line">   echo &quot;The for loop is run $var times.&quot;</span><br><span class="line">   var=$var+1      #数值计算</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">#####################################</span><br><span class="line">执行结果</span><br><span class="line">[root@cm-master scripts]# sh while.sh </span><br><span class="line">The for loop is run 1 times.</span><br><span class="line">The for loop is run 2 times.</span><br><span class="line">The for loop is run 3 times.</span><br></pre></td></tr></table></figure>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">declare -i var     #定义var为整型变量，目的是让变量值进行加减乘除等计算</span><br><span class="line">var=<span class="number">1</span></span><br><span class="line">while [[ $var -le <span class="number">3</span> ]]   </span><br><span class="line">   do</span><br><span class="line">   echo <span class="string">"The for loop is run $var times."</span></span><br><span class="line">   var=$var+<span class="number">1</span>      #数值计算</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">#####################################</span><br><span class="line">执行结果</span><br><span class="line">[root@cm-master scripts]# sh while.sh </span><br><span class="line">The for loop is run <span class="number">1</span> times.</span><br><span class="line">The for loop is run <span class="number">2</span> times.</span><br><span class="line">The for loop is run <span class="number">3</span> times.</span><br></pre></td></tr></table></figure>
 
 <p>案例1：【釜底抽薪法-逐行读取文件】将read命令和while循环来读取一个文本文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">FilePath=$1                      #把位置参数1的值给变量file</span><br><span class="line"></span><br><span class="line">if [[ $# -lt 1 ]];then       #判断位置参数个数，如果小于1则打印错误提示并退出，同时返回错误码1</span><br><span class="line">   echo &quot;Usage: $0 FILEPATH.&quot;</span><br><span class="line">   exit 1</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">while read -r line       #使用read命令从标准输入读取文件的一行，并赋值给变量hang</span><br><span class="line">  do</span><br><span class="line">   echo $line            #打印读入的行</span><br><span class="line"></span><br><span class="line">done &lt; &quot;$FilePath&quot;          </span><br><span class="line"></span><br><span class="line">注释：我习惯把这种方式叫做read釜底抽薪，因为这种方式在结束的时候需要执行文件，就好像是执行完的时候再把文件读进去一样。</span><br><span class="line"></span><br><span class="line">################################</span><br><span class="line">[root@cm-master scripts]# sh while.sh /etc/fstab </span><br><span class="line"></span><br><span class="line"># /etc/fstab</span><br><span class="line"># Created by anaconda on Wed Jul 5 15:52:21 2017</span><br><span class="line">#</span><br><span class="line"># Accessible filesystems, by reference, are maintained under &apos;/dev/disk&apos;</span><br><span class="line"># See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info</span><br><span class="line">#</span><br><span class="line">/dev/mapper/vg_cm5-lv_root / ext4 defaults 1 1</span><br><span class="line">UUID=f1c12bb9-1eb3-4c89-95c9-f8ca8ef1ce88 /boot ext4 defaults 1 2</span><br><span class="line">/dev/mapper/vg_cm5-lv_home /home ext4 defaults 1 2</span><br><span class="line">/dev/mapper/vg_cm5-lv_swap swap swap defaults 0 0</span><br><span class="line">tmpfs /dev/shm tmpfs defaults 0 0</span><br><span class="line">devpts /dev/pts devpts gid=5,mode=620 0 0</span><br><span class="line">sysfs /sys sysfs defaults 0 0</span><br><span class="line">proc /proc proc defaults 0 0</span><br></pre></td></tr></table></figure>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">FilePath=$<span class="number">1</span>                      #把位置参数<span class="number">1</span>的值给变量file</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [[ $# -lt <span class="number">1</span> ]];then       #判断位置参数个数，如果小于<span class="number">1</span>则打印错误提示并退出，同时返回错误码<span class="number">1</span></span><br><span class="line">   echo <span class="string">"Usage: $0 FILEPATH."</span></span><br><span class="line">   exit <span class="number">1</span></span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">while read -r line       #使用read命令从标准输入读取文件的一行，并赋值给变量hang</span><br><span class="line">  do</span><br><span class="line">   echo $line            #打印读入的行</span><br><span class="line"></span><br><span class="line">done &lt; <span class="string">"$FilePath"</span>          </span><br><span class="line"></span><br><span class="line">注释：我习惯把这种方式叫做read釜底抽薪，因为这种方式在结束的时候需要执行文件，就好像是执行完的时候再把文件读进去一样。</span><br><span class="line"></span><br><span class="line">################################</span><br><span class="line">[root@cm-master scripts]# sh while.sh /etc/fstab </span><br><span class="line"></span><br><span class="line"># /etc/fstab</span><br><span class="line"># Created by anaconda on Wed Jul <span class="number">5</span> <span class="number">15</span>:<span class="number">52</span>:<span class="number">21</span> <span class="number">2017</span></span><br><span class="line">#</span><br><span class="line"># Accessible filesystems, by reference, are maintained under <span class="string">'/dev/disk'</span></span><br><span class="line"># See man pages fstab(<span class="number">5</span>), findfs(<span class="number">8</span>), mount(<span class="number">8</span>) and/or blkid(<span class="number">8</span>) for more info</span><br><span class="line">#</span><br><span class="line">/dev/mapper/vg_cm5-lv_root / ext4 defaults <span class="number">1</span> <span class="number">1</span></span><br><span class="line">UUID=f1c12bb9<span class="number">-1</span>eb3<span class="number">-4</span>c89<span class="number">-95</span>c9-f8ca8ef1ce88 /boot ext4 defaults <span class="number">1</span> <span class="number">2</span></span><br><span class="line">/dev/mapper/vg_cm5-lv_home /home ext4 defaults <span class="number">1</span> <span class="number">2</span></span><br><span class="line">/dev/mapper/vg_cm5-lv_swap swap swap defaults <span class="number">0</span> <span class="number">0</span></span><br><span class="line">tmpfs /dev/shm tmpfs defaults <span class="number">0</span> <span class="number">0</span></span><br><span class="line">devpts /dev/pts devpts gid=<span class="number">5</span>,mode=<span class="number">620</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line">sysfs /sys sysfs defaults <span class="number">0</span> <span class="number">0</span></span><br><span class="line">proc /proc proc defaults <span class="number">0</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
 
 <p>案例2：还可以按列读取文件的内容，将文件分为3列输出</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">FilePath=$1</span><br><span class="line"></span><br><span class="line">if [[ $# -lt 1 ]];then</span><br><span class="line">   echo &quot;Usage: $0 FILEPATH.&quot;</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">while read -r f1 f2 f3       #从文件内读取内容赋值给f1、f2和f3</span><br><span class="line">  do</span><br><span class="line">  echo &quot;第一列: $f1;第二列: $f2;第三列: $f3&quot;    #按照我们预定的格式输出</span><br><span class="line">done &lt; &quot;$FilePath&quot;</span><br><span class="line">##############################</span><br><span class="line">执行结果：</span><br><span class="line">第一列: #;第二列: ;第三列: </span><br><span class="line">第一列: /dev/mapper/vg_cm5-lv_root;第二列: /;第三列: ext4    defaults   1 1</span><br><span class="line">第一列: UUID=f1c12bb9-1eb3-4c89-95c9-f8ca8ef1ce88;第二列: /boot;第三列: ext4    defaults    1 2</span><br><span class="line">第一列: /dev/mapper/vg_cm5-lv_home;第二列: /home;第三列: ext4    defaults    1 2</span><br><span class="line">第一列: /dev/mapper/vg_cm5-lv_swap;第二列: swap;第三列: swap    defaults    0 0</span><br><span class="line">第一列: tmpfs;第二列: /dev/shm;第三列: tmpfs   defaults   0 0</span><br><span class="line">第一列: devpts;第二列: /dev/pts;第三列: devpts  gid=5,mode=620  0 0</span><br><span class="line">第一列: sysfs;第二列: /sys;第三列: sysfs   defaults    0 0</span><br><span class="line">第一列: proc;第二列: /proc;第三列: proc    defaults    0 0</span><br></pre></td></tr></table></figure>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">FilePath=$<span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [[ $# -lt <span class="number">1</span> ]];then</span><br><span class="line">   echo <span class="string">"Usage: $0 FILEPATH."</span></span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">while read -r f1 f2 f3       #从文件内读取内容赋值给f1、f2和f3</span><br><span class="line">  do</span><br><span class="line">  echo <span class="string">"第一列: $f1;第二列: $f2;第三列: $f3"</span>    #按照我们预定的格式输出</span><br><span class="line">done &lt; <span class="string">"$FilePath"</span></span><br><span class="line">##############################</span><br><span class="line">执行结果：</span><br><span class="line">第一列: #;第二列: ;第三列: </span><br><span class="line">第一列: /dev/mapper/vg_cm5-lv_root;第二列: /;第三列: ext4    defaults   <span class="number">1</span> <span class="number">1</span></span><br><span class="line">第一列: UUID=f1c12bb9<span class="number">-1</span>eb3<span class="number">-4</span>c89<span class="number">-95</span>c9-f8ca8ef1ce88;第二列: /boot;第三列: ext4    defaults    <span class="number">1</span> <span class="number">2</span></span><br><span class="line">第一列: /dev/mapper/vg_cm5-lv_home;第二列: /home;第三列: ext4    defaults    <span class="number">1</span> <span class="number">2</span></span><br><span class="line">第一列: /dev/mapper/vg_cm5-lv_swap;第二列: swap;第三列: swap    defaults    <span class="number">0</span> <span class="number">0</span></span><br><span class="line">第一列: tmpfs;第二列: /dev/shm;第三列: tmpfs   defaults   <span class="number">0</span> <span class="number">0</span></span><br><span class="line">第一列: devpts;第二列: /dev/pts;第三列: devpts  gid=<span class="number">5</span>,mode=<span class="number">620</span>  <span class="number">0</span> <span class="number">0</span></span><br><span class="line">第一列: sysfs;第二列: /sys;第三列: sysfs   defaults    <span class="number">0</span> <span class="number">0</span></span><br><span class="line">第一列: proc;第二列: /proc;第三列: proc    defaults    <span class="number">0</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
 
 <h6 id="定义无限while循环-又称死循环"><a href="#定义无限while循环-又称死循环" class="headerlink" title="定义无限while循环(又称死循环)"></a>定义无限while循环(又称死循环)</h6><blockquote>
 <p>一般当条件永远不被满足时，就会发生一个无限循环。</p>
@@ -234,24 +238,24 @@
 <p>false命令 – 不会执行任何语句，脚本/程序将跳转到done语句后的下一行。</p>
 </blockquote>
 <p>实例1：使用“:” 定义一个无限循环</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">while :</span><br><span class="line">  do</span><br><span class="line">  echo &quot;Do something...&quot;</span><br><span class="line">  echo &quot;Hit [CTRL+C] to stop!&quot;</span><br><span class="line">  sleep 3    #定义每次循环时间间隔,单位：秒</span><br><span class="line"></span><br><span class="line">done</span><br><span class="line">注：“:” 冒号命令是Bash的内部命令，也就意味着其他shell并不支持。</span><br><span class="line">#########################</span><br><span class="line">执行结果：</span><br><span class="line">[root@cm-master scripts]# sh xh.sh </span><br><span class="line">Do something...</span><br><span class="line">Hit [CTRL+C] to stop!</span><br><span class="line">Do something...</span><br><span class="line">Hit [CTRL+C] to stop!</span><br></pre></td></tr></table></figure>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">while :</span><br><span class="line">  do</span><br><span class="line">  echo <span class="string">"Do something..."</span></span><br><span class="line">  echo <span class="string">"Hit [CTRL+C] to stop!"</span></span><br><span class="line">  sleep <span class="number">3</span>    #定义每次循环时间间隔,单位：秒</span><br><span class="line"></span><br><span class="line">done</span><br><span class="line">注：“:” 冒号命令是Bash的内部命令，也就意味着其他shell并不支持。</span><br><span class="line">#########################</span><br><span class="line">执行结果：</span><br><span class="line">[root@cm-master scripts]# sh xh.sh </span><br><span class="line">Do something...</span><br><span class="line">Hit [CTRL+C] to stop!</span><br><span class="line">Do something...</span><br><span class="line">Hit [CTRL+C] to stop!</span><br></pre></td></tr></table></figure>
 
 <p>实例2：使用“true” 定义一个无限循环</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">while true</span><br><span class="line">  do</span><br><span class="line">  echo &quot;Do something...&quot;</span><br><span class="line">  echo &quot;Hit [CTRL+C] to stop!&quot;</span><br><span class="line">  sleep 2       #定义每次循环时间间隔,单位：秒</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">true</span></span><br><span class="line">  <span class="keyword">do</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"Do something..."</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"Hit [CTRL+C] to stop!"</span></span><br><span class="line">  sleep 2       <span class="comment">#定义每次循环时间间隔,单位：秒</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
 
 <p>实例3：使用while循环显示数字0-9</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">a=0</span><br><span class="line"></span><br><span class="line">while [[ $a -lt 10 ]];do</span><br><span class="line">      echo $a</span><br><span class="line">      a=`expr $a + 1`</span><br><span class="line">done</span><br><span class="line">###############################</span><br><span class="line">执行结果：</span><br><span class="line">[root@cm-master scripts]# sh num.sh </span><br><span class="line">0</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td></tr></table></figure>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">a=<span class="number">0</span></span><br><span class="line"></span><br><span class="line">while [[ $a -lt <span class="number">10</span> ]];do</span><br><span class="line">      echo $a</span><br><span class="line">      a=`expr $a + <span class="number">1</span>`</span><br><span class="line">done</span><br><span class="line">###############################</span><br><span class="line">执行结果：</span><br><span class="line">[root@cm-master scripts]# sh num.sh </span><br><span class="line"><span class="number">0</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">4</span></span><br><span class="line"><span class="number">5</span></span><br><span class="line"><span class="number">6</span></span><br><span class="line"><span class="number">7</span></span><br><span class="line"><span class="number">8</span></span><br><span class="line"><span class="number">9</span></span><br></pre></td></tr></table></figure>
 
-<h6 id="expr手工命令计数器"><a href="#expr手工命令计数器" class="headerlink" title="expr手工命令计数器"></a>expr手工命令计数器</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">expr命令一般用于整数值，但也可用于字符串。</span><br><span class="line">expr的常用运算符： </span><br><span class="line">加法运算：+ </span><br><span class="line">减法运算：- </span><br><span class="line">乘法运算：\* </span><br><span class="line">除法运算：/ </span><br><span class="line"></span><br><span class="line">比如：</span><br><span class="line"><span class="meta">$</span> expr 10 + 10</span><br><span class="line">20</span><br><span class="line"><span class="meta">$</span> expr 5 \* 6</span><br><span class="line">30</span><br><span class="line"><span class="meta">$</span> expr 30 / 3</span><br><span class="line">10</span><br><span class="line"><span class="meta">$</span> expr 30 / 3 / 2</span><br><span class="line">5</span><br><span class="line">(注意运算符左右都有空格)</span><br><span class="line">使用乘号时，必须用反斜线屏蔽其特定含义。因为shell可能会误解显示星号的意义</span><br></pre></td></tr></table></figure>
+<h6 id="expr手工命令计数器"><a href="#expr手工命令计数器" class="headerlink" title="expr手工命令计数器"></a>expr手工命令计数器</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">expr命令一般用于整数值，但也可用于字符串。</span><br><span class="line">expr的常用运算符： </span><br><span class="line">加法运算：+ </span><br><span class="line">减法运算：- </span><br><span class="line">乘法运算：\* </span><br><span class="line">除法运算：/ </span><br><span class="line"></span><br><span class="line">比如：</span><br><span class="line"><span class="meta">$</span><span class="bash"> expr 10 + 10</span></span><br><span class="line">20</span><br><span class="line"><span class="meta">$</span><span class="bash"> expr 5 \* 6</span></span><br><span class="line">30</span><br><span class="line"><span class="meta">$</span><span class="bash"> expr 30 / 3</span></span><br><span class="line">10</span><br><span class="line"><span class="meta">$</span><span class="bash"> expr 30 / 3 / 2</span></span><br><span class="line">5</span><br><span class="line">(注意运算符左右都有空格)</span><br><span class="line">使用乘号时，必须用反斜线屏蔽其特定含义。因为shell可能会误解显示星号的意义</span><br></pre></td></tr></table></figure>
 
 <p>实例4：编写菜单驱动程序</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">while true</span><br><span class="line">do</span><br><span class="line"></span><br><span class="line">  clear</span><br><span class="line">  echo &quot;======================&quot;</span><br><span class="line">  echo &quot;    MAIN - 菜单    &quot;</span><br><span class="line">  echo &quot;======================&quot;</span><br><span class="line">  echo &quot;1. 显示日期与时间.&quot;</span><br><span class="line">  echo &quot;2. 显示系统信息.&quot;</span><br><span class="line">  echo &quot;3. 显示用户正在做什么.&quot;</span><br><span class="line">  echo &quot;4. Exit.&quot;</span><br><span class="line"></span><br><span class="line">read -p &quot;Enter your choice [1-4]：&quot; choice</span><br><span class="line">  case $choice in</span><br><span class="line">         1)</span><br><span class="line">         echo &quot;Today is $(date +%Y-%m-%d).&quot;</span><br><span class="line">         echo &quot;Current time: $(date +%H:%M:%S)&quot;</span><br><span class="line">         read -p &quot;Press [Enter] key to continue...&quot; readEnterkey</span><br><span class="line">         ;;</span><br><span class="line"></span><br><span class="line">         2)</span><br><span class="line">         uname -a</span><br><span class="line">         read -p &quot;Press [Enter] key to continue...&quot; readEnterkey</span><br><span class="line">         ;;</span><br><span class="line"></span><br><span class="line">         3)</span><br><span class="line">          w</span><br><span class="line">          read -p &quot;Press [Enter] key to continue...&quot; readEnterkey</span><br><span class="line">          ;;</span><br><span class="line"></span><br><span class="line">         4)</span><br><span class="line">          echo &quot;Bye!&quot;</span><br><span class="line">          exit 0</span><br><span class="line">          ;;</span><br><span class="line"></span><br><span class="line">         *)</span><br><span class="line">         echo &quot;Error: Invalid option!&quot;</span><br><span class="line">         read -p &quot;Press [Enter] key to continue...&quot; readEnterkey</span><br><span class="line">         ;;</span><br><span class="line">         </span><br><span class="line">    esac</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">###################################################################</span><br><span class="line">执行结果：</span><br><span class="line">======================</span><br><span class="line">    MAIN - 菜单    </span><br><span class="line">======================</span><br><span class="line">1. 显示 日期与时间.</span><br><span class="line">2. 显示系统信息.</span><br><span class="line">3. 显示用户正在做什么.</span><br><span class="line">4. Exit.</span><br><span class="line">Enter your choice [1-4]：3</span><br><span class="line"> 19:01:53 up 6 days,  4:20,  1 user,  load average: 0.27, 0.13, 0.07</span><br><span class="line">USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT</span><br><span class="line">root     pts/0    10.255.255.1     15:37    0.00s  0.05s  0.00s sh menu.sh</span><br><span class="line">Press [Enter] key to continue...</span><br></pre></td></tr></table></figure>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">while true</span><br><span class="line">do</span><br><span class="line"></span><br><span class="line">  clear</span><br><span class="line">  echo <span class="string">"======================"</span></span><br><span class="line">  echo <span class="string">"    MAIN - 菜单    "</span></span><br><span class="line">  echo <span class="string">"======================"</span></span><br><span class="line">  echo <span class="string">"1. 显示日期与时间."</span></span><br><span class="line">  echo <span class="string">"2. 显示系统信息."</span></span><br><span class="line">  echo <span class="string">"3. 显示用户正在做什么."</span></span><br><span class="line">  echo <span class="string">"4. Exit."</span></span><br><span class="line"></span><br><span class="line">read -p <span class="string">"Enter your choice [1-4]："</span> choice</span><br><span class="line">  <span class="keyword">case</span> $choice <span class="keyword">in</span></span><br><span class="line">         <span class="number">1</span>)</span><br><span class="line">         echo <span class="string">"Today is $(date +%Y-%m-%d)."</span></span><br><span class="line">         echo <span class="string">"Current time: $(date +%H:%M:%S)"</span></span><br><span class="line">         read -p <span class="string">"Press [Enter] key to continue..."</span> readEnterkey</span><br><span class="line">         ;;</span><br><span class="line"></span><br><span class="line">         <span class="number">2</span>)</span><br><span class="line">         uname -a</span><br><span class="line">         read -p <span class="string">"Press [Enter] key to continue..."</span> readEnterkey</span><br><span class="line">         ;;</span><br><span class="line"></span><br><span class="line">         <span class="number">3</span>)</span><br><span class="line">          w</span><br><span class="line">          read -p <span class="string">"Press [Enter] key to continue..."</span> readEnterkey</span><br><span class="line">          ;;</span><br><span class="line"></span><br><span class="line">         <span class="number">4</span>)</span><br><span class="line">          echo <span class="string">"Bye!"</span></span><br><span class="line">          exit <span class="number">0</span></span><br><span class="line">          ;;</span><br><span class="line"></span><br><span class="line">         *)</span><br><span class="line">         echo <span class="string">"Error: Invalid option!"</span></span><br><span class="line">         read -p <span class="string">"Press [Enter] key to continue..."</span> readEnterkey</span><br><span class="line">         ;;</span><br><span class="line">         </span><br><span class="line">    esac</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">###################################################################</span><br><span class="line">执行结果：</span><br><span class="line">======================</span><br><span class="line">    MAIN - 菜单    </span><br><span class="line">======================</span><br><span class="line"><span class="number">1.</span> 显示 日期与时间.</span><br><span class="line"><span class="number">2.</span> 显示系统信息.</span><br><span class="line"><span class="number">3.</span> 显示用户正在做什么.</span><br><span class="line"><span class="number">4.</span> Exit.</span><br><span class="line">Enter your choice [<span class="number">1</span><span class="number">-4</span>]：<span class="number">3</span></span><br><span class="line"> <span class="number">19</span>:<span class="number">01</span>:<span class="number">53</span> up <span class="number">6</span> days,  <span class="number">4</span>:<span class="number">20</span>,  <span class="number">1</span> user,  load average: <span class="number">0.27</span>, <span class="number">0.13</span>, <span class="number">0.07</span></span><br><span class="line">USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT</span><br><span class="line">root     pts/<span class="number">0</span>    <span class="number">10.255</span><span class="number">.255</span><span class="number">.1</span>     <span class="number">15</span>:<span class="number">37</span>    <span class="number">0.00</span>s  <span class="number">0.05</span>s  <span class="number">0.00</span>s sh menu.sh</span><br><span class="line">Press [Enter] key to continue...</span><br></pre></td></tr></table></figure>
 
 <h4 id="until循环"><a href="#until循环" class="headerlink" title="until循环"></a>until循环</h4><blockquote>
 <p>until循环与while循环类似，也同样基于一个条件。但util循环的判断条件正好与while循环的判断条件相反。</p>
 <p>until循环在条件为假的情况下才会继续运行;  一旦条件被满足，即为真，就会退出循环。</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">until [ CONDITION ]</span><br><span class="line">do</span><br><span class="line">  command1</span><br><span class="line">  command2</span><br><span class="line">  ......</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">until [ CONDITION ]</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">  command1</span><br><span class="line">  command2</span><br><span class="line">  <span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span></span><br><span class="line">done</span><br></pre></td></tr></table></figure>
 
 <p>until循环与while循环相比：</p>
 <ul>
@@ -260,12 +264,12 @@
 <li>until循环总是执行至少一次。</li>
 </ul>
 <p>实例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">var=1</span><br><span class="line">until [ $var -gt 5 ]</span><br><span class="line">do</span><br><span class="line">   echo &quot;The for loop is run $var times.&quot;</span><br><span class="line">   var=$(( var+1 ))</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">##########################</span><br><span class="line">执行结果：</span><br><span class="line">[root@CactiEZ ~]# sh until.sh </span><br><span class="line">The for loop is run 1 times.</span><br><span class="line">The for loop is run 2 times.</span><br><span class="line">The for loop is run 3 times.</span><br><span class="line">The for loop is run 4 times.</span><br><span class="line">The for loop is run 5 times.</span><br><span class="line"></span><br><span class="line">脚本会被执行5次，第6次条件被满足，则退出until循环。</span><br></pre></td></tr></table></figure>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">var=<span class="number">1</span></span><br><span class="line">until [ $var -gt <span class="number">5</span> ]</span><br><span class="line">do</span><br><span class="line">   echo <span class="string">"The for loop is run $var times."</span></span><br><span class="line">   var=$(( var+<span class="number">1</span> ))</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">##########################</span><br><span class="line">执行结果：</span><br><span class="line">[root@CactiEZ ~]# sh until.sh </span><br><span class="line">The for loop is run <span class="number">1</span> times.</span><br><span class="line">The for loop is run <span class="number">2</span> times.</span><br><span class="line">The for loop is run <span class="number">3</span> times.</span><br><span class="line">The for loop is run <span class="number">4</span> times.</span><br><span class="line">The for loop is run <span class="number">5</span> times.</span><br><span class="line"></span><br><span class="line">脚本会被执行<span class="number">5</span>次，第<span class="number">6</span>次条件被满足，则退出until循环。</span><br></pre></td></tr></table></figure>
 
 <h4 id="select循环语句"><a href="#select循环语句" class="headerlink" title="select循环语句"></a>select循环语句</h4><blockquote>
 <p>bash还提供select循环，其语法如下所示：</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select VAR in LIST</span><br><span class="line">do</span><br><span class="line">  command1</span><br><span class="line">  command2</span><br><span class="line">  ......</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="built_in">VAR</span> <span class="keyword">in</span> <span class="built_in">LIST</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">  command1</span><br><span class="line">  command2</span><br><span class="line">  <span class="params">...</span><span class="params">...</span></span><br><span class="line">done</span><br></pre></td></tr></table></figure>
 
 <p>select循环语句具有如下特点：</p>
 <ul>
@@ -276,10 +280,10 @@
 <li>可以通过添加一个退出选项，或按Ctrl+C或 Ctrl+D组合键退出select循环。</li>
 </ul>
 <p>实例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">PS3=&quot;Run command: &quot;   #定义PS3提示符</span><br><span class="line">select choice in date w hostname &quot;uname -a&quot; Exit    #指定select循环列表</span><br><span class="line"></span><br><span class="line">do </span><br><span class="line">  case $choice in</span><br><span class="line">    date)</span><br><span class="line">        echo &quot;===============================&quot;</span><br><span class="line">        echo &quot;Current system date and time: &quot;</span><br><span class="line">        echo &quot;===============================&quot;</span><br><span class="line">        $choice        #直接将变量的值作为命令运行</span><br><span class="line">        ;;</span><br><span class="line">      w)</span><br><span class="line">        echo &quot;==========================================&quot;</span><br><span class="line">        echo &quot;Who is logged on and what they are doing: &quot;</span><br><span class="line">        echo &quot;==========================================&quot;</span><br><span class="line">        $choice</span><br><span class="line">        ;;    </span><br><span class="line">hostname)</span><br><span class="line">        echo &quot;==========&quot;</span><br><span class="line">        echo &quot;Hostname: &quot;</span><br><span class="line">        echo &quot;==========&quot;</span><br><span class="line">        $choice</span><br><span class="line">        ;;</span><br><span class="line">&quot;uname -a&quot;)</span><br><span class="line">        echo &quot;====================&quot;</span><br><span class="line">        echo &quot;System information: &quot;</span><br><span class="line">        echo &quot;====================&quot;</span><br><span class="line">        $choice</span><br><span class="line">        ;;</span><br><span class="line">    Exit)</span><br><span class="line">        echo &quot;Bye!&quot;</span><br><span class="line">        exit</span><br><span class="line">        ;;</span><br><span class="line">  </span><br><span class="line">  esac</span><br><span class="line"></span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">PS3=<span class="string">"Run command: "</span>   <span class="comment">#定义PS3提示符</span></span><br><span class="line">select choice <span class="keyword">in</span> date w hostname <span class="string">"uname -a"</span> Exit    <span class="comment">#指定select循环列表</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">do</span> </span><br><span class="line">  <span class="keyword">case</span> <span class="variable">$choice</span> <span class="keyword">in</span></span><br><span class="line">    date)</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"==============================="</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"Current system date and time: "</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"==============================="</span></span><br><span class="line">        <span class="variable">$choice</span>        <span class="comment">#直接将变量的值作为命令运行</span></span><br><span class="line">        ;;</span><br><span class="line">      w)</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"=========================================="</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"Who is logged on and what they are doing: "</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"=========================================="</span></span><br><span class="line">        <span class="variable">$choice</span></span><br><span class="line">        ;;    </span><br><span class="line">hostname)</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"=========="</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"Hostname: "</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"=========="</span></span><br><span class="line">        <span class="variable">$choice</span></span><br><span class="line">        ;;</span><br><span class="line"><span class="string">"uname -a"</span>)</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"===================="</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"System information: "</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"===================="</span></span><br><span class="line">        <span class="variable">$choice</span></span><br><span class="line">        ;;</span><br><span class="line">    Exit)</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"Bye!"</span></span><br><span class="line">        <span class="built_in">exit</span></span><br><span class="line">        ;;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">esac</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
 
 <p>执行结果</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@CactiEZ ~]# sh select.sh </span><br><span class="line">1) date</span><br><span class="line">2) w</span><br><span class="line">3) hostname</span><br><span class="line">4) uname -a</span><br><span class="line">5) Exit</span><br><span class="line">Run command: 1</span><br><span class="line">===============================</span><br><span class="line">Current system date and time: </span><br><span class="line">===============================</span><br><span class="line">Wed Aug 23 16:43:49 CST 2017</span><br><span class="line">Run command: 5</span><br><span class="line">Bye!</span><br></pre></td></tr></table></figure>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@CactiEZ ~]# sh select.sh </span><br><span class="line">1) date</span><br><span class="line">2) w</span><br><span class="line">3) hostname</span><br><span class="line">4) uname -a</span><br><span class="line">5) Exit</span><br><span class="line">Run command: 1</span><br><span class="line">===============================</span><br><span class="line">Current system date and time: </span><br><span class="line">===============================</span><br><span class="line">Wed Aug 23 16:43:49 CST 2017</span><br><span class="line">Run command: 5</span><br><span class="line">Bye!</span><br></pre></td></tr></table></figure>
 
 <h2 id="循环控制"><a href="#循环控制" class="headerlink" title="循环控制"></a>循环控制</h2><blockquote>
 <p>break和continue是Bash中的循环控制命令，其用法与在其他编程语言中的同名语句完全一致。</p>
@@ -288,24 +292,24 @@
 <p>作用：break语句用于从for、while、until或select循环中退出，停止循环。</p>
 </blockquote>
 <p>break语句的语法如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">break [n]</span><br><span class="line"></span><br><span class="line">n代表嵌套循环的层级，如果指定了n, break 将退出n级嵌套循环。如果没有指定或n不≥1，则退出状态码0，否则退出状态码为n.</span><br></pre></td></tr></table></figure>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">break [<span class="built_in">n</span>]</span><br><span class="line"></span><br><span class="line"><span class="built_in">n</span>代表嵌套循环的层级，如果指定了<span class="built_in">n</span>, break 将退出<span class="built_in">n</span>级嵌套循环。如果没有指定或<span class="built_in">n</span>不≥<span class="number">1</span>，则退出状态码<span class="number">0</span>，否则退出状态码为n.</span><br></pre></td></tr></table></figure>
 
 <p>实例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line"></span><br><span class="line">#如果未指定参数，则打印脚本的使用方法，并返回退出状态码1</span><br><span class="line">[ $# -eq 0 ] &amp;&amp; &#123; echo &quot;Usage: sh $0 file path&quot;; exit 1; &#125;</span><br><span class="line"></span><br><span class="line">#将位置1的值献给变量match</span><br><span class="line">match=$1</span><br><span class="line">found=0</span><br><span class="line"></span><br><span class="line">#遍历目录/etc下的所有文件</span><br><span class="line">for file in /etc/*</span><br><span class="line">do</span><br><span class="line">#如果文件的路径与指定的参数文件路径相匹配，则打印文件已找到，并退出for循环</span><br><span class="line">  if [ $file == &quot;$match&quot; ];then</span><br><span class="line">     echo &quot;The file $match was found!&quot;</span><br><span class="line">     found=1</span><br><span class="line">     #使用break退出for循环</span><br><span class="line">     break</span><br><span class="line"></span><br><span class="line">  fi</span><br><span class="line"></span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">[ $found -ne 1 ] &amp;&amp; echo &quot;the $match not found in /etc directory.&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#如果未指定参数，则打印脚本的使用方法，并返回退出状态码1</span></span><br><span class="line">[ <span class="variable">$#</span> -eq 0 ] &amp;&amp; &#123; <span class="built_in">echo</span> <span class="string">"Usage: sh <span class="variable">$0</span> file path"</span>; <span class="built_in">exit</span> 1; &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#将位置1的值献给变量match</span></span><br><span class="line">match=<span class="variable">$1</span></span><br><span class="line">found=0</span><br><span class="line"></span><br><span class="line"><span class="comment">#遍历目录/etc下的所有文件</span></span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> /etc/*</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"><span class="comment">#如果文件的路径与指定的参数文件路径相匹配，则打印文件已找到，并退出for循环</span></span><br><span class="line">  <span class="keyword">if</span> [ <span class="variable">$file</span> == <span class="string">"<span class="variable">$match</span>"</span> ];<span class="keyword">then</span></span><br><span class="line">     <span class="built_in">echo</span> <span class="string">"The file <span class="variable">$match</span> was found!"</span></span><br><span class="line">     found=1</span><br><span class="line">     <span class="comment">#使用break退出for循环</span></span><br><span class="line">     <span class="built_in">break</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line">[ <span class="variable">$found</span> -ne 1 ] &amp;&amp; <span class="built_in">echo</span> <span class="string">"the <span class="variable">$match</span> not found in /etc directory."</span></span><br></pre></td></tr></table></figure>
 
 <p>执行结果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@CactiEZ ~]# sh break1.sh /etc/passwd</span><br><span class="line">The file /etc/passwd was found!</span><br><span class="line"></span><br><span class="line">[root@ ~]# sh break1.sh /etc/shadow</span><br><span class="line">The file /etc/shadow was found!</span><br><span class="line"></span><br><span class="line">[root@ ~]# sh break1.sh /etc/kkk</span><br><span class="line">the /etc/kkk not found in /etc directory.</span><br></pre></td></tr></table></figure>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@CactiEZ ~]# <span class="keyword">sh</span> break1.<span class="keyword">sh</span> /etc/passwd</span><br><span class="line">The <span class="keyword">file</span> /etc/passwd was found!</span><br><span class="line"></span><br><span class="line">[root@ ~]# <span class="keyword">sh</span> break1.<span class="keyword">sh</span> /etc/shadow</span><br><span class="line">The <span class="keyword">file</span> /etc/shadow was found!</span><br><span class="line"></span><br><span class="line">[root@ ~]# <span class="keyword">sh</span> break1.<span class="keyword">sh</span> /etc/kkk</span><br><span class="line">the /etc/kkk not found <span class="keyword">in</span> /etc directory.</span><br></pre></td></tr></table></figure>
 
 <p>实例2：使用break n语句退出嵌套循环</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">#如果未指定参数，则打印脚本的使用方法，并返回退出状态码1</span><br><span class="line">[[ $# -eq 0 ]] &amp;&amp; &#123; echo &quot;Usage: $0 command&quot;; exit 1; &#125;</span><br><span class="line"></span><br><span class="line">#将位置参数1的值赋给变量match</span><br><span class="line">match=$1</span><br><span class="line">found=0</span><br><span class="line"></span><br><span class="line">for dir in /bin /usr/bin</span><br><span class="line">do</span><br><span class="line"></span><br><span class="line">  #遍历目录下的所有文件</span><br><span class="line">  for file in $dir/*</span><br><span class="line">  do</span><br><span class="line">     #如果文件名与指定的参数文件名相匹配，则打印命令已找到，并退出嵌套的for循环。</span><br><span class="line">     if [[ $(basename $file) == &quot;$match&quot; ]];then</span><br><span class="line">       echo &quot;The command $match was found!&quot;</span><br><span class="line">       found=1</span><br><span class="line">       #退出两层的for循环</span><br><span class="line">       break 2</span><br><span class="line">     fi</span><br><span class="line"></span><br><span class="line">  done</span><br><span class="line"></span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">[[ $found -ne 1 ]] &amp;&amp; echo &quot;The command $match not found.&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#如果未指定参数，则打印脚本的使用方法，并返回退出状态码1</span></span><br><span class="line">[[ <span class="variable">$#</span> -eq 0 ]] &amp;&amp; &#123; <span class="built_in">echo</span> <span class="string">"Usage: <span class="variable">$0</span> command"</span>; <span class="built_in">exit</span> 1; &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#将位置参数1的值赋给变量match</span></span><br><span class="line">match=<span class="variable">$1</span></span><br><span class="line">found=0</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> dir <span class="keyword">in</span> /bin /usr/bin</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">#遍历目录下的所有文件</span></span><br><span class="line">  <span class="keyword">for</span> file <span class="keyword">in</span> <span class="variable">$dir</span>/*</span><br><span class="line">  <span class="keyword">do</span></span><br><span class="line">     <span class="comment">#如果文件名与指定的参数文件名相匹配，则打印命令已找到，并退出嵌套的for循环。</span></span><br><span class="line">     <span class="keyword">if</span> [[ $(basename <span class="variable">$file</span>) == <span class="string">"<span class="variable">$match</span>"</span> ]];<span class="keyword">then</span></span><br><span class="line">       <span class="built_in">echo</span> <span class="string">"The command <span class="variable">$match</span> was found!"</span></span><br><span class="line">       found=1</span><br><span class="line">       <span class="comment">#退出两层的for循环</span></span><br><span class="line">       <span class="built_in">break</span> 2</span><br><span class="line">     <span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line">[[ <span class="variable">$found</span> -ne 1 ]] &amp;&amp; <span class="built_in">echo</span> <span class="string">"The command <span class="variable">$match</span> not found."</span></span><br></pre></td></tr></table></figure>
 
 <p>测试</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@openvpn2]# cd /bin</span><br><span class="line">[root@openvpn2 bin]# sh /opt/break.sh arch</span><br><span class="line">The command arch was found!</span><br></pre></td></tr></table></figure>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@openvpn2]# <span class="keyword">cd</span> /bin</span><br><span class="line">[root@openvpn2 bin]# <span class="keyword">sh</span> /opt/<span class="keyword">break</span>.<span class="keyword">sh</span> <span class="keyword">arch</span></span><br><span class="line">The command <span class="keyword">arch</span> was found!</span><br></pre></td></tr></table></figure>
 
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
 <p>什么叫shell循环？</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shell 可以重复的执行特定指令，直到特定的条件被满足为止。这重复执行的一组命令就叫做循环。</span><br></pre></td></tr></table></figure>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">shell</span><span class="bash"> 可以重复的执行特定指令，直到特定的条件被满足为止。这重复执行的一组命令就叫做循环。</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>shell循环特点</p>
@@ -315,27 +319,27 @@
 <blockquote>
 <p>for循环总结</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在for循环中，每次指定列表中的新值被赋给变量VAR后，for循环都会执行一次，它将重复运行do和done之间的所有语句，直到条件不满足时为止。</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在<span class="keyword">for</span>循环中，每次指定列表中的新值被赋给变量VAR后，<span class="keyword">for</span>循环都会执行一次，它将重复运行<span class="keyword">do</span>和<span class="keyword">done</span>之间的所有语句，直到条件不满足时为止。</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>while循环总结</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1) while循环语句用于重复的执行一个命令列表</span><br><span class="line">2) while循环可以与read命令结合使用来读取一个文本文件</span><br><span class="line">3）while循环和专用命令&quot;:&quot;结合使用来定义一个无限循环</span><br><span class="line"></span><br><span class="line">定义一个无限循环可以使用3种命令：true命令、false命令和&quot;:&quot; 命令。</span><br></pre></td></tr></table></figure>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>) <span class="keyword">while</span>循环语句用于重复的执行一个命令列表</span><br><span class="line"><span class="number">2</span>) <span class="keyword">while</span>循环可以与<span class="built_in">read</span>命令结合使用来读取一个文本文件</span><br><span class="line"><span class="number">3</span>）<span class="keyword">while</span>循环和专用命令<span class="string">":"</span>结合使用来定义一个无限循环</span><br><span class="line"></span><br><span class="line">定义一个无限循环可以使用<span class="number">3</span>种命令：<span class="literal">true</span>命令、<span class="literal">false</span>命令和<span class="string">":"</span> 命令。</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>until循环总结</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">until循环与while循环类似，也同样基于一个条件。但until循环的判断条件正好与while循环的判断条件相反，until循环在条件为假的情况下才会持续的运行。一旦条件被满足，即为真，就会退出循环。</span><br></pre></td></tr></table></figure>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">until</span>循环与<span class="keyword">while</span>循环类似，也同样基于一个条件。但<span class="keyword">until</span>循环的判断条件正好与<span class="keyword">while</span>循环的判断条件相反，<span class="keyword">until</span>循环在条件为假的情况下才会持续的运行。一旦条件被满足，即为真，就会退出循环。</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>select循环总结</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1) select语句使用Bash内置变量PS3的值作为它的提示符信息</span><br><span class="line">2）打印到屏幕上的列表LIST中的每一项会在前面加上一个数字编号</span><br><span class="line">3）当用户输入的数字与某一个数字编号一致时，列表中相应的项即被赋予变量VAR</span><br><span class="line">4）如果用户输入的为空，将重新显示列表LIST中的项和提示符信息。</span><br><span class="line">5）可以通过添加一个退出选项，或按Ctrl+C或Ctrl+D组合键退出select循环</span><br></pre></td></tr></table></figure>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>) <span class="keyword">select</span>语句使用Bash内置变量PS3的值作为它的提示符信息</span><br><span class="line"><span class="number">2</span>）打印到屏幕上的列表<span class="built_in">LIST</span>中的每一项会在前面加上一个数字编号</span><br><span class="line"><span class="number">3</span>）当用户输入的数字与某一个数字编号一致时，列表中相应的项即被赋予变量<span class="built_in">VAR</span></span><br><span class="line"><span class="number">4</span>）如果用户输入的为空，将重新显示列表<span class="built_in">LIST</span>中的项和提示符信息。</span><br><span class="line"><span class="number">5</span>）可以通过添加一个退出选项，或按Ctrl+C或Ctrl+D组合键退出<span class="keyword">select</span>循环</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>break控制命令总结</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">break是Bash中的循环控制命令，break语句用于从for、while、until或select循环中退出，停止循环的执行。使用break n将退出n级嵌套循环。</span><br><span class="line"></span><br><span class="line">注：break的英文意思是“打破”，即打破n级嵌套循环</span><br></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">break</span>是Bash中的循环控制命令，<span class="keyword">break</span>语句用于从<span class="keyword">for</span>、<span class="keyword">while</span>、until或select循环中退出，停止循环的执行。使用<span class="keyword">break</span> n将退出n级嵌套循环。</span><br><span class="line"></span><br><span class="line">注：<span class="keyword">break</span>的英文意思是“打破”，即打破n级嵌套循环</span><br></pre></td></tr></table></figure>
 
 
       
@@ -511,7 +515,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2019 John Doe
+    		&copy; 2019 Gary Wu
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -615,18 +619,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">apache</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">目录浏览</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">高级运维</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Apache</a>
               </li>
              
@@ -655,19 +647,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CDH</a>
+                <a href="javascript:void(0)" class="js-tag color5">高级运维</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JDBC</a>
+                <a href="javascript:void(0)" class="js-tag color2">apache</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">MySQL驱动</a>
+                <a href="javascript:void(0)" class="js-tag color5">目录浏览</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">KAFKA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CDH</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -680,6 +676,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">大数据</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">JDBC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">MySQL驱动</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -715,18 +719,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Cacti流量叠加图形</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Cacti整合图形</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Graph</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">cacti</a>
               </li>
              
@@ -744,6 +736,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">监控</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">bugzilla</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">bugs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Cacti流量叠加图形</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Cacti整合图形</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Graph</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -768,14 +780,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">SCL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">bugzilla</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">bugs</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -823,14 +827,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">DNS TLS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Public DNS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">shadowsocks</a>
               </li>
              
@@ -840,6 +836,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">加密代理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">DNS TLS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Public DNS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -919,18 +923,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ESXI PATH</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ESXI补丁升级</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">ESXI6.7</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">VMware vSphere Client</a>
               </li>
              
@@ -943,6 +935,26 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CPU</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">虚拟化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ESXI PATH</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ESXI补丁升级</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">ESXI6.7</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Openstack</a>
               </li>
              
@@ -952,22 +964,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">混杂模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CPU</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">虚拟化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">磁盘置备</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">disk</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -991,6 +987,26 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Gentoo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">编译内核</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">NFS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">磁盘置备</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">disk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">fuse</a>
               </li>
              
@@ -1004,18 +1020,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">HDFS挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Gentoo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">编译内核</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">NFS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1079,6 +1083,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">HTTP状态码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">301</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">302</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
@@ -1107,27 +1123,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">HTTP状态码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">301</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">302</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">hdfs空文件</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hadoop fs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1151,6 +1151,22 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Jenkins</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">持续集成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">持续交付</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
@@ -1167,26 +1183,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jenkins</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">持续集成</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">持续交付</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Jumpserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">备机部署</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">分区</a>
               </li>
              
@@ -1199,7 +1195,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">分区热迁移</a>
+                <a href="javascript:void(0)" class="js-tag color1">Jumpserver</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">备机部署</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1208,6 +1208,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">KAFKA版本升级</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">分区热迁移</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1267,18 +1271,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">文件句柄</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">lsof</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">空间释放</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">限速方案</a>
               </li>
              
@@ -1299,6 +1291,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">文件句柄</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">lsof</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">空间释放</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">logstash</a>
               </li>
              
@@ -1312,6 +1316,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Mars</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">HDFS Shell</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1331,15 +1343,27 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Mars</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">HDFS Shell</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Hadoop</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">spark</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">tez</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">单用户模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">多用户模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">远程模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1364,26 +1388,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">机架感知</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">spark</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">tez</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">单用户模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">多用户模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">远程模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1423,15 +1427,27 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">yarn</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hive</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">HQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">yarn</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mongodb</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">mongodump</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mongorestore</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1455,15 +1471,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mongodb</a>
+                <a href="javascript:void(0)" class="js-tag color3">STARTUP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">mongodump</a>
+                <a href="javascript:void(0)" class="js-tag color1">副本集成员</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mongorestore</a>
+                <a href="javascript:void(0)" class="js-tag color5">成员状态</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1483,15 +1499,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">STARTUP</a>
+                <a href="javascript:void(0)" class="js-tag color5">MongoDB集群</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">副本集成员</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">成员状态</a>
+                <a href="javascript:void(0)" class="js-tag color2">mongo集群管理维护</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1519,14 +1531,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">MongoDB集群</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mongo集群管理维护</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">MySQL主从切换</a>
               </li>
              
@@ -1535,19 +1539,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">MySQL主从复制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">全备还原</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">主从同步</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">主从复制监控</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">MySQL主从复制</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">全备还原</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1579,14 +1583,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">慢查询</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">mysqldumpslow</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">dba</a>
               </li>
              
@@ -1604,6 +1600,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">MySQL多实例远程登陆</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">慢查询</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">mysqldumpslow</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1643,14 +1647,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ntp</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">upstream</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">proxy-set-header</a>
               </li>
              
@@ -1663,15 +1659,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">favicon.ico</a>
+                <a href="javascript:void(0)" class="js-tag color4">upstream</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">access</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">log</a>
+                <a href="javascript:void(0)" class="js-tag color4">ntp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1688,6 +1680,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">垃圾UA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">favicon.ico</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">access</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">log</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1727,6 +1731,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Glance</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">openstack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">PHP</a>
               </li>
              
@@ -1739,11 +1751,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Glance</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">openstack</a>
+                <a href="javascript:void(0)" class="js-tag color4">Keystone</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1756,10 +1764,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">OpenStack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Keystone</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1795,23 +1799,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">RAID5</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">parted</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">fdisk</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">RAID5</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">阵列卡</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">缓存</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1835,6 +1831,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">阵列卡</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">缓存</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">rabbitmq</a>
               </li>
              
@@ -1855,15 +1859,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">NTP时间同步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NAT</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">双线</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">NTP时间同步</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1955,6 +1959,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">YARN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">NodeManager</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">udp</a>
               </li>
              
@@ -1972,14 +1984,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">GFW</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">YARN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">NodeManager</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2015,10 +2019,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">rrdtool</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">微信</a>
               </li>
              
@@ -2027,11 +2027,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">weathermap</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">plugin</a>
+                <a href="javascript:void(0)" class="js-tag color3">rrdtool</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2044,6 +2040,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">将Bites转换为Mbits</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">weathermap</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">plugin</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">脚本</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2071,7 +2079,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">脚本</a>
+                <a href="javascript:void(0)" class="js-tag color1">socket.gaierror</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2080,10 +2088,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">socket.gaierror</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2131,14 +2135,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">wget</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">curl请求url不使用缓存</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">unix</a>
               </li>
              
@@ -2155,7 +2151,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">wget</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">curl请求url不使用缓存</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">docker机制</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">exit退出码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2172,14 +2184,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">emerge命令</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">exit退出码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2215,18 +2219,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">磁盘挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">fstab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">开机挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">gentoo</a>
               </li>
              
@@ -2236,6 +2228,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">install</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">磁盘挂载</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">fstab</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">开机挂载</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2267,10 +2271,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hadoop用户</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">fs</a>
               </li>
              
@@ -2283,6 +2283,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">hadoop用户</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">sersync</a>
               </li>
              
@@ -2292,6 +2296,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">实时同步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell脚本</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ip自动配置</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2311,18 +2323,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell脚本</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ip自动配置</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">jumpserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">topic</a>
               </li>
              
@@ -2331,23 +2331,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">keepalived</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LVS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">多实例</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">双主</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">脑裂</a>
+                <a href="javascript:void(0)" class="js-tag color1">jumpserver</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2368,6 +2352,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">nopasswd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">keepalived</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">LVS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">多实例</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">双主</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">脑裂</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2395,10 +2399,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">dd</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">rm恢复</a>
               </li>
              
@@ -2415,23 +2415,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">dd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统备份</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统恢复</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Logstash</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Tomcat</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2444,6 +2436,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">rubydebug</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Logstash</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Tomcat</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2463,6 +2467,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">mongod</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">二进制版</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">mariadb主从</a>
               </li>
              
@@ -2476,14 +2488,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">主从复制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mongod</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">二进制版</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2503,11 +2507,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">主从复制错误</a>
+                <a href="javascript:void(0)" class="js-tag color5">主键错误</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">主键错误</a>
+                <a href="javascript:void(0)" class="js-tag color2">主从复制错误</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2516,14 +2520,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">同步个别库</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mysql slave</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">relay log</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2539,7 +2535,39 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">mysql slave</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">relay log</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">root远程登录</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">优化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">socket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ulimit</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">tcp_nopush</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">tcp_nodelay</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2603,38 +2631,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">优化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">socket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ulimit</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">tcp_nopush</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">tcp_nodelay</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">uri</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">屏蔽接口</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Ddos</a>
               </li>
              
@@ -2647,11 +2643,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">proxy cache</a>
+                <a href="javascript:void(0)" class="js-tag color4">uri</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Nginx缓存清理</a>
+                <a href="javascript:void(0)" class="js-tag color5">屏蔽接口</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2660,6 +2656,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">443</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">proxy cache</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Nginx缓存清理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2683,18 +2687,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SOCKS5</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">proxychains</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">命令代理</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">ps</a>
               </li>
              
@@ -2704,6 +2696,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">进程运行时间</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">SOCKS5</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">proxychains</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">命令代理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2719,14 +2723,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">tar</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">crontab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">自重启</a>
               </li>
              
@@ -2735,11 +2731,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">rsync限速</a>
+                <a href="javascript:void(0)" class="js-tag color4">tar</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">bwlimit</a>
+                <a href="javascript:void(0)" class="js-tag color3">crontab</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2748,6 +2744,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">模板</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">rsync限速</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">bwlimit</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2760,6 +2764,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">zabbix_agent</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">salt-master高可用</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">salt-API</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">salt-ssh</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2791,18 +2807,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">salt-master高可用</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">salt-API</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">salt-ssh</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统瓶颈</a>
               </li>
              
@@ -2823,6 +2827,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">变量传参</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell传参</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">小数判断</a>
               </li>
              
@@ -2832,14 +2844,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">浮点数判断</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">变量传参</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell传参</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2871,6 +2875,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">expect</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Ros</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">FTP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">dsa</a>
               </li>
              
@@ -2887,15 +2903,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">expect</a>
+                <a href="javascript:void(0)" class="js-tag color1">supervisor</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Ros</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">FTP</a>
+                <a href="javascript:void(0)" class="js-tag color4">supervisorctl</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2908,14 +2920,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">pid</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">supervisor</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">supervisorctl</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2955,19 +2959,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">vim</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">中文乱码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">vmware</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">虚拟机克隆</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vim</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">中文乱码</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2983,10 +2987,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">告警</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">traceroute</a>
               </li>
              
@@ -2996,6 +2996,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">MTR</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">告警</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3023,6 +3027,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">zk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">触发器</a>
               </li>
              
@@ -3036,10 +3044,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">触发器表达式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">zk</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3059,11 +3063,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">云计算</a>
+                <a href="javascript:void(0)" class="js-tag color5">Rack</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Rack</a>
+                <a href="javascript:void(0)" class="js-tag color4">云计算</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3079,6 +3083,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CDN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">IM</a>
               </li>
              
@@ -3088,18 +3096,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">开源IM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CDN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">jq</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">筛选大于某个值的数据到文件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3123,11 +3119,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">taskset</a>
+                <a href="javascript:void(0)" class="js-tag color3">jq</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">PID</a>
+                <a href="javascript:void(0)" class="js-tag color4">筛选大于某个值的数据到文件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3139,15 +3135,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">zerotier</a>
+                <a href="javascript:void(0)" class="js-tag color3">taskset</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">内网穿透</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">全球畅联</a>
+                <a href="javascript:void(0)" class="js-tag color4">PID</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3171,7 +3163,31 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">zerotier</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">内网穿透</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">全球畅联</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">RocketMQ</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">分布式消息队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nameserver</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">brokerserver</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3191,39 +3207,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">分布式消息队列</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">nameserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">brokerserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">外部命令</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">内部命令</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">只读模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">fatab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mount</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">remount</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3243,19 +3231,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OpenSSL</a>
+                <a href="javascript:void(0)" class="js-tag color5">只读模式</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">CA</a>
+                <a href="javascript:void(0)" class="js-tag color1">fatab</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SSL证书</a>
+                <a href="javascript:void(0)" class="js-tag color1">mount</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">csr</a>
+                <a href="javascript:void(0)" class="js-tag color3">remount</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3272,6 +3260,22 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">免交互</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">OpenSSL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">CA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">SSL证书</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">csr</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3299,6 +3303,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">SHELL编程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">kill</a>
               </li>
              
@@ -3311,7 +3319,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">SHELL编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">Yum源</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3320,10 +3328,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Shell脚本</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Yum源</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3343,15 +3347,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">consumer</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">内存</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">使用率</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">consumer</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3455,6 +3459,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">flock</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LVS连接数监控</a>
               </li>
              
@@ -3468,10 +3476,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">InActConn</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">flock</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3647,6 +3651,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">autostart</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">libvert</a>
               </li>
              
@@ -3656,10 +3664,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">动态迁移</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">autostart</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3815,6 +3819,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">lvs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">4层负载均衡</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">DR模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">LNMP</a>
               </li>
              
@@ -3832,18 +3848,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">mysql数据库迁移</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">lvs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">4层负载均衡</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">DR模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3903,15 +3907,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">pass_proxy</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">htpasswd</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">日志切割</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">pass_proxy</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4211,15 +4215,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">磁盘</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">awk数组</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">磁盘管理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">磁盘</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4255,19 +4259,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">redis cluster</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">ssdb</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">LevelDB</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">redis cluster</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4311,14 +4315,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">codis集群</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">memcache</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">GlusterFS</a>
               </li>
              
@@ -4328,6 +4324,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NAS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">codis集群</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">memcache</a>
               </li>
              
               <li class="article-tag-list-item">

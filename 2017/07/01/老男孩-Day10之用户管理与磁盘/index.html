@@ -6,22 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://garywu520.github.io/blog">
-  <title>老男孩-Day10之用户管理与磁盘 | Hexo</title>
+  <title>老男孩-Day10之用户管理与磁盘 | Gary Wu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="用户管理123/etc/passwd    倒数第二列表示用户宿主目录；最后一列表示用户所使用的shell(即命令解释器)注：如果想把某个用户配置为傀儡用户（不能登录），对应用户shell需要改为/sbin/nologin/etc/skel   作用：该目录存放着新用户默认环境变量等配置文件。">
 <meta name="keywords" content="Linux基础,用户管理,磁盘">
 <meta property="og:type" content="article">
 <meta property="og:title" content="老男孩-Day10之用户管理与磁盘">
 <meta property="og:url" content="https://garywu520.github.io/blog/2017/07/01/老男孩-Day10之用户管理与磁盘/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Gary Wu">
 <meta property="og:description" content="用户管理123/etc/passwd    倒数第二列表示用户宿主目录；最后一列表示用户所使用的shell(即命令解释器)注：如果想把某个用户配置为傀儡用户（不能登录），对应用户shell需要改为/sbin/nologin/etc/skel   作用：该目录存放着新用户默认环境变量等配置文件。">
-<meta property="og:locale" content="default">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2017-07-05T12:20:51.704Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="老男孩-Day10之用户管理与磁盘">
 <meta name="twitter:description" content="用户管理123/etc/passwd    倒数第二列表示用户宿主目录；最后一列表示用户所使用的shell(即命令解释器)注：如果想把某个用户配置为傀儡用户（不能登录），对应用户shell需要改为/sbin/nologin/etc/skel   作用：该目录存放着新用户默认环境变量等配置文件。">
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="Gary Wu" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -47,12 +47,14 @@
 <div class="overlay" style="background: #4d4d4d"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
-		<a href="/blog/" class="profilepic">
-			<img src="https://raw.githubusercontent.com/discant520/garywu/master/images/touxiang.jpg" class="js-avatar">
+		<a href="/blog" class="profilepic">
+			<img src="http://pics0.baidu.com/feed/bd315c6034a85edf5f5b8bff8cf9cf27df54754d.png?token=c9857ef7ee73e1ffc14d3e3c4e9e3be3&amp;s=1E5207CAC64234F44988148A0300B090" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/blog/">John Doe</a></h1>
+		  <h1 class="header-author"><a href="/blog">Gary Wu</a></h1>
 		</hgroup>
+		
+		<p class="header-subtitle">运维架构师 - 从入门到放弃</p>
 		
 
 		<nav class="header-menu">
@@ -106,11 +108,13 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="https://raw.githubusercontent.com/discant520/garywu/master/images/touxiang.jpg" class="js-avatar">
+				<img src="http://pics0.baidu.com/feed/bd315c6034a85edf5f5b8bff8cf9cf27df54754d.png?token=c9857ef7ee73e1ffc14d3e3c4e9e3be3&amp;s=1E5207CAC64234F44988148A0300B090" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">John Doe</h1>
+			  <h1 class="header-author js-header-author">Gary Wu</h1>
 			</hgroup>
+			
+			<p class="header-subtitle"><i class="icon icon-quo-left"></i>运维架构师 - 从入门到放弃<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -185,45 +189,45 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="用户管理"><a href="#用户管理" class="headerlink" title="用户管理"></a>用户管理</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/etc/passwd    倒数第二列表示用户宿主目录；最后一列表示用户所使用的shell(即命令解释器)</span><br><span class="line">注：如果想把某个用户配置为傀儡用户（不能登录），对应用户shell需要改为/sbin/nologin</span><br><span class="line">/etc/skel   作用：该目录存放着新用户默认环境变量等配置文件。</span><br></pre></td></tr></table></figure>
+        <h3 id="用户管理"><a href="#用户管理" class="headerlink" title="用户管理"></a>用户管理</h3><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/etc/passwd    倒数第二列表示用户宿主目录；最后一列表示用户所使用的<span class="keyword">shell</span><span class="bash">(即命令解释器)</span></span><br><span class="line">注：如果想把某个用户配置为傀儡用户（不能登录），对应用户<span class="keyword">shell</span><span class="bash">需要改为/sbin/nologin</span></span><br><span class="line">/etc/skel   作用：该目录存放着新用户默认环境变量等配置文件。</span><br></pre></td></tr></table></figure>
 
 <a id="more"></a>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/etc/default/useradd  该文件定义了新用户的家目录、默认shell等参数。</span><br><span class="line">/etc/login.defs   该文件定义了新建目录或文件默认权限、添加用户是否创建家目录等。 </span><br><span class="line"></span><br><span class="line">ls -lrt ./old*     最新文件显示到最下方（排序）</span><br></pre></td></tr></table></figure>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">/etc/default/useradd</span>  该文件定义了新用户的家目录、默认shell等参数。</span><br><span class="line"><span class="string">/etc/login.defs</span>   该文件定义了新建目录或文件默认权限、添加用户是否创建家目录等。 </span><br><span class="line"></span><br><span class="line"><span class="keyword">ls</span> -lrt <span class="string">./old</span>*     最新文件显示到最下方（排序）</span><br></pre></td></tr></table></figure>
 
-<h6 id="“-bash-4-1-”-案例"><a href="#“-bash-4-1-”-案例" class="headerlink" title="“-bash-4.1$” 案例"></a>“-bash-4.1$” 案例</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">现象: 以某个用户登录系统后，出现</span><br><span class="line">-bash-4.1$ </span><br><span class="line">-bash-4.1$ </span><br><span class="line"></span><br><span class="line">原因：这个用户家目录下的环境变量文件（ .bashrc 和.bash_profile）被删除了。</span><br><span class="line"></span><br><span class="line">解决方案：</span><br><span class="line">从/etc/skel目录，把被删除的.bashrc和.bash_profile恢复，然后重新登录进入</span><br><span class="line">cp /etc/skel/.bash* ~</span><br></pre></td></tr></table></figure>
+<h6 id="“-bash-4-1-”-案例"><a href="#“-bash-4-1-”-案例" class="headerlink" title="“-bash-4.1$” 案例"></a>“-bash-4.1$” 案例</h6><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">现象: 以某个用户登录系统后，出现</span><br><span class="line">-<span class="keyword">bash-4.1$ </span></span><br><span class="line">-<span class="keyword">bash-4.1$ </span></span><br><span class="line"></span><br><span class="line">原因：这个用户家目录下的环境变量文件（ .<span class="keyword">bashrc </span>和.<span class="keyword">bash_profile）被删除了。</span></span><br><span class="line"><span class="keyword"></span></span><br><span class="line"><span class="keyword">解决方案：</span></span><br><span class="line"><span class="keyword">从/etc/skel目录，把被删除的.bashrc和.bash_profile恢复，然后重新登录进入</span></span><br><span class="line"><span class="keyword">cp </span>/etc/skel/.<span class="keyword">bash* </span>~</span><br></pre></td></tr></table></figure>
 
-<h6 id="添加用户"><a href="#添加用户" class="headerlink" title="添加用户"></a>添加用户</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">useradd  -g  指定用户组</span><br><span class="line">useradd  -u  指定用户uid (一般傀儡用户uid范围：1-499)</span><br><span class="line">useradd  -s  指定用户使用的shell</span><br><span class="line">useradd  -M  不创建家目录</span><br><span class="line">useradd  -c   给用户添加说明信息</span><br><span class="line">示例：usermod -c &quot;傀儡用户&quot; www1</span><br><span class="line">www1:x:12306:12306:傀儡用户:/home/www1:/sbin/nologin</span><br><span class="line"></span><br><span class="line">示例：添加一个用户www 指定uid为888，禁止用户登录系统，不创建家目录</span><br><span class="line">useradd -u 888 -s /sbin/nologin  -M www</span><br><span class="line">检查：id  www</span><br><span class="line">     ls -ld /home/www</span><br></pre></td></tr></table></figure>
+<h6 id="添加用户"><a href="#添加用户" class="headerlink" title="添加用户"></a>添加用户</h6><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">useradd  -g  指定用户组</span><br><span class="line">useradd  -u  指定用户uid (一般傀儡用户uid范围：<span class="number">1</span>-<span class="number">499</span>)</span><br><span class="line">useradd  -s  指定用户使用的shell</span><br><span class="line">useradd  -M  不创建家目录</span><br><span class="line">useradd  -c   给用户添加说明信息</span><br><span class="line">示例：usermod -c <span class="string">"傀儡用户"</span> www1</span><br><span class="line"><span class="symbol">www1:</span><span class="symbol">x:</span><span class="number">12306</span><span class="symbol">:</span><span class="number">12306</span><span class="symbol">:</span>傀儡用户<span class="symbol">:/home/www1</span><span class="symbol">:/sbin/nologin</span></span><br><span class="line"></span><br><span class="line">示例：添加一个用户www 指定uid为<span class="number">888</span>，禁止用户登录系统，不创建家目录</span><br><span class="line">useradd -u <span class="number">888</span> -s /sbin/nologin  -M www</span><br><span class="line">检查：id  www</span><br><span class="line">     ls -ld /home/www</span><br></pre></td></tr></table></figure>
 
-<h6 id="删除用户"><a href="#删除用户" class="headerlink" title="删除用户"></a>删除用户</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">方法1（推荐）：</span><br><span class="line">       vim /etc/passwd  给指定用户添加注释。</span><br><span class="line">       #www:x:888:888::/home/www:/sbin/nologin</span><br><span class="line">       </span><br><span class="line">方法2: </span><br><span class="line">       userdel www   默认不删除用户家目录</span><br><span class="line">       userdel -r www    连窝端</span><br></pre></td></tr></table></figure>
+<h6 id="删除用户"><a href="#删除用户" class="headerlink" title="删除用户"></a>删除用户</h6><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">方法<span class="selector-tag">1</span>（推荐）：</span><br><span class="line">       <span class="selector-tag">vim</span> /<span class="selector-tag">etc</span>/<span class="selector-tag">passwd</span>  给指定用户添加注释。</span><br><span class="line">       <span class="selector-id">#www</span><span class="selector-pseudo">:x</span><span class="selector-pseudo">:888</span><span class="selector-pseudo">:888</span>::/<span class="selector-tag">home</span>/<span class="selector-tag">www</span>:/<span class="selector-tag">sbin</span>/<span class="selector-tag">nologin</span></span><br><span class="line">       </span><br><span class="line">方法<span class="selector-tag">2</span>: </span><br><span class="line">       <span class="selector-tag">userdel</span> <span class="selector-tag">www</span>   默认不删除用户家目录</span><br><span class="line">       <span class="selector-tag">userdel</span> <span class="selector-tag">-r</span> <span class="selector-tag">www</span>    连窝端</span><br></pre></td></tr></table></figure>
 
-<h6 id="修改用户"><a href="#修改用户" class="headerlink" title="修改用户"></a>修改用户</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">usermod  -s   修改用户使用的shell</span><br><span class="line">usermod  -g   修改用户所属的组</span><br></pre></td></tr></table></figure>
+<h6 id="修改用户"><a href="#修改用户" class="headerlink" title="修改用户"></a>修改用户</h6><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">usermod  -s   修改用户使用的<span class="keyword">shell</span><span class="bash"></span></span><br><span class="line"><span class="bash">usermod  -g   修改用户所属的组</span></span><br></pre></td></tr></table></figure>
 
-<h6 id="passwd命令的-–stdin参数-只能root用户使用此命令"><a href="#passwd命令的-–stdin参数-只能root用户使用此命令" class="headerlink" title="passwd命令的 –stdin参数(只能root用户使用此命令)"></a>passwd命令的 –stdin参数(只能root用户使用此命令)</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">passwd --stdin username  非交互式设置密码或理解为从管道中获取密码</span><br><span class="line"></span><br><span class="line">示例：</span><br><span class="line">[root@oldboy202 ~]# echo &quot;1QAZ2wsx&quot; |passwd --stdin oldgirl</span><br><span class="line">Changing password for user oldgirl.</span><br><span class="line">passwd: all authentication tokens updated successfully.</span><br><span class="line"></span><br><span class="line">除此之外，还需要清理历史记录。 history -c</span><br></pre></td></tr></table></figure>
+<h6 id="passwd命令的-–stdin参数-只能root用户使用此命令"><a href="#passwd命令的-–stdin参数-只能root用户使用此命令" class="headerlink" title="passwd命令的 –stdin参数(只能root用户使用此命令)"></a>passwd命令的 –stdin参数(只能root用户使用此命令)</h6><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">passwd --stdin username  非交互式设置密码或理解为从管道中获取密码</span><br><span class="line"></span><br><span class="line">示例：</span><br><span class="line">[root@oldboy202 ~]# echo <span class="string">"1QAZ2wsx"</span> |passwd --stdin oldgirl</span><br><span class="line">Changing password <span class="keyword">for</span><span class="built_in"> user </span>oldgirl.</span><br><span class="line">passwd: all authentication tokens updated successfully.</span><br><span class="line"></span><br><span class="line">除此之外，还需要清理历史记录。 history -c</span><br></pre></td></tr></table></figure>
 
-<h6 id="企业场景"><a href="#企业场景" class="headerlink" title="企业场景"></a>企业场景</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">1. 密码至少12位以上</span><br><span class="line">   密码保存工具：keepass、lastpass</span><br><span class="line">   </span><br><span class="line">2. 安全措施</span><br><span class="line">   (1)/var/log/secure日志分析:failure</span><br><span class="line">   </span><br><span class="line">   (2)给文件添加指纹</span><br><span class="line">      md5sum filename &gt;&gt;check.md5</span><br><span class="line">      echo &quot;111&quot; &gt;&gt; filename</span><br><span class="line">      md5sum -c check.md5</span><br></pre></td></tr></table></figure>
+<h6 id="企业场景"><a href="#企业场景" class="headerlink" title="企业场景"></a>企业场景</h6><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>. 密码至少<span class="number">12</span>位以上</span><br><span class="line">   密码保存工具：keepass、lastpass</span><br><span class="line">   </span><br><span class="line"><span class="number">2</span>. 安全措施</span><br><span class="line">   (<span class="number">1</span>)/var/log/secure日志分析<span class="symbol">:failure</span></span><br><span class="line">   </span><br><span class="line">   (<span class="number">2</span>)给文件添加指纹</span><br><span class="line">      md5sum filename <span class="meta">&gt;&gt;</span>check.md5</span><br><span class="line">      echo <span class="string">"111"</span> <span class="meta">&gt;&gt; </span>filename</span><br><span class="line">      md5sum -c check.md5</span><br></pre></td></tr></table></figure>
 
-<h6 id="用户查询-命令"><a href="#用户查询-命令" class="headerlink" title="用户查询-命令"></a>用户查询-命令</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">id     查看用户uid、gid、用户所属组等信息，也可以判断某个用户是否存在</span><br><span class="line">w      显示已经远程登陆的用户以及在干什么，以及系统运行了多久，系统平均负载</span><br><span class="line">uptime 显示系统时间</span><br></pre></td></tr></table></figure>
+<h6 id="用户查询-命令"><a href="#用户查询-命令" class="headerlink" title="用户查询-命令"></a>用户查询-命令</h6><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">id</span>     查看用户uid、gid、用户所属组等信息，也可以判断某个用户是否存在</span><br><span class="line">w      显示已经远程登陆的用户以及在干什么，以及系统运行了多久，系统平均负载</span><br><span class="line">uptime 显示系统时间</span><br></pre></td></tr></table></figure>
 
-<h6 id="sudo"><a href="#sudo" class="headerlink" title="sudo"></a>sudo</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">普通用户没有权限执行root命令，这时候需要使用sudo</span><br><span class="line">[oldboy@oldboy202 ~]$sudo -l   查看当前用户有哪些sudo权限</span><br><span class="line">[oldboy@oldboy202 ~]$ls /root</span><br><span class="line">ls: cannot open directory /root: Permission denied</span><br><span class="line"></span><br><span class="line">解决方案：</span><br><span class="line">root编辑 visudo， 91gg定位到如下行并添加：</span><br><span class="line">92 oldboy  ALL=(ALL)       /bin/ls,/usr/sbin/useradd     让普通用户具有ls和添加用户权限</span><br><span class="line">93 oldboy  ALL=(ALL)       /sbin/*         授权sbin目录下的所有命令（慎用）</span><br><span class="line">94 oldboy  ALL=(ALL)   /bin/*, !/bin/rm    授权/bin下的所有命令（除了rm）</span><br><span class="line"></span><br><span class="line">注：添加多个命令，中间使用英文的逗号&quot;,&quot; </span><br><span class="line">vimsudo命令等同于vim /etc/sudoers</span><br></pre></td></tr></table></figure>
+<h6 id="sudo"><a href="#sudo" class="headerlink" title="sudo"></a>sudo</h6><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">普通用户没有权限执行root命令，这时候需要使用sudo</span><br><span class="line">[oldboy@oldboy202 ~]$sudo -l   查看当前用户有哪些sudo权限</span><br><span class="line">[oldboy@oldboy202 ~]$<span class="keyword">ls</span> <span class="string">/root</span></span><br><span class="line"><span class="keyword">ls</span>: cannot open directory <span class="string">/root</span>: Permission denied</span><br><span class="line"></span><br><span class="line">解决方案：</span><br><span class="line">root编辑 visudo， 91gg定位到如下行并添加：</span><br><span class="line">92 oldboy  ALL=<span class="params">(ALL)</span>       <span class="string">/bin/ls</span>,<span class="string">/usr/sbin/useradd</span>     让普通用户具有<span class="keyword">ls</span>和添加用户权限</span><br><span class="line">93 oldboy  ALL=<span class="params">(ALL)</span>       <span class="string">/sbin/</span>*         授权sbin目录下的所有命令（慎用）</span><br><span class="line">94 oldboy  ALL=<span class="params">(ALL)</span>   <span class="string">/bin/</span>*, !<span class="string">/bin/rm</span>    授权<span class="string">/bin</span>下的所有命令（除了rm）</span><br><span class="line"></span><br><span class="line">注：添加多个命令，中间使用英文的逗号<span class="string">","</span> </span><br><span class="line">vimsudo命令等同于vim <span class="string">/etc/sudoers</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">运维人员可以这样赋权：</span><br><span class="line"></span><br><span class="line"># visudo</span><br><span class="line">oldboy  ALL=(ALL)  NOPASSWD:ALL   给予用户所有权限，且不需要密码。</span><br><span class="line"></span><br><span class="line">切换到root用户</span><br><span class="line">sudo su -</span><br></pre></td></tr></table></figure>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">运维人员可以这样赋权：</span><br><span class="line"></span><br><span class="line"># visudo</span><br><span class="line">oldboy  <span class="keyword">ALL</span>=(<span class="keyword">ALL</span>)  NOPASSWD:<span class="keyword">ALL</span>   给予用户所有权限，且不需要密码。</span><br><span class="line"></span><br><span class="line">切换到root用户</span><br><span class="line">sudo su -</span><br></pre></td></tr></table></figure>
 
-<h6 id="行为-审计系统-堡垒机-跳板机"><a href="#行为-审计系统-堡垒机-跳板机" class="headerlink" title="行为/审计系统-堡垒机/跳板机"></a>行为/审计系统-堡垒机/跳板机</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. 齐治堡垒机（硬件）</span><br><span class="line">2. jumpserver跳板机</span><br><span class="line">3. gateone web跳板机</span><br><span class="line">4. Alex写的 crazyEYE</span><br></pre></td></tr></table></figure>
+<h6 id="行为-审计系统-堡垒机-跳板机"><a href="#行为-审计系统-堡垒机-跳板机" class="headerlink" title="行为/审计系统-堡垒机/跳板机"></a>行为/审计系统-堡垒机/跳板机</h6><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">1. </span>齐治堡垒机（硬件）</span><br><span class="line"><span class="bullet">2. </span>jumpserver跳板机</span><br><span class="line"><span class="bullet">3. </span>gateone web跳板机</span><br><span class="line"><span class="bullet">4. </span>Alex写的 crazyEYE</span><br></pre></td></tr></table></figure>
 
-<h6 id="chkconfig脚本开机自启动"><a href="#chkconfig脚本开机自启动" class="headerlink" title="chkconfig脚本开机自启动"></a>chkconfig脚本开机自启动</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/init.d/hostnamed</span><br><span class="line">    #!/bin/bash</span><br><span class="line">    # chkconfig: 2345 99 99      2345表示运行级别；两个99分别表示开机顺序和关机循序</span><br><span class="line">    # descrption: This is a cripts.  注释信息</span><br><span class="line">    hostname</span><br><span class="line">    </span><br><span class="line">chmod +x /etc/init.d/oldboyd</span><br><span class="line">chkconfig --add oldboyd</span><br><span class="line">chkconfig oldboyd on</span><br></pre></td></tr></table></figure>
+<h6 id="chkconfig脚本开机自启动"><a href="#chkconfig脚本开机自启动" class="headerlink" title="chkconfig脚本开机自启动"></a>chkconfig脚本开机自启动</h6><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/init.d/hostnamed</span><br><span class="line">    <span class="comment">#!/bin/bash</span></span><br><span class="line">    <span class="comment"># chkconfig: 2345 99 99      2345表示运行级别；两个99分别表示开机顺序和关机循序</span></span><br><span class="line">    <span class="comment"># descrption: This is a cripts.  注释信息</span></span><br><span class="line">    hostname</span><br><span class="line">    </span><br><span class="line">chmod +x /etc/init.d/oldboyd</span><br><span class="line">chkconfig <span class="comment">--add oldboyd</span></span><br><span class="line">chkconfig oldboyd <span class="keyword">on</span></span><br></pre></td></tr></table></figure>
 
-<h6 id="sed命令回顾"><a href="#sed命令回顾" class="headerlink" title="sed命令回顾"></a>sed命令回顾</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">sed 显示行</span><br><span class="line">sed -n &apos;1p&apos; filename      显示第一行</span><br><span class="line">sed -n &apos;1,5p&apos; filename    显示1-5行</span><br><span class="line">sed -n &apos;1p;5p;10p&apos; filename 显示第1行、第5行、第10行</span><br><span class="line">sed -n &apos;$p&apos;   显示文件最后一行</span><br><span class="line"></span><br><span class="line">删除</span><br><span class="line">sed &apos;/oldboy/d&apos; filename</span><br><span class="line"></span><br><span class="line">查找</span><br><span class="line">sed -n &apos;/oldboy/p&apos; filename  查找字符串</span><br><span class="line"></span><br><span class="line">sed通用方法1：  sed -r &apos;/找谁/s#找谁#替换谁#g&apos;  filename </span><br><span class="line">sed通用方法2：  sed -ri &apos;1,5s#找谁#替换成谁#g&apos; filename   （替换1-5行的某些内容,-r支持扩展正则）</span><br><span class="line">比如：sed -ri &apos;1,5s#oldboy#oldgirl#g&apos; filename   替换第一行到第5行的oldboy为oldgirl</span><br><span class="line"></span><br><span class="line">注：1. sed修改文件内容的时候需要提前备份。</span><br><span class="line">    2. sed -i 一定要放在最后，比如：sed -ri &apos;//s###g&apos; filename</span><br><span class="line">    3.使用-i参数时，禁止加上 -n参数（s###g后面也不能加p），否则除了修改的行之外，其他内容均会丢失。</span><br></pre></td></tr></table></figure>
+<h6 id="sed命令回顾"><a href="#sed命令回顾" class="headerlink" title="sed命令回顾"></a>sed命令回顾</h6><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">sed 显示行</span><br><span class="line">sed -n '<span class="number">1</span>p' filename      显示第一行</span><br><span class="line">sed -n '<span class="number">1</span>,<span class="number">5</span>p' filename    显示<span class="number">1</span><span class="number">-5</span>行</span><br><span class="line">sed -n '<span class="number">1</span>p;<span class="number">5</span>p;<span class="number">10</span>p' filename 显示第<span class="number">1</span>行、第<span class="number">5</span>行、第<span class="number">10</span>行</span><br><span class="line">sed -n '$p'   显示文件最后一行</span><br><span class="line"></span><br><span class="line">删除</span><br><span class="line">sed '/oldboy/d' filename</span><br><span class="line"></span><br><span class="line">查找</span><br><span class="line">sed -n '/oldboy/p' filename  查找字符串</span><br><span class="line"></span><br><span class="line">sed通用方法<span class="number">1</span>：  sed -r '/找谁/s#找谁#替换谁#g'  filename </span><br><span class="line">sed通用方法<span class="number">2</span>：  sed -ri '<span class="number">1</span>,<span class="number">5</span>s#找谁#替换成谁#g' filename   （替换<span class="number">1</span><span class="number">-5</span>行的某些内容,-r支持扩展正则）</span><br><span class="line">比如：sed -ri '<span class="number">1</span>,<span class="number">5</span>s#oldboy#oldgirl#g' filename   替换第一行到第<span class="number">5</span>行的oldboy为oldgirl</span><br><span class="line"></span><br><span class="line">注：<span class="number">1.</span> sed修改文件内容的时候需要提前备份。</span><br><span class="line">    <span class="number">2.</span> sed -i 一定要放在最后，比如：sed -ri '<span class="comment">//s###g' filename</span></span><br><span class="line">    <span class="number">3.</span>使用-i参数时，禁止加上 -n参数（s###g后面也不能加p），否则除了修改的行之外，其他内容均会丢失。</span><br></pre></td></tr></table></figure>
 
-<h3 id="磁盘"><a href="#磁盘" class="headerlink" title="磁盘"></a>磁盘</h3><h6 id="buffers与cache"><a href="#buffers与cache" class="headerlink" title="buffers与cache"></a>buffers与cache</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># free -m</span><br><span class="line">Linux特点：把不用的内存临时作为了buffers和cache</span><br><span class="line">内存实际剩余= free+buffers+cached</span><br><span class="line"></span><br><span class="line">Linux把我的内存吃掉了：http://www.linuxatemyram.com/</span><br></pre></td></tr></table></figure>
+<h3 id="磁盘"><a href="#磁盘" class="headerlink" title="磁盘"></a>磁盘</h3><h6 id="buffers与cache"><a href="#buffers与cache" class="headerlink" title="buffers与cache"></a>buffers与cache</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># free -m</span></span><br><span class="line">Linux特点：把不用的内存临时作为了buffers和cache</span><br><span class="line">内存实际剩余= <span class="built_in">free</span>+buffers+cached</span><br><span class="line"></span><br><span class="line">Linux把我的内存吃掉了：http:<span class="comment">//www.linuxatemyram.com/</span></span><br></pre></td></tr></table></figure>
 
-<h6 id="CDN"><a href="#CDN" class="headerlink" title="CDN"></a>CDN</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CDN</span><br><span class="line">1.尽量让用户访问读取缓存（每个地方的缓存）</span><br><span class="line">2.尽量根据用户的所在位置 让用户就近访问缓存 --提高用户的访问速度</span><br></pre></td></tr></table></figure>
+<h6 id="CDN"><a href="#CDN" class="headerlink" title="CDN"></a>CDN</h6><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CDN</span><br><span class="line"><span class="number">1.</span>尽量让用户访问读取缓存（每个地方的缓存）</span><br><span class="line"><span class="number">2.</span>尽量根据用户的所在位置 让用户就近访问缓存 --提高用户的访问速度</span><br></pre></td></tr></table></figure>
 
-<h6 id="Linux计算器"><a href="#Linux计算器" class="headerlink" title="Linux计算器"></a>Linux计算器</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">方法1【推荐】：AWK </span><br><span class="line">[root@oldboy202 ~]# awk &apos;BEGIN&#123;print 10*25.7+3&#125;&apos;</span><br><span class="line">260</span><br><span class="line">计算结果准确，可以出现小数</span><br><span class="line"></span><br><span class="line">方法2：python</span><br><span class="line"># python</span><br><span class="line">3.0/10</span><br><span class="line">0.29999999999999999</span><br><span class="line">&gt;&gt;&gt; </span><br><span class="line"></span><br><span class="line">方法3：echo $((10/3))    只能是整数计算</span><br></pre></td></tr></table></figure>
+<h6 id="Linux计算器"><a href="#Linux计算器" class="headerlink" title="Linux计算器"></a>Linux计算器</h6><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">方法<span class="number">1</span>【推荐】：AWK </span><br><span class="line">[root@oldboy202 ~]# awk 'BEGIN&#123;print <span class="number">10</span>*<span class="number">25.7</span>+<span class="number">3</span>&#125;'</span><br><span class="line"><span class="number">260</span></span><br><span class="line">计算结果准确，可以出现小数</span><br><span class="line"></span><br><span class="line">方法<span class="number">2</span>：python</span><br><span class="line"># python</span><br><span class="line"><span class="number">3.0</span>/<span class="number">10</span></span><br><span class="line"><span class="number">0.29999999999999999</span></span><br><span class="line">&gt;&gt;&gt; </span><br><span class="line"></span><br><span class="line">方法<span class="number">3</span>：echo $((<span class="number">10</span>/<span class="number">3</span>))    只能是整数计算</span><br></pre></td></tr></table></figure>
 
-<h6 id="买一个块硬盘-500G-但是实际格式化后不到500G，为什么？"><a href="#买一个块硬盘-500G-但是实际格式化后不到500G，为什么？" class="headerlink" title="买一个块硬盘 500G, 但是实际格式化后不到500G，为什么？"></a>买一个块硬盘 500G, 但是实际格式化后不到500G，为什么？</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1. 在计算机中GB、MB、KB 默认是按照1024为单位的</span><br><span class="line">2. 生产硬盘的厂商是按照1000为单位进行计算，所以会出现不足500G</span><br></pre></td></tr></table></figure>
+<h6 id="买一个块硬盘-500G-但是实际格式化后不到500G，为什么？"><a href="#买一个块硬盘-500G-但是实际格式化后不到500G，为什么？" class="headerlink" title="买一个块硬盘 500G, 但是实际格式化后不到500G，为什么？"></a>买一个块硬盘 500G, 但是实际格式化后不到500G，为什么？</h6><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> 在计算机中GB、MB、KB 默认是按照<span class="number">1024</span>为单位的</span><br><span class="line"><span class="number">2.</span> 生产硬盘的厂商是按照<span class="number">1000</span>为单位进行计算，所以会出现不足<span class="number">500</span>G</span><br></pre></td></tr></table></figure>
 
-<h6 id="批量添加10个用户，并将用户密码改为随机8位字符"><a href="#批量添加10个用户，并将用户密码改为随机8位字符" class="headerlink" title="批量添加10个用户，并将用户密码改为随机8位字符"></a>批量添加10个用户，并将用户密码改为随机8位字符</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">预备知识：</span><br><span class="line">[root@oldboy202 ~]# echo 123456 |sed -r &apos;s#.*#&lt;&amp;&gt;#g&apos;      找到的内容，全部放到&amp;位置</span><br><span class="line">&lt;123456&gt;</span><br><span class="line">[root@oldboy202 ~]# echo 123456 |sed -r &apos;s#[0-9]+#&lt;&amp;&gt;#g&apos;    找到的内容，全部放到&amp;位置</span><br><span class="line">&lt;123456&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">1. 先确定目标: useradd stu01;echo 123456 |passwd --stdin stu01</span><br><span class="line"></span><br><span class="line">2. 拼接这种命令，然后交给bash执行</span><br><span class="line"></span><br><span class="line">第一步：</span><br><span class="line">echo stu&#123;01..5&#125; |xargs -n1     排成一列</span><br><span class="line">echo stu&#123;01..5&#125; |tr &quot; &quot; &quot;\n&quot;   把空格替换为换行</span><br><span class="line"></span><br><span class="line">第二步：匹配.*的内容，放到&amp;的位置。</span><br><span class="line">[root@oldboy202 ~]# echo stu&#123;01..5&#125; |tr &quot; &quot; &quot;\n&quot; |sed &apos;s#.*#useradd &amp;;#g&apos;</span><br><span class="line">useradd stu01;</span><br><span class="line">useradd stu02;</span><br><span class="line">useradd stu03;</span><br><span class="line">useradd stu04;</span><br><span class="line">useradd stu05;</span><br><span class="line"></span><br><span class="line">第三步：拼接为想要的格式</span><br><span class="line">[root@oldboy202 ~]# echo stu&#123;01..5&#125; |tr &quot; &quot; &quot;\n&quot; |sed &apos;s#.*#useradd &amp;;echo 123456 |passwd --stdin &amp;#g&apos;</span><br><span class="line">useradd stu01;echo 123456 |passwd --stdin stu01</span><br><span class="line">useradd stu02;echo 123456 |passwd --stdin stu02</span><br><span class="line">useradd stu03;echo 123456 |passwd --stdin stu03</span><br><span class="line">useradd stu04;echo 123456 |passwd --stdin stu04</span><br><span class="line">useradd stu05;echo 123456 |passwd --stdin stu05</span><br><span class="line"></span><br><span class="line">第四步：交给bash执行</span><br><span class="line">[root@oldboy202 ~]# echo stu&#123;01..5&#125; |tr &quot; &quot; &quot;\n&quot; |sed &apos;s#.*#useradd &amp;;echo 123456 |passwd --stdin &amp;#g&apos; |bash</span><br><span class="line">Changing password for user stu01.</span><br><span class="line">passwd: all authentication tokens updated successfully.</span><br><span class="line">Changing password for user stu02.</span><br><span class="line">passwd: all authentication tokens updated successfully.</span><br><span class="line">Changing password for user stu03.</span><br><span class="line">passwd: all authentication tokens updated successfully.</span><br><span class="line">Changing password for user stu04.</span><br><span class="line">passwd: all authentication tokens updated successfully.</span><br><span class="line">Changing password for user stu05.</span><br><span class="line">passwd: all authentication tokens updated successfully.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">第五步：随机字符生成（缺点：密码看不到）</span><br><span class="line">date +%N|md5sum|cut -c 1-8   先输出微秒，然后使用md5加密，取出前8位随机数字</span><br><span class="line"></span><br><span class="line">echo stu&#123;01..10&#125; |tr &quot; &quot; &quot;\n&quot; |sed &apos;s#.*#useradd &amp;;echo $(date +%N|md5sum|cut -c1-8) |passwd --stdin &amp;#g&apos; |bash</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">第五步：优化版本</span><br><span class="line">echo stu&#123;40..43&#125;|xargs -n1|sed &apos;s#.*#useradd &amp;;pass=$(date +%N|md5sum |cut -c-8);echo $pass|passwd --stdin &amp;;echo &amp; $pass &gt;&gt;/tmp/pass.log#g&apos; |bash</span><br><span class="line"></span><br><span class="line">先定义一个变量，变量名称为pass；后面需要的地方使用$pass来获取变量值</span><br></pre></td></tr></table></figure>
+<h6 id="批量添加10个用户，并将用户密码改为随机8位字符"><a href="#批量添加10个用户，并将用户密码改为随机8位字符" class="headerlink" title="批量添加10个用户，并将用户密码改为随机8位字符"></a>批量添加10个用户，并将用户密码改为随机8位字符</h6><figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">预备知识：</span><br><span class="line">[root@oldboy202 ~]# echo <span class="number">123456</span> |<span class="type">sed</span> -r 's#.*#&lt;&amp;&gt;#g'      找到的内容，全部放到&amp;位置</span><br><span class="line">&lt;<span class="number">123456</span>&gt;</span><br><span class="line">[root@oldboy202 ~]# echo <span class="number">123456</span> |<span class="type">sed</span> -r 's#[<span class="number">0</span><span class="number">-9</span>]+#&lt;&amp;&gt;#g'    找到的内容，全部放到&amp;位置</span><br><span class="line">&lt;<span class="number">123456</span>&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="number">1.</span> 先确定目标: useradd stu01;echo <span class="number">123456</span> |<span class="type">passwd</span> --stdin stu01</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span> 拼接这种命令，然后交给bash执行</span><br><span class="line"></span><br><span class="line">第一步：</span><br><span class="line">echo stu&#123;<span class="number">01.</span><span class="number">.5</span>&#125; |<span class="type">xargs</span> -n1     排成一列</span><br><span class="line">echo stu&#123;<span class="number">01.</span><span class="number">.5</span>&#125; |<span class="type">tr</span> <span class="string">" "</span> <span class="string">"\n"</span>   把空格替换为换行</span><br><span class="line"></span><br><span class="line">第二步：匹配.*的内容，放到&amp;的位置。</span><br><span class="line">[root@oldboy202 ~]# echo stu&#123;<span class="number">01.</span><span class="number">.5</span>&#125; |<span class="type">tr</span> <span class="string">" "</span> <span class="string">"\n"</span> |<span class="type">sed</span> 's#.*#useradd &amp;;#g'</span><br><span class="line">useradd stu01;</span><br><span class="line">useradd stu02;</span><br><span class="line">useradd stu03;</span><br><span class="line">useradd stu04;</span><br><span class="line">useradd stu05;</span><br><span class="line"></span><br><span class="line">第三步：拼接为想要的格式</span><br><span class="line">[root@oldboy202 ~]# echo stu&#123;<span class="number">01.</span><span class="number">.5</span>&#125; |<span class="type">tr</span> <span class="string">" "</span> <span class="string">"\n"</span> |<span class="type">sed</span> 's#.*#useradd &amp;;echo <span class="number">123456</span> |<span class="type">passwd</span> --stdin &amp;#g'</span><br><span class="line">useradd stu01;echo <span class="number">123456</span> |<span class="type">passwd</span> --stdin stu01</span><br><span class="line">useradd stu02;echo <span class="number">123456</span> |<span class="type">passwd</span> --stdin stu02</span><br><span class="line">useradd stu03;echo <span class="number">123456</span> |<span class="type">passwd</span> --stdin stu03</span><br><span class="line">useradd stu04;echo <span class="number">123456</span> |<span class="type">passwd</span> --stdin stu04</span><br><span class="line">useradd stu05;echo <span class="number">123456</span> |<span class="type">passwd</span> --stdin stu05</span><br><span class="line"></span><br><span class="line">第四步：交给bash执行</span><br><span class="line">[root@oldboy202 ~]# echo stu&#123;<span class="number">01.</span><span class="number">.5</span>&#125; |<span class="type">tr</span> <span class="string">" "</span> <span class="string">"\n"</span> |<span class="type">sed</span> 's#.*#useradd &amp;;echo <span class="number">123456</span> |<span class="type">passwd</span> --stdin &amp;#g' |<span class="type">bash</span></span><br><span class="line">Changing password <span class="keyword">for</span> user stu01.</span><br><span class="line">passwd: all authentication tokens updated successfully.</span><br><span class="line">Changing password <span class="keyword">for</span> user stu02.</span><br><span class="line">passwd: all authentication tokens updated successfully.</span><br><span class="line">Changing password <span class="keyword">for</span> user stu03.</span><br><span class="line">passwd: all authentication tokens updated successfully.</span><br><span class="line">Changing password <span class="keyword">for</span> user stu04.</span><br><span class="line">passwd: all authentication tokens updated successfully.</span><br><span class="line">Changing password <span class="keyword">for</span> user stu05.</span><br><span class="line">passwd: all authentication tokens updated successfully.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">第五步：随机字符生成（缺点：密码看不到）</span><br><span class="line">date +%N|<span class="type">md5sum</span>|<span class="type">cut</span> -c <span class="number">1</span><span class="number">-8</span>   先输出微秒，然后使用md5加密，取出前<span class="number">8</span>位随机数字</span><br><span class="line"></span><br><span class="line">echo stu&#123;<span class="number">01.</span><span class="number">.10</span>&#125; |<span class="type">tr</span> <span class="string">" "</span> <span class="string">"\n"</span> |<span class="type">sed</span> 's#.*#useradd &amp;;echo $(date +%N|<span class="type">md5sum</span>|<span class="type">cut</span> -c1<span class="number">-8</span>) |<span class="type">passwd</span> --stdin &amp;#g' |<span class="type">bash</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">第五步：优化版本</span><br><span class="line">echo stu&#123;<span class="number">40.</span><span class="number">.43</span>&#125;|<span class="type">xargs</span> -n1|<span class="type">sed</span> 's#.*#useradd &amp;;pass=$(date +%N|<span class="type">md5sum</span> |<span class="type">cut</span> -c<span class="number">-8</span>);echo $pass|<span class="type">passwd</span> --stdin &amp;;echo &amp; $pass &gt;&gt;/tmp/pass.log#g' |<span class="type">bash</span></span><br><span class="line"></span><br><span class="line">先定义一个变量，变量名称为pass；后面需要的地方使用$pass来获取变量值</span><br></pre></td></tr></table></figure>
 
 
       
@@ -383,7 +387,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2019 John Doe
+    		&copy; 2019 Gary Wu
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -487,18 +491,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">apache</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">目录浏览</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">高级运维</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Apache</a>
               </li>
              
@@ -527,19 +519,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CDH</a>
+                <a href="javascript:void(0)" class="js-tag color5">高级运维</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JDBC</a>
+                <a href="javascript:void(0)" class="js-tag color2">apache</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">MySQL驱动</a>
+                <a href="javascript:void(0)" class="js-tag color5">目录浏览</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">KAFKA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CDH</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -552,6 +548,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">大数据</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">JDBC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">MySQL驱动</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -587,18 +591,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Cacti流量叠加图形</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Cacti整合图形</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Graph</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">cacti</a>
               </li>
              
@@ -616,6 +608,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">监控</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">bugzilla</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">bugs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Cacti流量叠加图形</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Cacti整合图形</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Graph</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -640,14 +652,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">SCL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">bugzilla</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">bugs</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -695,14 +699,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">DNS TLS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Public DNS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">shadowsocks</a>
               </li>
              
@@ -712,6 +708,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">加密代理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">DNS TLS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Public DNS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -791,18 +795,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ESXI PATH</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ESXI补丁升级</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">ESXI6.7</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">VMware vSphere Client</a>
               </li>
              
@@ -815,6 +807,26 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CPU</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">虚拟化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ESXI PATH</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ESXI补丁升级</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">ESXI6.7</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Openstack</a>
               </li>
              
@@ -824,22 +836,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">混杂模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CPU</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">虚拟化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">磁盘置备</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">disk</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -863,6 +859,26 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Gentoo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">编译内核</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">NFS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">磁盘置备</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">disk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">fuse</a>
               </li>
              
@@ -876,18 +892,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">HDFS挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Gentoo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">编译内核</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">NFS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -951,6 +955,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">HTTP状态码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">301</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">302</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
@@ -979,27 +995,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">HTTP状态码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">301</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">302</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">hdfs空文件</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hadoop fs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1023,6 +1023,22 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Jenkins</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">持续集成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">持续交付</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
@@ -1039,26 +1055,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jenkins</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">持续集成</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">持续交付</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Jumpserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">备机部署</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">分区</a>
               </li>
              
@@ -1071,7 +1067,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">分区热迁移</a>
+                <a href="javascript:void(0)" class="js-tag color1">Jumpserver</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">备机部署</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1080,6 +1080,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">KAFKA版本升级</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">分区热迁移</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1139,18 +1143,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">文件句柄</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">lsof</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">空间释放</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">限速方案</a>
               </li>
              
@@ -1171,6 +1163,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">文件句柄</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">lsof</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">空间释放</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">logstash</a>
               </li>
              
@@ -1184,6 +1188,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Mars</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">HDFS Shell</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1203,15 +1215,27 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Mars</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">HDFS Shell</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Hadoop</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">spark</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">tez</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">单用户模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">多用户模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">远程模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1236,26 +1260,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">机架感知</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">spark</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">tez</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">单用户模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">多用户模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">远程模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1295,15 +1299,27 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">yarn</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hive</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">HQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">yarn</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mongodb</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">mongodump</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mongorestore</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1327,15 +1343,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mongodb</a>
+                <a href="javascript:void(0)" class="js-tag color3">STARTUP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">mongodump</a>
+                <a href="javascript:void(0)" class="js-tag color1">副本集成员</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mongorestore</a>
+                <a href="javascript:void(0)" class="js-tag color5">成员状态</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1355,15 +1371,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">STARTUP</a>
+                <a href="javascript:void(0)" class="js-tag color5">MongoDB集群</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">副本集成员</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">成员状态</a>
+                <a href="javascript:void(0)" class="js-tag color2">mongo集群管理维护</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1391,14 +1403,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">MongoDB集群</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mongo集群管理维护</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">MySQL主从切换</a>
               </li>
              
@@ -1407,19 +1411,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">MySQL主从复制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">全备还原</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">主从同步</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">主从复制监控</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">MySQL主从复制</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">全备还原</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1451,14 +1455,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">慢查询</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">mysqldumpslow</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">dba</a>
               </li>
              
@@ -1476,6 +1472,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">MySQL多实例远程登陆</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">慢查询</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">mysqldumpslow</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1515,14 +1519,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ntp</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">upstream</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">proxy-set-header</a>
               </li>
              
@@ -1535,15 +1531,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">favicon.ico</a>
+                <a href="javascript:void(0)" class="js-tag color4">upstream</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">access</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">log</a>
+                <a href="javascript:void(0)" class="js-tag color4">ntp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1560,6 +1552,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">垃圾UA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">favicon.ico</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">access</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">log</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1599,6 +1603,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Glance</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">openstack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">PHP</a>
               </li>
              
@@ -1611,11 +1623,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Glance</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">openstack</a>
+                <a href="javascript:void(0)" class="js-tag color4">Keystone</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1628,10 +1636,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">OpenStack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Keystone</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1667,23 +1671,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">RAID5</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">parted</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">fdisk</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">RAID5</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">阵列卡</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">缓存</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1707,6 +1703,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">阵列卡</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">缓存</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">rabbitmq</a>
               </li>
              
@@ -1727,15 +1731,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">NTP时间同步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NAT</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">双线</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">NTP时间同步</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1827,6 +1831,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">YARN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">NodeManager</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">udp</a>
               </li>
              
@@ -1844,14 +1856,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">GFW</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">YARN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">NodeManager</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1887,10 +1891,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">rrdtool</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">微信</a>
               </li>
              
@@ -1899,11 +1899,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">weathermap</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">plugin</a>
+                <a href="javascript:void(0)" class="js-tag color3">rrdtool</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1916,6 +1912,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">将Bites转换为Mbits</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">weathermap</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">plugin</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">脚本</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1943,7 +1951,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">脚本</a>
+                <a href="javascript:void(0)" class="js-tag color1">socket.gaierror</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1952,10 +1960,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">socket.gaierror</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2003,14 +2007,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">wget</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">curl请求url不使用缓存</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">unix</a>
               </li>
              
@@ -2027,7 +2023,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">wget</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">curl请求url不使用缓存</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">docker机制</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">exit退出码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2044,14 +2056,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">emerge命令</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">exit退出码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2087,18 +2091,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">磁盘挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">fstab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">开机挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">gentoo</a>
               </li>
              
@@ -2108,6 +2100,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">install</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">磁盘挂载</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">fstab</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">开机挂载</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2139,10 +2143,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hadoop用户</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">fs</a>
               </li>
              
@@ -2155,6 +2155,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">hadoop用户</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">sersync</a>
               </li>
              
@@ -2164,6 +2168,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">实时同步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell脚本</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ip自动配置</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2183,18 +2195,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell脚本</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ip自动配置</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">jumpserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">topic</a>
               </li>
              
@@ -2203,23 +2203,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">keepalived</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LVS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">多实例</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">双主</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">脑裂</a>
+                <a href="javascript:void(0)" class="js-tag color1">jumpserver</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2240,6 +2224,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">nopasswd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">keepalived</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">LVS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">多实例</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">双主</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">脑裂</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2267,10 +2271,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">dd</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">rm恢复</a>
               </li>
              
@@ -2287,23 +2287,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">dd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统备份</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统恢复</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Logstash</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Tomcat</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2316,6 +2308,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">rubydebug</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Logstash</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Tomcat</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2335,6 +2339,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">mongod</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">二进制版</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">mariadb主从</a>
               </li>
              
@@ -2348,14 +2360,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">主从复制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mongod</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">二进制版</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2375,11 +2379,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">主从复制错误</a>
+                <a href="javascript:void(0)" class="js-tag color5">主键错误</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">主键错误</a>
+                <a href="javascript:void(0)" class="js-tag color2">主从复制错误</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2388,14 +2392,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">同步个别库</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mysql slave</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">relay log</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2411,7 +2407,39 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">mysql slave</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">relay log</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">root远程登录</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">优化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">socket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ulimit</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">tcp_nopush</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">tcp_nodelay</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2475,38 +2503,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">优化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">socket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ulimit</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">tcp_nopush</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">tcp_nodelay</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">uri</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">屏蔽接口</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Ddos</a>
               </li>
              
@@ -2519,11 +2515,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">proxy cache</a>
+                <a href="javascript:void(0)" class="js-tag color4">uri</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Nginx缓存清理</a>
+                <a href="javascript:void(0)" class="js-tag color5">屏蔽接口</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2532,6 +2528,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">443</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">proxy cache</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Nginx缓存清理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2555,18 +2559,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SOCKS5</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">proxychains</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">命令代理</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">ps</a>
               </li>
              
@@ -2576,6 +2568,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">进程运行时间</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">SOCKS5</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">proxychains</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">命令代理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2591,14 +2595,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">tar</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">crontab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">自重启</a>
               </li>
              
@@ -2607,11 +2603,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">rsync限速</a>
+                <a href="javascript:void(0)" class="js-tag color4">tar</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">bwlimit</a>
+                <a href="javascript:void(0)" class="js-tag color3">crontab</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2620,6 +2616,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">模板</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">rsync限速</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">bwlimit</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2632,6 +2636,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">zabbix_agent</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">salt-master高可用</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">salt-API</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">salt-ssh</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2663,18 +2679,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">salt-master高可用</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">salt-API</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">salt-ssh</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统瓶颈</a>
               </li>
              
@@ -2695,6 +2699,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">变量传参</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell传参</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">小数判断</a>
               </li>
              
@@ -2704,14 +2716,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">浮点数判断</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">变量传参</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell传参</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2743,6 +2747,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">expect</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Ros</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">FTP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">dsa</a>
               </li>
              
@@ -2759,15 +2775,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">expect</a>
+                <a href="javascript:void(0)" class="js-tag color1">supervisor</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Ros</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">FTP</a>
+                <a href="javascript:void(0)" class="js-tag color4">supervisorctl</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2780,14 +2792,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">pid</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">supervisor</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">supervisorctl</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2827,19 +2831,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">vim</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">中文乱码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">vmware</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">虚拟机克隆</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vim</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">中文乱码</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2855,10 +2859,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">告警</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">traceroute</a>
               </li>
              
@@ -2868,6 +2868,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">MTR</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">告警</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2895,6 +2899,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">zk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">触发器</a>
               </li>
              
@@ -2908,10 +2916,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">触发器表达式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">zk</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2931,11 +2935,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">云计算</a>
+                <a href="javascript:void(0)" class="js-tag color5">Rack</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Rack</a>
+                <a href="javascript:void(0)" class="js-tag color4">云计算</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2951,6 +2955,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CDN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">IM</a>
               </li>
              
@@ -2960,18 +2968,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">开源IM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CDN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">jq</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">筛选大于某个值的数据到文件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2995,11 +2991,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">taskset</a>
+                <a href="javascript:void(0)" class="js-tag color3">jq</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">PID</a>
+                <a href="javascript:void(0)" class="js-tag color4">筛选大于某个值的数据到文件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3011,15 +3007,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">zerotier</a>
+                <a href="javascript:void(0)" class="js-tag color3">taskset</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">内网穿透</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">全球畅联</a>
+                <a href="javascript:void(0)" class="js-tag color4">PID</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3043,7 +3035,31 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">zerotier</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">内网穿透</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">全球畅联</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">RocketMQ</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">分布式消息队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nameserver</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">brokerserver</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3063,39 +3079,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">分布式消息队列</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">nameserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">brokerserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">外部命令</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">内部命令</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">只读模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">fatab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mount</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">remount</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3115,19 +3103,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OpenSSL</a>
+                <a href="javascript:void(0)" class="js-tag color5">只读模式</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">CA</a>
+                <a href="javascript:void(0)" class="js-tag color1">fatab</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SSL证书</a>
+                <a href="javascript:void(0)" class="js-tag color1">mount</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">csr</a>
+                <a href="javascript:void(0)" class="js-tag color3">remount</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3144,6 +3132,22 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">免交互</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">OpenSSL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">CA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">SSL证书</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">csr</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3171,6 +3175,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">SHELL编程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">kill</a>
               </li>
              
@@ -3183,7 +3191,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">SHELL编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">Yum源</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3192,10 +3200,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Shell脚本</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Yum源</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3215,15 +3219,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">consumer</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">内存</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">使用率</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">consumer</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3327,6 +3331,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">flock</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LVS连接数监控</a>
               </li>
              
@@ -3340,10 +3348,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">InActConn</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">flock</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3519,6 +3523,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">autostart</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">libvert</a>
               </li>
              
@@ -3528,10 +3536,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">动态迁移</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">autostart</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3687,6 +3691,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">lvs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">4层负载均衡</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">DR模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">LNMP</a>
               </li>
              
@@ -3704,18 +3720,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">mysql数据库迁移</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">lvs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">4层负载均衡</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">DR模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3775,15 +3779,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">pass_proxy</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">htpasswd</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">日志切割</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">pass_proxy</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4083,15 +4087,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">磁盘</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">awk数组</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">磁盘管理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">磁盘</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4127,19 +4131,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">redis cluster</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">ssdb</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">LevelDB</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">redis cluster</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4183,14 +4187,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">codis集群</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">memcache</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">GlusterFS</a>
               </li>
              
@@ -4200,6 +4196,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NAS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">codis集群</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">memcache</a>
               </li>
              
               <li class="article-tag-list-item">

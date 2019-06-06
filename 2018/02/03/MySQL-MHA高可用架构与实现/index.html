@@ -6,22 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://garywu520.github.io/blog">
-  <title>MySQL MHA高可用架构与实现 | Hexo</title>
+  <title>MySQL MHA高可用架构与实现 | Gary Wu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="MHA高可用架构  MHA可以解决的问题 12341. 监控所有节点状态2. 自动选择新的主库3. 对业务透明（通过VIP自动切换到新主库）4. 尽量保证新的主库与老的主库数据一致,即数据补偿">
 <meta name="keywords" content="高级运维,MySQL,Failover,binlog server,异步复制,半同步复制,MHA,VIP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL MHA高可用架构与实现">
 <meta property="og:url" content="https://garywu520.github.io/blog/2018/02/03/MySQL-MHA高可用架构与实现/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Gary Wu">
 <meta property="og:description" content="MHA高可用架构  MHA可以解决的问题 12341. 监控所有节点状态2. 自动选择新的主库3. 对业务透明（通过VIP自动切换到新主库）4. 尽量保证新的主库与老的主库数据一致,即数据补偿">
-<meta property="og:locale" content="default">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2018-02-03T08:51:26.069Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL MHA高可用架构与实现">
 <meta name="twitter:description" content="MHA高可用架构  MHA可以解决的问题 12341. 监控所有节点状态2. 自动选择新的主库3. 对业务透明（通过VIP自动切换到新主库）4. 尽量保证新的主库与老的主库数据一致,即数据补偿">
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="Gary Wu" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -47,12 +47,14 @@
 <div class="overlay" style="background: #4d4d4d"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
-		<a href="/blog/" class="profilepic">
-			<img src="https://raw.githubusercontent.com/discant520/garywu/master/images/touxiang.jpg" class="js-avatar">
+		<a href="/blog" class="profilepic">
+			<img src="http://pics0.baidu.com/feed/bd315c6034a85edf5f5b8bff8cf9cf27df54754d.png?token=c9857ef7ee73e1ffc14d3e3c4e9e3be3&amp;s=1E5207CAC64234F44988148A0300B090" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/blog/">John Doe</a></h1>
+		  <h1 class="header-author"><a href="/blog">Gary Wu</a></h1>
 		</hgroup>
+		
+		<p class="header-subtitle">运维架构师 - 从入门到放弃</p>
 		
 
 		<nav class="header-menu">
@@ -106,11 +108,13 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="https://raw.githubusercontent.com/discant520/garywu/master/images/touxiang.jpg" class="js-avatar">
+				<img src="http://pics0.baidu.com/feed/bd315c6034a85edf5f5b8bff8cf9cf27df54754d.png?token=c9857ef7ee73e1ffc14d3e3c4e9e3be3&amp;s=1E5207CAC64234F44988148A0300B090" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">John Doe</h1>
+			  <h1 class="header-author js-header-author">Gary Wu</h1>
 			</hgroup>
+			
+			<p class="header-subtitle"><i class="icon icon-quo-left"></i>运维架构师 - 从入门到放弃<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -189,15 +193,15 @@
 <p>MHA高可用架构</p>
 </blockquote>
 <p>MHA可以解决的问题</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. 监控所有节点状态</span><br><span class="line">2. 自动选择新的主库</span><br><span class="line">3. 对业务透明（通过VIP自动切换到新主库）</span><br><span class="line">4. 尽量保证新的主库与老的主库数据一致,即数据补偿</span><br></pre></td></tr></table></figure>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">1. </span>监控所有节点状态</span><br><span class="line"><span class="bullet">2. </span>自动选择新的主库</span><br><span class="line"><span class="bullet">3. </span>对业务透明（通过VIP自动切换到新主库）</span><br><span class="line"><span class="bullet">4. </span>尽量保证新的主库与老的主库数据一致,即数据补偿</span><br></pre></td></tr></table></figure>
 
 <a id="more"></a>
 
 <p>MHA原理</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">1. 原版MHA架构要求至少三个节点才能实现</span><br><span class="line">2. 监控多个节点【心跳、主从复制的状态(show slave status)】</span><br><span class="line">3. MHA结构是由Manager+node构成。所以三台数据库实例都需要安装MHA node相关软件。生产环境下,Manager需要单独安装在某台额外的服务器上。</span><br><span class="line">4. 所以节点配置SSH互信(即无密码登陆)</span><br><span class="line">5. 选主: MHA会默认按照将来配置文件中节点添加顺序作为选主库的依据,由于配置文件是我们自己指定的，所以MHA的选主是乐观的。同时它也会去判断从节点和主节点延迟状况。如何判断？通过show slave status\G结果中的Seconds_Behind_Master参数作为依据，如果延迟较大超出指定范围也不会选择指定顺序中的从库作为新的主库。</span><br><span class="line">通过人为干预MHA的选主，设定权重，让MHA按照人为配置选择新主，如果有这种干预，还一定要保证从库真的很新。技术：半同步复制或者是使用更高端的硬件设备,如硬盘改为SSD</span><br><span class="line"></span><br><span class="line">6. 数据补偿</span><br><span class="line">主库宕机才会选主</span><br><span class="line">第一种情况(乐观): 仅是数据库实例宕机了，但服务器运行正常能正常ssh</span><br><span class="line">&lt;1&gt;保存从库缺失部分的binlog</span><br><span class="line">&lt;2&gt;重新构建新的主从环境</span><br><span class="line">   第一阶段的数据补偿</span><br><span class="line">   2.1:将S2(从库)和S1（新主库）进行对比，获得缺失部分的日志进行恢复到S2从库</span><br><span class="line">   2.2:S2从库 change master to S1(新主库)，即重新自动变更主从架构</span><br><span class="line">&lt;3&gt;将S1(新主)和原主库缺失并保存下来的binlog恢复。</span><br><span class="line"></span><br><span class="line">第二种情况（悲观）: 原主库, 操作系统都无法ssh</span><br><span class="line">&lt;1&gt;尝试保存从库缺失部分的binlog,发现无法获取</span><br><span class="line">&lt;2&gt;重新构建新的主从环境</span><br><span class="line">   第一阶段的数据补偿</span><br><span class="line">   2.1:将S2(从库)和S1（新主库）进行对比，获得缺失部分的日志进行恢复到S2从库</span><br><span class="line">   2.2:S2从库 change master to S1(新主库)，即重新自动变更主从架构</span><br><span class="line">   </span><br><span class="line">问题: 和原主库的数据差异如何补偿？</span><br><span class="line">方案:(1)配置半同步复制</span><br><span class="line">     (2)binlog实时的备份到远程节点(binlog server)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">1. 原版MHA架构要求至少三个节点才能实现</span><br><span class="line">2. 监控多个节点【心跳、主从复制的状态(<span class="keyword">show</span> <span class="keyword">slave</span> <span class="keyword">status</span>)】</span><br><span class="line"><span class="number">3.</span> MHA结构是由Manager+node构成。所以三台数据库实例都需要安装MHA node相关软件。生产环境下,Manager需要单独安装在某台额外的服务器上。</span><br><span class="line"><span class="number">4.</span> 所以节点配置SSH互信(即无密码登陆)</span><br><span class="line"><span class="number">5.</span> 选主: MHA会默认按照将来配置文件中节点添加顺序作为选主库的依据,由于配置文件是我们自己指定的，所以MHA的选主是乐观的。同时它也会去判断从节点和主节点延迟状况。如何判断？通过<span class="keyword">show</span> <span class="keyword">slave</span> <span class="keyword">status</span>\G结果中的Seconds_Behind_Master参数作为依据，如果延迟较大超出指定范围也不会选择指定顺序中的从库作为新的主库。</span><br><span class="line">通过人为干预MHA的选主，设定权重，让MHA按照人为配置选择新主，如果有这种干预，还一定要保证从库真的很新。技术：半同步复制或者是使用更高端的硬件设备,如硬盘改为SSD</span><br><span class="line"></span><br><span class="line"><span class="number">6.</span> 数据补偿</span><br><span class="line">主库宕机才会选主</span><br><span class="line">第一种情况(乐观): 仅是数据库实例宕机了，但服务器运行正常能正常ssh</span><br><span class="line">&lt;<span class="number">1</span>&gt;保存从库缺失部分的<span class="keyword">binlog</span></span><br><span class="line">&lt;<span class="number">2</span>&gt;重新构建新的主从环境</span><br><span class="line">   第一阶段的数据补偿</span><br><span class="line">   <span class="number">2.1</span>:将S2(从库)和S1（新主库）进行对比，获得缺失部分的日志进行恢复到S2从库</span><br><span class="line">   <span class="number">2.2</span>:S2从库 <span class="keyword">change</span> <span class="keyword">master</span> <span class="keyword">to</span> S1(新主库)，即重新自动变更主从架构</span><br><span class="line">&lt;<span class="number">3</span>&gt;将S1(新主)和原主库缺失并保存下来的<span class="keyword">binlog</span>恢复。</span><br><span class="line"></span><br><span class="line">第二种情况（悲观）: 原主库, 操作系统都无法ssh</span><br><span class="line">&lt;<span class="number">1</span>&gt;尝试保存从库缺失部分的<span class="keyword">binlog</span>,发现无法获取</span><br><span class="line">&lt;<span class="number">2</span>&gt;重新构建新的主从环境</span><br><span class="line">   第一阶段的数据补偿</span><br><span class="line">   <span class="number">2.1</span>:将S2(从库)和S1（新主库）进行对比，获得缺失部分的日志进行恢复到S2从库</span><br><span class="line">   <span class="number">2.2</span>:S2从库 <span class="keyword">change</span> <span class="keyword">master</span> <span class="keyword">to</span> S1(新主库)，即重新自动变更主从架构</span><br><span class="line">   </span><br><span class="line">问题: 和原主库的数据差异如何补偿？</span><br><span class="line">方案:(<span class="number">1</span>)配置半同步复制</span><br><span class="line">     (<span class="number">2</span>)<span class="keyword">binlog</span>实时的备份到远程节点(<span class="keyword">binlog</span> <span class="keyword">server</span>)</span><br></pre></td></tr></table></figure>
 
 <p>异步复制与半同步复制</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(1)mysql默认是异步复制（即只同步差异部分）</span><br><span class="line">(2)半同步复制，即主库将数据发送到从库，从库确确实实接受到了数据到relay-log(非缓存中),此时从库给主库进行接收确认。</span><br></pre></td></tr></table></figure>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">(1)</span>mysql默认是异步复制（即只同步差异部分）</span><br><span class="line"><span class="comment">(2)</span>半同步复制，即主库将数据发送到从库，从库确确实实接受到了数据到relay-log<span class="comment">(非缓存中)</span>,此时从库给主库进行接收确认。</span><br></pre></td></tr></table></figure>
 
 <!-- more -->
 
@@ -205,20 +209,20 @@
 <h4 id="MHA搭建过程"><a href="#MHA搭建过程" class="headerlink" title="MHA搭建过程"></a>MHA搭建过程</h4><blockquote>
 <p>环境</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1、准备环境: 准备3台机器，安装好MySQL5.6.36</span><br><span class="line">10.0.0.51</span><br><span class="line">10.0.0.52</span><br><span class="line">10.0.0.53</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1、准备环境: 准备3台机器，安装好<span class="selector-tag">MySQL5</span><span class="selector-class">.6</span><span class="selector-class">.36</span></span><br><span class="line">10<span class="selector-class">.0</span><span class="selector-class">.0</span><span class="selector-class">.51</span></span><br><span class="line">10<span class="selector-class">.0</span><span class="selector-class">.0</span><span class="selector-class">.52</span></span><br><span class="line">10<span class="selector-class">.0</span><span class="selector-class">.0</span><span class="selector-class">.53</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">2、配置文件规划</span><br><span class="line">[mysqld]</span><br><span class="line">basedir=/application/mysql</span><br><span class="line">datadir=/application/mysql/data</span><br><span class="line">socket=/tmp/mysql.sock</span><br><span class="line">log-error=/var/log/mysql.log</span><br><span class="line">log-bin=/data/mysql/mysql-bin</span><br><span class="line">binlog_format=row</span><br><span class="line">secure-file-priv=/tmp </span><br><span class="line">server-id=51\52\53</span><br><span class="line">gtid-mode=on</span><br><span class="line">enforce-gtid-consistency=true</span><br><span class="line">log-slave-updates=1</span><br><span class="line"></span><br><span class="line">说明：</span><br><span class="line">除了server-id不同，其他都相同</span><br><span class="line">gtid-mode=on  启用gtid类型，否则就是普通的复制架构</span><br><span class="line">enforce-gtid-consistency=true  强制GTID的一致性</span><br><span class="line">log-slave-updates=1	  slave更新是否记入日志（5.6必须的）</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">2、配置文件规划</span><br><span class="line">[mysqld]</span><br><span class="line"><span class="attribute">basedir</span>=/application/mysql</span><br><span class="line"><span class="attribute">datadir</span>=/application/mysql/data</span><br><span class="line"><span class="attribute">socket</span>=/tmp/mysql.sock</span><br><span class="line"><span class="attribute">log-error</span>=/var/log/mysql.log</span><br><span class="line"><span class="attribute">log-bin</span>=/data/mysql/mysql-bin</span><br><span class="line"><span class="attribute">binlog_format</span>=row</span><br><span class="line"><span class="attribute">secure-file-priv</span>=/tmp </span><br><span class="line"><span class="attribute">server-id</span>=51\52\53</span><br><span class="line"><span class="attribute">gtid-mode</span>=on</span><br><span class="line"><span class="attribute">enforce-gtid-consistency</span>=<span class="literal">true</span></span><br><span class="line"><span class="attribute">log-slave-updates</span>=1</span><br><span class="line"></span><br><span class="line">说明：</span><br><span class="line">除了server-id不同，其他都相同</span><br><span class="line"><span class="attribute">gtid-mode</span>=on  启用gtid类型，否则就是普通的复制架构</span><br><span class="line"><span class="attribute">enforce-gtid-consistency</span>=<span class="literal">true</span>  强制GTID的一致性</span><br><span class="line"><span class="attribute">log-slave-updates</span>=1	  slave更新是否记入日志（5.6必须的）</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">3、分别初始化数据</span><br><span class="line">/application/mysql/scripts/mysql_install_db --defaults-file=/etc/my.cnf --basedir=/application/mysql --datadir=/application/mysql/data/ --user=mysql</span><br><span class="line"></span><br><span class="line">启动数据库</span><br><span class="line">/etc/init.d/mysqld start</span><br></pre></td></tr></table></figure>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3</span>、分别初始化数据</span><br><span class="line"><span class="regexp">/application/my</span>sql<span class="regexp">/scripts/my</span>sql_install_db --defaults-<span class="keyword">file</span>=<span class="regexp">/etc/my</span>.cnf --basedir=<span class="regexp">/application/my</span>sql --datadir=<span class="regexp">/application/my</span>sql<span class="regexp">/data/</span> --user=mysql</span><br><span class="line"></span><br><span class="line">启动数据库</span><br><span class="line"><span class="regexp">/etc/i</span>nit.d<span class="regexp">/mysqld start</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">4、主节点-创建复制用户(51作为主节点，52、53为从)</span><br><span class="line">GRANT REPLICATION SLAVE ON *.* TO repl@&apos;10.0.0.%&apos; IDENTIFIED BY &apos;123&apos;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">4、主节点-创建复制用户(51作为主节点，52、53为从)</span><br><span class="line"><span class="keyword">GRANT</span> <span class="keyword">REPLICATION</span> <span class="keyword">SLAVE</span> <span class="keyword">ON</span> *.* <span class="keyword">TO</span> repl@<span class="string">'10.0.0.%'</span> <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="string">'123'</span>;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">5、52/53从库开启复制</span><br><span class="line">change master to master_host=&apos;10.0.0.51&apos;,master_user=&apos;repl&apos;,master_password=&apos;123&apos;,MASTER_AUTO_POSITION=1;</span><br><span class="line"></span><br><span class="line">启动slave</span><br><span class="line">start slave;</span><br><span class="line"></span><br><span class="line">验证slave</span><br><span class="line">mysql&gt; show slave status;</span><br></pre></td></tr></table></figure>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">5</span>、<span class="number">52</span>/<span class="number">53</span>从库开启复制</span><br><span class="line">change <span class="keyword">master</span> <span class="title">to</span> <span class="attr">master_host=</span>'<span class="number">10.0</span>.<span class="number">0.51</span>',<span class="attr">master_user=</span>'repl',<span class="attr">master_password=</span>'<span class="number">123</span>',<span class="attr">MASTER_AUTO_POSITION=</span><span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">启动<span class="literal">slave</span></span><br><span class="line"><span class="literal">start</span> <span class="literal">slave</span>;</span><br><span class="line"></span><br><span class="line">验证<span class="literal">slave</span></span><br><span class="line">mysql&gt; show <span class="literal">slave</span> status;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">关闭relaylog自动删除</span><br><span class="line"></span><br><span class="line">set global relay_log_purge = 0;</span><br><span class="line">set global relay_log_purge = 0;  临时（建议三个节点都做）</span><br><span class="line">relay_log_purge = 0   	永久，在配置文件，建议在三个节点都做</span><br><span class="line">set global read_only=1;  临时，为后续读写分离准备，不需要在配置文件生效（在所有从库）</span><br></pre></td></tr></table></figure>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">关闭relaylog自动删除</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span> global <span class="comment">relay_log_purge = 0</span>;</span><br><span class="line"><span class="keyword">set</span> global <span class="comment">relay_log_purge = 0</span>;  临时（建议三个节点都做）</span><br><span class="line">relay_log_purge = <span class="number">0</span>   	永久，在配置文件，建议在三个节点都做</span><br><span class="line"><span class="keyword">set</span> global <span class="comment">read_only=1</span>;  临时，为后续读写分离准备，不需要在配置文件生效（在所有从库）</span><br></pre></td></tr></table></figure>
 
 <p>注：MySQL使用GTID的优势</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(1) group commit</span><br><span class="line">(2) 对每一个事务记录唯一的一串编号uuid：TXID</span><br><span class="line">(3) failover（故障转移）更加有优势。</span><br><span class="line">3.1 选主方面</span><br><span class="line">	classic replication    mseter.info和主中show master status</span><br><span class="line">	GTID   比较主从的gtid就可以了。</span><br><span class="line">3.2 数据补偿方面</span><br><span class="line">	classic, 比较主从master.info 和show  master status。把没有的拿过来运行时，使用gtid比较简单</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(1)<span class="built_in"> group </span>commit</span><br><span class="line">(2) 对每一个事务记录唯一的一串编号uuid：TXID</span><br><span class="line">(3) failover（故障转移）更加有优势。</span><br><span class="line">3.1 选主方面</span><br><span class="line">	classic replication    mseter.info和主中show master status</span><br><span class="line">	GTID   比较主从的gtid就可以了。</span><br><span class="line">3.2 数据补偿方面</span><br><span class="line">	classic, 比较主从master.<span class="builtin-name">info</span> 和show  master status。把没有的拿过来运行时，使用gtid比较简单</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>部署MHA</p>
@@ -226,55 +230,55 @@
 <ul>
 <li>安装mha node节点</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">各节点安装node软件包及依赖</span><br><span class="line"></span><br><span class="line">依赖包perl-DBD-MySQL ，并在三个节点都安装node软件</span><br><span class="line">yum install -y perl-DBD-MySQL</span><br><span class="line">rpm -ivh mha4mysql-node-0.56-0.el6.noarch.rpm</span><br></pre></td></tr></table></figure>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">各节点安装<span class="keyword">node</span><span class="title">软件包及依赖</span></span><br><span class="line"><span class="title"></span></span><br><span class="line"><span class="title">依赖包perl-DBD-MySQL</span> ，并在三个节点都安装<span class="keyword">node</span><span class="title">软件</span></span><br><span class="line"><span class="title">yum</span> install -y perl-DBD-MySQL</span><br><span class="line">rpm -ivh mha4mysql-<span class="keyword">node</span><span class="title">-0</span>.<span class="number">56</span>-<span class="number">0</span>.el6.noarch.rpm</span><br></pre></td></tr></table></figure>
 
 <p>创建mha管理用户</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">主库中创建mha管理用户(从库会自动同步)</span><br><span class="line">grant all privileges on *.* to mha@&apos;10.0.0.%&apos; identified by &apos;mha&apos;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">主库中创建mha管理用户(从库会自动同步)</span><br><span class="line"><span class="keyword">grant</span> <span class="keyword">all</span> <span class="keyword">privileges</span> <span class="keyword">on</span> *.* <span class="keyword">to</span> mha@<span class="string">'10.0.0.%'</span> <span class="keyword">identified</span> <span class="keyword">by</span> <span class="string">'mha'</span>;</span><br></pre></td></tr></table></figure>
 
 <p>配置软连接</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ln -s /application/mysql/bin/mysqlbinlog /usr/bin/mysqlbinlog</span><br><span class="line">ln -s /application/mysql/bin/mysql /usr/bin/mysql</span><br></pre></td></tr></table></figure>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ln -s <span class="meta-keyword">/application/</span>mysql<span class="meta-keyword">/bin/</span>mysqlbinlog <span class="meta-keyword">/usr/</span>bin/mysqlbinlog</span><br><span class="line">ln -s <span class="meta-keyword">/application/</span>mysql<span class="meta-keyword">/bin/</span>mysql <span class="meta-keyword">/usr/</span>bin/mysql</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>部署manger节点(生产环境为独立服务器)</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-6.repo</span><br><span class="line">yum install -y perl-Config-Tiny epel-release perl-Log-Dispatch perl-Parallel-ForkManager perl-Time-HiRes</span><br><span class="line"></span><br><span class="line">安装  manager软件</span><br><span class="line">rpm -ivh mha4mysql-manager-0.56-0.el6.noarch.rpm </span><br><span class="line"></span><br><span class="line">创建必要目录</span><br><span class="line">mkdir -p /etc/mha</span><br><span class="line">mkdir -p /var/log/mha/app1  可以管理多套主从复制</span><br><span class="line"></span><br><span class="line">创建配置文件 (不需要的配置不要留着，注释没用,切换后会重写)</span><br><span class="line">vim /etc/mha/app1.cnf    </span><br><span class="line"></span><br><span class="line">内容如下：</span><br><span class="line">[server default]                     </span><br><span class="line">manager_log=/var/log/mha/app1/manager</span><br><span class="line">manager_workdir=/var/log/mha/app1</span><br><span class="line">master_binlog_dir=/data/mysql</span><br><span class="line">user=mha</span><br><span class="line">password=mha</span><br><span class="line">ping_interval=2</span><br><span class="line">repl_password=123</span><br><span class="line">repl_user=repl</span><br><span class="line">ssh_user=root</span><br><span class="line"></span><br><span class="line">[server1]</span><br><span class="line">hostname=10.0.0.51</span><br><span class="line">port=3306</span><br><span class="line"></span><br><span class="line">[server2]</span><br><span class="line">hostname=10.0.0.52</span><br><span class="line">port=3306</span><br><span class="line"></span><br><span class="line">[server3]</span><br><span class="line">hostname=10.0.0.53</span><br><span class="line">port=3306</span><br></pre></td></tr></table></figure>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-6.repo</span><br><span class="line">yum install -y perl-Config-Tiny epel-release perl-Log-Dispatch perl-Parallel-ForkManager perl-Time-HiRes</span><br><span class="line"></span><br><span class="line">安装  manager软件</span><br><span class="line">rpm -ivh mha4mysql-manager-0.56-0.el6.noarch.rpm </span><br><span class="line"></span><br><span class="line">创建必要目录</span><br><span class="line">mkdir -p /etc/mha</span><br><span class="line">mkdir -p /var/log/mha/app1  可以管理多套主从复制</span><br><span class="line"></span><br><span class="line">创建配置文件 (不需要的配置不要留着，注释没用,切换后会重写)</span><br><span class="line">vim /etc/mha/app1.cnf    </span><br><span class="line"></span><br><span class="line">内容如下：</span><br><span class="line">[server default]                     </span><br><span class="line">manager_log=/var/log/mha/app1/manager</span><br><span class="line">manager_workdir=/var/log/mha/app1</span><br><span class="line">master_binlog_dir=/data/mysql</span><br><span class="line">user=mha</span><br><span class="line">password=mha</span><br><span class="line">ping_interval=2</span><br><span class="line">repl_password=123</span><br><span class="line">repl_user=repl</span><br><span class="line">ssh_user=root</span><br><span class="line"></span><br><span class="line">[server1]</span><br><span class="line">hostname=10.0.0.51</span><br><span class="line">port=3306</span><br><span class="line"></span><br><span class="line">[server2]</span><br><span class="line">hostname=10.0.0.52</span><br><span class="line">port=3306</span><br><span class="line"></span><br><span class="line">[server3]</span><br><span class="line">hostname=10.0.0.53</span><br><span class="line">port=3306</span><br></pre></td></tr></table></figure>
 
 <p>配置节点SSH互信</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">配置互信(所有节点)</span><br><span class="line">ssh-keygen -t dsa -P &apos;&apos; -f ~/.ssh/id_dsa &gt;/dev/null 2&gt;&amp;1</span><br><span class="line">ssh-copy-id -i /root/.ssh/id_dsa.pub root@10.0.0.51</span><br><span class="line">ssh-copy-id -i /root/.ssh/id_dsa.pub root@10.0.0.52</span><br><span class="line">ssh-copy-id -i /root/.ssh/id_dsa.pub root@10.0.0.53</span><br><span class="line"></span><br><span class="line">检测互信</span><br><span class="line">[root@server3 ~]# masterha_check_ssh  --conf=/etc/mha/app1.cnf</span><br></pre></td></tr></table></figure>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">配置互信(所有节点)</span><br><span class="line">ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa &gt;/dev/null <span class="number">2</span>&gt;&amp;<span class="number">1</span></span><br><span class="line">ssh-copy-id -i /root/.ssh/id_dsa.pub root@<span class="number">10.0</span><span class="number">.0</span><span class="number">.51</span></span><br><span class="line">ssh-copy-id -i /root/.ssh/id_dsa.pub root@<span class="number">10.0</span><span class="number">.0</span><span class="number">.52</span></span><br><span class="line">ssh-copy-id -i /root/.ssh/id_dsa.pub root@<span class="number">10.0</span><span class="number">.0</span><span class="number">.53</span></span><br><span class="line"></span><br><span class="line">检测互信</span><br><span class="line">[root@server3 ~]# masterha_check_ssh  --conf=/etc/mha/app1.cnf</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">检查主从状态</span><br><span class="line">masterha_check_repl --conf=/etc/mha/app1.conf</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">检查主从状态</span><br><span class="line">masterha_check_repl <span class="attribute">--conf</span>=/etc/mha/app1.conf</span><br></pre></td></tr></table></figure>
 
 <p>故障处理</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">故障处理:</span><br><span class="line">[error][/usr/share/perl5/vendor_perl/MHA/ServerManager.pm, ln301] </span><br><span class="line">Got MySQL error when connecting 10.0.0.53(10.0.0.53:3306) :1045:Access denied for user &apos;mha&apos;@&apos;server3&apos; </span><br><span class="line">(using password: YES), but this is not a MySQL crash. Check MySQL server settings.</span><br><span class="line"></span><br><span class="line">解决：</span><br><span class="line">我们需要在配置文件中加入 </span><br><span class="line">skip-name-resolve</span><br></pre></td></tr></table></figure>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">故障处理:</span><br><span class="line">[<span class="string">error</span>][<span class="symbol">/usr/share/perl5/vendor_perl/MHA/ServerManager.pm, ln301</span>] </span><br><span class="line">Got MySQL error when connecting 10.0.0.53(10.0.0.53:3306) :1045:Access denied for user 'mha'@'server3' </span><br><span class="line">(using password: YES), but this is not a MySQL crash. Check MySQL server settings.</span><br><span class="line"></span><br><span class="line">解决：</span><br><span class="line">我们需要在配置文件中加入 </span><br><span class="line">skip-name-resolve</span><br></pre></td></tr></table></figure>
 
 <p>在manager节点启动mha</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">nohup masterha_manager --conf=/etc/mha/app1.cnf --remove_dead_master_conf --ignore_last_failover &lt; /dev/null &gt; /var/log/mha/app1/manager.log 2&gt;&amp;1 &amp;</span><br><span class="line"></span><br><span class="line">mha启动验证</span><br><span class="line">ps -ef |grep manager</span><br><span class="line"></span><br><span class="line">检查MHA集群状态：</span><br><span class="line">masterha_check_status --conf=/etc/mha/app1.cnf </span><br><span class="line">app1 (pid:7502) is running(0:PING_OK), master:10.0.0.51</span><br></pre></td></tr></table></figure>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">nohup masterha_manager --<span class="keyword">conf</span>=/etc/mha/app1.<span class="keyword">cnf</span> --remove_dead_master_conf --ignore_last_failover &lt; /dev/null &gt; /var/<span class="built_in">log</span>/mha/app1/manager.<span class="built_in">log</span> <span class="number">2</span>&gt;&amp;<span class="number">1</span> &amp;</span><br><span class="line"></span><br><span class="line">mha启动验证</span><br><span class="line"><span class="keyword">ps</span> -ef |<span class="keyword">grep</span> manager</span><br><span class="line"></span><br><span class="line">检查MHA集群状态：</span><br><span class="line">masterha_check_status --<span class="keyword">conf</span>=/etc/mha/app1.<span class="keyword">cnf</span> </span><br><span class="line">app1 (pid:<span class="number">7502</span>) <span class="keyword">is</span> running(<span class="number">0</span>:PING_OK), master:<span class="number">10.0</span>.<span class="number">0.51</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>MHA故障模拟及修复</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1.模拟主库宕机，tailf命令查看mha机器的manager log信息</span><br><span class="line">   (1)log查看主库宕机,从库选举、切换等等过程</span><br><span class="line">   (2)再次查看配置文件内容，发现主库信息已经被自动移除</span><br><span class="line">2.恢复MHA架构</span><br><span class="line">  (1)修复1主2从复制架构</span><br><span class="line">     将宕机的原主库启动mysql服务，然后change master to 到新主库，最后start slave</span><br><span class="line">  (2)修复MHA</span><br><span class="line">     - 配置文件添加新节点(添加宕机恢复好的原主库)</span><br><span class="line">     - 检查ssh互信与主从状态，最后启动MHA</span><br></pre></td></tr></table></figure>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>模拟主库宕机，tailf命令查看mha机器的manager log信息</span><br><span class="line">   (<span class="number">1</span>)log查看主库宕机,从库选举、切换等等过程</span><br><span class="line">   (<span class="number">2</span>)再次查看配置文件内容，发现主库信息已经被自动移除</span><br><span class="line"><span class="number">2.</span>恢复MHA架构</span><br><span class="line">  (<span class="number">1</span>)修复<span class="number">1</span>主<span class="number">2</span>从复制架构</span><br><span class="line">     将宕机的原主库启动mysql服务，然后change master to 到新主库，最后start slave</span><br><span class="line">  (<span class="number">2</span>)修复MHA</span><br><span class="line">     - 配置文件添加新节点(添加宕机恢复好的原主库)</span><br><span class="line">     - 检查ssh互信与主从状态，最后启动MHA</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>MHA高级功能</p>
 </blockquote>
 <p>VIP高可用实现</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(1)人为指定一个VIP地址(不能被占用)</span><br><span class="line">(2)MHA能够切换这个VIP</span><br><span class="line">(3)MHA ip failover脚本(自己写)</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(1)人为指定一个VIP地址(不能被占用)</span><br><span class="line">(2)MHA能够切换这个VIP</span><br><span class="line">(3)MHA<span class="built_in"> ip </span>failover脚本(自己写)</span><br></pre></td></tr></table></figure>
 
 <p>MHA-VIP脚本:master_ip_failover.sh</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env perl</span><br><span class="line"></span><br><span class="line">use strict;</span><br><span class="line">use warnings FATAL =&gt; &apos;all&apos;;</span><br><span class="line"></span><br><span class="line">use Getopt::Long;</span><br><span class="line"></span><br><span class="line">my (</span><br><span class="line">    $command,          $ssh_user,        $orig_master_host, $orig_master_ip,</span><br><span class="line">    $orig_master_port, $new_master_host, $new_master_ip,    $new_master_port</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">#--------------------- 需要关注的区域-----------------------</span><br><span class="line">my $vip = &apos;10.0.0.55/24&apos;;</span><br><span class="line">my $key = &apos;1&apos;;</span><br><span class="line">my $ssh_start_vip = &quot;/sbin/ifconfig eth1:$key $vip&quot;;</span><br><span class="line">my $ssh_stop_vip = &quot;/sbin/ifconfig eth1:$key down&quot;;</span><br><span class="line">#--------------------- 结束关注的区域------------------------</span><br><span class="line"></span><br><span class="line">GetOptions(</span><br><span class="line">    &apos;command=s&apos;          =&gt; \$command,</span><br><span class="line">    &apos;ssh_user=s&apos;         =&gt; \$ssh_user,</span><br><span class="line">    &apos;orig_master_host=s&apos; =&gt; \$orig_master_host,</span><br><span class="line">    &apos;orig_master_ip=s&apos;   =&gt; \$orig_master_ip,</span><br><span class="line">    &apos;orig_master_port=i&apos; =&gt; \$orig_master_port,</span><br><span class="line">    &apos;new_master_host=s&apos;  =&gt; \$new_master_host,</span><br><span class="line">    &apos;new_master_ip=s&apos;    =&gt; \$new_master_ip,</span><br><span class="line">    &apos;new_master_port=i&apos;  =&gt; \$new_master_port,</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">exit &amp;main();</span><br><span class="line"></span><br><span class="line">sub main &#123;</span><br><span class="line"></span><br><span class="line">    print &quot;\n\nIN SCRIPT TEST====$ssh_stop_vip==$ssh_start_vip===\n\n&quot;;</span><br><span class="line"></span><br><span class="line">    if ( $command eq &quot;stop&quot; || $command eq &quot;stopssh&quot; ) &#123;</span><br><span class="line"></span><br><span class="line">        my $exit_code = 1;</span><br><span class="line">        eval &#123;</span><br><span class="line">            print &quot;Disabling the VIP on old master: $orig_master_host \n&quot;;</span><br><span class="line">            &amp;stop_vip();</span><br><span class="line">            $exit_code = 0;</span><br><span class="line">        &#125;;</span><br><span class="line">        if ($@) &#123;</span><br><span class="line">            warn &quot;Got Error: $@\n&quot;;</span><br><span class="line">            exit $exit_code;</span><br><span class="line">        &#125;</span><br><span class="line">        exit $exit_code;</span><br><span class="line">    &#125;</span><br><span class="line">    elsif ( $command eq &quot;start&quot; ) &#123;</span><br><span class="line"></span><br><span class="line">        my $exit_code = 10;</span><br><span class="line">        eval &#123;</span><br><span class="line">            print &quot;Enabling the VIP - $vip on the new master - $new_master_host \n&quot;;</span><br><span class="line">            &amp;start_vip();</span><br><span class="line">            $exit_code = 0;</span><br><span class="line">        &#125;;</span><br><span class="line">        if ($@) &#123;</span><br><span class="line">            warn $@;</span><br><span class="line">            exit $exit_code;</span><br><span class="line">        &#125;</span><br><span class="line">        exit $exit_code;</span><br><span class="line">    &#125;</span><br><span class="line">    elsif ( $command eq &quot;status&quot; ) &#123;</span><br><span class="line">        print &quot;Checking the Status of the script.. OK \n&quot;;</span><br><span class="line">        exit 0;</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        &amp;usage();</span><br><span class="line">        exit 1;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">sub start_vip() &#123;</span><br><span class="line">    `ssh $ssh_user\@$new_master_host \&quot; $ssh_start_vip \&quot;`;</span><br><span class="line">&#125;</span><br><span class="line">sub stop_vip() &#123;</span><br><span class="line">     return 0  unless  ($ssh_user);</span><br><span class="line">    `ssh $ssh_user\@$orig_master_host \&quot; $ssh_stop_vip \&quot;`;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">sub usage &#123;</span><br><span class="line">    print</span><br><span class="line">    &quot;Usage: master_ip_failover --command=start|stop|stopssh|status --orig_master_host=host --orig_master_ip=ip --orig_master_port=port --new_master_host=host --new_master_ip=ip --new_master_port=port\n&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env perl</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> strict;</span><br><span class="line"><span class="keyword">use</span> warnings <span class="string">FATAL =&gt;</span> <span class="string">'all'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> Getopt::Long;</span><br><span class="line"></span><br><span class="line"><span class="keyword">my</span> (</span><br><span class="line">    $command,          $ssh_user,        $orig_master_host, $orig_master_ip,</span><br><span class="line">    $orig_master_port, $new_master_host, $new_master_ip,    $new_master_port</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">#--------------------- 需要关注的区域-----------------------</span></span><br><span class="line"><span class="keyword">my</span> $vip = <span class="string">'10.0.0.55/24'</span>;</span><br><span class="line"><span class="keyword">my</span> $key = <span class="string">'1'</span>;</span><br><span class="line"><span class="keyword">my</span> $ssh_start_vip = <span class="string">"/sbin/ifconfig eth1:$key $vip"</span>;</span><br><span class="line"><span class="keyword">my</span> $ssh_stop_vip = <span class="string">"/sbin/ifconfig eth1:$key down"</span>;</span><br><span class="line"><span class="comment">#--------------------- 结束关注的区域------------------------</span></span><br><span class="line"></span><br><span class="line">GetOptions(</span><br><span class="line">    <span class="string">'command=s'</span>          =&gt; \$command,</span><br><span class="line">    <span class="string">'ssh_user=s'</span>         =&gt; \$ssh_user,</span><br><span class="line">    <span class="string">'orig_master_host=s'</span> =&gt; \$orig_master_host,</span><br><span class="line">    <span class="string">'orig_master_ip=s'</span>   =&gt; \$orig_master_ip,</span><br><span class="line">    <span class="string">'orig_master_port=i'</span> =&gt; \$orig_master_port,</span><br><span class="line">    <span class="string">'new_master_host=s'</span>  =&gt; \$new_master_host,</span><br><span class="line">    <span class="string">'new_master_ip=s'</span>    =&gt; \$new_master_ip,</span><br><span class="line">    <span class="string">'new_master_port=i'</span>  =&gt; \$new_master_port,</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">exit</span> &amp;main();</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">sub</span> <span class="title">main</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">print</span> <span class="string">"\n\nIN SCRIPT TEST====$ssh_stop_vip==$ssh_start_vip===\n\n"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ( $command eq <span class="string">"stop"</span> || $command eq <span class="string">"stopssh"</span> ) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">my</span> $exit_code = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">eval</span> &#123;</span><br><span class="line">            <span class="keyword">print</span> <span class="string">"Disabling the VIP on old master: $orig_master_host \n"</span>;</span><br><span class="line">            &amp;stop_vip();</span><br><span class="line">            $exit_code = <span class="number">0</span>;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">if</span> ($@) &#123;</span><br><span class="line">            <span class="keyword">warn</span> <span class="string">"Got Error: $@\n"</span>;</span><br><span class="line">            <span class="keyword">exit</span> $exit_code;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">exit</span> $exit_code;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">elsif</span> ( $command eq <span class="string">"start"</span> ) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">my</span> $exit_code = <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">eval</span> &#123;</span><br><span class="line">            <span class="keyword">print</span> <span class="string">"Enabling the VIP - $vip on the new master - $new_master_host \n"</span>;</span><br><span class="line">            &amp;start_vip();</span><br><span class="line">            $exit_code = <span class="number">0</span>;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">if</span> ($@) &#123;</span><br><span class="line">            <span class="keyword">warn</span> $@;</span><br><span class="line">            <span class="keyword">exit</span> $exit_code;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">exit</span> $exit_code;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">elsif</span> ( $command eq <span class="string">"status"</span> ) &#123;</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"Checking the Status of the script.. OK \n"</span>;</span><br><span class="line">        <span class="keyword">exit</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        &amp;usage();</span><br><span class="line">        <span class="keyword">exit</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">sub</span> <span class="title">start_vip</span>() </span>&#123;</span><br><span class="line">    <span class="string">`ssh $ssh_user\@$new_master_host \" $ssh_start_vip \"`</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">sub</span> <span class="title">stop_vip</span>() </span>&#123;</span><br><span class="line">     <span class="keyword">return</span> <span class="number">0</span>  <span class="keyword">unless</span>  ($ssh_user);</span><br><span class="line">    <span class="string">`ssh $ssh_user\@$orig_master_host \" $ssh_stop_vip \"`</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">sub</span> <span class="title">usage</span> </span>&#123;</span><br><span class="line">    <span class="keyword">print</span></span><br><span class="line">    <span class="string">"Usage: master_ip_failover --command=start|stop|stopssh|status --orig_master_host=host --orig_master_ip=ip --orig_master_port=port --new_master_host=host --new_master_ip=ip --new_master_port=port\n"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>VIP实现步骤</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">VIP(Manager节点)</span><br><span class="line">(1)添加一个vip切换脚本(使用的是源码包中的模板)</span><br><span class="line">vi  /usr/local/bin/master_ip_failover(如上脚本)</span><br><span class="line">修改如下内容:</span><br><span class="line">my $vip = &apos;10.0.0.55/24&apos;;</span><br><span class="line">my $key = &apos;1&apos;;</span><br><span class="line">my $ssh_start_vip = &quot;/sbin/ifconfig eth0:$key $vip&quot;;</span><br><span class="line">my $ssh_stop_vip = &quot;/sbin/ifconfig eth0:$key down&quot;;</span><br><span class="line"></span><br><span class="line">(2)在配置文件中加入调用定制的脚本</span><br><span class="line">vi /etc/mha/app1.cnf</span><br><span class="line">添加：</span><br><span class="line">master_ip_failover_script=/usr/local/bin/master_ip_failover</span><br><span class="line"></span><br><span class="line">(3)重启MHA</span><br><span class="line">重启mha</span><br><span class="line">masterha_stop --conf=/etc/mha/app1.cnf</span><br><span class="line">nohup masterha_manager --conf=/etc/mha/app1.cnf --remove_dead_master_conf --ignore_last_failover &lt; /dev/null &gt; /var/log/mha/app1/manager.log 2&gt;&amp;1 &amp;</span><br><span class="line"></span><br><span class="line">(4)(主库)第一次需要手工添加VIP到配置文件指定的网卡别名上(eth0:1)</span><br><span class="line">ifconfig eth0:1 10.0.0.55/24</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">(5)测试vip漂移</span><br><span class="line">   关闭master节点,查看新主节点的ip信息</span><br></pre></td></tr></table></figure>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">VIP(Manager节点)</span><br><span class="line">(<span class="number">1</span>)添加一个vip切换脚本(使用的是源码包中的模板)</span><br><span class="line">vi  <span class="regexp">/usr/</span>local<span class="regexp">/bin/</span>master_ip_failover(如上脚本)</span><br><span class="line">修改如下内容:</span><br><span class="line">my $vip = <span class="string">'10.0.0.55/24'</span>;</span><br><span class="line">my $key = <span class="string">'1'</span>;</span><br><span class="line">my $ssh_start_vip = <span class="string">"/sbin/ifconfig eth0:$key $vip"</span>;</span><br><span class="line">my $ssh_stop_vip = <span class="string">"/sbin/ifconfig eth0:$key down"</span>;</span><br><span class="line"></span><br><span class="line">(<span class="number">2</span>)在配置文件中加入调用定制的脚本</span><br><span class="line">vi <span class="regexp">/etc/</span>mha/app1.cnf</span><br><span class="line">添加：</span><br><span class="line">master_ip_failover_script=<span class="regexp">/usr/</span>local<span class="regexp">/bin/</span>master_ip_failover</span><br><span class="line"></span><br><span class="line">(<span class="number">3</span>)重启MHA</span><br><span class="line">重启mha</span><br><span class="line">masterha_stop --conf=<span class="regexp">/etc/</span>mha/app1.cnf</span><br><span class="line">nohup masterha_manager --conf=<span class="regexp">/etc/</span>mha<span class="regexp">/app1.cnf --remove_dead_master_conf --ignore_last_failover &lt; /</span>dev<span class="regexp">/null &gt; /</span>var<span class="regexp">/log/</span>mha<span class="regexp">/app1/</span>manager.log <span class="number">2</span>&gt;&amp;<span class="number">1</span> &amp;</span><br><span class="line"></span><br><span class="line">(<span class="number">4</span>)(主库)第一次需要手工添加VIP到配置文件指定的网卡别名上(<span class="string">eth0:</span><span class="number">1</span>)</span><br><span class="line">ifconfig <span class="string">eth0:</span><span class="number">1</span> <span class="number">10.0</span><span class="number">.0</span><span class="number">.55</span>/<span class="number">24</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">(<span class="number">5</span>)测试vip漂移</span><br><span class="line">   关闭master节点,查看新主节点的ip信息</span><br></pre></td></tr></table></figure>
 
 <p>Binlog Server(新配置一个节点)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">（1）准备一台新的mysql实例（53），必须开启GTID</span><br><span class="line">（2）建立binlog接收目录，不能和主库binlog目录一样</span><br><span class="line">	mkdir /data/mysql/binlog/ </span><br><span class="line">	chown -R mysql.mysql /data/</span><br><span class="line">	</span><br><span class="line">（3）在app1.cnf中开启binlogserver功能</span><br><span class="line">	[binlog1]</span><br><span class="line">	no_master=1</span><br><span class="line">	hostname=10.0.0.53        ---&gt;db03那台机器</span><br><span class="line">	master_binlog_dir=/data/mysql/binlog/  	---&gt;我们自定义的binlog保存目录</span><br><span class="line"></span><br><span class="line">（4）开启binlog接收（接收主库的binlog）</span><br><span class="line">	cd  /data/mysql/binlog/</span><br><span class="line">	mysqlbinlog  -R --host=10.0.0.51 --user=mha --password=mha --raw  --stop-never mysql-bin.000001 &amp;</span><br><span class="line">	</span><br><span class="line">（5）停止MHA</span><br><span class="line">	/usr/bin/masterha_stop --conf=/etc/mha/app1.cnf</span><br><span class="line">	</span><br><span class="line">（6）开启MHA</span><br><span class="line">nohup masterha_manager --conf=/etc/mha/app1.cnf --remove_dead_master_conf --ignore_last_failover &lt; /dev/null &gt; /var/log/mha/app1/manager.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">（1）准备一台新的mysql实例（53），必须开启GTID</span><br><span class="line">（2）建立binlog接收目录，不能和主库binlog目录一样</span><br><span class="line">	mkdir <span class="string">/data/mysql/binlog/</span> </span><br><span class="line">	chown -R mysql.mysql <span class="string">/data/</span></span><br><span class="line">	</span><br><span class="line">（3）在app1.cnf中开启binlogserver功能</span><br><span class="line">	[binlog1]</span><br><span class="line">	no_master=1</span><br><span class="line">	hostname=10.0.0.53        <span class="params">---</span>&gt;db03那台机器</span><br><span class="line">	master_binlog_dir=<span class="string">/data/mysql/binlog/</span>  	<span class="params">---</span>&gt;我们自定义的binlog保存目录</span><br><span class="line"></span><br><span class="line">（4）开启binlog接收（接收主库的binlog）</span><br><span class="line">	<span class="keyword">cd</span>  <span class="string">/data/mysql/binlog/</span></span><br><span class="line">	mysqlbinlog  -R <span class="params">--host=10</span>.0.0.51 <span class="params">--user=mha</span> <span class="params">--password=mha</span> <span class="params">--raw</span>  <span class="params">--stop-never</span> mysql-bin.000001 &amp;</span><br><span class="line">	</span><br><span class="line">（5）停止MHA</span><br><span class="line">	<span class="string">/usr/bin/masterha_stop</span> <span class="params">--conf=/etc/mha/app1</span>.cnf</span><br><span class="line">	</span><br><span class="line">（6）开启MHA</span><br><span class="line">nohup masterha_manager <span class="params">--conf=/etc/mha/app1</span>.cnf <span class="params">--remove_dead_master_conf</span> <span class="params">--ignore_last_failover</span> &lt; <span class="string">/dev/null</span> &gt; <span class="string">/var/log/mha/app1/manager.log</span> 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
 
 <p>发送邮件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">3.send_report</span><br><span class="line">(1)准备发邮件的脚本</span><br><span class="line"></span><br><span class="line">(2)将准备好的脚本添加到mha配置文件中,让其调用</span><br><span class="line">	vi /etc/mha/app1.cnf</span><br><span class="line">	report_script=/usr/local/bin/send</span><br><span class="line">	</span><br><span class="line">（3）停止MHA</span><br><span class="line">		/usr/bin/masterha_stop --conf=/etc/mha/app1.cnf</span><br><span class="line">		</span><br><span class="line">（4）开启MHA</span><br><span class="line">	nohup masterha_manager --conf=/etc/mha/app1.cnf --remove_dead_master_conf --ignore_last_failover &lt; /dev/null &gt; /var/log/mha/app1/manager.log 2&gt;&amp;1 &amp;</span><br><span class="line">		</span><br><span class="line">(5) 关闭主库,看警告邮件</span><br></pre></td></tr></table></figure>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3.</span>send_report</span><br><span class="line">(<span class="number">1</span>)准备发邮件的脚本</span><br><span class="line"></span><br><span class="line">(<span class="number">2</span>)将准备好的脚本添加到mha配置文件中,让其调用</span><br><span class="line">	vi <span class="regexp">/etc/</span>mha/app1.cnf</span><br><span class="line">	report_script=<span class="regexp">/usr/</span>local<span class="regexp">/bin/</span>send</span><br><span class="line">	</span><br><span class="line">（<span class="number">3</span>）停止MHA</span><br><span class="line">		<span class="regexp">/usr/</span>bin<span class="regexp">/masterha_stop --conf=/</span>etc<span class="regexp">/mha/</span>app1.cnf</span><br><span class="line">		</span><br><span class="line">（<span class="number">4</span>）开启MHA</span><br><span class="line">	nohup masterha_manager --conf=<span class="regexp">/etc/</span>mha<span class="regexp">/app1.cnf --remove_dead_master_conf --ignore_last_failover &lt; /</span>dev<span class="regexp">/null &gt; /</span>var<span class="regexp">/log/</span>mha<span class="regexp">/app1/</span>manager.log <span class="number">2</span>&gt;&amp;<span class="number">1</span> &amp;</span><br><span class="line">		</span><br><span class="line">(<span class="number">5</span>) 关闭主库,看警告邮件</span><br></pre></td></tr></table></figure>
 
 <p>MHA架构不足</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">MHA: 浪费机器</span><br><span class="line"></span><br><span class="line">读写分离:将读操作落到从节点上去运行,主库只负责写入</span><br><span class="line"></span><br><span class="line">mysql中间件实现: atlas(奇虎360开源)</span><br><span class="line"></span><br><span class="line">facebook:</span><br><span class="line">多套MHA集群,分片(分布式系统一类:分布式存储)</span><br></pre></td></tr></table></figure>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">MHA</span>: 浪费机器</span><br><span class="line"></span><br><span class="line">读写分离:将读操作落到从节点上去运行,主库只负责写入</span><br><span class="line"></span><br><span class="line"><span class="attribute">mysql中间件实现</span>: atlas(奇虎360开源)</span><br><span class="line"></span><br><span class="line"><span class="attribute">facebook:</span></span><br><span class="line"><span class="attribute">多套MHA集群,分片(分布式系统一类:分布式存储)</span></span><br></pre></td></tr></table></figure>
 
 
       
@@ -454,7 +458,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2019 John Doe
+    		&copy; 2019 Gary Wu
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -558,18 +562,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">apache</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">目录浏览</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">高级运维</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Apache</a>
               </li>
              
@@ -598,19 +590,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CDH</a>
+                <a href="javascript:void(0)" class="js-tag color5">高级运维</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JDBC</a>
+                <a href="javascript:void(0)" class="js-tag color2">apache</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">MySQL驱动</a>
+                <a href="javascript:void(0)" class="js-tag color5">目录浏览</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">KAFKA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CDH</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -623,6 +619,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">大数据</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">JDBC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">MySQL驱动</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -658,18 +662,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Cacti流量叠加图形</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Cacti整合图形</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Graph</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">cacti</a>
               </li>
              
@@ -687,6 +679,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">监控</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">bugzilla</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">bugs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Cacti流量叠加图形</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Cacti整合图形</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Graph</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -711,14 +723,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">SCL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">bugzilla</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">bugs</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -766,14 +770,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">DNS TLS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Public DNS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">shadowsocks</a>
               </li>
              
@@ -783,6 +779,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">加密代理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">DNS TLS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Public DNS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -862,18 +866,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ESXI PATH</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ESXI补丁升级</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">ESXI6.7</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">VMware vSphere Client</a>
               </li>
              
@@ -886,6 +878,26 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CPU</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">虚拟化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ESXI PATH</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ESXI补丁升级</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">ESXI6.7</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Openstack</a>
               </li>
              
@@ -895,22 +907,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">混杂模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CPU</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">虚拟化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">磁盘置备</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">disk</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -934,6 +930,26 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Gentoo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">编译内核</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">NFS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">磁盘置备</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">disk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">fuse</a>
               </li>
              
@@ -947,18 +963,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">HDFS挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Gentoo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">编译内核</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">NFS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1022,6 +1026,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">HTTP状态码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">301</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">302</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
@@ -1050,27 +1066,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">HTTP状态码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">301</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">302</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">hdfs空文件</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hadoop fs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1094,6 +1094,22 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Jenkins</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">持续集成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">持续交付</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
@@ -1110,26 +1126,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jenkins</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">持续集成</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">持续交付</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Jumpserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">备机部署</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">分区</a>
               </li>
              
@@ -1142,7 +1138,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">分区热迁移</a>
+                <a href="javascript:void(0)" class="js-tag color1">Jumpserver</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">备机部署</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1151,6 +1151,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">KAFKA版本升级</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">分区热迁移</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1210,18 +1214,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">文件句柄</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">lsof</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">空间释放</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">限速方案</a>
               </li>
              
@@ -1242,6 +1234,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">文件句柄</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">lsof</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">空间释放</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">logstash</a>
               </li>
              
@@ -1255,6 +1259,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Mars</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">HDFS Shell</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1274,15 +1286,27 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Mars</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">HDFS Shell</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Hadoop</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">spark</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">tez</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">单用户模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">多用户模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">远程模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1307,26 +1331,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">机架感知</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">spark</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">tez</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">单用户模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">多用户模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">远程模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1366,15 +1370,27 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">yarn</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hive</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">HQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">yarn</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mongodb</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">mongodump</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mongorestore</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1398,15 +1414,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mongodb</a>
+                <a href="javascript:void(0)" class="js-tag color3">STARTUP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">mongodump</a>
+                <a href="javascript:void(0)" class="js-tag color1">副本集成员</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mongorestore</a>
+                <a href="javascript:void(0)" class="js-tag color5">成员状态</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1426,15 +1442,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">STARTUP</a>
+                <a href="javascript:void(0)" class="js-tag color5">MongoDB集群</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">副本集成员</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">成员状态</a>
+                <a href="javascript:void(0)" class="js-tag color2">mongo集群管理维护</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1462,14 +1474,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">MongoDB集群</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mongo集群管理维护</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">MySQL主从切换</a>
               </li>
              
@@ -1478,19 +1482,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">MySQL主从复制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">全备还原</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">主从同步</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">主从复制监控</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">MySQL主从复制</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">全备还原</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1522,14 +1526,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">慢查询</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">mysqldumpslow</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">dba</a>
               </li>
              
@@ -1547,6 +1543,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">MySQL多实例远程登陆</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">慢查询</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">mysqldumpslow</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1586,14 +1590,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ntp</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">upstream</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">proxy-set-header</a>
               </li>
              
@@ -1606,15 +1602,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">favicon.ico</a>
+                <a href="javascript:void(0)" class="js-tag color4">upstream</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">access</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">log</a>
+                <a href="javascript:void(0)" class="js-tag color4">ntp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1631,6 +1623,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">垃圾UA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">favicon.ico</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">access</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">log</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1670,6 +1674,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Glance</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">openstack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">PHP</a>
               </li>
              
@@ -1682,11 +1694,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Glance</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">openstack</a>
+                <a href="javascript:void(0)" class="js-tag color4">Keystone</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1699,10 +1707,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">OpenStack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Keystone</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1738,23 +1742,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">RAID5</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">parted</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">fdisk</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">RAID5</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">阵列卡</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">缓存</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1778,6 +1774,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">阵列卡</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">缓存</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">rabbitmq</a>
               </li>
              
@@ -1798,15 +1802,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">NTP时间同步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NAT</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">双线</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">NTP时间同步</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1898,6 +1902,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">YARN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">NodeManager</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">udp</a>
               </li>
              
@@ -1915,14 +1927,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">GFW</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">YARN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">NodeManager</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1958,10 +1962,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">rrdtool</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">微信</a>
               </li>
              
@@ -1970,11 +1970,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">weathermap</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">plugin</a>
+                <a href="javascript:void(0)" class="js-tag color3">rrdtool</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1987,6 +1983,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">将Bites转换为Mbits</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">weathermap</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">plugin</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">脚本</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2014,7 +2022,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">脚本</a>
+                <a href="javascript:void(0)" class="js-tag color1">socket.gaierror</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2023,10 +2031,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">socket.gaierror</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2074,14 +2078,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">wget</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">curl请求url不使用缓存</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">unix</a>
               </li>
              
@@ -2098,7 +2094,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">wget</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">curl请求url不使用缓存</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">docker机制</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">exit退出码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2115,14 +2127,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">emerge命令</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">exit退出码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2158,18 +2162,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">磁盘挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">fstab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">开机挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">gentoo</a>
               </li>
              
@@ -2179,6 +2171,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">install</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">磁盘挂载</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">fstab</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">开机挂载</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2210,10 +2214,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hadoop用户</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">fs</a>
               </li>
              
@@ -2226,6 +2226,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">hadoop用户</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">sersync</a>
               </li>
              
@@ -2235,6 +2239,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">实时同步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell脚本</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ip自动配置</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2254,18 +2266,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell脚本</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ip自动配置</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">jumpserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">topic</a>
               </li>
              
@@ -2274,23 +2274,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">keepalived</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LVS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">多实例</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">双主</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">脑裂</a>
+                <a href="javascript:void(0)" class="js-tag color1">jumpserver</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2311,6 +2295,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">nopasswd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">keepalived</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">LVS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">多实例</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">双主</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">脑裂</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2338,10 +2342,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">dd</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">rm恢复</a>
               </li>
              
@@ -2358,23 +2358,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">dd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统备份</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统恢复</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Logstash</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Tomcat</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2387,6 +2379,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">rubydebug</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Logstash</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Tomcat</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2406,6 +2410,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">mongod</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">二进制版</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">mariadb主从</a>
               </li>
              
@@ -2419,14 +2431,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">主从复制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mongod</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">二进制版</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2446,11 +2450,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">主从复制错误</a>
+                <a href="javascript:void(0)" class="js-tag color5">主键错误</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">主键错误</a>
+                <a href="javascript:void(0)" class="js-tag color2">主从复制错误</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2459,14 +2463,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">同步个别库</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mysql slave</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">relay log</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2482,7 +2478,39 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">mysql slave</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">relay log</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">root远程登录</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">优化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">socket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ulimit</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">tcp_nopush</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">tcp_nodelay</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2546,38 +2574,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">优化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">socket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ulimit</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">tcp_nopush</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">tcp_nodelay</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">uri</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">屏蔽接口</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Ddos</a>
               </li>
              
@@ -2590,11 +2586,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">proxy cache</a>
+                <a href="javascript:void(0)" class="js-tag color4">uri</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Nginx缓存清理</a>
+                <a href="javascript:void(0)" class="js-tag color5">屏蔽接口</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2603,6 +2599,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">443</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">proxy cache</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Nginx缓存清理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2626,18 +2630,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SOCKS5</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">proxychains</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">命令代理</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">ps</a>
               </li>
              
@@ -2647,6 +2639,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">进程运行时间</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">SOCKS5</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">proxychains</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">命令代理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2662,14 +2666,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">tar</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">crontab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">自重启</a>
               </li>
              
@@ -2678,11 +2674,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">rsync限速</a>
+                <a href="javascript:void(0)" class="js-tag color4">tar</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">bwlimit</a>
+                <a href="javascript:void(0)" class="js-tag color3">crontab</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2691,6 +2687,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">模板</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">rsync限速</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">bwlimit</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2703,6 +2707,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">zabbix_agent</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">salt-master高可用</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">salt-API</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">salt-ssh</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2734,18 +2750,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">salt-master高可用</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">salt-API</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">salt-ssh</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统瓶颈</a>
               </li>
              
@@ -2766,6 +2770,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">变量传参</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell传参</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">小数判断</a>
               </li>
              
@@ -2775,14 +2787,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">浮点数判断</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">变量传参</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell传参</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2814,6 +2818,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">expect</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Ros</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">FTP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">dsa</a>
               </li>
              
@@ -2830,15 +2846,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">expect</a>
+                <a href="javascript:void(0)" class="js-tag color1">supervisor</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Ros</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">FTP</a>
+                <a href="javascript:void(0)" class="js-tag color4">supervisorctl</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2851,14 +2863,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">pid</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">supervisor</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">supervisorctl</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2898,19 +2902,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">vim</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">中文乱码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">vmware</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">虚拟机克隆</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vim</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">中文乱码</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2926,10 +2930,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">告警</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">traceroute</a>
               </li>
              
@@ -2939,6 +2939,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">MTR</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">告警</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2966,6 +2970,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">zk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">触发器</a>
               </li>
              
@@ -2979,10 +2987,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">触发器表达式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">zk</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3002,11 +3006,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">云计算</a>
+                <a href="javascript:void(0)" class="js-tag color5">Rack</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Rack</a>
+                <a href="javascript:void(0)" class="js-tag color4">云计算</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3022,6 +3026,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CDN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">IM</a>
               </li>
              
@@ -3031,18 +3039,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">开源IM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CDN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">jq</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">筛选大于某个值的数据到文件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3066,11 +3062,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">taskset</a>
+                <a href="javascript:void(0)" class="js-tag color3">jq</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">PID</a>
+                <a href="javascript:void(0)" class="js-tag color4">筛选大于某个值的数据到文件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3082,15 +3078,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">zerotier</a>
+                <a href="javascript:void(0)" class="js-tag color3">taskset</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">内网穿透</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">全球畅联</a>
+                <a href="javascript:void(0)" class="js-tag color4">PID</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3114,7 +3106,31 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">zerotier</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">内网穿透</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">全球畅联</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">RocketMQ</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">分布式消息队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nameserver</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">brokerserver</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3134,39 +3150,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">分布式消息队列</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">nameserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">brokerserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">外部命令</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">内部命令</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">只读模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">fatab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mount</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">remount</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3186,19 +3174,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OpenSSL</a>
+                <a href="javascript:void(0)" class="js-tag color5">只读模式</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">CA</a>
+                <a href="javascript:void(0)" class="js-tag color1">fatab</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SSL证书</a>
+                <a href="javascript:void(0)" class="js-tag color1">mount</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">csr</a>
+                <a href="javascript:void(0)" class="js-tag color3">remount</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3215,6 +3203,22 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">免交互</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">OpenSSL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">CA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">SSL证书</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">csr</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3242,6 +3246,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">SHELL编程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">kill</a>
               </li>
              
@@ -3254,7 +3262,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">SHELL编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">Yum源</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3263,10 +3271,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Shell脚本</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Yum源</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3286,15 +3290,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">consumer</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">内存</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">使用率</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">consumer</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3398,6 +3402,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">flock</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LVS连接数监控</a>
               </li>
              
@@ -3411,10 +3419,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">InActConn</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">flock</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3590,6 +3594,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">autostart</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">libvert</a>
               </li>
              
@@ -3599,10 +3607,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">动态迁移</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">autostart</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3758,6 +3762,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">lvs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">4层负载均衡</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">DR模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">LNMP</a>
               </li>
              
@@ -3775,18 +3791,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">mysql数据库迁移</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">lvs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">4层负载均衡</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">DR模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3846,15 +3850,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">pass_proxy</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">htpasswd</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">日志切割</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">pass_proxy</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4154,15 +4158,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">磁盘</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">awk数组</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">磁盘管理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">磁盘</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4198,19 +4202,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">redis cluster</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">ssdb</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">LevelDB</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">redis cluster</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4254,14 +4258,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">codis集群</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">memcache</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">GlusterFS</a>
               </li>
              
@@ -4271,6 +4267,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NAS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">codis集群</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">memcache</a>
               </li>
              
               <li class="article-tag-list-item">

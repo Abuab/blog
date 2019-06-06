@@ -6,22 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://garywu520.github.io/blog">
-  <title>Bind9主从同步部署 | Hexo</title>
+  <title>Bind9主从同步部署 | Gary Wu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="12之前没有独立写过Bind主从同步，只有与LVS相结合的文章，故今天给补充完善。本次测试版本：bind-9.10.8-P1.tar.gz">
 <meta name="keywords" content="高级运维,DNS,bind,bind9,bind主从,迭代DNS,root hint">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Bind9主从同步部署">
 <meta property="og:url" content="https://garywu520.github.io/blog/2018/08/17/Bind9主从同步部署/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Gary Wu">
 <meta property="og:description" content="12之前没有独立写过Bind主从同步，只有与LVS相结合的文章，故今天给补充完善。本次测试版本：bind-9.10.8-P1.tar.gz">
-<meta property="og:locale" content="default">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2018-08-22T03:12:34.726Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Bind9主从同步部署">
 <meta name="twitter:description" content="12之前没有独立写过Bind主从同步，只有与LVS相结合的文章，故今天给补充完善。本次测试版本：bind-9.10.8-P1.tar.gz">
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="Gary Wu" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -47,12 +47,14 @@
 <div class="overlay" style="background: #4d4d4d"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
-		<a href="/blog/" class="profilepic">
-			<img src="https://raw.githubusercontent.com/discant520/garywu/master/images/touxiang.jpg" class="js-avatar">
+		<a href="/blog" class="profilepic">
+			<img src="http://pics0.baidu.com/feed/bd315c6034a85edf5f5b8bff8cf9cf27df54754d.png?token=c9857ef7ee73e1ffc14d3e3c4e9e3be3&amp;s=1E5207CAC64234F44988148A0300B090" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/blog/">John Doe</a></h1>
+		  <h1 class="header-author"><a href="/blog">Gary Wu</a></h1>
 		</hgroup>
+		
+		<p class="header-subtitle">运维架构师 - 从入门到放弃</p>
 		
 
 		<nav class="header-menu">
@@ -106,11 +108,13 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="https://raw.githubusercontent.com/discant520/garywu/master/images/touxiang.jpg" class="js-avatar">
+				<img src="http://pics0.baidu.com/feed/bd315c6034a85edf5f5b8bff8cf9cf27df54754d.png?token=c9857ef7ee73e1ffc14d3e3c4e9e3be3&amp;s=1E5207CAC64234F44988148A0300B090" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">John Doe</h1>
+			  <h1 class="header-author js-header-author">Gary Wu</h1>
 			</hgroup>
+			
+			<p class="header-subtitle"><i class="icon icon-quo-left"></i>运维架构师 - 从入门到放弃<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -185,102 +189,102 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">之前没有独立写过Bind主从同步，只有与LVS相结合的文章，故今天给补充完善。</span><br><span class="line">本次测试版本：bind-9.10.8-P1.tar.gz</span><br></pre></td></tr></table></figure>
+        <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">之前没有独立写过<span class="selector-tag">Bind</span>主从同步，只有与<span class="selector-tag">LVS</span>相结合的文章，故今天给补充完善。</span><br><span class="line">本次测试版本：<span class="selector-tag">bind-9</span><span class="selector-class">.10</span><span class="selector-class">.8-P1</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span></span><br></pre></td></tr></table></figure>
 
 <a id="more"></a>
 
 <h2 id="部署Bind主DNS"><a href="#部署Bind主DNS" class="headerlink" title="部署Bind主DNS"></a>部署Bind主DNS</h2><p>编译安装</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf bind-9.10.8-P1.tar.gz</span><br><span class="line">cd  bind-9.10.8-P1</span><br><span class="line">mkdir -p /etc/bind</span><br><span class="line">./configure --enable-threads --with-libtool --with-ecdsa --prefix=/usr/local/web2016/bind  \     --sysconfdir=/etc/bind</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf <span class="built_in">bind</span>-9.10.8-P1.tar.gz</span><br><span class="line"><span class="built_in">cd</span>  <span class="built_in">bind</span>-9.10.8-P1</span><br><span class="line">mkdir -p /etc/<span class="built_in">bind</span></span><br><span class="line">./configure --<span class="built_in">enable</span>-threads --with-libtool --with-ecdsa --prefix=/usr/<span class="built_in">local</span>/web2016/<span class="built_in">bind</span>  \     --sysconfdir=/etc/<span class="built_in">bind</span></span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">编译参数，释义：</span><br><span class="line">--enable-threads    #开启多线程支持</span><br><span class="line">--with-libtool      #使用GNU libtool</span><br><span class="line">--with-ecdsa        #开启ECDSA算法支持</span><br></pre></td></tr></table></figure>
+<figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">编译参数，释义：</span><br><span class="line"><span class="built_in">--enable-threads</span>    <span class="comment">#开启多线程支持</span></span><br><span class="line"><span class="built_in">--with-libtool</span>      <span class="comment">#使用GNU libtool</span></span><br><span class="line"><span class="built_in">--with-ecdsa</span>        <span class="comment">#开启ECDSA算法支持</span></span><br></pre></td></tr></table></figure>
 
 <p>命令软链</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -sv /usr/local/web2016/bind/sbin/* /sbin/</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -sv <span class="regexp">/usr/</span>local<span class="regexp">/web2016/</span>bind<span class="regexp">/sbin/</span>* <span class="regexp">/sbin/</span></span><br></pre></td></tr></table></figure>
 
 <p>创建傀儡用户named</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd -r -m  -d /var/named -s /sbin/nologin named</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd -r -m  -d <span class="regexp">/var/</span>named -s <span class="regexp">/sbin/</span>nologin named</span><br></pre></td></tr></table></figure>
 
 <p>创建rndc key</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">伪造数据，便于生成key</span><br><span class="line">echo &quot;1111111111qqqqqqqqqqqqwwwwwwwwwwwwwwddddddddddffffffhjFD21AAAAAAAAAAA&quot; &gt;/root/random</span><br><span class="line"></span><br><span class="line">生成key</span><br><span class="line">rndc-confgen -r /root/random -s 127.0.0.1 -p 953 &gt;/etc/bind/rndc.conf</span><br></pre></td></tr></table></figure>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">伪造数据，便于生成<span class="type">key</span></span><br><span class="line">echo <span class="string">"1111111111qqqqqqqqqqqqwwwwwwwwwwwwwwddddddddddffffffhjFD21AAAAAAAAAAA"</span> &gt;/root/random</span><br><span class="line"></span><br><span class="line">生成<span class="type">key</span></span><br><span class="line">rndc-confgen -r /root/random -s <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> -p <span class="number">953</span> &gt;/etc/bind/rndc.conf</span><br></pre></td></tr></table></figure>
 
 <p>手动创建named.conf</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/bind/named.conf</span><br></pre></td></tr></table></figure>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/<span class="keyword">bind</span>/<span class="keyword">named</span>.conf</span><br></pre></td></tr></table></figure>
 
-<h4 id="named-conf配置文件"><a href="#named-conf配置文件" class="headerlink" title="named.conf配置文件"></a>named.conf配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">options &#123;</span><br><span class="line">   listen-on port 53 &#123; any; &#125;;      //定义DNS监听在哪个端口上</span><br><span class="line">   directory &quot;/etc/bind/zone&quot;;   //指定DNS区域文件存放目录</span><br><span class="line">   pid-file &quot;/etc/bind/var/named.pid&quot;;   //指定named进程pid文件路径</span><br><span class="line">   allow-query &#123; any; &#125;;          //允许哪些主机可以使用该DNS来解析</span><br><span class="line">   Dump-file &quot;/etc/bind/var/binddump.db&quot;;     //缓存转储位置</span><br><span class="line">   Statistics-file &quot;/etc/bind/stats/named_stats&quot;;   //记录统计信息的文件</span><br><span class="line">   zone-statistics yes;  //收集在服务器所有域的统计数据, 这些统计数据可以通过使用rndc stats来访问</span><br><span class="line">   memstatistics-file &quot;/etc/bind/stats/mem_stats&quot;;     //记录内存使用的统计信息</span><br><span class="line">   empty-zones-enable yes;   </span><br><span class="line">   forwarders &#123;114.114.114.114;8.8.8.8;&#125;;   //定义上游DNS[需要配置root hint顶级域]</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">key &quot;rndc-key&quot; &#123;               //注：这个key部分是通过rndc-confgen命令生成的配置，贴过来</span><br><span class="line">        algorithm hmac-md5;</span><br><span class="line">        secret &quot;7RJEIT7ztJyXy9A8ZlvZJA==&quot;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">controls &#123;              //配置rndc权限与端口</span><br><span class="line">       inet 127.0.0.1 port 953</span><br><span class="line">       allow &#123; 127.0.0.1; &#125; keys &#123; &quot;rndc-key&quot;; &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">logging &#123;</span><br><span class="line">  channel warning &#123;        //warnning可以改为default_debug（默认）。</span><br><span class="line">     file &quot;/var/log/named/named.log&quot; versions 10 size 10m;    //日志文件路径/版本/大小</span><br><span class="line">     severity warning;     //如果warnning改为default_debug后，此处可以改为severity dynamic</span><br><span class="line">     print-category yes;   //日志中是否需要写入日志类别</span><br><span class="line">     print-severity yes;   //日志中是否需要写入消息级别</span><br><span class="line">     print-time yes;       //日志中是否需要写入时间</span><br><span class="line">    &#125;;</span><br><span class="line">     channel general_dns &#123;               //绑定其他log channel通道，以下保持默认即可。</span><br><span class="line">     file &quot;/var/log/named/named2.log&quot; versions 10 size 100m;</span><br><span class="line">     severity info;    </span><br><span class="line">     print-category yes; </span><br><span class="line">     print-severity yes;</span><br><span class="line">     print-time yes;</span><br><span class="line">    &#125;;</span><br><span class="line">  category default &#123;</span><br><span class="line">    warning;</span><br><span class="line">  &#125;;</span><br><span class="line">  category queries &#123;</span><br><span class="line">    general_dns;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">include &quot;/etc/bind/view/*.conf&quot;;   #加载Bind视图文件</span><br></pre></td></tr></table></figure>
+<h4 id="named-conf配置文件"><a href="#named-conf配置文件" class="headerlink" title="named.conf配置文件"></a>named.conf配置文件</h4><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">options &#123;</span><br><span class="line">   <span class="section">listen</span>-on port <span class="number">53</span> &#123; any; &#125;;      <span class="comment">//定义DNS监听在哪个端口上</span></span><br><span class="line">   directory <span class="string">"/etc/bind/zone"</span>;   <span class="comment">//指定DNS区域文件存放目录</span></span><br><span class="line">   pid-file <span class="string">"/etc/bind/var/named.pid"</span>;   <span class="comment">//指定named进程pid文件路径</span></span><br><span class="line">   allow-query &#123; any; &#125;;          <span class="comment">//允许哪些主机可以使用该DNS来解析</span></span><br><span class="line">   Dump-file <span class="string">"/etc/bind/var/binddump.db"</span>;     <span class="comment">//缓存转储位置</span></span><br><span class="line">   Statistics-file <span class="string">"/etc/bind/stats/named_stats"</span>;   <span class="comment">//记录统计信息的文件</span></span><br><span class="line">   zone-statistics yes;  <span class="comment">//收集在服务器所有域的统计数据, 这些统计数据可以通过使用rndc stats来访问</span></span><br><span class="line">   memstatistics-file <span class="string">"/etc/bind/stats/mem_stats"</span>;     <span class="comment">//记录内存使用的统计信息</span></span><br><span class="line">   empty-zones-enable yes;   </span><br><span class="line">   forwarders &#123;<span class="number">114.114</span><span class="number">.114</span><span class="number">.114</span>;<span class="number">8.8</span><span class="number">.8</span><span class="number">.8</span>;&#125;;   <span class="comment">//定义上游DNS[需要配置root hint顶级域]</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">key</span> <span class="string">"rndc-key"</span> &#123;               <span class="comment">//注：这个key部分是通过rndc-confgen命令生成的配置，贴过来</span></span><br><span class="line">        algorithm hmac-md5;</span><br><span class="line">        secret <span class="string">"7RJEIT7ztJyXy9A8ZlvZJA=="</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">controls &#123;              <span class="comment">//配置rndc权限与端口</span></span><br><span class="line">       inet <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> port <span class="number">953</span></span><br><span class="line">       allow &#123; <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>; &#125; keys &#123; <span class="string">"rndc-key"</span>; &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">logging &#123;</span><br><span class="line">  channel warning &#123;        <span class="comment">//warnning可以改为default_debug（默认）。</span></span><br><span class="line">     file <span class="string">"/var/log/named/named.log"</span> versions <span class="number">10</span> size <span class="number">10</span>m;    <span class="comment">//日志文件路径/版本/大小</span></span><br><span class="line">     severity warning;     <span class="comment">//如果warnning改为default_debug后，此处可以改为severity dynamic</span></span><br><span class="line">     print-category yes;   <span class="comment">//日志中是否需要写入日志类别</span></span><br><span class="line">     print-severity yes;   <span class="comment">//日志中是否需要写入消息级别</span></span><br><span class="line">     print-time yes;       <span class="comment">//日志中是否需要写入时间</span></span><br><span class="line">    &#125;;</span><br><span class="line">     channel general_dns &#123;               <span class="comment">//绑定其他log channel通道，以下保持默认即可。</span></span><br><span class="line">     file <span class="string">"/var/log/named/named2.log"</span> versions <span class="number">10</span> size <span class="number">100</span>m;</span><br><span class="line">     severity info;    </span><br><span class="line">     print-category yes; </span><br><span class="line">     print-severity yes;</span><br><span class="line">     print-time yes;</span><br><span class="line">    &#125;;</span><br><span class="line">  category <span class="section">default</span> &#123;</span><br><span class="line">    warning;</span><br><span class="line">  &#125;;</span><br><span class="line">  category queries &#123;</span><br><span class="line">    general_dns;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">include <span class="string">"/etc/bind/view/*.conf"</span>;   #加载Bind视图文件</span><br></pre></td></tr></table></figure>
 
 <p>创建相关目录并授权</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /etc/bind/zone</span><br><span class="line">mkdir -p /etc/bind/var</span><br><span class="line">mkdir -p /etc/bind/stats</span><br><span class="line">mkdir -p /etc/bind/view</span><br><span class="line">mkdir -p /var/log/named</span><br><span class="line">wget https://www.internic.net/domain/named.root</span><br><span class="line">chown -R named.named /etc/bind</span><br><span class="line">chown -R named.named /var/log</span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mkdir -<span class="selector-tag">p</span> /etc/bind/zone</span><br><span class="line">mkdir -<span class="selector-tag">p</span> /etc/bind/var</span><br><span class="line">mkdir -<span class="selector-tag">p</span> /etc/bind/stats</span><br><span class="line">mkdir -<span class="selector-tag">p</span> /etc/bind/view</span><br><span class="line">mkdir -<span class="selector-tag">p</span> /var/log/named</span><br><span class="line">wget https:<span class="comment">//www.internic.net/domain/named.root</span></span><br><span class="line">chown -R named<span class="selector-class">.named</span> /etc/bind</span><br><span class="line">chown -R named<span class="selector-class">.named</span> /var/log</span><br></pre></td></tr></table></figure>
 
 <p>配置Bind视图</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/bind/view/view.conf</span><br></pre></td></tr></table></figure>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">vim</span> /etc/bind/<span class="keyword">view</span>/<span class="keyword">view</span>.<span class="keyword">conf</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">view &quot;View&quot; &#123;                  //配置bind视图功能</span><br><span class="line">  zone &quot;test.org&quot; &#123;</span><br><span class="line">        type    master;     </span><br><span class="line">        file    &quot;test.org.zone&quot;;    //定义zone区域文件</span><br><span class="line">        allow-transfer &#123;            //允许本区域传输给特定的从DNS服务器</span><br><span class="line">                10.0.10.102;      //slave IP,可以存在多个slave</span><br><span class="line">        &#125;;</span><br><span class="line">        notify  yes;  </span><br><span class="line">        also-notify &#123;</span><br><span class="line">               10.0.10.102;</span><br><span class="line">        &#125;;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  zone &quot;10.0.10.in-addr.arpa&quot; &#123;     //定义反向zone区域文件</span><br><span class="line">        type    master;</span><br><span class="line">        file    &quot;10.0.10.zone&quot;;     </span><br><span class="line">        allow-transfer &#123;               //允许本区域传输给特定的从DNS服务器</span><br><span class="line">                10.0.10.102;         //slave IP,可以存在多个slave</span><br><span class="line">                       &#125;;</span><br><span class="line">        notify  yes;</span><br><span class="line">        also-notify &#123;</span><br><span class="line">                10.0.10.102;</span><br><span class="line">        &#125;;</span><br><span class="line">   &#125;;</span><br><span class="line">   </span><br><span class="line">   zone &quot;.&quot; in &#123;</span><br><span class="line">         type hint;</span><br><span class="line">         file &quot;/etc/bind/named.root&quot;</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">注：参数释义</span><br><span class="line">(1)区域类型有type：｛hint（根）| master（主dns）| slave（辅助DNS）| forward（转发）｝</span><br><span class="line">(2)notify如果是yes（默认），当一个授权的服务器修改了一个域后，DNS NOTIFY信息被发送给列在also-notify选项中的服务器。</span><br></pre></td></tr></table></figure>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">view <span class="string">"View"</span> &#123;                  <span class="comment">//配置bind视图功能</span></span><br><span class="line">  zone <span class="string">"test.org"</span> &#123;</span><br><span class="line">        type    master;     </span><br><span class="line">        file    <span class="string">"test.org.zone"</span>;    <span class="comment">//定义zone区域文件</span></span><br><span class="line">        allow-transfer &#123;            <span class="comment">//允许本区域传输给特定的从DNS服务器</span></span><br><span class="line">                <span class="number">10.0</span><span class="number">.10</span><span class="number">.102</span>;      <span class="comment">//slave IP,可以存在多个slave</span></span><br><span class="line">        &#125;;</span><br><span class="line">        notify  yes;  </span><br><span class="line">        also-notify &#123;</span><br><span class="line">               <span class="number">10.0</span><span class="number">.10</span><span class="number">.102</span>;</span><br><span class="line">        &#125;;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  zone <span class="string">"10.0.10.in-addr.arpa"</span> &#123;     <span class="comment">//定义反向zone区域文件</span></span><br><span class="line">        type    master;</span><br><span class="line">        file    <span class="string">"10.0.10.zone"</span>;     </span><br><span class="line">        allow-transfer &#123;               <span class="comment">//允许本区域传输给特定的从DNS服务器</span></span><br><span class="line">                <span class="number">10.0</span><span class="number">.10</span><span class="number">.102</span>;         <span class="comment">//slave IP,可以存在多个slave</span></span><br><span class="line">                       &#125;;</span><br><span class="line">        notify  yes;</span><br><span class="line">        also-notify &#123;</span><br><span class="line">                <span class="number">10.0</span><span class="number">.10</span><span class="number">.102</span>;</span><br><span class="line">        &#125;;</span><br><span class="line">   &#125;;</span><br><span class="line">   </span><br><span class="line">   zone <span class="string">"."</span> in &#123;</span><br><span class="line">         type hint;</span><br><span class="line">         file <span class="string">"/etc/bind/named.root"</span></span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">注：参数释义</span><br><span class="line">(<span class="number">1</span>)区域类型有type：｛hint（根）| master（主dns）| slave（辅助DNS）| forward（转发）｝</span><br><span class="line">(<span class="number">2</span>)notify如果是yes（默认），当一个授权的服务器修改了一个域后，DNS NOTIFY信息被发送给列在also-notify选项中的服务器。</span><br></pre></td></tr></table></figure>
 
 <p>正向区域和反向区域文件配置-略</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">需要在zone子目录定义，因为配置文件zone目录是这么写的</span><br><span class="line"></span><br><span class="line">zone配置文件语法检查</span><br><span class="line">named-checkzone test.org /etc/bind/zone/test.org.zone</span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">需要在zone子目录定义，因为配置文件zone目录是这么写的</span><br><span class="line"></span><br><span class="line">zone配置文件语法检查</span><br><span class="line">named-checkzone test<span class="selector-class">.org</span> /etc/bind/zone/test<span class="selector-class">.org</span><span class="selector-class">.zone</span></span><br></pre></td></tr></table></figure>
 
 <p>最后再次修改目录权限</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chown -R named.named /etc/bind</span><br><span class="line">chown -R named.named /var/log</span><br></pre></td></tr></table></figure>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chown -R <span class="keyword">named</span>.<span class="keyword">named</span> /etc/<span class="keyword">bind</span></span><br><span class="line">chown -R <span class="keyword">named</span>.<span class="keyword">named</span> /var/<span class="built_in">log</span></span><br></pre></td></tr></table></figure>
 
 <p>启动服务</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">named.conf配置文件检查</span><br><span class="line">named-checkconf /etc/bind/named.conf</span><br></pre></td></tr></table></figure>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">named</span>.conf配置文件检查</span><br><span class="line"><span class="keyword">named</span>-checkconf /etc/<span class="keyword">bind</span>/<span class="keyword">named</span>.conf</span><br></pre></td></tr></table></figure>
 
 <p>named启动脚本[建议使用supervisor]</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/named</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/etc/i</span>nit.d<span class="regexp">/named</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash </span><br><span class="line"># named a network name service. </span><br><span class="line"># chkconfig: 345 35 75 </span><br><span class="line"># description: a name server</span><br><span class="line"></span><br><span class="line">if [ `id -u` -ne 0 ];then</span><br><span class="line">   echo &quot;ERROR:For bind to port 53,must run as root.&quot; </span><br><span class="line">   exit 1</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">case &quot;$1&quot; in</span><br><span class="line">start)</span><br><span class="line">        if [ -x /usr/sbin/named ]; then</span><br><span class="line">  /usr/sbin/named -c /etc/bind/named.conf -u named &amp;&amp; echo . &amp;&amp; echo &apos;BIND9.10 server started&apos; </span><br><span class="line">        fi</span><br><span class="line">      ;;</span><br><span class="line"> </span><br><span class="line">stop)</span><br><span class="line">       kill `cat /etc/named/var/named.pid` &amp;&amp; echo . &amp;&amp; echo &apos;BIND9.10 server stopped&apos; </span><br><span class="line">       ;;</span><br><span class="line"></span><br><span class="line">restart)</span><br><span class="line">       echo . </span><br><span class="line">       echo &quot;Restart BIND9.10 server&quot; </span><br><span class="line">       $0 stop</span><br><span class="line">       sleep 10</span><br><span class="line">       $0 start</span><br><span class="line">       ;;</span><br><span class="line"></span><br><span class="line">reload)</span><br><span class="line">      /usr/sbin/rndc reload</span><br><span class="line">      ;;</span><br><span class="line"></span><br><span class="line">status)</span><br><span class="line">     /usr/sbin/rndc status</span><br><span class="line">     ;;</span><br><span class="line"></span><br><span class="line">*)</span><br><span class="line">     echo &quot;$0 start | stop | restart |reload |status&quot; </span><br><span class="line">     ;;</span><br><span class="line">esac</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash </span></span><br><span class="line"><span class="comment"># named a network name service. </span></span><br><span class="line"><span class="comment"># chkconfig: 345 35 75 </span></span><br><span class="line"><span class="comment"># description: a name server</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ `id -u` -ne 0 ];<span class="keyword">then</span></span><br><span class="line">   <span class="built_in">echo</span> <span class="string">"ERROR:For bind to port 53,must run as root."</span> </span><br><span class="line">   <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> <span class="string">"<span class="variable">$1</span>"</span> <span class="keyword">in</span></span><br><span class="line">start)</span><br><span class="line">        <span class="keyword">if</span> [ -x /usr/sbin/named ]; <span class="keyword">then</span></span><br><span class="line">  /usr/sbin/named -c /etc/<span class="built_in">bind</span>/named.conf -u named &amp;&amp; <span class="built_in">echo</span> . &amp;&amp; <span class="built_in">echo</span> <span class="string">'BIND9.10 server started'</span> </span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line">      ;;</span><br><span class="line"> </span><br><span class="line">stop)</span><br><span class="line">       <span class="built_in">kill</span> `cat /etc/named/var/named.pid` &amp;&amp; <span class="built_in">echo</span> . &amp;&amp; <span class="built_in">echo</span> <span class="string">'BIND9.10 server stopped'</span> </span><br><span class="line">       ;;</span><br><span class="line"></span><br><span class="line">restart)</span><br><span class="line">       <span class="built_in">echo</span> . </span><br><span class="line">       <span class="built_in">echo</span> <span class="string">"Restart BIND9.10 server"</span> </span><br><span class="line">       <span class="variable">$0</span> stop</span><br><span class="line">       sleep 10</span><br><span class="line">       <span class="variable">$0</span> start</span><br><span class="line">       ;;</span><br><span class="line"></span><br><span class="line">reload)</span><br><span class="line">      /usr/sbin/rndc reload</span><br><span class="line">      ;;</span><br><span class="line"></span><br><span class="line">status)</span><br><span class="line">     /usr/sbin/rndc status</span><br><span class="line">     ;;</span><br><span class="line"></span><br><span class="line">*)</span><br><span class="line">     <span class="built_in">echo</span> <span class="string">"<span class="variable">$0</span> start | stop | restart |reload |status"</span> </span><br><span class="line">     ;;</span><br><span class="line"><span class="keyword">esac</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">chmod  755  /etc/init.d/named</span><br><span class="line">chkconfig --add named</span><br><span class="line">chkconfig named on</span><br><span class="line"></span><br><span class="line">/etc/init.d/named start </span><br><span class="line">/etc/init.d/named status</span><br></pre></td></tr></table></figure>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">chmod  <span class="number">755</span>  /etc/init.d/<span class="keyword">named</span></span><br><span class="line">chkconfig --add <span class="keyword">named</span></span><br><span class="line">chkconfig <span class="keyword">named</span> on</span><br><span class="line"></span><br><span class="line">/etc/init.d/<span class="keyword">named</span> start </span><br><span class="line">/etc/init.d/<span class="keyword">named</span> <span class="keyword">status</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="进程查看"><a href="#进程查看" class="headerlink" title="进程查看"></a>进程查看</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@ns1 ~]# netstat -lntup|grep 53</span><br><span class="line">tcp    0     0 10.0.10.101:53          0.0.0.0:*       LISTEN      2361/named          </span><br><span class="line">tcp    0     0 127.0.0.1:53            0.0.0.0:*       LISTEN      2361/named          </span><br><span class="line">tcp    0     0 127.0.0.1:953           0.0.0.0:*       LISTEN      2361/named          </span><br><span class="line">tcp6   0     0 :::53                   :::*            LISTEN      2361/named          </span><br><span class="line">udp    0     0 10.0.10.101:53          0.0.0.0:*      2361/named          </span><br><span class="line">udp    0     0 127.0.0.1:53            0.0.0.0:*      2361/named          </span><br><span class="line">udp6   0     0 :::53                   :::*           2361/named</span><br></pre></td></tr></table></figure>
+<h4 id="进程查看"><a href="#进程查看" class="headerlink" title="进程查看"></a>进程查看</h4><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@ns1 ~]# netstat -lntup|grep <span class="number">53</span></span><br><span class="line">tcp    <span class="number">0</span>     <span class="number">0</span> <span class="number">10.0</span><span class="meta">.10</span><span class="meta">.101</span>:<span class="number">53</span>          <span class="number">0.0</span><span class="meta">.0</span><span class="meta">.0</span>:*       LISTEN      <span class="number">2361</span>/named          </span><br><span class="line">tcp    <span class="number">0</span>     <span class="number">0</span> <span class="number">127.0</span><span class="meta">.0</span><span class="meta">.1</span>:<span class="number">53</span>            <span class="number">0.0</span><span class="meta">.0</span><span class="meta">.0</span>:*       LISTEN      <span class="number">2361</span>/named          </span><br><span class="line">tcp    <span class="number">0</span>     <span class="number">0</span> <span class="number">127.0</span><span class="meta">.0</span><span class="meta">.1</span>:<span class="number">953</span>           <span class="number">0.0</span><span class="meta">.0</span><span class="meta">.0</span>:*       LISTEN      <span class="number">2361</span>/named          </span><br><span class="line">tcp6   <span class="number">0</span>     <span class="number">0</span> :::<span class="number">53</span>                   :::*            LISTEN      <span class="number">2361</span>/named          </span><br><span class="line">udp    <span class="number">0</span>     <span class="number">0</span> <span class="number">10.0</span><span class="meta">.10</span><span class="meta">.101</span>:<span class="number">53</span>          <span class="number">0.0</span><span class="meta">.0</span><span class="meta">.0</span>:*      <span class="number">2361</span>/named          </span><br><span class="line">udp    <span class="number">0</span>     <span class="number">0</span> <span class="number">127.0</span><span class="meta">.0</span><span class="meta">.1</span>:<span class="number">53</span>            <span class="number">0.0</span><span class="meta">.0</span><span class="meta">.0</span>:*      <span class="number">2361</span>/named          </span><br><span class="line">udp6   <span class="number">0</span>     <span class="number">0</span> :::<span class="number">53</span>                   :::*           <span class="number">2361</span>/named</span><br></pre></td></tr></table></figure>
 
-<h4 id="日常管理"><a href="#日常管理" class="headerlink" title="日常管理"></a>日常管理</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/named start 启动服务</span><br><span class="line">rndc status  查看服务运行情况</span><br><span class="line">rndc reload  重新加载区域文件</span><br><span class="line">rndc stop    停止DNS服务</span><br></pre></td></tr></table></figure>
+<h4 id="日常管理"><a href="#日常管理" class="headerlink" title="日常管理"></a>日常管理</h4><figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/<span class="keyword">named</span> start 启动服务</span><br><span class="line">rndc <span class="keyword">status</span>  查看服务运行情况</span><br><span class="line">rndc reload  重新加载区域文件</span><br><span class="line">rndc <span class="keyword">stop</span>    停止DNS服务</span><br></pre></td></tr></table></figure>
 
 <h2 id="部署bind从DNS"><a href="#部署bind从DNS" class="headerlink" title="部署bind从DNS"></a>部署bind从DNS</h2><p>编译安装</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">略</span><br></pre></td></tr></table></figure>
 
 <p>主配置文件/etc/bind/named.conf</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">options &#123;</span><br><span class="line">   listen-on port 53 &#123; any; &#125;;      //定义DNS监听在哪个端口上</span><br><span class="line">   directory &quot;/etc/bind/zone&quot;;   //指定DNS区域文件存放目录</span><br><span class="line">   pid-file &quot;/etc/bind/var/named.pid&quot;;   //指定named进程pid文件路径</span><br><span class="line">   allow-query &#123; any; &#125;;          //允许哪些主机可以使用该DNS来解析</span><br><span class="line">   Dump-file &quot;/etc/bind/var/binddump.db&quot;;     //缓存转储位置</span><br><span class="line">   Statistics-file &quot;/etc/bind/stats/named_stats&quot;;   //记录统计信息的文件</span><br><span class="line">   zone-statistics yes;  //收集在服务器所有域的统计数据, 这些统计数据可以通过使用rndc stats来访问</span><br><span class="line">   memstatistics-file &quot;/etc/bind/stats/mem_stats&quot;;     //记录内存使用的统计信息</span><br><span class="line">   empty-zones-enable yes;   </span><br><span class="line">   forwarders &#123;114.114.114.114;8.8.8.8;&#125;;   //定义上游DNS[需要配置root hint顶级域]</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">key &quot;rndc-key&quot; &#123;               //注：这个key部分是通过rndc-confgen命令生成的配置，贴过来</span><br><span class="line">        algorithm hmac-md5;</span><br><span class="line">        secret &quot;7RJEIT7ztJyXy9A8ZlvZJA==&quot;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">controls &#123;              //配置rndc权限与端口</span><br><span class="line">       inet 127.0.0.1 port 953</span><br><span class="line">       allow &#123; 127.0.0.1; &#125; keys &#123; &quot;rndc-key&quot;; &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">logging &#123;</span><br><span class="line">  channel warning &#123;        //warnning可以改为default_debug（默认）。</span><br><span class="line">     file &quot;/var/log/named/named.log&quot; versions 10 size 10m;    //日志文件路径/版本/大小</span><br><span class="line">     severity warning;     //如果warnning改为default_debug后，此处可以改为severity dynamic</span><br><span class="line">     print-category yes;   //日志中是否需要写入日志类别</span><br><span class="line">     print-severity yes;   //日志中是否需要写入消息级别</span><br><span class="line">     print-time yes;       //日志中是否需要写入时间</span><br><span class="line">    &#125;;</span><br><span class="line">     channel general_dns &#123;               //绑定其他log channel通道，以下保持默认即可。</span><br><span class="line">     file &quot;/var/log/named/named2.log&quot; versions 10 size 100m;</span><br><span class="line">     severity info;    </span><br><span class="line">     print-category yes; </span><br><span class="line">     print-severity yes;</span><br><span class="line">     print-time yes;</span><br><span class="line">    &#125;;</span><br><span class="line">  category default &#123;</span><br><span class="line">    warning;</span><br><span class="line">  &#125;;</span><br><span class="line">  category queries &#123;</span><br><span class="line">    general_dns;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">include &quot;/etc/bind/view/*.conf&quot;;   #加载Bind视图文件</span><br></pre></td></tr></table></figure>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">options &#123;</span><br><span class="line">   <span class="section">listen</span>-on port <span class="number">53</span> &#123; any; &#125;;      <span class="comment">//定义DNS监听在哪个端口上</span></span><br><span class="line">   directory <span class="string">"/etc/bind/zone"</span>;   <span class="comment">//指定DNS区域文件存放目录</span></span><br><span class="line">   pid-file <span class="string">"/etc/bind/var/named.pid"</span>;   <span class="comment">//指定named进程pid文件路径</span></span><br><span class="line">   allow-query &#123; any; &#125;;          <span class="comment">//允许哪些主机可以使用该DNS来解析</span></span><br><span class="line">   Dump-file <span class="string">"/etc/bind/var/binddump.db"</span>;     <span class="comment">//缓存转储位置</span></span><br><span class="line">   Statistics-file <span class="string">"/etc/bind/stats/named_stats"</span>;   <span class="comment">//记录统计信息的文件</span></span><br><span class="line">   zone-statistics yes;  <span class="comment">//收集在服务器所有域的统计数据, 这些统计数据可以通过使用rndc stats来访问</span></span><br><span class="line">   memstatistics-file <span class="string">"/etc/bind/stats/mem_stats"</span>;     <span class="comment">//记录内存使用的统计信息</span></span><br><span class="line">   empty-zones-enable yes;   </span><br><span class="line">   forwarders &#123;<span class="number">114.114</span><span class="number">.114</span><span class="number">.114</span>;<span class="number">8.8</span><span class="number">.8</span><span class="number">.8</span>;&#125;;   <span class="comment">//定义上游DNS[需要配置root hint顶级域]</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">key</span> <span class="string">"rndc-key"</span> &#123;               <span class="comment">//注：这个key部分是通过rndc-confgen命令生成的配置，贴过来</span></span><br><span class="line">        algorithm hmac-md5;</span><br><span class="line">        secret <span class="string">"7RJEIT7ztJyXy9A8ZlvZJA=="</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">controls &#123;              <span class="comment">//配置rndc权限与端口</span></span><br><span class="line">       inet <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> port <span class="number">953</span></span><br><span class="line">       allow &#123; <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>; &#125; keys &#123; <span class="string">"rndc-key"</span>; &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">logging &#123;</span><br><span class="line">  channel warning &#123;        <span class="comment">//warnning可以改为default_debug（默认）。</span></span><br><span class="line">     file <span class="string">"/var/log/named/named.log"</span> versions <span class="number">10</span> size <span class="number">10</span>m;    <span class="comment">//日志文件路径/版本/大小</span></span><br><span class="line">     severity warning;     <span class="comment">//如果warnning改为default_debug后，此处可以改为severity dynamic</span></span><br><span class="line">     print-category yes;   <span class="comment">//日志中是否需要写入日志类别</span></span><br><span class="line">     print-severity yes;   <span class="comment">//日志中是否需要写入消息级别</span></span><br><span class="line">     print-time yes;       <span class="comment">//日志中是否需要写入时间</span></span><br><span class="line">    &#125;;</span><br><span class="line">     channel general_dns &#123;               <span class="comment">//绑定其他log channel通道，以下保持默认即可。</span></span><br><span class="line">     file <span class="string">"/var/log/named/named2.log"</span> versions <span class="number">10</span> size <span class="number">100</span>m;</span><br><span class="line">     severity info;    </span><br><span class="line">     print-category yes; </span><br><span class="line">     print-severity yes;</span><br><span class="line">     print-time yes;</span><br><span class="line">    &#125;;</span><br><span class="line">  category <span class="section">default</span> &#123;</span><br><span class="line">    warning;</span><br><span class="line">  &#125;;</span><br><span class="line">  category queries &#123;</span><br><span class="line">    general_dns;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">include <span class="string">"/etc/bind/view/*.conf"</span>;   #加载Bind视图文件</span><br></pre></td></tr></table></figure>
 
 <p>编辑/etc/bind/rndc.key</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">key &quot;rndc-key&quot; &#123;               //与主DNS保持一致</span><br><span class="line">        algorithm hmac-md5;</span><br><span class="line">        secret &quot;7RJEIT7ztJyXy9A8ZlvZJA==&quot;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">key <span class="string">"rndc-key"</span> &#123;               //与主DNS保持一致</span><br><span class="line">        algorithm hmac-md5<span class="comment">;</span></span><br><span class="line">        secret <span class="string">"7RJEIT7ztJyXy9A8ZlvZJA=="</span><span class="comment">;</span></span><br><span class="line">&#125;<span class="comment">;</span></span><br></pre></td></tr></table></figure>
 
 <p>编辑/etc/bind/rndc.conf</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">key &quot;rndc-key&quot; &#123;               //与主DNS保持一致</span><br><span class="line">        algorithm hmac-md5;</span><br><span class="line">        secret &quot;7RJEIT7ztJyXy9A8ZlvZJA==&quot;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">options &#123;</span><br><span class="line">        default-key &quot;rndc-key&quot;;</span><br><span class="line">        default-server 127.0.0.1;</span><br><span class="line">        default-port 953;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">key</span> <span class="string">"rndc-key"</span> &#123;               <span class="comment">//与主DNS保持一致</span></span><br><span class="line">        algorithm hmac-md5;</span><br><span class="line">        secret <span class="string">"7RJEIT7ztJyXy9A8ZlvZJA=="</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">options &#123;</span><br><span class="line">        <span class="section">default</span>-<span class="type">key</span> <span class="string">"rndc-key"</span>;</span><br><span class="line">        <span class="section">default</span>-server <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>;</span><br><span class="line">        <span class="section">default</span>-port <span class="number">953</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <p>创建相关目录并授权</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /etc/bind/zone</span><br><span class="line">mkdir -p /etc/bind/var</span><br><span class="line">mkdir -p /etc/bind/stats</span><br><span class="line">mkdir -p /etc/bind/view</span><br><span class="line">mkdir -p /var/log/named</span><br><span class="line">wget https://www.internic.net/domain/named.root</span><br><span class="line">chown -R named.named /etc/bind</span><br><span class="line">chown -R named.named /var/log</span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mkdir -<span class="selector-tag">p</span> /etc/bind/zone</span><br><span class="line">mkdir -<span class="selector-tag">p</span> /etc/bind/var</span><br><span class="line">mkdir -<span class="selector-tag">p</span> /etc/bind/stats</span><br><span class="line">mkdir -<span class="selector-tag">p</span> /etc/bind/view</span><br><span class="line">mkdir -<span class="selector-tag">p</span> /var/log/named</span><br><span class="line">wget https:<span class="comment">//www.internic.net/domain/named.root</span></span><br><span class="line">chown -R named<span class="selector-class">.named</span> /etc/bind</span><br><span class="line">chown -R named<span class="selector-class">.named</span> /var/log</span><br></pre></td></tr></table></figure>
 
 <p>配置Bind视图</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/bind/view/view.conf</span><br></pre></td></tr></table></figure>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">vim</span> /etc/bind/<span class="keyword">view</span>/<span class="keyword">view</span>.<span class="keyword">conf</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">view &quot;View&quot; &#123;                  //配置bind视图功能</span><br><span class="line">  zone &quot;test.org&quot; &#123;</span><br><span class="line">        type    slave;          //正向区域文件配置为slave模式</span><br><span class="line">        masters &#123; 10.0.10.101; &#125;;  //此处要指定masterIP，可以添加多个</span><br><span class="line">        file    &quot;slave.test.org.zone&quot;;  //不需要对其创建，服务启动后，会自动同步过来</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  zone &quot;10.0.10.in-addr.arpa&quot; &#123;     </span><br><span class="line">        type    slave;                 //反向区域文件配置为slave模式</span><br><span class="line">        masters &#123; 10.0.10.101; &#125;;    //此处要指定masterIP，可以添加多个</span><br><span class="line">        file    &quot;slave.10.0.10.zone&quot;;     //不需要对其创建，服务启动后，会自动同步过来</span><br><span class="line">       </span><br><span class="line">   &#125;;</span><br><span class="line">   </span><br><span class="line">   zone &quot;.&quot; in &#123;</span><br><span class="line">         type hint;</span><br><span class="line">         file &quot;/etc/bind/named.root&quot;;</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">注：参数释义</span><br><span class="line">(1)区域类型有type：｛hint（根）| master（主dns）| slave（辅助DNS）| forward（转发）｝</span><br><span class="line">(2)file 可以指定一个文件路径</span><br></pre></td></tr></table></figure>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">view</span> <span class="string">"View"</span> &#123;                  <span class="comment">//配置bind视图功能</span></span><br><span class="line">  zone <span class="string">"test.org"</span> &#123;</span><br><span class="line">        <span class="keyword">type</span>    slave;          <span class="comment">//正向区域文件配置为slave模式</span></span><br><span class="line">        masters &#123; 10.0.10.101; &#125;;  <span class="comment">//此处要指定masterIP，可以添加多个</span></span><br><span class="line">        <span class="keyword">file</span>    <span class="string">"slave.test.org.zone"</span>;  <span class="comment">//不需要对其创建，服务启动后，会自动同步过来</span></span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  zone <span class="string">"10.0.10.in-addr.arpa"</span> &#123;     </span><br><span class="line">        <span class="keyword">type</span>    slave;                 <span class="comment">//反向区域文件配置为slave模式</span></span><br><span class="line">        masters &#123; 10.0.10.101; &#125;;    <span class="comment">//此处要指定masterIP，可以添加多个</span></span><br><span class="line">        <span class="keyword">file</span>    <span class="string">"slave.10.0.10.zone"</span>;     <span class="comment">//不需要对其创建，服务启动后，会自动同步过来</span></span><br><span class="line">       </span><br><span class="line">   &#125;;</span><br><span class="line">   </span><br><span class="line">   zone <span class="string">"."</span> <span class="keyword">in</span> &#123;</span><br><span class="line">         <span class="keyword">type</span> hint;</span><br><span class="line">         <span class="keyword">file</span> <span class="string">"/etc/bind/named.root"</span>;</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">注：参数释义</span><br><span class="line">(1)区域类型有<span class="keyword">type</span>：｛hint（根）| master（主dns）| slave（辅助DNS）| forward（转发）｝</span><br><span class="line">(2)<span class="keyword">file</span> 可以指定一个文件路径</span><br></pre></td></tr></table></figure>
 
 <p>最后再次修改目录权限</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chown -R named.named /etc/bind</span><br><span class="line">chown -R named.named /var/log</span><br></pre></td></tr></table></figure>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chown -R <span class="keyword">named</span>.<span class="keyword">named</span> /etc/<span class="keyword">bind</span></span><br><span class="line">chown -R <span class="keyword">named</span>.<span class="keyword">named</span> /var/<span class="built_in">log</span></span><br></pre></td></tr></table></figure>
 
 <p>启动服务</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">named.conf配置文件检查</span><br><span class="line">named-checkconf /etc/bind/named.conf</span><br></pre></td></tr></table></figure>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">named</span>.conf配置文件检查</span><br><span class="line"><span class="keyword">named</span>-checkconf /etc/<span class="keyword">bind</span>/<span class="keyword">named</span>.conf</span><br></pre></td></tr></table></figure>
 
 <p>named启动脚本[建议使用supervisor]</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/named</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/etc/i</span>nit.d<span class="regexp">/named</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash </span><br><span class="line"># named a network name service. </span><br><span class="line"># chkconfig: 345 35 75 </span><br><span class="line"># description: a name server</span><br><span class="line"></span><br><span class="line">if [ `id -u` -ne 0 ];then</span><br><span class="line">   echo &quot;ERROR:For bind to port 53,must run as root.&quot; </span><br><span class="line">   exit 1</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">case &quot;$1&quot; in</span><br><span class="line">start)</span><br><span class="line">        if [ -x /usr/sbin/named ]; then</span><br><span class="line">  /usr/sbin/named -c /etc/bind/named.conf -u named &amp;&amp; echo . &amp;&amp; echo &apos;BIND9.10 server started&apos; </span><br><span class="line">        fi</span><br><span class="line">      ;;</span><br><span class="line"> </span><br><span class="line">stop)</span><br><span class="line">       kill `cat /etc/named/var/named.pid` &amp;&amp; echo . &amp;&amp; echo &apos;BIND9.10 server stopped&apos; </span><br><span class="line">       ;;</span><br><span class="line"></span><br><span class="line">restart)</span><br><span class="line">       echo . </span><br><span class="line">       echo &quot;Restart BIND9.10 server&quot; </span><br><span class="line">       $0 stop</span><br><span class="line">       sleep 10</span><br><span class="line">       $0 start</span><br><span class="line">       ;;</span><br><span class="line"></span><br><span class="line">reload)</span><br><span class="line">      /usr/sbin/rndc reload</span><br><span class="line">      ;;</span><br><span class="line"></span><br><span class="line">status)</span><br><span class="line">     /usr/sbin/rndc status</span><br><span class="line">     ;;</span><br><span class="line"></span><br><span class="line">*)</span><br><span class="line">     echo &quot;$0 start | stop | restart |reload |status&quot; </span><br><span class="line">     ;;</span><br><span class="line">esac</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash </span></span><br><span class="line"><span class="comment"># named a network name service. </span></span><br><span class="line"><span class="comment"># chkconfig: 345 35 75 </span></span><br><span class="line"><span class="comment"># description: a name server</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ `id -u` -ne 0 ];<span class="keyword">then</span></span><br><span class="line">   <span class="built_in">echo</span> <span class="string">"ERROR:For bind to port 53,must run as root."</span> </span><br><span class="line">   <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> <span class="string">"<span class="variable">$1</span>"</span> <span class="keyword">in</span></span><br><span class="line">start)</span><br><span class="line">        <span class="keyword">if</span> [ -x /usr/sbin/named ]; <span class="keyword">then</span></span><br><span class="line">  /usr/sbin/named -c /etc/<span class="built_in">bind</span>/named.conf -u named &amp;&amp; <span class="built_in">echo</span> . &amp;&amp; <span class="built_in">echo</span> <span class="string">'BIND9.10 server started'</span> </span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line">      ;;</span><br><span class="line"> </span><br><span class="line">stop)</span><br><span class="line">       <span class="built_in">kill</span> `cat /etc/named/var/named.pid` &amp;&amp; <span class="built_in">echo</span> . &amp;&amp; <span class="built_in">echo</span> <span class="string">'BIND9.10 server stopped'</span> </span><br><span class="line">       ;;</span><br><span class="line"></span><br><span class="line">restart)</span><br><span class="line">       <span class="built_in">echo</span> . </span><br><span class="line">       <span class="built_in">echo</span> <span class="string">"Restart BIND9.10 server"</span> </span><br><span class="line">       <span class="variable">$0</span> stop</span><br><span class="line">       sleep 10</span><br><span class="line">       <span class="variable">$0</span> start</span><br><span class="line">       ;;</span><br><span class="line"></span><br><span class="line">reload)</span><br><span class="line">      /usr/sbin/rndc reload</span><br><span class="line">      ;;</span><br><span class="line"></span><br><span class="line">status)</span><br><span class="line">     /usr/sbin/rndc status</span><br><span class="line">     ;;</span><br><span class="line"></span><br><span class="line">*)</span><br><span class="line">     <span class="built_in">echo</span> <span class="string">"<span class="variable">$0</span> start | stop | restart |reload |status"</span> </span><br><span class="line">     ;;</span><br><span class="line"><span class="keyword">esac</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">chmod  755  /etc/init.d/named</span><br><span class="line">chkconfig --add named</span><br><span class="line">chkconfig named on</span><br><span class="line"></span><br><span class="line">/etc/init.d/named start </span><br><span class="line">/etc/init.d/named status</span><br></pre></td></tr></table></figure>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">chmod  <span class="number">755</span>  /etc/init.d/<span class="keyword">named</span></span><br><span class="line">chkconfig --add <span class="keyword">named</span></span><br><span class="line">chkconfig <span class="keyword">named</span> on</span><br><span class="line"></span><br><span class="line">/etc/init.d/<span class="keyword">named</span> start </span><br><span class="line">/etc/init.d/<span class="keyword">named</span> <span class="keyword">status</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="进程查看-1"><a href="#进程查看-1" class="headerlink" title="进程查看"></a>进程查看</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@ns2 ~]# netstat -lntup|grep 53</span><br></pre></td></tr></table></figure>
+<h4 id="进程查看-1"><a href="#进程查看-1" class="headerlink" title="进程查看"></a>进程查看</h4><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@ns2</span> ~]<span class="meta"># netstat -lntup|grep 53</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="日常管理-1"><a href="#日常管理-1" class="headerlink" title="日常管理"></a>日常管理</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/named start 启动服务</span><br><span class="line">rndc status  查看服务运行情况</span><br><span class="line">rndc reload  重新加载区域文件</span><br><span class="line">rndc stop    停止DNS服务</span><br></pre></td></tr></table></figure>
+<h4 id="日常管理-1"><a href="#日常管理-1" class="headerlink" title="日常管理"></a>日常管理</h4><figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/<span class="keyword">named</span> start 启动服务</span><br><span class="line">rndc <span class="keyword">status</span>  查看服务运行情况</span><br><span class="line">rndc reload  重新加载区域文件</span><br><span class="line">rndc <span class="keyword">stop</span>    停止DNS服务</span><br></pre></td></tr></table></figure>
 
-<h2 id="压力测试"><a href="#压力测试" class="headerlink" title="压力测试"></a>压力测试</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dig 分别测试主从DNS解析是否正常。</span><br><span class="line"></span><br><span class="line">接下来就可以进行压力测试了，工具很多，不进行列举</span><br></pre></td></tr></table></figure>
+<h2 id="压力测试"><a href="#压力测试" class="headerlink" title="压力测试"></a>压力测试</h2><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">dig </span>分别测试主从DNS解析是否正常。</span><br><span class="line"></span><br><span class="line">接下来就可以进行压力测试了，工具很多，不进行列举</span><br></pre></td></tr></table></figure>
 
 <h2 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h2><p>正向区域zone-格式参考</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$ORIGIN test.org.     ; //设置默认域</span><br><span class="line">$TTL 38404         ; default time to live</span><br><span class="line"></span><br><span class="line">@   IN   SOA     web.moxiu. admin.moxiu. (</span><br><span class="line">    20180814</span><br><span class="line">        10800</span><br><span class="line">        3600</span><br><span class="line">        604800</span><br><span class="line">        38400 )</span><br><span class="line"></span><br><span class="line">        NS      10.0.10.101.      ; 主DNS IP或域名</span><br><span class="line"></span><br><span class="line">        IN      NS      ns1.moxiu.</span><br><span class="line">        IN      NS      ns2.moxiu.</span><br><span class="line">ns1     IN      A       10.0.10.101</span><br><span class="line">ns2     IN      A       10.0.10.102</span><br><span class="line">cname   IN      CNAME   www.baidu.com.</span><br><span class="line">cwl     IN      A       1.1.1.1</span><br><span class="line">cwl2    IN      A       7.7.7.7</span><br></pre></td></tr></table></figure>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ORIGIN</span> test.org.     <span class="comment">; //设置默认域</span></span><br><span class="line"><span class="meta">$TTL</span> <span class="number">38404</span>         <span class="comment">; default time to live</span></span><br><span class="line"></span><br><span class="line">@   <span class="keyword">IN</span>   <span class="keyword">SOA</span>     web.moxiu. admin.moxiu. (</span><br><span class="line">    <span class="number">20180814</span></span><br><span class="line">        <span class="number">10800</span></span><br><span class="line">        <span class="number">3600</span></span><br><span class="line">        <span class="number">604800</span></span><br><span class="line">        <span class="number">38400</span> )</span><br><span class="line"></span><br><span class="line">        <span class="keyword">NS</span>      <span class="number">10.0.10.101</span>.      <span class="comment">; 主DNS IP或域名</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">IN</span>      <span class="keyword">NS</span>      ns1.moxiu.</span><br><span class="line">        <span class="keyword">IN</span>      <span class="keyword">NS</span>      ns2.moxiu.</span><br><span class="line">ns1     <span class="keyword">IN</span>      <span class="keyword">A</span>       <span class="number">10.0.10.101</span></span><br><span class="line">ns2     <span class="keyword">IN</span>      <span class="keyword">A</span>       <span class="number">10.0.10.102</span></span><br><span class="line">cname   <span class="keyword">IN</span>      <span class="keyword">CNAME</span>   www.baidu.com.</span><br><span class="line">cwl     <span class="keyword">IN</span>      <span class="keyword">A</span>       <span class="number">1.1.1.1</span></span><br><span class="line">cwl2    <span class="keyword">IN</span>      <span class="keyword">A</span>       <span class="number">7.7.7.7</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">其中:  $ORIGIN test.org.     ; //设置默认域</span><br><span class="line">这样的话，域名解析的时候需要：dig  cw1.test.org ; 当然默认域，也可以设置为&quot;teet.&quot;, 解析的时候这样：dig  cw1.teet.  也就是说解析二级域是由自己在这里控制的【顶级域是.】</span><br></pre></td></tr></table></figure>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">其中:  $<span class="keyword">ORIGIN </span>test.<span class="keyword">org. </span>    <span class="comment">; //设置默认域</span></span><br><span class="line">这样的话，域名解析的时候需要：<span class="keyword">dig </span> cw1.test.<span class="keyword">org </span><span class="comment">; 当然默认域，也可以设置为"teet.", 解析的时候这样：dig  cw1.teet.  也就是说解析二级域是由自己在这里控制的【顶级域是.】</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="关于优化"><a href="#关于优化" class="headerlink" title="关于优化"></a>关于优化</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">此配置文件能满足基本需求，如果需要将Bind效率提升，需要对参数进行优化。不在本篇讨论范围，Google解决。</span><br></pre></td></tr></table></figure>
+<h2 id="关于优化"><a href="#关于优化" class="headerlink" title="关于优化"></a>关于优化</h2><figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">此配置文件能满足基本需求，如果需要将<span class="keyword">Bind</span>效率提升，需要对参数进行优化。不在本篇讨论范围，Google解决。</span><br></pre></td></tr></table></figure>
 
 
       
@@ -456,7 +460,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2019 John Doe
+    		&copy; 2019 Gary Wu
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -560,18 +564,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">apache</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">目录浏览</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">高级运维</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Apache</a>
               </li>
              
@@ -600,19 +592,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CDH</a>
+                <a href="javascript:void(0)" class="js-tag color5">高级运维</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JDBC</a>
+                <a href="javascript:void(0)" class="js-tag color2">apache</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">MySQL驱动</a>
+                <a href="javascript:void(0)" class="js-tag color5">目录浏览</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">KAFKA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CDH</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -625,6 +621,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">大数据</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">JDBC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">MySQL驱动</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -660,18 +664,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Cacti流量叠加图形</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Cacti整合图形</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Graph</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">cacti</a>
               </li>
              
@@ -689,6 +681,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">监控</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">bugzilla</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">bugs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Cacti流量叠加图形</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Cacti整合图形</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Graph</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -713,14 +725,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">SCL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">bugzilla</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">bugs</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -768,14 +772,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">DNS TLS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Public DNS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">shadowsocks</a>
               </li>
              
@@ -785,6 +781,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">加密代理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">DNS TLS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Public DNS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -864,18 +868,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ESXI PATH</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ESXI补丁升级</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">ESXI6.7</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">VMware vSphere Client</a>
               </li>
              
@@ -888,6 +880,26 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CPU</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">虚拟化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ESXI PATH</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ESXI补丁升级</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">ESXI6.7</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Openstack</a>
               </li>
              
@@ -897,22 +909,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">混杂模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CPU</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">虚拟化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">磁盘置备</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">disk</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -936,6 +932,26 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Gentoo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">编译内核</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">NFS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">磁盘置备</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">disk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">fuse</a>
               </li>
              
@@ -949,18 +965,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">HDFS挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Gentoo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">编译内核</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">NFS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1024,6 +1028,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">HTTP状态码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">301</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">302</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
@@ -1052,27 +1068,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">HTTP状态码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">301</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">302</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">hdfs空文件</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hadoop fs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1096,6 +1096,22 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Jenkins</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">持续集成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">持续交付</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
@@ -1112,26 +1128,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jenkins</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">持续集成</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">持续交付</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Jumpserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">备机部署</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">分区</a>
               </li>
              
@@ -1144,7 +1140,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">分区热迁移</a>
+                <a href="javascript:void(0)" class="js-tag color1">Jumpserver</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">备机部署</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1153,6 +1153,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">KAFKA版本升级</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">分区热迁移</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1212,18 +1216,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">文件句柄</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">lsof</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">空间释放</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">限速方案</a>
               </li>
              
@@ -1244,6 +1236,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">文件句柄</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">lsof</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">空间释放</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">logstash</a>
               </li>
              
@@ -1257,6 +1261,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Mars</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">HDFS Shell</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1276,15 +1288,27 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Mars</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">HDFS Shell</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Hadoop</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">spark</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">tez</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">单用户模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">多用户模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">远程模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1309,26 +1333,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">机架感知</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">spark</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">tez</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">单用户模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">多用户模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">远程模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1368,15 +1372,27 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">yarn</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hive</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">HQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">yarn</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mongodb</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">mongodump</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mongorestore</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1400,15 +1416,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mongodb</a>
+                <a href="javascript:void(0)" class="js-tag color3">STARTUP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">mongodump</a>
+                <a href="javascript:void(0)" class="js-tag color1">副本集成员</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mongorestore</a>
+                <a href="javascript:void(0)" class="js-tag color5">成员状态</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1428,15 +1444,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">STARTUP</a>
+                <a href="javascript:void(0)" class="js-tag color5">MongoDB集群</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">副本集成员</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">成员状态</a>
+                <a href="javascript:void(0)" class="js-tag color2">mongo集群管理维护</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1464,14 +1476,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">MongoDB集群</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mongo集群管理维护</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">MySQL主从切换</a>
               </li>
              
@@ -1480,19 +1484,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">MySQL主从复制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">全备还原</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">主从同步</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">主从复制监控</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">MySQL主从复制</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">全备还原</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1524,14 +1528,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">慢查询</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">mysqldumpslow</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">dba</a>
               </li>
              
@@ -1549,6 +1545,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">MySQL多实例远程登陆</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">慢查询</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">mysqldumpslow</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1588,14 +1592,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ntp</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">upstream</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">proxy-set-header</a>
               </li>
              
@@ -1608,15 +1604,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">favicon.ico</a>
+                <a href="javascript:void(0)" class="js-tag color4">upstream</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">access</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">log</a>
+                <a href="javascript:void(0)" class="js-tag color4">ntp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1633,6 +1625,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">垃圾UA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">favicon.ico</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">access</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">log</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1672,6 +1676,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Glance</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">openstack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">PHP</a>
               </li>
              
@@ -1684,11 +1696,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Glance</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">openstack</a>
+                <a href="javascript:void(0)" class="js-tag color4">Keystone</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1701,10 +1709,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">OpenStack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Keystone</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1740,23 +1744,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">RAID5</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">parted</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">fdisk</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">RAID5</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">阵列卡</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">缓存</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1780,6 +1776,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">阵列卡</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">缓存</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">rabbitmq</a>
               </li>
              
@@ -1800,15 +1804,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">NTP时间同步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NAT</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">双线</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">NTP时间同步</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1900,6 +1904,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">YARN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">NodeManager</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">udp</a>
               </li>
              
@@ -1917,14 +1929,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">GFW</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">YARN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">NodeManager</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1960,10 +1964,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">rrdtool</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">微信</a>
               </li>
              
@@ -1972,11 +1972,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">weathermap</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">plugin</a>
+                <a href="javascript:void(0)" class="js-tag color3">rrdtool</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1989,6 +1985,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">将Bites转换为Mbits</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">weathermap</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">plugin</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">脚本</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2016,7 +2024,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">脚本</a>
+                <a href="javascript:void(0)" class="js-tag color1">socket.gaierror</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2025,10 +2033,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">socket.gaierror</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2076,14 +2080,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">wget</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">curl请求url不使用缓存</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">unix</a>
               </li>
              
@@ -2100,7 +2096,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">wget</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">curl请求url不使用缓存</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">docker机制</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">exit退出码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2117,14 +2129,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">emerge命令</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">exit退出码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2160,18 +2164,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">磁盘挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">fstab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">开机挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">gentoo</a>
               </li>
              
@@ -2181,6 +2173,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">install</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">磁盘挂载</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">fstab</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">开机挂载</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2212,10 +2216,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hadoop用户</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">fs</a>
               </li>
              
@@ -2228,6 +2228,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">hadoop用户</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">sersync</a>
               </li>
              
@@ -2237,6 +2241,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">实时同步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell脚本</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ip自动配置</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2256,18 +2268,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell脚本</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ip自动配置</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">jumpserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">topic</a>
               </li>
              
@@ -2276,23 +2276,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">keepalived</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LVS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">多实例</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">双主</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">脑裂</a>
+                <a href="javascript:void(0)" class="js-tag color1">jumpserver</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2313,6 +2297,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">nopasswd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">keepalived</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">LVS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">多实例</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">双主</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">脑裂</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2340,10 +2344,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">dd</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">rm恢复</a>
               </li>
              
@@ -2360,23 +2360,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">dd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统备份</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统恢复</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Logstash</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Tomcat</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2389,6 +2381,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">rubydebug</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Logstash</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Tomcat</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2408,6 +2412,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">mongod</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">二进制版</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">mariadb主从</a>
               </li>
              
@@ -2421,14 +2433,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">主从复制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mongod</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">二进制版</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2448,11 +2452,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">主从复制错误</a>
+                <a href="javascript:void(0)" class="js-tag color5">主键错误</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">主键错误</a>
+                <a href="javascript:void(0)" class="js-tag color2">主从复制错误</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2461,14 +2465,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">同步个别库</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mysql slave</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">relay log</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2484,7 +2480,39 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">mysql slave</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">relay log</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">root远程登录</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">优化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">socket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ulimit</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">tcp_nopush</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">tcp_nodelay</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2548,38 +2576,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">优化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">socket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ulimit</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">tcp_nopush</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">tcp_nodelay</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">uri</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">屏蔽接口</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Ddos</a>
               </li>
              
@@ -2592,11 +2588,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">proxy cache</a>
+                <a href="javascript:void(0)" class="js-tag color4">uri</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Nginx缓存清理</a>
+                <a href="javascript:void(0)" class="js-tag color5">屏蔽接口</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2605,6 +2601,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">443</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">proxy cache</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Nginx缓存清理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2628,18 +2632,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SOCKS5</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">proxychains</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">命令代理</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">ps</a>
               </li>
              
@@ -2649,6 +2641,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">进程运行时间</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">SOCKS5</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">proxychains</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">命令代理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2664,14 +2668,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">tar</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">crontab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">自重启</a>
               </li>
              
@@ -2680,11 +2676,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">rsync限速</a>
+                <a href="javascript:void(0)" class="js-tag color4">tar</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">bwlimit</a>
+                <a href="javascript:void(0)" class="js-tag color3">crontab</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2693,6 +2689,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">模板</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">rsync限速</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">bwlimit</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2705,6 +2709,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">zabbix_agent</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">salt-master高可用</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">salt-API</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">salt-ssh</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2736,18 +2752,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">salt-master高可用</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">salt-API</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">salt-ssh</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统瓶颈</a>
               </li>
              
@@ -2768,6 +2772,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">变量传参</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell传参</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">小数判断</a>
               </li>
              
@@ -2777,14 +2789,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">浮点数判断</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">变量传参</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell传参</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2816,6 +2820,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">expect</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Ros</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">FTP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">dsa</a>
               </li>
              
@@ -2832,15 +2848,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">expect</a>
+                <a href="javascript:void(0)" class="js-tag color1">supervisor</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Ros</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">FTP</a>
+                <a href="javascript:void(0)" class="js-tag color4">supervisorctl</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2853,14 +2865,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">pid</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">supervisor</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">supervisorctl</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2900,19 +2904,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">vim</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">中文乱码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">vmware</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">虚拟机克隆</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vim</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">中文乱码</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2928,10 +2932,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">告警</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">traceroute</a>
               </li>
              
@@ -2941,6 +2941,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">MTR</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">告警</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2968,6 +2972,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">zk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">触发器</a>
               </li>
              
@@ -2981,10 +2989,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">触发器表达式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">zk</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3004,11 +3008,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">云计算</a>
+                <a href="javascript:void(0)" class="js-tag color5">Rack</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Rack</a>
+                <a href="javascript:void(0)" class="js-tag color4">云计算</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3024,6 +3028,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CDN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">IM</a>
               </li>
              
@@ -3033,18 +3041,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">开源IM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CDN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">jq</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">筛选大于某个值的数据到文件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3068,11 +3064,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">taskset</a>
+                <a href="javascript:void(0)" class="js-tag color3">jq</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">PID</a>
+                <a href="javascript:void(0)" class="js-tag color4">筛选大于某个值的数据到文件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3084,15 +3080,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">zerotier</a>
+                <a href="javascript:void(0)" class="js-tag color3">taskset</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">内网穿透</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">全球畅联</a>
+                <a href="javascript:void(0)" class="js-tag color4">PID</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3116,7 +3108,31 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">zerotier</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">内网穿透</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">全球畅联</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">RocketMQ</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">分布式消息队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nameserver</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">brokerserver</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3136,39 +3152,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">分布式消息队列</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">nameserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">brokerserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">外部命令</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">内部命令</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">只读模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">fatab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mount</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">remount</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3188,19 +3176,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OpenSSL</a>
+                <a href="javascript:void(0)" class="js-tag color5">只读模式</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">CA</a>
+                <a href="javascript:void(0)" class="js-tag color1">fatab</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SSL证书</a>
+                <a href="javascript:void(0)" class="js-tag color1">mount</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">csr</a>
+                <a href="javascript:void(0)" class="js-tag color3">remount</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3217,6 +3205,22 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">免交互</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">OpenSSL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">CA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">SSL证书</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">csr</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3244,6 +3248,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">SHELL编程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">kill</a>
               </li>
              
@@ -3256,7 +3264,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">SHELL编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">Yum源</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3265,10 +3273,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Shell脚本</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Yum源</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3288,15 +3292,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">consumer</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">内存</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">使用率</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">consumer</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3400,6 +3404,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">flock</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LVS连接数监控</a>
               </li>
              
@@ -3413,10 +3421,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">InActConn</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">flock</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3592,6 +3596,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">autostart</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">libvert</a>
               </li>
              
@@ -3601,10 +3609,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">动态迁移</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">autostart</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3760,6 +3764,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">lvs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">4层负载均衡</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">DR模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">LNMP</a>
               </li>
              
@@ -3777,18 +3793,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">mysql数据库迁移</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">lvs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">4层负载均衡</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">DR模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3848,15 +3852,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">pass_proxy</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">htpasswd</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">日志切割</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">pass_proxy</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4156,15 +4160,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">磁盘</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">awk数组</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">磁盘管理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">磁盘</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4200,19 +4204,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">redis cluster</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">ssdb</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">LevelDB</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">redis cluster</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4256,14 +4260,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">codis集群</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">memcache</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">GlusterFS</a>
               </li>
              
@@ -4273,6 +4269,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NAS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">codis集群</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">memcache</a>
               </li>
              
               <li class="article-tag-list-item">

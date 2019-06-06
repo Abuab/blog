@@ -6,16 +6,16 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://garywu520.github.io/blog">
-  <title>shell高级编程-进阶2 | Hexo</title>
+  <title>shell高级编程-进阶2 | Gary Wu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="定义变量的三种方式   直接赋值  123如：x=10 或 file=/etc/hosts规律：脚本中能用变量的地方尽量使用变量   传参(传递参数)  123$0 $1 ... $n  $#传参方式让脚本更加灵活   交互式设置变量  1使用read命令实现脚本交互。">
 <meta name="keywords" content="高级运维,shell">
 <meta property="og:type" content="article">
 <meta property="og:title" content="shell高级编程-进阶2">
 <meta property="og:url" content="https://garywu520.github.io/blog/2017/12/02/shell高级编程-进阶2/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Gary Wu">
 <meta property="og:description" content="定义变量的三种方式   直接赋值  123如：x=10 或 file=/etc/hosts规律：脚本中能用变量的地方尽量使用变量   传参(传递参数)  123$0 $1 ... $n  $#传参方式让脚本更加灵活   交互式设置变量  1使用read命令实现脚本交互。">
-<meta property="og:locale" content="default">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/wuyanteng/wuyanteng.github.io/master/images/shell%E5%AD%90%E4%B8%B2.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/wuyanteng/wuyanteng.github.io/master/images/fuzhi.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/wuyanteng/wuyanteng.github.io/master/images/true_false.png">
@@ -26,7 +26,7 @@
 <meta name="twitter:description" content="定义变量的三种方式   直接赋值  123如：x=10 或 file=/etc/hosts规律：脚本中能用变量的地方尽量使用变量   传参(传递参数)  123$0 $1 ... $n  $#传参方式让脚本更加灵活   交互式设置变量  1使用read命令实现脚本交互。">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/wuyanteng/wuyanteng.github.io/master/images/shell%E5%AD%90%E4%B8%B2.png">
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="Gary Wu" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -52,12 +52,14 @@
 <div class="overlay" style="background: #4d4d4d"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
-		<a href="/blog/" class="profilepic">
-			<img src="https://raw.githubusercontent.com/discant520/garywu/master/images/touxiang.jpg" class="js-avatar">
+		<a href="/blog" class="profilepic">
+			<img src="http://pics0.baidu.com/feed/bd315c6034a85edf5f5b8bff8cf9cf27df54754d.png?token=c9857ef7ee73e1ffc14d3e3c4e9e3be3&amp;s=1E5207CAC64234F44988148A0300B090" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/blog/">John Doe</a></h1>
+		  <h1 class="header-author"><a href="/blog">Gary Wu</a></h1>
 		</hgroup>
+		
+		<p class="header-subtitle">运维架构师 - 从入门到放弃</p>
 		
 
 		<nav class="header-menu">
@@ -111,11 +113,13 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="https://raw.githubusercontent.com/discant520/garywu/master/images/touxiang.jpg" class="js-avatar">
+				<img src="http://pics0.baidu.com/feed/bd315c6034a85edf5f5b8bff8cf9cf27df54754d.png?token=c9857ef7ee73e1ffc14d3e3c4e9e3be3&amp;s=1E5207CAC64234F44988148A0300B090" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">John Doe</h1>
+			  <h1 class="header-author js-header-author">Gary Wu</h1>
 			</hgroup>
+			
+			<p class="header-subtitle"><i class="icon icon-quo-left"></i>运维架构师 - 从入门到放弃<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -196,99 +200,99 @@
 <ul>
 <li>直接赋值</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">如：x=10 或 file=/etc/hosts</span><br><span class="line"></span><br><span class="line">规律：脚本中能用变量的地方尽量使用变量</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">如：<span class="attribute">x</span>=10 或 <span class="attribute">file</span>=/etc/hosts</span><br><span class="line"></span><br><span class="line">规律：脚本中能用变量的地方尽量使用变量</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>传参(传递参数)</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$0 $1 ... $n  $#</span><br><span class="line"></span><br><span class="line">传参方式让脚本更加灵活</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$0</span> <span class="variable">$1</span> <span class="built_in">..</span>. <span class="variable">$n</span>  <span class="variable">$#</span></span><br><span class="line"></span><br><span class="line">传参方式让脚本更加灵活</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>交互式设置变量</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使用read命令实现脚本交互。</span><br></pre></td></tr></table></figure>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使用<span class="built_in">read</span>命令实现脚本交互。</span><br></pre></td></tr></table></figure>
 
 <a id="more"></a>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@jkbackup scripts]# read</span><br><span class="line">oldboy                 #输入字符就相当于给$REPLY变量赋值</span><br><span class="line">[root@jkbackup scripts]# echo $REPLY</span><br><span class="line">oldboy</span><br></pre></td></tr></table></figure>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@jkbackup</span> scripts]<span class="meta"># read</span></span><br><span class="line">oldboy                 <span class="meta">#输入字符就相当于给$REPLY变量赋值</span></span><br><span class="line">[root<span class="symbol">@jkbackup</span> scripts]<span class="meta"># echo $REPLY</span></span><br><span class="line">oldboy</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@jkbackup scripts]# read -p &quot;请输入你的年龄:&quot;</span><br><span class="line">请输入你的年龄:18</span><br><span class="line">[root@jkbackup scripts]# echo $REPLY</span><br><span class="line">18</span><br><span class="line"></span><br><span class="line">-p 设置提示语句</span><br><span class="line">age 设置的变量名称,前面要有空格</span><br></pre></td></tr></table></figure>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@jkbackup</span> scripts]<span class="meta"># read -p <span class="string">"请输入你的年龄:"</span></span></span><br><span class="line">请输入你的年龄:<span class="number">18</span></span><br><span class="line">[root<span class="symbol">@jkbackup</span> scripts]<span class="meta"># echo $REPLY</span></span><br><span class="line"><span class="number">18</span></span><br><span class="line"></span><br><span class="line">-p 设置提示语句</span><br><span class="line">age 设置的变量名称,前面要有空格</span><br></pre></td></tr></table></figure>
 
 <p>把值明确赋值给某个变量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@jkbackup scripts]# read -p &quot;请输入你的姓名:&quot; age</span><br><span class="line">请输入你的姓名:garywu</span><br><span class="line">[root@jkbackup scripts]# echo $age</span><br><span class="line">garywu</span><br><span class="line">[root@jkbackup scripts]# echo $REPLY     #可以看到$REPLY的值没变</span><br><span class="line">18</span><br></pre></td></tr></table></figure>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@<span class="keyword">jkbackup </span><span class="keyword">scripts]# </span>read -p <span class="string">"请输入你的姓名:"</span> age</span><br><span class="line">请输入你的姓名:garywu</span><br><span class="line">[root@<span class="keyword">jkbackup </span><span class="keyword">scripts]# </span>echo $age</span><br><span class="line">garywu</span><br><span class="line">[root@<span class="keyword">jkbackup </span><span class="keyword">scripts]# </span>echo $REPLY     <span class="comment">#可以看到$REPLY的值没变</span></span><br><span class="line"><span class="number">18</span></span><br></pre></td></tr></table></figure>
 
 <p>交互输入银行卡账号密码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@jkbackup scripts]# cat test.sh </span><br><span class="line">read -t 5 -p &quot;请输入你的银行卡账号: &quot; account</span><br><span class="line">read -t 5 -s -p &quot;请输入你的银行卡密码: &quot; pass</span><br><span class="line">echo</span><br><span class="line">echo &quot;你的银行卡卡号：&quot; $account ，&quot;你的银行卡密码：&quot; $pass </span><br><span class="line"></span><br><span class="line">注：-s 用来关闭回显,即不显示输入的内容</span><br><span class="line">   -t  设置超时时间,单位:秒。超时后将退出交互</span><br><span class="line">   echo  shell换行符</span><br><span class="line"></span><br><span class="line">结果:</span><br><span class="line">[root@jkbackup scripts]# sh test.sh </span><br><span class="line">请输入你的银行卡账号: 12345</span><br><span class="line">请输入你的银行卡密码: </span><br><span class="line">你的银行卡卡号： 12345 ，你的银行卡密码： 67890</span><br></pre></td></tr></table></figure>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@jkbackup scripts]# <span class="keyword">cat</span> <span class="keyword">test</span>.<span class="keyword">sh</span> </span><br><span class="line"><span class="keyword">read</span> -t 5 -p <span class="string">"请输入你的银行卡账号: "</span> account</span><br><span class="line"><span class="keyword">read</span> -t 5 -s -p <span class="string">"请输入你的银行卡密码: "</span> pass</span><br><span class="line">echo</span><br><span class="line">echo <span class="string">"你的银行卡卡号："</span> <span class="variable">$account</span> ，<span class="string">"你的银行卡密码："</span> <span class="variable">$pass</span> </span><br><span class="line"></span><br><span class="line">注：-s 用来关闭回显,即不显示输入的内容</span><br><span class="line">   -t  设置超时时间,单位:秒。超时后将退出交互</span><br><span class="line">   echo  <span class="keyword">shell</span>换行符</span><br><span class="line"></span><br><span class="line">结果:</span><br><span class="line">[root@jkbackup scripts]# <span class="keyword">sh</span> <span class="keyword">test</span>.<span class="keyword">sh</span> </span><br><span class="line">请输入你的银行卡账号: 12345</span><br><span class="line">请输入你的银行卡密码: </span><br><span class="line">你的银行卡卡号： 12345 ，你的银行卡密码： 67890</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>变量的子串</p>
 </blockquote>
 <p><img src="https://raw.githubusercontent.com/wuyanteng/wuyanteng.github.io/master/images/shell%E5%AD%90%E4%B8%B2.png" alt="shell子串"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">查找man bash搜索Parameter Expansion</span><br><span class="line"></span><br><span class="line">变量的长度是指: 变量值的长度</span><br></pre></td></tr></table></figure>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">查找man <span class="keyword">bash搜索Parameter </span>Expansion</span><br><span class="line"></span><br><span class="line">变量的长度是指: 变量值的长度</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">基础知识</span><br><span class="line">[root@jkbackup scripts]# OLDBOY=&quot;I am oldboy&quot;</span><br><span class="line">[root@jkbackup scripts]# echo $&#123;OLDBOY&#125;</span><br><span class="line">I am oldboy</span><br><span class="line">[root@jkbackup scripts]# echo $&#123;OLDBOY&#125;|wc -L   #统计变量值的长度</span><br><span class="line">11</span><br><span class="line">[root@jkbackup scripts]# time echo $&#123;OLDBOY&#125;|wc -L</span><br><span class="line">11</span><br><span class="line"></span><br><span class="line">real	0m0.006s</span><br><span class="line">user	0m0.000s</span><br><span class="line">sys	0m0.005s</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">基础知识</span><br><span class="line">[root@jkbackup scripts]# <span class="attribute">OLDBOY</span>=<span class="string">"I am oldboy"</span></span><br><span class="line">[root@jkbackup scripts]# echo <span class="variable">$&#123;OLDBOY&#125;</span></span><br><span class="line">I am oldboy</span><br><span class="line">[root@jkbackup scripts]# echo <span class="variable">$&#123;OLDBOY&#125;</span>|wc -L   #统计变量值的长度</span><br><span class="line">11</span><br><span class="line">[root@jkbackup scripts]# time echo <span class="variable">$&#123;OLDBOY&#125;</span>|wc -L</span><br><span class="line">11</span><br><span class="line"></span><br><span class="line">real	0m0.006s</span><br><span class="line">user	0m0.000s</span><br><span class="line">sys	0m0.005s</span><br></pre></td></tr></table></figure>
 
 <p>获取子串(变量值)的长度</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">格式: echo $&#123;#OLDBOY&#125;</span><br><span class="line"></span><br><span class="line">例：</span><br><span class="line">[root@jkbackup scripts]# file=/etc/sysconfig/network-scripts/ifcfg-eth0 </span><br><span class="line">[root@jkbackup scripts]# echo $&#123;#file&#125;</span><br><span class="line">41</span><br></pre></td></tr></table></figure>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">格式: echo <span class="variable">$&#123;</span><span class="comment">#OLDBOY&#125;</span></span><br><span class="line"></span><br><span class="line">例：</span><br><span class="line">[root<span class="variable">@jkbackup</span> scripts]<span class="comment"># file=/etc/sysconfig/network-scripts/ifcfg-eth0 </span></span><br><span class="line">[root<span class="variable">@jkbackup</span> scripts]<span class="comment"># echo $&#123;#file&#125;</span></span><br><span class="line"><span class="number">41</span></span><br></pre></td></tr></table></figure>
 
 <p>提取部分子串</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@jkbackup scripts]# echo $&#123;file&#125;</span><br><span class="line">/etc/sysconfig/network-scripts/ifcfg-eth0</span><br><span class="line"></span><br><span class="line">#从第4个子串开始切(起始是0)</span><br><span class="line">[root@jkbackup scripts]# echo $&#123;file:4&#125;     </span><br><span class="line">/sysconfig/network-scripts/ifcfg-eth0</span><br><span class="line"></span><br><span class="line">#从第4个开始切(起始是0),并且往后保留10位</span><br><span class="line">[root@jkbackup scripts]# echo $&#123;file:4:10&#125;  </span><br><span class="line">/sysconfig</span><br></pre></td></tr></table></figure>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@jkbackup</span> scripts]<span class="meta"># echo $&#123;file&#125;</span></span><br><span class="line">/etc/sysconfig/network-scripts/ifcfg-eth0</span><br><span class="line"></span><br><span class="line"><span class="meta">#从第4个子串开始切(起始是0)</span></span><br><span class="line">[root<span class="symbol">@jkbackup</span> scripts]<span class="meta"># echo $&#123;file:4&#125;     </span></span><br><span class="line">/sysconfig/network-scripts/ifcfg-eth0</span><br><span class="line"></span><br><span class="line"><span class="meta">#从第4个开始切(起始是0),并且往后保留10位</span></span><br><span class="line">[root<span class="symbol">@jkbackup</span> scripts]<span class="meta"># echo $&#123;file:4:10&#125;  </span></span><br><span class="line">/sysconfig</span><br></pre></td></tr></table></figure>
 
 <p>删除部分字符串</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@jkbackup scripts]#  oldboy=abcABC123ABCabc</span><br><span class="line">[root@jkbackup scripts]# echo $&#123;oldboy&#125;</span><br><span class="line">abcABC123ABCabc</span><br><span class="line">[root@jkbackup scripts]# echo $&#123;oldboy#a*c&#125;   #从前往后最短匹配</span><br><span class="line">ABC123ABCabc</span><br><span class="line">[root@jkbackup scripts]# echo $&#123;oldboy#a*C&#125;</span><br><span class="line">123ABCabc</span><br><span class="line">[root@jkbackup scripts]# echo $&#123;oldboy##a*C&#125; #从前往后最长匹配</span><br><span class="line">abc</span><br></pre></td></tr></table></figure>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@<span class="keyword">jkbackup </span><span class="keyword">scripts]# </span> oldboy=abcABC123ABCabc</span><br><span class="line">[root@<span class="keyword">jkbackup </span><span class="keyword">scripts]# </span>echo $&#123;oldboy&#125;</span><br><span class="line">abcABC123ABCabc</span><br><span class="line">[root@<span class="keyword">jkbackup </span><span class="keyword">scripts]# </span>echo $&#123;oldboy<span class="comment">#a*c&#125;   #从前往后最短匹配</span></span><br><span class="line">ABC123ABCabc</span><br><span class="line">[root@<span class="keyword">jkbackup </span><span class="keyword">scripts]# </span>echo $&#123;oldboy<span class="comment">#a*C&#125;</span></span><br><span class="line"><span class="number">123</span>ABCabc</span><br><span class="line">[root@<span class="keyword">jkbackup </span><span class="keyword">scripts]# </span>echo $&#123;oldboy<span class="comment">##a*C&#125; #从前往后最长匹配</span></span><br><span class="line">abc</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@jkbackup scripts]# echo $&#123;oldboy&#125;</span><br><span class="line">abcABC123ABCabc</span><br><span class="line">[root@jkbackup scripts]# echo $&#123;oldboy%abc&#125;   #从后往前最短匹配</span><br><span class="line">abcABC123ABC</span><br><span class="line">[root@jkbackup scripts]# echo $&#123;oldboy%a*c&#125;   #从后往前最短匹配</span><br><span class="line">abcABC123ABC</span><br><span class="line">[root@jkbackup scripts]# echo $&#123;oldboy%a*C&#125;</span><br><span class="line">abcABC123ABCabc</span><br><span class="line">[root@jkbackup scripts]# echo $&#123;oldboy%%a*c&#125;   #从后往前最长匹配</span><br><span class="line"></span><br><span class="line">[root@jkbackup scripts]# </span><br><span class="line">[root@jkbackup scripts]# echo $&#123;oldboy%%A*c&#125;   #从后往前最长匹配</span><br><span class="line">abc</span><br></pre></td></tr></table></figure>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@jkbackup scripts]<span class="comment"># echo $&#123;oldboy&#125;</span></span><br><span class="line">abcABC123ABCabc</span><br><span class="line">[root@jkbackup scripts]<span class="comment"># echo $&#123;oldboy%abc&#125;   #从后往前最短匹配</span></span><br><span class="line">abcABC123ABC</span><br><span class="line">[root@jkbackup scripts]<span class="comment"># echo $&#123;oldboy%a*c&#125;   #从后往前最短匹配</span></span><br><span class="line">abcABC123ABC</span><br><span class="line">[root@jkbackup scripts]<span class="comment"># echo $&#123;oldboy%a*C&#125;</span></span><br><span class="line">abcABC123ABCabc</span><br><span class="line">[root@jkbackup scripts]<span class="comment"># echo $&#123;oldboy%%a*c&#125;   #从后往前最长匹配</span></span><br><span class="line"></span><br><span class="line">[root@jkbackup scripts]<span class="comment"># </span></span><br><span class="line">[root@jkbackup scripts]<span class="comment"># echo $&#123;oldboy%%A*c&#125;   #从后往前最长匹配</span></span><br><span class="line">abc</span><br></pre></td></tr></table></figure>
 
 <p>替换</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">单个替换</span><br><span class="line">[root@jkbackup scripts]# echo $&#123;oldboy&#125;</span><br><span class="line">abcABC123ABCabc</span><br><span class="line">[root@jkbackup scripts]# echo $&#123;oldboy/123/888&#125;</span><br><span class="line">abcABC888ABCabc</span><br><span class="line"></span><br><span class="line">全部替换</span><br><span class="line">[root@jkbackup scripts]# echo $&#123;oldboy&#125;</span><br><span class="line">abcABC123ABCabc</span><br><span class="line">[root@jkbackup scripts]# echo $&#123;oldboy//ABC/KKK&#125;</span><br><span class="line">abcKKK123KKKabc</span><br></pre></td></tr></table></figure>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">单个替换</span><br><span class="line">[root<span class="symbol">@jkbackup</span> scripts]<span class="meta"># echo $&#123;oldboy&#125;</span></span><br><span class="line">abcABC123ABCabc</span><br><span class="line">[root<span class="symbol">@jkbackup</span> scripts]<span class="meta"># echo $&#123;oldboy/123/888&#125;</span></span><br><span class="line">abcABC888ABCabc</span><br><span class="line"></span><br><span class="line">全部替换</span><br><span class="line">[root<span class="symbol">@jkbackup</span> scripts]<span class="meta"># echo $&#123;oldboy&#125;</span></span><br><span class="line">abcABC123ABCabc</span><br><span class="line">[root<span class="symbol">@jkbackup</span> scripts]<span class="meta"># echo $&#123;oldboy//ABC/KKK&#125;</span></span><br><span class="line">abcKKK123KKKabc</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>空变量</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">find一个空变量并删除的结果: </span><br><span class="line"></span><br><span class="line">find &#123;$test&#125;  |xargs rm  -rf   </span><br><span class="line">#此操作会删除当前目录所有文件,如果是在root用户执行，结果就呵呵了O(∩_∩)O~</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">find一个空变量并删除的结果</span>: </span><br><span class="line"></span><br><span class="line">find &#123;$test&#125;  |xargs rm  -rf   </span><br><span class="line">#此操作会删除当前目录所有文件,如果是在root用户执行，结果就呵呵了O(∩_∩)O~</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>变量赋值</p>
 </blockquote>
 <p><img src="https://raw.githubusercontent.com/wuyanteng/wuyanteng.github.io/master/images/fuzhi.png" alt="赋值"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">示例：</span><br><span class="line">httpd=$&#123;HTTPD-/usr/sbin/httpd&#125;</span><br><span class="line">prog=httpd</span><br><span class="line">pidfile=$&#123;PIDFILE-/var/run/httpd/httpd.pid&#125;</span><br><span class="line">lockfile=$&#123;LOCKFILE-/var/lock/subsys/httpd&#125;</span><br><span class="line"></span><br><span class="line">如果$HTTP变量值为空，则赋值为/usr/sbin/httpd</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">示例：</span><br><span class="line"><span class="attribute">httpd</span>=<span class="variable">$&#123;HTTPD-/usr/sbin/httpd&#125;</span></span><br><span class="line"><span class="attribute">prog</span>=httpd</span><br><span class="line"><span class="attribute">pidfile</span>=<span class="variable">$&#123;PIDFILE-/var/run/httpd/httpd.pid&#125;</span></span><br><span class="line"><span class="attribute">lockfile</span>=<span class="variable">$&#123;LOCKFILE-/var/lock/subsys/httpd&#125;</span></span><br><span class="line"></span><br><span class="line">如果<span class="variable">$HTTP</span>变量值为空，则赋值为/usr/sbin/httpd</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#检测变量不存在就临时赋值</span><br><span class="line">[root@jkbackup scripts]# echo $&#123;HTTPD-/usr/sbin/httpd&#125; </span><br><span class="line">/usr/sbin/httpd</span><br><span class="line">[root@jkbackup scripts]# echo $HTTPD     #此时这个变量值还是空</span><br><span class="line"></span><br><span class="line">[root@jkbackup scripts]#</span><br></pre></td></tr></table></figure>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#检测变量不存在就临时赋值</span></span><br><span class="line">[root<span class="symbol">@jkbackup</span> scripts]<span class="meta"># echo $&#123;HTTPD-/usr/sbin/httpd&#125; </span></span><br><span class="line">/usr/sbin/httpd</span><br><span class="line">[root<span class="symbol">@jkbackup</span> scripts]<span class="meta"># echo $HTTPD     #此时这个变量值还是空</span></span><br><span class="line"></span><br><span class="line">[root<span class="symbol">@jkbackup</span> scripts]<span class="meta">#</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#检测变量不存在就进行赋值</span><br><span class="line">[root@jkbackup scripts]# echo $&#123;HTTPD=/usr/sbin/httpd&#125; </span><br><span class="line">/usr/sbin/httpd</span><br><span class="line">[root@jkbackup scripts]# echo $HTTPD    #变量值随之改变</span><br><span class="line">/usr/sbin/httpd</span><br></pre></td></tr></table></figure>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#检测变量不存在就进行赋值</span></span><br><span class="line">[root<span class="symbol">@jkbackup</span> scripts]<span class="meta"># echo $&#123;HTTPD=/usr/sbin/httpd&#125; </span></span><br><span class="line">/usr/sbin/httpd</span><br><span class="line">[root<span class="symbol">@jkbackup</span> scripts]<span class="meta"># echo $HTTPD    #变量值随之改变</span></span><br><span class="line">/usr/sbin/httpd</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>变量的数值运算</p>
 </blockquote>
 <p>使用双括号 (())  进行加减乘除  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">格式：echo $((1+1*8))</span><br><span class="line">[root@jkbackup scripts]# echo $((1+1*8))</span><br><span class="line">9</span><br><span class="line">[root@jkbackup scripts]# echo $((1+2**3))   #1+2的三次方</span><br><span class="line">9</span><br><span class="line">[root@jkbackup scripts]# echo $((1+2**3-(5+1)))   #先算括号内的,再加减乘除</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">格式：echo $((<span class="number">1</span>+<span class="number">1</span>*<span class="number">8</span>))</span><br><span class="line">[root@jkbackup scripts]# echo $((<span class="number">1</span>+<span class="number">1</span>*<span class="number">8</span>))</span><br><span class="line"><span class="number">9</span></span><br><span class="line">[root@jkbackup scripts]# echo $((<span class="number">1</span>+<span class="number">2</span>**<span class="number">3</span>))   #<span class="number">1</span>+<span class="number">2</span>的三次方</span><br><span class="line"><span class="number">9</span></span><br><span class="line">[root@jkbackup scripts]# echo $((<span class="number">1</span>+<span class="number">2</span>**<span class="number">3</span>-(<span class="number">5</span>+<span class="number">1</span>)))   #先算括号内的,再加减乘除</span><br><span class="line"><span class="number">3</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">i=5</span><br><span class="line">echo $((i++)) 或echo $((++i))       #每次运算的值自动加1</span><br><span class="line"></span><br><span class="line">[root@jkbackup scripts]# i=5</span><br><span class="line">[root@jkbackup scripts]# </span><br><span class="line">[root@jkbackup scripts]# echo $((i++))</span><br><span class="line">5</span><br><span class="line">[root@jkbackup scripts]# echo $((i++))</span><br><span class="line">6</span><br><span class="line">[root@jkbackup scripts]# echo $((i++))</span><br><span class="line">7</span><br></pre></td></tr></table></figure>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">i=<span class="number">5</span></span><br><span class="line">echo <span class="variable">$(</span>(i++)) 或echo <span class="variable">$(</span>(++i))       <span class="comment">#每次运算的值自动加1</span></span><br><span class="line"></span><br><span class="line">[root<span class="variable">@jkbackup</span> scripts]<span class="comment"># i=5</span></span><br><span class="line">[root<span class="variable">@jkbackup</span> scripts]<span class="comment"># </span></span><br><span class="line">[root<span class="variable">@jkbackup</span> scripts]<span class="comment"># echo $((i++))</span></span><br><span class="line"><span class="number">5</span></span><br><span class="line">[root<span class="variable">@jkbackup</span> scripts]<span class="comment"># echo $((i++))</span></span><br><span class="line"><span class="number">6</span></span><br><span class="line">[root<span class="variable">@jkbackup</span> scripts]<span class="comment"># echo $((i++))</span></span><br><span class="line"><span class="number">7</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">i=7</span><br><span class="line">echo $((i--)) 或echo $((--i))       #每次运算的值自动减1</span><br><span class="line"></span><br><span class="line">[root@jkbackup scripts]# echo $((--i))</span><br><span class="line">7</span><br><span class="line">[root@jkbackup scripts]# echo $((--i))</span><br><span class="line">6</span><br><span class="line">[root@jkbackup scripts]# echo $((--i))</span><br><span class="line">5</span><br><span class="line">[root@jkbackup scripts]# echo $((--i))</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">i=<span class="number">7</span></span><br><span class="line">echo <span class="variable">$(</span>(i--)) 或echo <span class="variable">$(</span>(--i))       <span class="comment">#每次运算的值自动减1</span></span><br><span class="line"></span><br><span class="line">[root<span class="variable">@jkbackup</span> scripts]<span class="comment"># echo $((--i))</span></span><br><span class="line"><span class="number">7</span></span><br><span class="line">[root<span class="variable">@jkbackup</span> scripts]<span class="comment"># echo $((--i))</span></span><br><span class="line"><span class="number">6</span></span><br><span class="line">[root<span class="variable">@jkbackup</span> scripts]<span class="comment"># echo $((--i))</span></span><br><span class="line"><span class="number">5</span></span><br><span class="line">[root<span class="variable">@jkbackup</span> scripts]<span class="comment"># echo $((--i))</span></span><br><span class="line"><span class="number">4</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>写一个加减乘除的shell计算器</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@jkbackup scripts]# cat jisuanqi.sh </span><br><span class="line">#!/bin/bash</span><br><span class="line">echo &quot;shell计算器&quot;</span><br><span class="line">read -p &apos;输入一个数字: &apos; a</span><br><span class="line">read -p &apos;请输入计算方法: &apos; b</span><br><span class="line">read -p &apos;输入一个数字: &apos; c</span><br><span class="line">echo &quot;计算结果: &quot;$(($a$b$c))</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@jkbackup scripts]<span class="comment"># cat jisuanqi.sh </span></span><br><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"shell计算器"</span></span><br><span class="line"><span class="built_in">read</span> -p <span class="string">'输入一个数字: '</span> a</span><br><span class="line"><span class="built_in">read</span> -p <span class="string">'请输入计算方法: '</span> b</span><br><span class="line"><span class="built_in">read</span> -p <span class="string">'输入一个数字: '</span> c</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"计算结果: "</span>$((<span class="variable">$a</span><span class="variable">$b</span><span class="variable">$c</span>))</span><br></pre></td></tr></table></figure>
 
 <p>使用let进行加减乘除运算</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@jkbackup scripts]# i=1</span><br><span class="line">[root@jkbackup scripts]# let i=i+1</span><br><span class="line">[root@jkbackup scripts]# echo $i</span><br><span class="line">2</span><br></pre></td></tr></table></figure>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@jkbackup</span> scripts]<span class="meta"># i=1</span></span><br><span class="line">[root<span class="symbol">@jkbackup</span> scripts]<span class="meta"># let i=i+1</span></span><br><span class="line">[root<span class="symbol">@jkbackup</span> scripts]<span class="meta"># echo $i</span></span><br><span class="line"><span class="number">2</span></span><br></pre></td></tr></table></figure>
 
 <p>使用expr进行加减乘除运算</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">示例：expr 1 + 2    </span><br><span class="line"></span><br><span class="line">[root@jkbackup scripts]# expr 1 + 2</span><br><span class="line">3</span><br><span class="line">[root@jkbackup scripts]# expr 1 \* 2</span><br><span class="line">2</span><br><span class="line">[root@jkbackup scripts]# </span><br><span class="line">[root@jkbackup scripts]# expr 4 \/ 2</span><br><span class="line">2</span><br></pre></td></tr></table></figure>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">示例：expr <span class="number">1</span> + <span class="number">2</span>    </span><br><span class="line"></span><br><span class="line">[root@jkbackup scripts]# expr <span class="number">1</span> + <span class="number">2</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line">[root@jkbackup scripts]# expr <span class="number">1</span> \* <span class="number">2</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line">[root@jkbackup scripts]# </span><br><span class="line">[root@jkbackup scripts]# expr <span class="number">4</span> \/ <span class="number">2</span></span><br><span class="line"><span class="number">2</span></span><br></pre></td></tr></table></figure>
 
 <p>使用expr判断输入的传参是否为整数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@jkbackup scripts]# expr 1 + a</span><br><span class="line">expr: non-integer argument(非整数参数)</span><br><span class="line">[root@jkbackup scripts]# expr 1 + 12.5</span><br><span class="line">expr: non-integer argument</span><br><span class="line"></span><br><span class="line">[root@jkbackup scripts]# echo $?        #非整数返回值是2</span><br><span class="line">2</span><br><span class="line">[root@jkbackup scripts]#</span><br></pre></td></tr></table></figure>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@jkbackup scripts]<span class="comment"># expr 1 + a</span></span><br><span class="line">expr: non-integer argument(非整数参数)</span><br><span class="line">[root@jkbackup scripts]<span class="comment"># expr 1 + 12.5</span></span><br><span class="line">expr: non-integer argument</span><br><span class="line"></span><br><span class="line">[root@jkbackup scripts]<span class="comment"># echo $?        #非整数返回值是2</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line">[root@jkbackup scripts]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
 
 <p>bc 小数计算</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">bc进入交互界面</span><br><span class="line">1+1</span><br><span class="line">3</span><br><span class="line"></span><br><span class="line">[root@jenkins ~]# echo &quot;scale=2;355/113&quot;|bc</span><br><span class="line">3.14</span><br><span class="line">[root@jenkins ~]# echo &quot;scale=12;355/113&quot;|bc</span><br><span class="line">3.141592920353</span><br></pre></td></tr></table></figure>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">bc进入交互界面</span><br><span class="line"><span class="number">1</span>+<span class="number">1</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"></span><br><span class="line">[root@jenkins ~]# echo <span class="string">"scale=2;355/113"</span>|bc</span><br><span class="line"><span class="number">3.14</span></span><br><span class="line">[root@jenkins ~]# echo <span class="string">"scale=12;355/113"</span>|bc</span><br><span class="line"><span class="number">3.141592920353</span></span><br></pre></td></tr></table></figure>
 
 <p>[]加减乘除计算</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@jenkins ~]# echo $[2+3]</span><br><span class="line">5</span><br><span class="line">[root@jenkins ~]# echo $[2*3]</span><br><span class="line">6</span><br></pre></td></tr></table></figure>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@jenkins ~]# echo $[<span class="number">2</span>+<span class="number">3</span>]</span><br><span class="line"><span class="number">5</span></span><br><span class="line">[root@jenkins ~]# echo $[<span class="number">2</span>*<span class="number">3</span>]</span><br><span class="line"><span class="number">6</span></span><br></pre></td></tr></table></figure>
 
 <p>awk计算</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@jenkins ~]# echo &quot;7.7 3.8&quot;|awk &apos;&#123;print ($1-$2)&#125;&apos;</span><br><span class="line">3.9</span><br><span class="line">[root@jenkins ~]# echo &quot;7.7 3.8&quot;|awk &apos;&#123;print ($1-$2*$1)&#125;&apos;</span><br><span class="line">-21.56</span><br></pre></td></tr></table></figure>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="meta">@jenkins</span> ~]# echo <span class="string">"7.7 3.8"</span>|awk <span class="string">'&#123;print (<span class="subst">$1</span>-<span class="subst">$2</span>)&#125;'</span></span><br><span class="line"><span class="number">3.9</span></span><br><span class="line">[root<span class="meta">@jenkins</span> ~]# echo <span class="string">"7.7 3.8"</span>|awk <span class="string">'&#123;print (<span class="subst">$1</span>-<span class="subst">$2</span>*<span class="subst">$1</span>)&#125;'</span></span><br><span class="line"><span class="number">-21.56</span></span><br></pre></td></tr></table></figure>
 
 <h4 id="条件表达式"><a href="#条件表达式" class="headerlink" title="条件表达式"></a>条件表达式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">对环境等进行判断</span><br></pre></td></tr></table></figure>
 
@@ -296,38 +300,38 @@
 <p>文件判断</p>
 </blockquote>
 <p><img src="https://raw.githubusercontent.com/wuyanteng/wuyanteng.github.io/master/images/true_false.png" alt="文件判断"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">先敲一对[],然后退格输入2个空格[  ],最后再回退一个空格开始输入[ -f /etc/hosts ]</span><br><span class="line"></span><br><span class="line">文件判断</span><br><span class="line">[root@jkbackup scripts]# [  -f /etc/hosts ]</span><br><span class="line">[root@jkbackup scripts]# echo $?       #0表示命令执行成功，文件存在</span><br><span class="line">0</span><br></pre></td></tr></table></figure>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">先敲一对<span class="string">[]</span>,然后退格输入<span class="number">2</span>个空格<span class="string">[  ]</span>,最后再回退一个空格开始输入<span class="string">[ -f /etc/hosts ]</span></span><br><span class="line"></span><br><span class="line">文件判断</span><br><span class="line"><span class="string">[root@jkbackup scripts]</span># <span class="string">[  -f /etc/hosts ]</span></span><br><span class="line"><span class="string">[root@jkbackup scripts]</span># echo $?       #<span class="number">0</span>表示命令执行成功，文件存在</span><br><span class="line"><span class="number">0</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[ -f /etc/hosts ] &amp;&amp; echo &quot;表达式成立&quot;  || echo &quot;表达式不成立&quot;</span><br><span class="line">[ -f /etc/host ] &amp;&amp; echo &quot;表达式成立&quot;  || echo &quot;表达式不成立&quot;</span><br><span class="line">[ -f /etc/hosts ] &amp;&amp; cat /etc/hosts  || echo &quot;文件不存在&quot;</span><br><span class="line">[ -f /etc/host ] &amp;&amp; cat /etc/hosts  || echo &quot;文件不存在&quot;</span><br><span class="line"></span><br><span class="line">[ -d /etc1/ ] &amp;&amp; echo &quot;表达式成立&quot;  || echo &quot;表达式不成立&quot;</span><br><span class="line">表达式不成立</span><br><span class="line">[ -d /etc/ ] &amp;&amp; echo &quot;表达式成立&quot;  || echo &quot;表达式不成立&quot;</span><br><span class="line">表达式成立</span><br></pre></td></tr></table></figure>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[ -f <span class="string">/etc/hosts</span> ] &amp;&amp; <span class="keyword">echo</span> <span class="string">"表达式成立"</span>  || <span class="keyword">echo</span> <span class="string">"表达式不成立"</span></span><br><span class="line">[ -f <span class="string">/etc/host</span> ] &amp;&amp; <span class="keyword">echo</span> <span class="string">"表达式成立"</span>  || <span class="keyword">echo</span> <span class="string">"表达式不成立"</span></span><br><span class="line">[ -f <span class="string">/etc/hosts</span> ] &amp;&amp; cat <span class="string">/etc/hosts</span>  || <span class="keyword">echo</span> <span class="string">"文件不存在"</span></span><br><span class="line">[ -f <span class="string">/etc/host</span> ] &amp;&amp; cat <span class="string">/etc/hosts</span>  || <span class="keyword">echo</span> <span class="string">"文件不存在"</span></span><br><span class="line"></span><br><span class="line">[ -d <span class="string">/etc1/</span> ] &amp;&amp; <span class="keyword">echo</span> <span class="string">"表达式成立"</span>  || <span class="keyword">echo</span> <span class="string">"表达式不成立"</span></span><br><span class="line">表达式不成立</span><br><span class="line">[ -d <span class="string">/etc/</span> ] &amp;&amp; <span class="keyword">echo</span> <span class="string">"表达式成立"</span>  || <span class="keyword">echo</span> <span class="string">"表达式不成立"</span></span><br><span class="line">表达式成立</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>字符串判断</p>
 </blockquote>
 <p><img src="https://raw.githubusercontent.com/wuyanteng/wuyanteng.github.io/master/images/zifu_panduan.png" alt="字符长度判断"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@jenkins scripts]# name=</span><br><span class="line">[root@jenkins scripts]# [ -z &quot;$name&quot; ] &amp;&amp; echo &quot;表达式成立&quot;  || echo &quot;表达式不成立&quot;</span><br><span class="line">表达式成立</span><br><span class="line">[root@jenkins scripts]# name=&quot; &quot;</span><br><span class="line">[root@jenkins scripts]# [ -z &quot;$name&quot; ] &amp;&amp; echo &quot;表达式成立&quot;  || echo &quot;表达式不成立&quot;</span><br><span class="line">表达式不成立</span><br></pre></td></tr></table></figure>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@jenkins</span> scripts]<span class="meta"># name=</span></span><br><span class="line">[root<span class="symbol">@jenkins</span> scripts]<span class="meta"># [ -z <span class="string">"$name"</span> ] &amp;&amp; echo <span class="string">"表达式成立"</span>  || echo <span class="string">"表达式不成立"</span></span></span><br><span class="line">表达式成立</span><br><span class="line">[root<span class="symbol">@jenkins</span> scripts]<span class="meta"># name=<span class="string">" "</span></span></span><br><span class="line">[root<span class="symbol">@jenkins</span> scripts]<span class="meta"># [ -z <span class="string">"$name"</span> ] &amp;&amp; echo <span class="string">"表达式成立"</span>  || echo <span class="string">"表达式不成立"</span></span></span><br><span class="line">表达式不成立</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@jenkins scripts]# [ -z &quot;$age&quot; ] &amp;&amp; echo &quot;表达式成立&quot;  || echo &quot;表达式不成立&quot;</span><br><span class="line">表达式成立</span><br><span class="line">[root@jenkins scripts]# [ -n &quot;$age&quot; ] &amp;&amp; echo &quot;表达式成立&quot;  || echo &quot;表达式不成立&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@jenkins</span> scripts]<span class="meta"># [ -z <span class="string">"$age"</span> ] &amp;&amp; echo <span class="string">"表达式成立"</span>  || echo <span class="string">"表达式不成立"</span></span></span><br><span class="line">表达式成立</span><br><span class="line">[root<span class="symbol">@jenkins</span> scripts]<span class="meta"># [ -n <span class="string">"$age"</span> ] &amp;&amp; echo <span class="string">"表达式成立"</span>  || echo <span class="string">"表达式不成立"</span></span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[ &quot;$name1&quot; == &quot;$name2&quot; ] &amp;&amp; echo &quot;表达式成立&quot;  || echo &quot;表达式不成立&quot;</span><br><span class="line">[ &quot;$name1&quot; != &quot;$name2&quot; ] &amp;&amp; echo &quot;表达式成立&quot;  || echo &quot;表达式不成立&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[ <span class="string">"<span class="variable">$name1</span>"</span> == <span class="string">"<span class="variable">$name2</span>"</span> ] &amp;&amp; <span class="built_in">echo</span> <span class="string">"表达式成立"</span>  || <span class="built_in">echo</span> <span class="string">"表达式不成立"</span></span><br><span class="line">[ <span class="string">"<span class="variable">$name1</span>"</span> != <span class="string">"<span class="variable">$name2</span>"</span> ] &amp;&amp; <span class="built_in">echo</span> <span class="string">"表达式成立"</span>  || <span class="built_in">echo</span> <span class="string">"表达式不成立"</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>整数判断</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">-eq     equal 等于</span><br><span class="line">-ne     not equal 不等于</span><br><span class="line">-gt     great than 大于</span><br><span class="line">-ge     great equal 大于等于</span><br><span class="line">-lt     less than   小于</span><br><span class="line">-le     less equal  小于等于</span><br><span class="line"></span><br><span class="line">[root@jkbackup scripts]# [ 1 -ne 2 ] &amp;&amp; echo &quot;表达式成立&quot; || echo &quot;表达式不成立&quot;</span><br><span class="line">表达式成立</span><br><span class="line">[root@jkbackup scripts]# [ 10 -le 2 ] &amp;&amp; echo &quot;表达式成立&quot; || echo &quot;表达式不成 立&quot;</span><br><span class="line">表达式不成立</span><br><span class="line">[root@jkbackup scripts]# [ 10 -gt 19 ] &amp;&amp; echo &quot;表达式成立&quot; || echo &quot;表达式不.立&quot;</span><br><span class="line">表达式不成立</span><br><span class="line">[root@jkbackup scripts]# [ 10 -le 19 ] &amp;&amp; echo &quot;表达式成立&quot; || echo &quot;表达式不.立&quot;</span><br><span class="line">表达式成立</span><br></pre></td></tr></table></figure>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">-eq     equal 等于</span><br><span class="line">-ne     not equal 不等于</span><br><span class="line">-gt     great than 大于</span><br><span class="line">-ge     great equal 大于等于</span><br><span class="line">-<span class="keyword">lt</span>     less than   小于</span><br><span class="line">-<span class="keyword">le</span>     less equal  小于等于</span><br><span class="line"></span><br><span class="line">[root@jkbackup scripts]# [ <span class="number">1</span> -ne <span class="number">2</span> ] &amp;&amp; <span class="keyword">echo</span> <span class="string">"表达式成立"</span> || <span class="keyword">echo</span> <span class="string">"表达式不成立"</span></span><br><span class="line">表达式成立</span><br><span class="line">[root@jkbackup scripts]# [ <span class="number">10</span> -<span class="keyword">le</span> <span class="number">2</span> ] &amp;&amp; <span class="keyword">echo</span> <span class="string">"表达式成立"</span> || <span class="keyword">echo</span> <span class="string">"表达式不成 立"</span></span><br><span class="line">表达式不成立</span><br><span class="line">[root@jkbackup scripts]# [ <span class="number">10</span> -gt <span class="number">19</span> ] &amp;&amp; <span class="keyword">echo</span> <span class="string">"表达式成立"</span> || <span class="keyword">echo</span> <span class="string">"表达式不.立"</span></span><br><span class="line">表达式不成立</span><br><span class="line">[root@jkbackup scripts]# [ <span class="number">10</span> -<span class="keyword">le</span> <span class="number">19</span> ] &amp;&amp; <span class="keyword">echo</span> <span class="string">"表达式成立"</span> || <span class="keyword">echo</span> <span class="string">"表达式不.立"</span></span><br><span class="line">表达式成立</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>逻辑判断符</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">与    简写：-a</span><br><span class="line">或    简写：-o</span><br><span class="line">非    简写: ！</span><br><span class="line"></span><br><span class="line">[root@jkbackup scripts]# [ 10 -le 19 -a 5 -gt 8 ] &amp;&amp; echo &quot;表达式成立&quot; || echo &quot;表达式不成立&quot;&quot;</span><br><span class="line">表达式不成立</span><br><span class="line">[root@jkbackup scripts]# </span><br><span class="line">[root@jkbackup scripts]# [ 10 -le 19 -a 5 -lt 8 ] &amp;&amp; echo &quot;表达式成立&quot; || echo &quot;表达式不成立&quot;&quot;</span><br><span class="line">表达式成立</span><br><span class="line">[root@jkbackup scripts]# [ 10 -le 19 -a ! 5 -lt 8 ] &amp;&amp; echo &quot;表达式成立&quot; || echo &quot;表达式不成立&quot;</span><br><span class="line">表达式不成立</span><br></pre></td></tr></table></figure>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">与    简写：-<span class="keyword">a</span></span><br><span class="line">或    简写：-<span class="keyword">o</span></span><br><span class="line">非    简写: ！</span><br><span class="line"></span><br><span class="line">[root@jkbackup scripts]# [ <span class="number">10</span> -<span class="keyword">le</span> <span class="number">19</span> -<span class="keyword">a</span> <span class="number">5</span> -gt <span class="number">8</span> ] &amp;&amp; <span class="keyword">echo</span> <span class="string">"表达式成立"</span> || <span class="keyword">echo</span> <span class="string">"表达式不成立"</span><span class="comment">"</span></span><br><span class="line">表达式不成立</span><br><span class="line">[root@jkbackup scripts]# </span><br><span class="line">[root@jkbackup scripts]# [ <span class="number">10</span> -<span class="keyword">le</span> <span class="number">19</span> -<span class="keyword">a</span> <span class="number">5</span> -<span class="keyword">lt</span> <span class="number">8</span> ] &amp;&amp; <span class="keyword">echo</span> <span class="string">"表达式成立"</span> || <span class="keyword">echo</span> <span class="string">"表达式不成立"</span><span class="comment">"</span></span><br><span class="line">表达式成立</span><br><span class="line">[root@jkbackup scripts]# [ <span class="number">10</span> -<span class="keyword">le</span> <span class="number">19</span> -<span class="keyword">a</span> ! <span class="number">5</span> -<span class="keyword">lt</span> <span class="number">8</span> ] &amp;&amp; <span class="keyword">echo</span> <span class="string">"表达式成立"</span> || <span class="keyword">echo</span> <span class="string">"表达式不成立"</span></span><br><span class="line">表达式不成立</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>判断两个数字-测试</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">直接赋值方式</span><br><span class="line"></span><br><span class="line">[root@jkbackup shell]# cat read.sh </span><br><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">num1=10</span><br><span class="line">num2=3</span><br><span class="line"></span><br><span class="line">#判断变量不为空</span><br><span class="line">[ -z &quot;$num1&quot; ] &amp;&amp; echo &quot;第一个变量未赋值&quot; &amp;&amp; exit 1</span><br><span class="line">[ -z &quot;$num2&quot; ] &amp;&amp; echo &quot;第二个变量未赋值&quot; &amp;&amp; exit 1</span><br><span class="line"></span><br><span class="line">#判断是不是整数</span><br><span class="line">expr 2 + &quot;$num1&quot; &amp;&gt;/dev/null</span><br><span class="line">[ $? -eq 2 ] &amp;&amp; echo “第一个不是数字” &amp;&amp; exit 1</span><br><span class="line">expr 2 + &quot;$num2&quot; &amp;&gt;/dev/null</span><br><span class="line">[ $? -eq 2 ] &amp;&amp; echo “第二个不是数字” &amp;&amp; exit 1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#正式判断</span><br><span class="line">[ $num1 -gt $num2 ] &amp;&amp; echo &quot;$num1 &gt; $num2&quot; &amp;&amp; exit</span><br><span class="line">[ $num1 -eq $num2 ] &amp;&amp; echo &quot;$num1 = $num2&quot; &amp;&amp; exit</span><br><span class="line">[ $num1 -lt $num2 ] &amp;&amp; echo &quot;$num1 &lt; $num2&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">直接赋值方式</span><br><span class="line"></span><br><span class="line">[root@jkbackup shell]<span class="comment"># cat read.sh </span></span><br><span class="line"><span class="comment">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">num1=<span class="number">10</span></span><br><span class="line">num2=<span class="number">3</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#判断变量不为空</span></span><br><span class="line">[ -z <span class="string">"$num1"</span> ] &amp;&amp; echo <span class="string">"第一个变量未赋值"</span> &amp;&amp; <span class="keyword">exit</span> <span class="number">1</span></span><br><span class="line">[ -z <span class="string">"$num2"</span> ] &amp;&amp; echo <span class="string">"第二个变量未赋值"</span> &amp;&amp; <span class="keyword">exit</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#判断是不是整数</span></span><br><span class="line">expr <span class="number">2</span> + <span class="string">"$num1"</span> &amp;&gt;<span class="regexp">/dev/</span>null</span><br><span class="line">[ $? -eq <span class="number">2</span> ] &amp;&amp; echo “第一个不是数字” &amp;&amp; <span class="keyword">exit</span> <span class="number">1</span></span><br><span class="line">expr <span class="number">2</span> + <span class="string">"$num2"</span> &amp;&gt;<span class="regexp">/dev/</span>null</span><br><span class="line">[ $? -eq <span class="number">2</span> ] &amp;&amp; echo “第二个不是数字” &amp;&amp; <span class="keyword">exit</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#正式判断</span></span><br><span class="line">[ <span class="variable">$num1</span> -gt <span class="variable">$num2</span> ] &amp;&amp; echo <span class="string">"$num1 &gt; $num2"</span> &amp;&amp; <span class="keyword">exit</span></span><br><span class="line">[ <span class="variable">$num1</span> -eq <span class="variable">$num2</span> ] &amp;&amp; echo <span class="string">"$num1 = $num2"</span> &amp;&amp; <span class="keyword">exit</span></span><br><span class="line">[ <span class="variable">$num1</span> -lt <span class="variable">$num2</span> ] &amp;&amp; echo <span class="string">"$num1 &lt; $num2"</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">变量方式</span><br><span class="line"></span><br><span class="line">[root@jkbackup shell]# cat  read.sh </span><br><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">num1=$1</span><br><span class="line">num2=$2</span><br><span class="line">[ $# != 2 ] &amp;&amp; echo &quot;USAGE：sh $0 num1 num2&quot; &amp;&amp; exit 1</span><br><span class="line"></span><br><span class="line">#判断变量不为空</span><br><span class="line">[ -z &quot;$num1&quot; ] &amp;&amp; echo &quot;第一个变量未赋值&quot; &amp;&amp; exit 1</span><br><span class="line">[ -z &quot;$num2&quot; ] &amp;&amp; echo &quot;第二个变量未赋值&quot; &amp;&amp; exit 1</span><br><span class="line"></span><br><span class="line">#判断是不是整数</span><br><span class="line">expr 2 + &quot;$num1&quot; &amp;&gt;/dev/null</span><br><span class="line">[ $? -eq 2 ] &amp;&amp; echo “第一个不是数字” &amp;&amp; exit 1</span><br><span class="line">expr 2 + &quot;$num2&quot; &amp;&gt;/dev/null</span><br><span class="line">[ $? -eq 2 ] &amp;&amp; echo “第二个不是数字” &amp;&amp; exit 1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#正式判断</span><br><span class="line">[ $num1 -gt $num2 ] &amp;&amp; echo &quot;$num1 &gt; $num2&quot; &amp;&amp; exit</span><br><span class="line">[ $num1 -eq $num2 ] &amp;&amp; echo &quot;$num1 = $num2&quot; &amp;&amp; exit</span><br><span class="line">[ $num1 -lt $num2 ] &amp;&amp; echo &quot;$num1 &lt; $num2&quot; </span><br><span class="line"></span><br><span class="line">测试结果：</span><br><span class="line">[root@jkbackup shell]# sh read.sh </span><br><span class="line">USAGE：sh read.sh num1 num2</span><br><span class="line">[root@jkbackup shell]# sh read.sh 1.5 2</span><br><span class="line">“第一个不是数字”</span><br><span class="line">[root@jkbackup shell]# </span><br><span class="line">[root@jkbackup shell]# sh read.sh 5 10</span><br><span class="line">5 &lt; 10</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">变量方式</span><br><span class="line"></span><br><span class="line">[root@jkbackup shell]<span class="comment"># cat  read.sh </span></span><br><span class="line"><span class="comment">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">num1=<span class="variable">$1</span></span><br><span class="line">num2=<span class="variable">$2</span></span><br><span class="line">[ <span class="variable">$#</span> != <span class="number">2</span> ] &amp;&amp; echo <span class="string">"USAGE：sh $0 num1 num2"</span> &amp;&amp; <span class="keyword">exit</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#判断变量不为空</span></span><br><span class="line">[ -z <span class="string">"$num1"</span> ] &amp;&amp; echo <span class="string">"第一个变量未赋值"</span> &amp;&amp; <span class="keyword">exit</span> <span class="number">1</span></span><br><span class="line">[ -z <span class="string">"$num2"</span> ] &amp;&amp; echo <span class="string">"第二个变量未赋值"</span> &amp;&amp; <span class="keyword">exit</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#判断是不是整数</span></span><br><span class="line">expr <span class="number">2</span> + <span class="string">"$num1"</span> &amp;&gt;<span class="regexp">/dev/</span>null</span><br><span class="line">[ $? -eq <span class="number">2</span> ] &amp;&amp; echo “第一个不是数字” &amp;&amp; <span class="keyword">exit</span> <span class="number">1</span></span><br><span class="line">expr <span class="number">2</span> + <span class="string">"$num2"</span> &amp;&gt;<span class="regexp">/dev/</span>null</span><br><span class="line">[ $? -eq <span class="number">2</span> ] &amp;&amp; echo “第二个不是数字” &amp;&amp; <span class="keyword">exit</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#正式判断</span></span><br><span class="line">[ <span class="variable">$num1</span> -gt <span class="variable">$num2</span> ] &amp;&amp; echo <span class="string">"$num1 &gt; $num2"</span> &amp;&amp; <span class="keyword">exit</span></span><br><span class="line">[ <span class="variable">$num1</span> -eq <span class="variable">$num2</span> ] &amp;&amp; echo <span class="string">"$num1 = $num2"</span> &amp;&amp; <span class="keyword">exit</span></span><br><span class="line">[ <span class="variable">$num1</span> -lt <span class="variable">$num2</span> ] &amp;&amp; echo <span class="string">"$num1 &lt; $num2"</span> </span><br><span class="line"></span><br><span class="line">测试结果：</span><br><span class="line">[root@jkbackup shell]<span class="comment"># sh read.sh </span></span><br><span class="line">USAGE：sh read.sh num1 num2</span><br><span class="line">[root@jkbackup shell]<span class="comment"># sh read.sh 1.5 2</span></span><br><span class="line">“第一个不是数字”</span><br><span class="line">[root@jkbackup shell]<span class="comment"># </span></span><br><span class="line">[root@jkbackup shell]<span class="comment"># sh read.sh 5 10</span></span><br><span class="line"><span class="number">5</span> &lt; <span class="number">10</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">read读入方式</span><br><span class="line"></span><br><span class="line">[root@jkbackup shell]# cat read.sh </span><br><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">read -p &quot;请输入第一个数字: &quot; num1</span><br><span class="line">read -p &quot;请输入第二个数字: &quot; num2</span><br><span class="line"></span><br><span class="line">#判断变量不为空</span><br><span class="line">[ -z &quot;$num1&quot; ] &amp;&amp; echo &quot;第一个变量未赋值&quot; &amp;&amp; exit 1</span><br><span class="line">[ -z &quot;$num2&quot; ] &amp;&amp; echo &quot;第二个变量未赋值&quot; &amp;&amp; exit 1</span><br><span class="line"></span><br><span class="line">#判断是不是整数</span><br><span class="line">expr 2+&quot;$num1&quot; &amp;&gt;/dev/null</span><br><span class="line">[ $? -eq 2 ] &amp;&amp; echo “第一个不是数字” &amp;&amp; exit 1</span><br><span class="line">expr 2+&quot;$num2&quot; &amp;&gt;/dev/null</span><br><span class="line">[ $? -eq 2 ] &amp;&amp; echo “第二个不是数字” &amp;&amp; exit 1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#正式判断</span><br><span class="line">[ $num1 -gt $num2 ] &amp;&amp; echo &quot;$num1 &gt; $num2&quot; &amp;&amp; exit</span><br><span class="line">[ $num1 -eq $num2 ] &amp;&amp; echo &quot;$num1 = $num2&quot; &amp;&amp; exit</span><br><span class="line">[ $num1 -lt $num2 ] &amp;&amp; echo &quot;$num1 &lt; $num2&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">read读入方式</span><br><span class="line"></span><br><span class="line">[root@jkbackup shell]<span class="comment"># cat read.sh </span></span><br><span class="line"><span class="comment">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">read -p <span class="string">"请输入第一个数字: "</span> num1</span><br><span class="line">read -p <span class="string">"请输入第二个数字: "</span> num2</span><br><span class="line"></span><br><span class="line"><span class="comment">#判断变量不为空</span></span><br><span class="line">[ -z <span class="string">"$num1"</span> ] &amp;&amp; echo <span class="string">"第一个变量未赋值"</span> &amp;&amp; <span class="keyword">exit</span> <span class="number">1</span></span><br><span class="line">[ -z <span class="string">"$num2"</span> ] &amp;&amp; echo <span class="string">"第二个变量未赋值"</span> &amp;&amp; <span class="keyword">exit</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#判断是不是整数</span></span><br><span class="line">expr <span class="number">2</span>+<span class="string">"$num1"</span> &amp;&gt;<span class="regexp">/dev/</span>null</span><br><span class="line">[ $? -eq <span class="number">2</span> ] &amp;&amp; echo “第一个不是数字” &amp;&amp; <span class="keyword">exit</span> <span class="number">1</span></span><br><span class="line">expr <span class="number">2</span>+<span class="string">"$num2"</span> &amp;&gt;<span class="regexp">/dev/</span>null</span><br><span class="line">[ $? -eq <span class="number">2</span> ] &amp;&amp; echo “第二个不是数字” &amp;&amp; <span class="keyword">exit</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#正式判断</span></span><br><span class="line">[ <span class="variable">$num1</span> -gt <span class="variable">$num2</span> ] &amp;&amp; echo <span class="string">"$num1 &gt; $num2"</span> &amp;&amp; <span class="keyword">exit</span></span><br><span class="line">[ <span class="variable">$num1</span> -eq <span class="variable">$num2</span> ] &amp;&amp; echo <span class="string">"$num1 = $num2"</span> &amp;&amp; <span class="keyword">exit</span></span><br><span class="line">[ <span class="variable">$num1</span> -lt <span class="variable">$num2</span> ] &amp;&amp; echo <span class="string">"$num1 &lt; $num2"</span></span><br></pre></td></tr></table></figure>
 
 <h4 id="条件语句"><a href="#条件语句" class="headerlink" title="条件语句"></a>条件语句</h4><blockquote>
 <p>if条件语句</p>
@@ -335,30 +339,30 @@
 <p>单分支语句</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">如果  条件成立；则</span><br><span class="line">    执行命令</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">if [ $num1 -gt $num2 ];then</span><br><span class="line">   echo &quot;$num1&quot; &gt; &quot;$num2&quot;</span><br><span class="line">   exit</span><br><span class="line">fi   </span><br><span class="line"></span><br><span class="line">if [ $num1 -lt $num2 ];then</span><br><span class="line">   echo &quot;$num1&quot; &lt; &quot;$num2&quot;</span><br><span class="line">   exit</span><br><span class="line">fi   </span><br><span class="line"></span><br><span class="line">if [ $num1 -eq $num2 ];then</span><br><span class="line">   echo &quot;$num1&quot; = &quot;$num2&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> [ <span class="variable">$num1</span> -gt <span class="variable">$num2</span> ];then</span><br><span class="line">   echo <span class="string">"$num1"</span> &gt; <span class="string">"$num2"</span></span><br><span class="line">   <span class="keyword">exit</span></span><br><span class="line">fi   </span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$num1</span> -lt <span class="variable">$num2</span> ];then</span><br><span class="line">   echo <span class="string">"$num1"</span> &lt; <span class="string">"$num2"</span></span><br><span class="line">   <span class="keyword">exit</span></span><br><span class="line">fi   </span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$num1</span> -eq <span class="variable">$num2</span> ];then</span><br><span class="line">   echo <span class="string">"$num1"</span> = <span class="string">"$num2"</span></span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
 
 <p>双分支语句</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">if [ $num1 -gt $num2 ];then</span><br><span class="line">   echo &quot;$num1&quot; &gt; &quot;$num2&quot;</span><br><span class="line">   exit</span><br><span class="line">else </span><br><span class="line">    echo &quot;$num1&quot; 不大于 &quot;$num2&quot;</span><br><span class="line"></span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> [ <span class="variable">$num1</span> -gt <span class="variable">$num2</span> ];then</span><br><span class="line">   echo <span class="string">"$num1"</span> &gt; <span class="string">"$num2"</span></span><br><span class="line">   <span class="keyword">exit</span></span><br><span class="line"><span class="keyword">else</span> </span><br><span class="line">    echo <span class="string">"$num1"</span> 不大于 <span class="string">"$num2"</span></span><br><span class="line"></span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
 
 <p>多分支语句</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">if [ $num1 -gt $num2 ];then</span><br><span class="line">   echo &quot;$num1 &gt; $num2&quot;</span><br><span class="line"></span><br><span class="line">elif  [ $num1 -eq $num2 ];then</span><br><span class="line">    echo &quot;$num1 = $num2&quot;</span><br><span class="line"></span><br><span class="line">else</span><br><span class="line">     echo &quot;$num1 &lt; $num2&quot;</span><br><span class="line">     </span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> [ <span class="variable">$num1</span> -gt <span class="variable">$num2</span> ];<span class="keyword">then</span></span><br><span class="line">   <span class="built_in">echo</span> <span class="string">"<span class="variable">$num1</span> &gt; <span class="variable">$num2</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">elif</span>  [ <span class="variable">$num1</span> -eq <span class="variable">$num2</span> ];<span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"<span class="variable">$num1</span> = <span class="variable">$num2</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">     <span class="built_in">echo</span> <span class="string">"<span class="variable">$num1</span> &lt; <span class="variable">$num2</span>"</span></span><br><span class="line">     </span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>小结</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">单分支：一个条件一个结果</span><br><span class="line">双分支：一个条件多个结果</span><br><span class="line">多分支语句: 多个条件多个结果</span><br></pre></td></tr></table></figure>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">单分支：一个条件一个结果</span><br><span class="line">双分支：一个条件多个结果</span><br><span class="line"><span class="section">多分支语句: 多个条件多个结果</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>练习</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">要求：使用脚本监测系统内存，低于100M发邮件报警, 3分钟检查一次</span><br></pre></td></tr></table></figure>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">要求：使用脚本监测系统内存，低于<span class="number">100</span>M发邮件报警, <span class="number">3</span>分钟检查一次</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">mem=`free -m | awk &apos;NR==2&#123;print $NF&#125;&apos;`</span><br><span class="line"></span><br><span class="line">if [ $mem -lt 1600 ];then</span><br><span class="line">   echo “警告:系统可用内存低于100M” &amp;&amp; echo &quot;当前值:$mem&quot;|mail -s WARNING 110@110.cn</span><br><span class="line"></span><br><span class="line">else</span><br><span class="line">   exit 0</span><br><span class="line"></span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">mem=`free -m | awk <span class="string">'NR==2&#123;print $NF&#125;'</span>`</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$mem</span> -lt 1600 ];<span class="keyword">then</span></span><br><span class="line">   <span class="built_in">echo</span> “警告:系统可用内存低于100M” &amp;&amp; <span class="built_in">echo</span> <span class="string">"当前值:<span class="variable">$mem</span>"</span>|mail -s WARNING 110@110.cn</span><br><span class="line"></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">   <span class="built_in">exit</span> 0</span><br><span class="line"></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>写一个nginx启动脚本</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@jenkins scripts]# . /etc/init.d/functions </span><br><span class="line">[root@jenkins scripts]# action &quot;start nginx&quot; /bin/true</span><br><span class="line">start nginx                                                [  确定  ]</span><br><span class="line">[root@jenkins scripts]# action &quot;start nginx&quot; /bin/false</span><br><span class="line">start nginx                                                [失败]</span><br><span class="line"></span><br><span class="line">调用上述的functions就可以返回“确定”或“失败”</span><br></pre></td></tr></table></figure>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@jenkins</span> scripts]<span class="meta"># . /etc/init.d/functions </span></span><br><span class="line">[root<span class="symbol">@jenkins</span> scripts]<span class="meta"># action <span class="string">"start nginx"</span> /bin/true</span></span><br><span class="line">start nginx                                                [  确定  ]</span><br><span class="line">[root<span class="symbol">@jenkins</span> scripts]<span class="meta"># action <span class="string">"start nginx"</span> /bin/false</span></span><br><span class="line">start nginx                                                [失败]</span><br><span class="line"></span><br><span class="line">调用上述的functions就可以返回“确定”或“失败”</span><br></pre></td></tr></table></figure>
 
 
       
@@ -514,7 +518,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2019 John Doe
+    		&copy; 2019 Gary Wu
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -618,18 +622,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">apache</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">目录浏览</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">高级运维</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Apache</a>
               </li>
              
@@ -658,19 +650,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CDH</a>
+                <a href="javascript:void(0)" class="js-tag color5">高级运维</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JDBC</a>
+                <a href="javascript:void(0)" class="js-tag color2">apache</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">MySQL驱动</a>
+                <a href="javascript:void(0)" class="js-tag color5">目录浏览</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">KAFKA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CDH</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -683,6 +679,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">大数据</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">JDBC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">MySQL驱动</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -718,18 +722,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Cacti流量叠加图形</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Cacti整合图形</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Graph</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">cacti</a>
               </li>
              
@@ -747,6 +739,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">监控</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">bugzilla</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">bugs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Cacti流量叠加图形</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Cacti整合图形</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Graph</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -771,14 +783,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">SCL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">bugzilla</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">bugs</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -826,14 +830,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">DNS TLS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Public DNS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">shadowsocks</a>
               </li>
              
@@ -843,6 +839,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">加密代理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">DNS TLS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Public DNS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -922,18 +926,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ESXI PATH</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ESXI补丁升级</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">ESXI6.7</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">VMware vSphere Client</a>
               </li>
              
@@ -946,6 +938,26 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CPU</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">虚拟化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ESXI PATH</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ESXI补丁升级</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">ESXI6.7</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Openstack</a>
               </li>
              
@@ -955,22 +967,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">混杂模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CPU</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">虚拟化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">磁盘置备</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">disk</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -994,6 +990,26 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Gentoo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">编译内核</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">NFS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">磁盘置备</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">disk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">fuse</a>
               </li>
              
@@ -1007,18 +1023,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">HDFS挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Gentoo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">编译内核</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">NFS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1082,6 +1086,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">HTTP状态码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">301</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">302</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
@@ -1110,27 +1126,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">HTTP状态码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">301</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">302</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">hdfs空文件</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hadoop fs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1154,6 +1154,22 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Jenkins</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">持续集成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">持续交付</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
@@ -1170,26 +1186,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jenkins</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">持续集成</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">持续交付</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Jumpserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">备机部署</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">分区</a>
               </li>
              
@@ -1202,7 +1198,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">分区热迁移</a>
+                <a href="javascript:void(0)" class="js-tag color1">Jumpserver</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">备机部署</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1211,6 +1211,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">KAFKA版本升级</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">分区热迁移</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1270,18 +1274,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">文件句柄</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">lsof</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">空间释放</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">限速方案</a>
               </li>
              
@@ -1302,6 +1294,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">文件句柄</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">lsof</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">空间释放</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">logstash</a>
               </li>
              
@@ -1315,6 +1319,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Mars</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">HDFS Shell</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1334,15 +1346,27 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Mars</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">HDFS Shell</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Hadoop</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">spark</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">tez</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">单用户模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">多用户模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">远程模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1367,26 +1391,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">机架感知</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">spark</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">tez</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">单用户模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">多用户模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">远程模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1426,15 +1430,27 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">yarn</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hive</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">HQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">yarn</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mongodb</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">mongodump</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mongorestore</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1458,15 +1474,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mongodb</a>
+                <a href="javascript:void(0)" class="js-tag color3">STARTUP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">mongodump</a>
+                <a href="javascript:void(0)" class="js-tag color1">副本集成员</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mongorestore</a>
+                <a href="javascript:void(0)" class="js-tag color5">成员状态</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1486,15 +1502,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">STARTUP</a>
+                <a href="javascript:void(0)" class="js-tag color5">MongoDB集群</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">副本集成员</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">成员状态</a>
+                <a href="javascript:void(0)" class="js-tag color2">mongo集群管理维护</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1522,14 +1534,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">MongoDB集群</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mongo集群管理维护</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">MySQL主从切换</a>
               </li>
              
@@ -1538,19 +1542,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">MySQL主从复制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">全备还原</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">主从同步</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">主从复制监控</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">MySQL主从复制</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">全备还原</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1582,14 +1586,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">慢查询</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">mysqldumpslow</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">dba</a>
               </li>
              
@@ -1607,6 +1603,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">MySQL多实例远程登陆</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">慢查询</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">mysqldumpslow</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1646,14 +1650,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ntp</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">upstream</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">proxy-set-header</a>
               </li>
              
@@ -1666,15 +1662,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">favicon.ico</a>
+                <a href="javascript:void(0)" class="js-tag color4">upstream</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">access</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">log</a>
+                <a href="javascript:void(0)" class="js-tag color4">ntp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1691,6 +1683,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">垃圾UA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">favicon.ico</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">access</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">log</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1730,6 +1734,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Glance</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">openstack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">PHP</a>
               </li>
              
@@ -1742,11 +1754,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Glance</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">openstack</a>
+                <a href="javascript:void(0)" class="js-tag color4">Keystone</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1759,10 +1767,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">OpenStack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Keystone</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1798,23 +1802,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">RAID5</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">parted</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">fdisk</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">RAID5</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">阵列卡</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">缓存</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1838,6 +1834,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">阵列卡</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">缓存</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">rabbitmq</a>
               </li>
              
@@ -1858,15 +1862,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">NTP时间同步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NAT</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">双线</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">NTP时间同步</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1958,6 +1962,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">YARN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">NodeManager</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">udp</a>
               </li>
              
@@ -1975,14 +1987,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">GFW</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">YARN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">NodeManager</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2018,10 +2022,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">rrdtool</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">微信</a>
               </li>
              
@@ -2030,11 +2030,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">weathermap</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">plugin</a>
+                <a href="javascript:void(0)" class="js-tag color3">rrdtool</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2047,6 +2043,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">将Bites转换为Mbits</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">weathermap</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">plugin</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">脚本</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2074,7 +2082,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">脚本</a>
+                <a href="javascript:void(0)" class="js-tag color1">socket.gaierror</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2083,10 +2091,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">socket.gaierror</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2134,14 +2138,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">wget</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">curl请求url不使用缓存</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">unix</a>
               </li>
              
@@ -2158,7 +2154,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">wget</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">curl请求url不使用缓存</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">docker机制</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">exit退出码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2175,14 +2187,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">emerge命令</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">exit退出码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2218,18 +2222,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">磁盘挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">fstab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">开机挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">gentoo</a>
               </li>
              
@@ -2239,6 +2231,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">install</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">磁盘挂载</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">fstab</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">开机挂载</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2270,10 +2274,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hadoop用户</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">fs</a>
               </li>
              
@@ -2286,6 +2286,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">hadoop用户</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">sersync</a>
               </li>
              
@@ -2295,6 +2299,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">实时同步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell脚本</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ip自动配置</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2314,18 +2326,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell脚本</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ip自动配置</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">jumpserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">topic</a>
               </li>
              
@@ -2334,23 +2334,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">keepalived</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LVS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">多实例</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">双主</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">脑裂</a>
+                <a href="javascript:void(0)" class="js-tag color1">jumpserver</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2371,6 +2355,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">nopasswd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">keepalived</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">LVS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">多实例</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">双主</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">脑裂</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2398,10 +2402,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">dd</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">rm恢复</a>
               </li>
              
@@ -2418,23 +2418,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">dd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统备份</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统恢复</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Logstash</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Tomcat</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2447,6 +2439,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">rubydebug</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Logstash</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Tomcat</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2466,6 +2470,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">mongod</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">二进制版</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">mariadb主从</a>
               </li>
              
@@ -2479,14 +2491,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">主从复制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mongod</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">二进制版</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2506,11 +2510,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">主从复制错误</a>
+                <a href="javascript:void(0)" class="js-tag color5">主键错误</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">主键错误</a>
+                <a href="javascript:void(0)" class="js-tag color2">主从复制错误</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2519,14 +2523,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">同步个别库</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mysql slave</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">relay log</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2542,7 +2538,39 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">mysql slave</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">relay log</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">root远程登录</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">优化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">socket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ulimit</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">tcp_nopush</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">tcp_nodelay</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2606,38 +2634,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">优化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">socket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ulimit</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">tcp_nopush</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">tcp_nodelay</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">uri</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">屏蔽接口</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Ddos</a>
               </li>
              
@@ -2650,11 +2646,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">proxy cache</a>
+                <a href="javascript:void(0)" class="js-tag color4">uri</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Nginx缓存清理</a>
+                <a href="javascript:void(0)" class="js-tag color5">屏蔽接口</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2663,6 +2659,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">443</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">proxy cache</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Nginx缓存清理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2686,18 +2690,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SOCKS5</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">proxychains</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">命令代理</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">ps</a>
               </li>
              
@@ -2707,6 +2699,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">进程运行时间</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">SOCKS5</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">proxychains</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">命令代理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2722,14 +2726,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">tar</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">crontab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">自重启</a>
               </li>
              
@@ -2738,11 +2734,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">rsync限速</a>
+                <a href="javascript:void(0)" class="js-tag color4">tar</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">bwlimit</a>
+                <a href="javascript:void(0)" class="js-tag color3">crontab</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2751,6 +2747,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">模板</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">rsync限速</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">bwlimit</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2763,6 +2767,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">zabbix_agent</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">salt-master高可用</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">salt-API</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">salt-ssh</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2794,18 +2810,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">salt-master高可用</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">salt-API</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">salt-ssh</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统瓶颈</a>
               </li>
              
@@ -2826,6 +2830,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">变量传参</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell传参</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">小数判断</a>
               </li>
              
@@ -2835,14 +2847,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">浮点数判断</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">变量传参</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell传参</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2874,6 +2878,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">expect</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Ros</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">FTP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">dsa</a>
               </li>
              
@@ -2890,15 +2906,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">expect</a>
+                <a href="javascript:void(0)" class="js-tag color1">supervisor</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Ros</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">FTP</a>
+                <a href="javascript:void(0)" class="js-tag color4">supervisorctl</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2911,14 +2923,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">pid</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">supervisor</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">supervisorctl</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2958,19 +2962,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">vim</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">中文乱码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">vmware</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">虚拟机克隆</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vim</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">中文乱码</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2986,10 +2990,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">告警</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">traceroute</a>
               </li>
              
@@ -2999,6 +2999,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">MTR</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">告警</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3026,6 +3030,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">zk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">触发器</a>
               </li>
              
@@ -3039,10 +3047,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">触发器表达式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">zk</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3062,11 +3066,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">云计算</a>
+                <a href="javascript:void(0)" class="js-tag color5">Rack</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Rack</a>
+                <a href="javascript:void(0)" class="js-tag color4">云计算</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3082,6 +3086,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CDN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">IM</a>
               </li>
              
@@ -3091,18 +3099,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">开源IM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CDN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">jq</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">筛选大于某个值的数据到文件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3126,11 +3122,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">taskset</a>
+                <a href="javascript:void(0)" class="js-tag color3">jq</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">PID</a>
+                <a href="javascript:void(0)" class="js-tag color4">筛选大于某个值的数据到文件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3142,15 +3138,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">zerotier</a>
+                <a href="javascript:void(0)" class="js-tag color3">taskset</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">内网穿透</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">全球畅联</a>
+                <a href="javascript:void(0)" class="js-tag color4">PID</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3174,7 +3166,31 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">zerotier</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">内网穿透</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">全球畅联</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">RocketMQ</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">分布式消息队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nameserver</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">brokerserver</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3194,39 +3210,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">分布式消息队列</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">nameserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">brokerserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">外部命令</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">内部命令</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">只读模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">fatab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mount</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">remount</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3246,19 +3234,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OpenSSL</a>
+                <a href="javascript:void(0)" class="js-tag color5">只读模式</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">CA</a>
+                <a href="javascript:void(0)" class="js-tag color1">fatab</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SSL证书</a>
+                <a href="javascript:void(0)" class="js-tag color1">mount</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">csr</a>
+                <a href="javascript:void(0)" class="js-tag color3">remount</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3275,6 +3263,22 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">免交互</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">OpenSSL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">CA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">SSL证书</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">csr</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3302,6 +3306,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">SHELL编程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">kill</a>
               </li>
              
@@ -3314,7 +3322,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">SHELL编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">Yum源</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3323,10 +3331,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Shell脚本</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Yum源</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3346,15 +3350,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">consumer</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">内存</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">使用率</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">consumer</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3458,6 +3462,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">flock</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LVS连接数监控</a>
               </li>
              
@@ -3471,10 +3479,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">InActConn</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">flock</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3650,6 +3654,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">autostart</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">libvert</a>
               </li>
              
@@ -3659,10 +3667,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">动态迁移</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">autostart</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3818,6 +3822,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">lvs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">4层负载均衡</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">DR模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">LNMP</a>
               </li>
              
@@ -3835,18 +3851,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">mysql数据库迁移</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">lvs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">4层负载均衡</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">DR模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3906,15 +3910,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">pass_proxy</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">htpasswd</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">日志切割</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">pass_proxy</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4214,15 +4218,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">磁盘</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">awk数组</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">磁盘管理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">磁盘</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4258,19 +4262,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">redis cluster</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">ssdb</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">LevelDB</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">redis cluster</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4314,14 +4318,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">codis集群</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">memcache</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">GlusterFS</a>
               </li>
              
@@ -4331,6 +4327,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NAS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">codis集群</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">memcache</a>
               </li>
              
               <li class="article-tag-list-item">

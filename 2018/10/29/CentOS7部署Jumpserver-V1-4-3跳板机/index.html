@@ -6,22 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://garywu520.github.io/blog">
-  <title>CentOS7部署Jumpserver V1.4.3跳板机 | Hexo</title>
+  <title>CentOS7部署Jumpserver V1.4.3跳板机 | Gary Wu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="环境123456789IP：10.0.10.88内存：≥4GB数据库：       mysql 版本大于等于 5.6      mariadb 版本大于等于 5.5.6SELINUX: 关闭Firewalld: stop + disable注：不计划用它管理windows资产，故windows支持性组件未纳入部署范围。  字符集设置1234# 修改字符集，否则可能报 input/output er">
 <meta name="keywords" content="高级运维,jumpserver,跳板机,堡垒机">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CentOS7部署Jumpserver V1.4.3跳板机">
 <meta property="og:url" content="https://garywu520.github.io/blog/2018/10/29/CentOS7部署Jumpserver-V1-4-3跳板机/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Gary Wu">
 <meta property="og:description" content="环境123456789IP：10.0.10.88内存：≥4GB数据库：       mysql 版本大于等于 5.6      mariadb 版本大于等于 5.5.6SELINUX: 关闭Firewalld: stop + disable注：不计划用它管理windows资产，故windows支持性组件未纳入部署范围。  字符集设置1234# 修改字符集，否则可能报 input/output er">
-<meta property="og:locale" content="default">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2018-10-29T01:59:18.479Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CentOS7部署Jumpserver V1.4.3跳板机">
 <meta name="twitter:description" content="环境123456789IP：10.0.10.88内存：≥4GB数据库：       mysql 版本大于等于 5.6      mariadb 版本大于等于 5.5.6SELINUX: 关闭Firewalld: stop + disable注：不计划用它管理windows资产，故windows支持性组件未纳入部署范围。  字符集设置1234# 修改字符集，否则可能报 input/output er">
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="Gary Wu" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -47,12 +47,14 @@
 <div class="overlay" style="background: #4d4d4d"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
-		<a href="/blog/" class="profilepic">
-			<img src="https://raw.githubusercontent.com/discant520/garywu/master/images/touxiang.jpg" class="js-avatar">
+		<a href="/blog" class="profilepic">
+			<img src="http://pics0.baidu.com/feed/bd315c6034a85edf5f5b8bff8cf9cf27df54754d.png?token=c9857ef7ee73e1ffc14d3e3c4e9e3be3&amp;s=1E5207CAC64234F44988148A0300B090" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/blog/">John Doe</a></h1>
+		  <h1 class="header-author"><a href="/blog">Gary Wu</a></h1>
 		</hgroup>
+		
+		<p class="header-subtitle">运维架构师 - 从入门到放弃</p>
 		
 
 		<nav class="header-menu">
@@ -106,11 +108,13 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="https://raw.githubusercontent.com/discant520/garywu/master/images/touxiang.jpg" class="js-avatar">
+				<img src="http://pics0.baidu.com/feed/bd315c6034a85edf5f5b8bff8cf9cf27df54754d.png?token=c9857ef7ee73e1ffc14d3e3c4e9e3be3&amp;s=1E5207CAC64234F44988148A0300B090" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">John Doe</h1>
+			  <h1 class="header-author js-header-author">Gary Wu</h1>
 			</hgroup>
+			
+			<p class="header-subtitle"><i class="icon icon-quo-left"></i>运维架构师 - 从入门到放弃<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -185,87 +189,87 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h5 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">IP：10.0.10.88</span><br><span class="line">内存：≥4GB</span><br><span class="line">数据库： </span><br><span class="line">      mysql 版本大于等于 5.6</span><br><span class="line">      mariadb 版本大于等于 5.5.6</span><br><span class="line">SELINUX: 关闭</span><br><span class="line">Firewalld: stop + disable</span><br><span class="line"></span><br><span class="line">注：不计划用它管理windows资产，故windows支持性组件未纳入部署范围。</span><br></pre></td></tr></table></figure>
+        <h5 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h5><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">IP</span>：10<span class="selector-class">.0</span><span class="selector-class">.10</span><span class="selector-class">.88</span></span><br><span class="line">内存：≥4<span class="selector-tag">GB</span></span><br><span class="line">数据库： </span><br><span class="line">      <span class="selector-tag">mysql</span> 版本大于等于 5<span class="selector-class">.6</span></span><br><span class="line">      <span class="selector-tag">mariadb</span> 版本大于等于 5<span class="selector-class">.5</span><span class="selector-class">.6</span></span><br><span class="line"><span class="selector-tag">SELINUX</span>: 关闭</span><br><span class="line"><span class="selector-tag">Firewalld</span>: <span class="selector-tag">stop</span> + <span class="selector-tag">disable</span></span><br><span class="line"></span><br><span class="line">注：不计划用它管理<span class="selector-tag">windows</span>资产，故<span class="selector-tag">windows</span>支持性组件未纳入部署范围。</span><br></pre></td></tr></table></figure>
 
-<h5 id="字符集设置"><a href="#字符集设置" class="headerlink" title="字符集设置"></a>字符集设置</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 修改字符集，否则可能报 input/output error的问题，因为日志里打印了中文</span><br><span class="line">localedef -c -f UTF-8 -i zh_CN zh_CN.UTF-8</span><br><span class="line">export LC_ALL=zh_CN.UTF-8</span><br><span class="line">echo &apos;LANG=zh_CN.UTF-8&apos; &gt; /etc/sysconfig/i18n</span><br></pre></td></tr></table></figure>
+<h5 id="字符集设置"><a href="#字符集设置" class="headerlink" title="字符集设置"></a>字符集设置</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改字符集，否则可能报 input/output error的问题，因为日志里打印了中文</span></span><br><span class="line">localedef -c -f UTF-8 -i zh_CN zh_CN.UTF-8</span><br><span class="line"><span class="built_in">export</span> LC_ALL=zh_CN.UTF-8</span><br><span class="line"><span class="built_in">echo</span> <span class="string">'LANG=zh_CN.UTF-8'</span> &gt; /etc/sysconfig/i18n</span><br></pre></td></tr></table></figure>
 
 <a id="more"></a>
 
-<h5 id="准备Python3和Python虚拟环境"><a href="#准备Python3和Python虚拟环境" class="headerlink" title="准备Python3和Python虚拟环境"></a>准备Python3和Python虚拟环境</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">安装依赖包</span><br><span class="line">yum -y install wget sqlite-devel xz gcc automake zlib-devel openssl-devel epel-release git</span><br></pre></td></tr></table></figure>
+<h5 id="准备Python3和Python虚拟环境"><a href="#准备Python3和Python虚拟环境" class="headerlink" title="准备Python3和Python虚拟环境"></a>准备Python3和Python虚拟环境</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">安装依赖包</span><br><span class="line">yum -y <span class="keyword">install</span> wget sqlite-devel xz gcc automake zlib-devel openssl-devel epel-<span class="keyword">release</span> git</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">编译安装Python3</span><br><span class="line"></span><br><span class="line">wget https://www.python.org/ftp/python/3.6.1/Python-3.6.1.tar.xz</span><br><span class="line">tar xvf Python-3.6.1.tar.xz  &amp;&amp; cd Python-3.6.1</span><br><span class="line">./configure &amp;&amp; make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">编译安装Python3</span><br><span class="line"></span><br><span class="line">wget http<span class="variable">s:</span>//www.<span class="keyword">python</span>.org/ftp/<span class="keyword">python</span>/<span class="number">3.6</span>.<span class="number">1</span>/Python-<span class="number">3.6</span>.<span class="number">1</span>.tar.xz</span><br><span class="line">tar xvf Python-<span class="number">3.6</span>.<span class="number">1</span>.tar.xz  &amp;&amp; <span class="keyword">cd</span> Python-<span class="number">3.6</span>.<span class="number">1</span></span><br><span class="line">./configure &amp;&amp; <span class="keyword">make</span> &amp;&amp; <span class="keyword">make</span> install</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">建立 Python 虚拟环境</span><br><span class="line"></span><br><span class="line">cd /opt</span><br><span class="line">python3 -m venv py3</span><br><span class="line">source /opt/py3/bin/activate</span><br><span class="line"></span><br><span class="line"># 看到下面的提示符代表成功</span><br><span class="line">(py3) [root@localhost py3]</span><br><span class="line"></span><br><span class="line">注：如果未配置自动载入 Python 虚拟环境设置，则以后运行 Jumpserver都要先运行以上 source 命令，以下所有命令均在该虚拟环境中运行</span><br></pre></td></tr></table></figure>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">建立 Python 虚拟环境</span><br><span class="line"></span><br><span class="line"><span class="keyword">cd</span> /<span class="keyword">opt</span></span><br><span class="line"><span class="keyword">python3</span> -<span class="keyword">m</span> venv <span class="keyword">py3</span></span><br><span class="line"><span class="keyword">source</span> /<span class="keyword">opt</span>/<span class="keyword">py3</span>/bin/activate</span><br><span class="line"></span><br><span class="line"># 看到下面的提示符代表成功</span><br><span class="line">(<span class="keyword">py3</span>) [root@localhost <span class="keyword">py3</span>]</span><br><span class="line"></span><br><span class="line">注：如果未配置自动载入 Python 虚拟环境设置，则以后运行 Jumpserver都要先运行以上 <span class="keyword">source</span> 命令，以下所有命令均在该虚拟环境中运行</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">自动载入 Python 虚拟环境设置</span><br><span class="line">cd /opt</span><br><span class="line">git clone https://github.com/kennethreitz/autoenv.git</span><br><span class="line">echo &apos;source /opt/autoenv/activate.sh&apos; &gt;&gt; ~/.bashrc</span><br><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">自动载入 Python 虚拟环境设置</span><br><span class="line"><span class="keyword">cd</span> <span class="string">/opt</span></span><br><span class="line">git clone https:<span class="string">//github.com/kennethreitz/autoenv.git</span></span><br><span class="line"><span class="keyword">echo</span> 'source <span class="string">/opt/autoenv/activate.sh</span>' &gt;&gt; ~<span class="string">/.bashrc</span></span><br><span class="line">source ~<span class="string">/.bashrc</span></span><br></pre></td></tr></table></figure>
 
-<h5 id="安装jumpserver"><a href="#安装jumpserver" class="headerlink" title="安装jumpserver"></a>安装jumpserver</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">下载jumpserver</span><br><span class="line">cd /opt/</span><br><span class="line">git clone https://github.com/jumpserver/jumpserver.git &amp;&amp; cd jumpserver &amp;&amp; git checkout master</span><br><span class="line">echo &quot;source /opt/py3/bin/activate&quot; &gt; /opt/jumpserver/.env  # 进入 jumpserver 目录时将自动载入 python 虚拟环境</span><br></pre></td></tr></table></figure>
+<h5 id="安装jumpserver"><a href="#安装jumpserver" class="headerlink" title="安装jumpserver"></a>安装jumpserver</h5><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">下载jumpserver</span><br><span class="line"><span class="keyword">cd</span> /<span class="keyword">opt</span>/</span><br><span class="line">git clone http<span class="variable">s:</span>//github.<span class="keyword">com</span>/jumpserver/jumpserver.git &amp;&amp; <span class="keyword">cd</span> jumpserver &amp;&amp; git checkout master</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"source /opt/py3/bin/activate"</span> &gt; /<span class="keyword">opt</span>/jumpserver/.env  # 进入 jumpserver 目录时将自动载入 <span class="keyword">python</span> 虚拟环境</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">安装依赖 RPM 包</span><br><span class="line">cd /opt/jumpserver/requirements</span><br><span class="line">yum -y install $(cat rpm_requirements.txt)</span><br></pre></td></tr></table></figure>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">安装依赖 RPM 包</span><br><span class="line"><span class="keyword">cd</span> /<span class="keyword">opt</span>/jumpserver/requirements</span><br><span class="line">yum -<span class="keyword">y</span> install $(<span class="keyword">cat</span> rpm_requirements.txt)</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">安装 Python 库依赖</span><br><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">安装 Python 库依赖</span><br><span class="line">pip <span class="keyword">install</span> -r requirements.txt</span><br></pre></td></tr></table></figure>
 
-<h5 id="安装redis"><a href="#安装redis" class="headerlink" title="安装redis"></a>安装redis</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Jumpserver 使用 Redis 做 cache 和 celery broke</span><br><span class="line">yum -y install redis</span><br><span class="line">systemctl enable redis</span><br><span class="line">systemctl start redis</span><br><span class="line">systemctl status redis</span><br></pre></td></tr></table></figure>
+<h5 id="安装redis"><a href="#安装redis" class="headerlink" title="安装redis"></a>安装redis</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Jumpserver 使用 Redis 做 <span class="keyword">cache</span> 和 celery broke</span><br><span class="line">yum -y <span class="keyword">install</span> redis</span><br><span class="line">systemctl <span class="keyword">enable</span> redis</span><br><span class="line">systemctl <span class="keyword">start</span> redis</span><br><span class="line">systemctl <span class="keyword">status</span> redis</span><br></pre></td></tr></table></figure>
 
-<h5 id="安装MySQL"><a href="#安装MySQL" class="headerlink" title="安装MySQL"></a>安装MySQL</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum -y install mariadb mariadb-devel mariadb-server # centos7下安装的是mariadb</span><br><span class="line">systemctl enable mariadb</span><br><span class="line">systemctl start mariadb</span><br></pre></td></tr></table></figure>
+<h5 id="安装MySQL"><a href="#安装MySQL" class="headerlink" title="安装MySQL"></a>安装MySQL</h5><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">yum</span> -y install <span class="keyword">mariadb </span><span class="keyword">mariadb-devel </span><span class="keyword">mariadb-server </span># centos7下安装的是<span class="keyword">mariadb</span></span><br><span class="line"><span class="keyword">systemctl </span>enable <span class="keyword">mariadb</span></span><br><span class="line"><span class="keyword">systemctl </span>start <span class="keyword">mariadb</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">创建数据库 Jumpserver 并授权</span><br><span class="line"></span><br><span class="line"># mysql</span><br><span class="line">&gt; create database jumpserver default charset &apos;utf8&apos;;</span><br><span class="line">&gt; grant all on jumpserver.* to &apos;jumpserver&apos;@&apos;127.0.0.1&apos; identified by &apos;weakPassword&apos;;</span><br><span class="line">&gt; flush privileges;</span><br></pre></td></tr></table></figure>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">创建数据库 Jumpserver 并授权</span><br><span class="line"></span><br><span class="line"><span class="comment"># mysql</span></span><br><span class="line">&gt; create database jumpserver <span class="keyword">default</span> charset <span class="string">'utf8'</span>;</span><br><span class="line">&gt; grant all <span class="literal">on</span> jumpserver.* <span class="keyword">to</span> <span class="string">'jumpserver'</span>@<span class="string">'127.0.0.1'</span> identified <span class="keyword">by</span> <span class="string">'weakPassword'</span>;</span><br><span class="line">&gt; flush privileges;</span><br></pre></td></tr></table></figure>
 
-<h5 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum install -y nginx</span><br><span class="line">systemctl enable nginx</span><br><span class="line">systemctl start nginx</span><br></pre></td></tr></table></figure>
+<h5 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum <span class="keyword">install</span> -y nginx</span><br><span class="line">systemctl <span class="keyword">enable</span> nginx</span><br><span class="line">systemctl <span class="keyword">start</span> nginx</span><br></pre></td></tr></table></figure>
 
-<h5 id="修改Jumpserver配置文件"><a href="#修改Jumpserver配置文件" class="headerlink" title="修改Jumpserver配置文件"></a>修改Jumpserver配置文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/jumpserver</span><br><span class="line">cp config_example.py config.py</span><br><span class="line">vim config.py</span><br></pre></td></tr></table></figure>
+<h5 id="修改Jumpserver配置文件"><a href="#修改Jumpserver配置文件" class="headerlink" title="修改Jumpserver配置文件"></a>修改Jumpserver配置文件</h5><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> /<span class="keyword">opt</span>/jumpserver</span><br><span class="line"><span class="keyword">cp</span> config_example.<span class="keyword">py</span> config.<span class="keyword">py</span></span><br><span class="line"><span class="keyword">vim</span> config.<span class="keyword">py</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line"></span><br><span class="line">BASE_DIR = os.path.dirname(os.path.abspath(__file__))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Config:</span><br><span class="line">    SECRET_KEY = os.environ.get(&apos;SECRET_KEY&apos;) or &apos;9BY8IY9LpenB5M5fMcX0jYwmLWIlNVuZanQlkypbjgZ9t4rWoW&apos;</span><br><span class="line"></span><br><span class="line">    ALLOWED_HOSTS = [&apos;*&apos;]</span><br><span class="line"></span><br><span class="line">    DEBUG = os.environ.get(&quot;DEBUG&quot;) or False</span><br><span class="line"></span><br><span class="line">    LOG_LEVEL = os.environ.get(&quot;LOG_LEVEL&quot;) or &apos;WARNING&apos;</span><br><span class="line">    LOG_DIR = os.path.join(BASE_DIR, &apos;logs&apos;)</span><br><span class="line">    </span><br><span class="line">    DB_ENGINE = os.environ.get(&quot;DB_ENGINE&quot;) or &apos;mysql&apos;</span><br><span class="line">    DB_HOST = os.environ.get(&quot;DB_HOST&quot;) or &apos;127.0.0.1&apos;</span><br><span class="line">    DB_PORT = os.environ.get(&quot;DB_PORT&quot;) or 3306</span><br><span class="line">    DB_USER = os.environ.get(&quot;DB_USER&quot;) or &apos;jumpserver&apos;</span><br><span class="line">    DB_PASSWORD = os.environ.get(&quot;DB_PASSWORD&quot;) or &apos;weakPassword&apos;</span><br><span class="line">    DB_NAME = os.environ.get(&quot;DB_NAME&quot;) or &apos;jumpserver&apos;</span><br><span class="line">    </span><br><span class="line">    HTTP_BIND_HOST = &apos;0.0.0.0&apos;</span><br><span class="line">    HTTP_LISTEN_PORT = 8080</span><br><span class="line">    </span><br><span class="line">    REDIS_HOST = os.environ.get(&quot;REDIS_HOST&quot;) or &apos;127.0.0.1&apos;</span><br><span class="line">    REDIS_PORT = os.environ.get(&quot;REDIS_PORT&quot;) or 6379</span><br><span class="line">    REDIS_PASSWORD = os.environ.get(&quot;REDIS_PASSWORD&quot;) or &apos;&apos;</span><br><span class="line">    REDIS_DB_CELERY = os.environ.get(&apos;REDIS_DB&apos;) or 3</span><br><span class="line">    REDIS_DB_CACHE = os.environ.get(&apos;REDIS_DB&apos;) or 4</span><br><span class="line">    </span><br><span class="line">        def __init__(self):</span><br><span class="line">        pass</span><br><span class="line"></span><br><span class="line">    def __getattr__(self, item):</span><br><span class="line">        return None</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class DevelopmentConfig(Config):</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class TestConfig(Config):</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class ProductionConfig(Config):</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># Default using Config settings, you can write if/else for different env</span><br><span class="line">config = DevelopmentConfig()</span><br></pre></td></tr></table></figure>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">import <span class="built_in">os</span></span><br><span class="line"></span><br><span class="line">BASE_DIR = <span class="built_in">os</span>.<span class="built_in">path</span>.dirname(<span class="built_in">os</span>.<span class="built_in">path</span>.abspath(__file__))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Config:</span><br><span class="line">    SECRET_KEY = <span class="built_in">os</span>.environ.get(<span class="string">'SECRET_KEY'</span>) <span class="keyword">or</span> <span class="string">'9BY8IY9LpenB5M5fMcX0jYwmLWIlNVuZanQlkypbjgZ9t4rWoW'</span></span><br><span class="line"></span><br><span class="line">    ALLOWED_HOSTS = [<span class="string">'*'</span>]</span><br><span class="line"></span><br><span class="line">    DEBUG = <span class="built_in">os</span>.environ.get(<span class="string">"DEBUG"</span>) <span class="keyword">or</span> False</span><br><span class="line"></span><br><span class="line">    LOG_LEVEL = <span class="built_in">os</span>.environ.get(<span class="string">"LOG_LEVEL"</span>) <span class="keyword">or</span> <span class="string">'WARNING'</span></span><br><span class="line">    LOG_DIR = <span class="built_in">os</span>.<span class="built_in">path</span>.join(BASE_DIR, <span class="string">'logs'</span>)</span><br><span class="line">    </span><br><span class="line">    DB_ENGINE = <span class="built_in">os</span>.environ.get(<span class="string">"DB_ENGINE"</span>) <span class="keyword">or</span> <span class="string">'mysql'</span></span><br><span class="line">    DB_HOST = <span class="built_in">os</span>.environ.get(<span class="string">"DB_HOST"</span>) <span class="keyword">or</span> <span class="string">'127.0.0.1'</span></span><br><span class="line">    DB_PORT = <span class="built_in">os</span>.environ.get(<span class="string">"DB_PORT"</span>) <span class="keyword">or</span> <span class="number">3306</span></span><br><span class="line">    DB_USER = <span class="built_in">os</span>.environ.get(<span class="string">"DB_USER"</span>) <span class="keyword">or</span> <span class="string">'jumpserver'</span></span><br><span class="line">    DB_PASSWORD = <span class="built_in">os</span>.environ.get(<span class="string">"DB_PASSWORD"</span>) <span class="keyword">or</span> <span class="string">'weakPassword'</span></span><br><span class="line">    DB_NAME = <span class="built_in">os</span>.environ.get(<span class="string">"DB_NAME"</span>) <span class="keyword">or</span> <span class="string">'jumpserver'</span></span><br><span class="line">    </span><br><span class="line">    HTTP_BIND_HOST = <span class="string">'0.0.0.0'</span></span><br><span class="line">    HTTP_LISTEN_PORT = <span class="number">8080</span></span><br><span class="line">    </span><br><span class="line">    REDIS_HOST = <span class="built_in">os</span>.environ.get(<span class="string">"REDIS_HOST"</span>) <span class="keyword">or</span> <span class="string">'127.0.0.1'</span></span><br><span class="line">    REDIS_PORT = <span class="built_in">os</span>.environ.get(<span class="string">"REDIS_PORT"</span>) <span class="keyword">or</span> <span class="number">6379</span></span><br><span class="line">    REDIS_PASSWORD = <span class="built_in">os</span>.environ.get(<span class="string">"REDIS_PASSWORD"</span>) <span class="keyword">or</span> <span class="string">''</span></span><br><span class="line">    REDIS_DB_CELERY = <span class="built_in">os</span>.environ.get(<span class="string">'REDIS_DB'</span>) <span class="keyword">or</span> <span class="number">3</span></span><br><span class="line">    REDIS_DB_CACHE = <span class="built_in">os</span>.environ.get(<span class="string">'REDIS_DB'</span>) <span class="keyword">or</span> <span class="number">4</span></span><br><span class="line">    </span><br><span class="line">        def __init__(self):</span><br><span class="line">        pass</span><br><span class="line"></span><br><span class="line">    def __getattr__(self, item):</span><br><span class="line">        <span class="keyword">return</span> None</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class DevelopmentConfig(Config):</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class TestConfig(Config):</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class ProductionConfig(Config):</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># Default using Config settings, you can <span class="built_in">write</span> <span class="keyword">if</span>/<span class="keyword">else</span> <span class="keyword">for</span> different env</span><br><span class="line"><span class="built_in">config</span> = DevelopmentConfig()</span><br></pre></td></tr></table></figure>
 
-<h5 id="生成数据库表结构和初始化数据"><a href="#生成数据库表结构和初始化数据" class="headerlink" title="生成数据库表结构和初始化数据"></a>生成数据库表结构和初始化数据</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/jumpserver/utils</span><br><span class="line">bash make_migrations.sh</span><br></pre></td></tr></table></figure>
+<h5 id="生成数据库表结构和初始化数据"><a href="#生成数据库表结构和初始化数据" class="headerlink" title="生成数据库表结构和初始化数据"></a>生成数据库表结构和初始化数据</h5><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> /<span class="keyword">opt</span>/jumpserver/utils</span><br><span class="line">bash make_migrations.<span class="keyword">sh</span></span><br></pre></td></tr></table></figure>
 
-<h5 id="运行-Jumpserver"><a href="#运行-Jumpserver" class="headerlink" title="运行 Jumpserver"></a>运行 Jumpserver</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/jumpserver</span><br><span class="line">./jms start all        </span><br><span class="line"></span><br><span class="line">注：后台运行命令： ./jms start all -d</span><br></pre></td></tr></table></figure>
+<h5 id="运行-Jumpserver"><a href="#运行-Jumpserver" class="headerlink" title="运行 Jumpserver"></a>运行 Jumpserver</h5><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> <span class="string">/opt/jumpserver</span></span><br><span class="line"><span class="string">./jms</span> start all        </span><br><span class="line"></span><br><span class="line">注：后台运行命令： <span class="string">./jms</span> start all -d</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">运行不报错，请浏览器访问 http://10.0.10.88:8080/ </span><br><span class="line">默认账号: admin 密码: admin </span><br><span class="line"></span><br><span class="line">页面显示不正常先不用处理，继续往下操作，原因是因为 django 无法在非 debug 模式下加载静态资源, 后面搭建 nginx 代理后即可正常访问，</span><br></pre></td></tr></table></figure>
+<figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">运行不报错，请浏览器访问 http:<span class="comment">//10.0.10.88:8080/ </span></span><br><span class="line">默认账号: <span class="built_in">admin</span> 密码: <span class="built_in">admin</span> </span><br><span class="line"></span><br><span class="line">页面显示不正常先不用处理，继续往下操作，原因是因为 django 无法在非 debug 模式下加载静态资源, 后面搭建 nginx 代理后即可正常访问，</span><br></pre></td></tr></table></figure>
 
-<h5 id="安装ssh-server-和-websocket-server-Coco"><a href="#安装ssh-server-和-websocket-server-Coco" class="headerlink" title="安装ssh server 和 websocket server: Coco"></a>安装ssh server 和 websocket server: Coco</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">source /opt/py3/bin/activate</span><br><span class="line">cd /opt</span><br><span class="line">source /opt/py3/bin/activate</span><br><span class="line">git clone https://github.com/jumpserver/coco.git &amp;&amp; cd coco &amp;&amp; git checkout master</span><br><span class="line">echo &quot;source /opt/py3/bin/activate&quot; &gt; /opt/coco/.env  #进入coco目录时将自动载入 python 虚拟环境</span><br></pre></td></tr></table></figure>
+<h5 id="安装ssh-server-和-websocket-server-Coco"><a href="#安装ssh-server-和-websocket-server-Coco" class="headerlink" title="安装ssh server 和 websocket server: Coco"></a>安装ssh server 和 websocket server: Coco</h5><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">source</span> /<span class="keyword">opt</span>/<span class="keyword">py3</span>/bin/activate</span><br><span class="line"><span class="keyword">cd</span> /<span class="keyword">opt</span></span><br><span class="line"><span class="keyword">source</span> /<span class="keyword">opt</span>/<span class="keyword">py3</span>/bin/activate</span><br><span class="line">git clone http<span class="variable">s:</span>//github.<span class="keyword">com</span>/jumpserver/coco.git &amp;&amp; <span class="keyword">cd</span> coco &amp;&amp; git checkout master</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"source /opt/py3/bin/activate"</span> &gt; /<span class="keyword">opt</span>/coco/.env  #进入coco目录时将自动载入 <span class="keyword">python</span> 虚拟环境</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">安装依赖</span><br><span class="line">cd /opt/coco/requirements</span><br><span class="line">yum -y  install $(cat rpm_requirements.txt)</span><br><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">安装依赖</span><br><span class="line"><span class="keyword">cd</span> /<span class="keyword">opt</span>/coco/requirements</span><br><span class="line">yum -<span class="keyword">y</span>  install $(<span class="keyword">cat</span> rpm_requirements.txt)</span><br><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">修改coco配置文件</span><br><span class="line">cd /opt/coco</span><br><span class="line">mkdir keys logs</span><br><span class="line">cp conf_example.py conf.py  # 如果 coco 与 jumpserver 分开部署，请手动修改 conf.py</span><br><span class="line">vim conf.py</span><br></pre></td></tr></table></figure>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">修改coco配置文件</span><br><span class="line"><span class="keyword">cd</span> /<span class="keyword">opt</span>/coco</span><br><span class="line"><span class="built_in">mkdir</span> <span class="built_in">keys</span> logs</span><br><span class="line"><span class="keyword">cp</span> conf_example.<span class="keyword">py</span> <span class="keyword">conf</span>.<span class="keyword">py</span>  # 如果 coco 与 jumpserver 分开部署，请手动修改 <span class="keyword">conf</span>.<span class="keyword">py</span></span><br><span class="line"><span class="keyword">vim</span> <span class="keyword">conf</span>.<span class="keyword">py</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env python3</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line">#</span><br><span class="line"></span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line">BASE_DIR = os.path.dirname(__file__)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Config:</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    Coco config file, coco also load config from server update setting below</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    # 项目名称, 会用来向Jumpserver注册, 识别而已, 不能重复</span><br><span class="line">    # NAME = &quot;localhost&quot;</span><br><span class="line">    NAME = &quot;coco&quot;</span><br><span class="line"></span><br><span class="line">    # Jumpserver项目的url, api请求注册会使用</span><br><span class="line">    CORE_HOST = os.environ.get(&quot;CORE_HOST&quot;) or &apos;http://127.0.0.1:8080&apos;</span><br><span class="line"></span><br><span class="line">    # 启动时绑定的ip, 默认 0.0.0.0</span><br><span class="line">    # BIND_HOST = &apos;0.0.0.0&apos;</span><br><span class="line"></span><br><span class="line">    # 监听的SSH端口号, 默认2222</span><br><span class="line">    # SSHD_PORT = 2222</span><br><span class="line"></span><br><span class="line">    # 监听的HTTP/WS端口号，默认5000</span><br><span class="line">    # HTTPD_PORT = 5000</span><br><span class="line">    </span><br><span class="line">    # 项目使用的ACCESS KEY, 默认会注册,并保存到 ACCESS_KEY_STORE中,</span><br><span class="line">    # 如果有需求, 可以写到配置文件中, 格式 access_key_id:access_key_secret</span><br><span class="line">    # ACCESS_KEY = None</span><br><span class="line"></span><br><span class="line">    # ACCESS KEY 保存的地址, 默认注册后会保存到该文件中</span><br><span class="line">    # ACCESS_KEY_STORE = os.path.join(BASE_DIR, &apos;keys&apos;, &apos;.access_key&apos;)</span><br><span class="line"></span><br><span class="line">    # 加密密钥</span><br><span class="line">    # SECRET_KEY = None</span><br><span class="line"></span><br><span class="line">    # 设置日志级别 [&apos;DEBUG&apos;, &apos;INFO&apos;, &apos;WARN&apos;, &apos;ERROR&apos;, &apos;FATAL&apos;, &apos;CRITICAL&apos;]</span><br><span class="line">    LOG_LEVEL = &apos;WARN&apos;</span><br><span class="line"></span><br><span class="line">    # 日志存放的目录</span><br><span class="line">    # LOG_DIR = os.path.join(BASE_DIR, &apos;logs&apos;)</span><br><span class="line"></span><br><span class="line">    # Session录像存放目录</span><br><span class="line">    # SESSION_DIR = os.path.join(BASE_DIR, &apos;sessions&apos;)</span><br><span class="line"></span><br><span class="line">    # 资产显示排序方式, [&apos;ip&apos;, &apos;hostname&apos;]</span><br><span class="line">    # ASSET_LIST_SORT_BY = &apos;ip&apos;</span><br><span class="line"></span><br><span class="line">    # 登录是否支持密码认证</span><br><span class="line">    # PASSWORD_AUTH = True</span><br><span class="line"></span><br><span class="line">    # 登录是否支持秘钥认证</span><br><span class="line">    # PUBLIC_KEY_AUTH = True</span><br><span class="line"></span><br><span class="line">    # SSH白名单</span><br><span class="line">    # ALLOW_SSH_USER = &apos;all&apos;  # [&apos;test&apos;, &apos;test2&apos;]</span><br><span class="line"></span><br><span class="line">    # SSH黑名单, 如果用户同时在白名单和黑名单，黑名单优先生效</span><br><span class="line">    # BLOCK_SSH_USER = []</span><br><span class="line"></span><br><span class="line">    # 和Jumpserver 保持心跳时间间隔</span><br><span class="line">    # HEARTBEAT_INTERVAL = 5</span><br><span class="line"></span><br><span class="line">    # Admin的名字，出问题会提示给用户</span><br><span class="line">    # ADMINS = &apos;&apos;</span><br><span class="line">    COMMAND_STORAGE = &#123;</span><br><span class="line">        &quot;TYPE&quot;: &quot;server&quot;</span><br><span class="line">    &#125;</span><br><span class="line">    REPLAY_STORAGE = &#123;</span><br><span class="line">        &quot;TYPE&quot;: &quot;server&quot;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    # SSH连接超时时间 (default 15 seconds)</span><br><span class="line">    # SSH_TIMEOUT = 15</span><br><span class="line"></span><br><span class="line">    # 语言 = en</span><br><span class="line">    LANGUAGE_CODE = &apos;zh&apos;</span><br><span class="line"></span><br><span class="line">config = Config()</span><br></pre></td></tr></table></figure>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env python3</span></span><br><span class="line"><span class="meta"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="meta">#</span></span><br><span class="line"></span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line">BASE_DIR = os.path.dirname(__file__)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Config:</span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Coco config file, coco also load config from server update setting below</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="meta"># 项目名称, 会用来向Jumpserver注册, 识别而已, 不能重复</span></span><br><span class="line">    <span class="meta"># NAME = <span class="string">"localhost"</span></span></span><br><span class="line">    NAME = <span class="string">"coco"</span></span><br><span class="line"></span><br><span class="line">    <span class="meta"># Jumpserver项目的url, api请求注册会使用</span></span><br><span class="line">    CORE_HOST = os.environ.get(<span class="string">"CORE_HOST"</span>) <span class="literal">or</span> <span class="string">'http://127.0.0.1:8080'</span></span><br><span class="line"></span><br><span class="line">    <span class="meta"># 启动时绑定的ip, 默认 0.0.0.0</span></span><br><span class="line">    <span class="meta"># BIND_HOST = <span class="string">'0.0.0.0'</span></span></span><br><span class="line"></span><br><span class="line">    <span class="meta"># 监听的SSH端口号, 默认2222</span></span><br><span class="line">    <span class="meta"># SSHD_PORT = 2222</span></span><br><span class="line"></span><br><span class="line">    <span class="meta"># 监听的HTTP/WS端口号，默认5000</span></span><br><span class="line">    <span class="meta"># HTTPD_PORT = 5000</span></span><br><span class="line">    </span><br><span class="line">    <span class="meta"># 项目使用的ACCESS KEY, 默认会注册,并保存到 ACCESS_KEY_STORE中,</span></span><br><span class="line">    <span class="meta"># 如果有需求, 可以写到配置文件中, 格式 access_key_id:access_key_secret</span></span><br><span class="line">    <span class="meta"># ACCESS_KEY = None</span></span><br><span class="line"></span><br><span class="line">    <span class="meta"># ACCESS KEY 保存的地址, 默认注册后会保存到该文件中</span></span><br><span class="line">    <span class="meta"># ACCESS_KEY_STORE = os.path.join(BASE_DIR, <span class="string">'keys'</span>, <span class="string">'.access_key'</span>)</span></span><br><span class="line"></span><br><span class="line">    <span class="meta"># 加密密钥</span></span><br><span class="line">    <span class="meta"># SECRET_KEY = None</span></span><br><span class="line"></span><br><span class="line">    <span class="meta"># 设置日志级别 [<span class="string">'DEBUG'</span>, <span class="string">'INFO'</span>, <span class="string">'WARN'</span>, <span class="string">'ERROR'</span>, <span class="string">'FATAL'</span>, <span class="string">'CRITICAL'</span>]</span></span><br><span class="line">    LOG_LEVEL = <span class="string">'WARN'</span></span><br><span class="line"></span><br><span class="line">    <span class="meta"># 日志存放的目录</span></span><br><span class="line">    <span class="meta"># LOG_DIR = os.path.join(BASE_DIR, <span class="string">'logs'</span>)</span></span><br><span class="line"></span><br><span class="line">    <span class="meta"># Session录像存放目录</span></span><br><span class="line">    <span class="meta"># SESSION_DIR = os.path.join(BASE_DIR, <span class="string">'sessions'</span>)</span></span><br><span class="line"></span><br><span class="line">    <span class="meta"># 资产显示排序方式, [<span class="string">'ip'</span>, <span class="string">'hostname'</span>]</span></span><br><span class="line">    <span class="meta"># ASSET_LIST_SORT_BY = <span class="string">'ip'</span></span></span><br><span class="line"></span><br><span class="line">    <span class="meta"># 登录是否支持密码认证</span></span><br><span class="line">    <span class="meta"># PASSWORD_AUTH = True</span></span><br><span class="line"></span><br><span class="line">    <span class="meta"># 登录是否支持秘钥认证</span></span><br><span class="line">    <span class="meta"># PUBLIC_KEY_AUTH = True</span></span><br><span class="line"></span><br><span class="line">    <span class="meta"># SSH白名单</span></span><br><span class="line">    <span class="meta"># ALLOW_SSH_USER = <span class="string">'all'</span>  # [<span class="string">'test'</span>, <span class="string">'test2'</span>]</span></span><br><span class="line"></span><br><span class="line">    <span class="meta"># SSH黑名单, 如果用户同时在白名单和黑名单，黑名单优先生效</span></span><br><span class="line">    <span class="meta"># BLOCK_SSH_USER = []</span></span><br><span class="line"></span><br><span class="line">    <span class="meta"># 和Jumpserver 保持心跳时间间隔</span></span><br><span class="line">    <span class="meta"># HEARTBEAT_INTERVAL = 5</span></span><br><span class="line"></span><br><span class="line">    <span class="meta"># Admin的名字，出问题会提示给用户</span></span><br><span class="line">    <span class="meta"># ADMINS = <span class="string">''</span></span></span><br><span class="line">    COMMAND_STORAGE = &#123;</span><br><span class="line">        <span class="string">"TYPE"</span>: <span class="string">"server"</span></span><br><span class="line">    &#125;</span><br><span class="line">    REPLAY_STORAGE = &#123;</span><br><span class="line">        <span class="string">"TYPE"</span>: <span class="string">"server"</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta"># SSH连接超时时间 (default 15 seconds)</span></span><br><span class="line">    <span class="meta"># SSH_TIMEOUT = 15</span></span><br><span class="line"></span><br><span class="line">    <span class="meta"># 语言 = en</span></span><br><span class="line">    LANGUAGE_CODE = <span class="string">'zh'</span></span><br><span class="line"></span><br><span class="line">config = Config()</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">暂且不启动coco, 因为coco需要向jumpserver中注册，而jumpserver暂且还不能正常访问，需要先配置Nginx代理才行。因为jumpserver配置文件中启用了 DEBUG = False参数的缘故。</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">暂且不启动coco, 因为coco需要向jumpserver中注册，而jumpserver暂且还不能正常访问，需要先配置Nginx代理才行。因为jumpserver配置文件中启用了 <span class="builtin-name">DEBUG</span> = <span class="literal">False</span>参数的缘故。</span><br></pre></td></tr></table></figure>
 
-<h5 id="安装-Web-Terminal-前端-Luna"><a href="#安装-Web-Terminal-前端-Luna" class="headerlink" title="安装 Web Terminal 前端: Luna"></a>安装 Web Terminal 前端: Luna</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Luna 需要Nginx来运行访问</span><br><span class="line">Luna Releases: https://github.com/jumpserver/luna/releases</span><br></pre></td></tr></table></figure>
+<h5 id="安装-Web-Terminal-前端-Luna"><a href="#安装-Web-Terminal-前端-Luna" class="headerlink" title="安装 Web Terminal 前端: Luna"></a>安装 Web Terminal 前端: Luna</h5><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Luna 需要Nginx来运行访问</span><br><span class="line">Luna <span class="string">Releases:</span> <span class="string">https:</span><span class="comment">//github.com/jumpserver/luna/releases</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd /opt</span><br><span class="line">wget https://github.com/jumpserver/luna/releases/download/1.4.3/luna.tar.gz</span><br><span class="line">tar xvf luna.tar.gz</span><br><span class="line">chown -R root:root luna</span><br></pre></td></tr></table></figure>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> /<span class="keyword">opt</span></span><br><span class="line">wget http<span class="variable">s:</span>//github.<span class="keyword">com</span>/jumpserver/luna/releases/download/<span class="number">1.4</span>.<span class="number">3</span>/luna.tar.gz</span><br><span class="line">tar xvf luna.tar.gz</span><br><span class="line">chown -R roo<span class="variable">t:root</span> luna</span><br></pre></td></tr></table></figure>
 
-<h5 id="配置-Nginx-整合各组件"><a href="#配置-Nginx-整合各组件" class="headerlink" title="配置 Nginx 整合各组件"></a>配置 Nginx 整合各组件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">前面已经安装了Nginx，故接下来直接配置配置文件。</span><br><span class="line">vim /etc/nginx/conf.d/jumpserver.conf</span><br></pre></td></tr></table></figure>
+<h5 id="配置-Nginx-整合各组件"><a href="#配置-Nginx-整合各组件" class="headerlink" title="配置 Nginx 整合各组件"></a>配置 Nginx 整合各组件</h5><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">前面已经安装了Nginx，故接下来直接配置配置文件。</span><br><span class="line"><span class="keyword">vim</span> /etc/nginx/<span class="keyword">conf</span>.d/jumpserver.<span class="keyword">conf</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;    #代理端口，以后将通过此端口进行访问，不再通过8080端口</span><br><span class="line">    server_name jumpserver.xx.cn;  # 修改成你的域名</span><br><span class="line"></span><br><span class="line">    client_max_body_size 100m;  #录像及文件上传大小限制</span><br><span class="line"></span><br><span class="line">    location /luna/ &#123;</span><br><span class="line">        try_files $uri / /index.html;</span><br><span class="line">        alias /opt/luna/;    #luna 路径，如果修改安装目录，此处需要修改</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location /media/ &#123;</span><br><span class="line">        add_header Content-Encoding gzip;</span><br><span class="line">        root /opt/jumpserver/data/;  #录像位置，如果修改安装目录，此处需要修改</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location /static/ &#123;</span><br><span class="line">        root /opt/jumpserver/data/;  #静态资源，如果修改安装目录，此处需要修改</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location /socket.io/ &#123;</span><br><span class="line">        proxy_pass       http://localhost:5000/socket.io/;  #如果coco安装在别的服务器，请填写它的ip</span><br><span class="line">        proxy_buffering off;</span><br><span class="line">        proxy_http_version 1.1;</span><br><span class="line">        proxy_set_header Upgrade $http_upgrade;</span><br><span class="line">        proxy_set_header Connection &quot;upgrade&quot;;</span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">        proxy_set_header Host $host;</span><br><span class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">        access_log off;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location /coco/ &#123;</span><br><span class="line">        proxy_pass       http://localhost:5000/coco/;  #如果coco安装在别的服务器，请填写它的ip</span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">        proxy_set_header Host $host;</span><br><span class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">        access_log off;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_pass http://localhost:8080;  #如果jumpserver安装在别的服务器，请填写它的ip</span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">        proxy_set_header Host $host;</span><br><span class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;    <span class="comment">#代理端口，以后将通过此端口进行访问，不再通过8080端口</span></span><br><span class="line">    <span class="attribute">server_name</span> jumpserver.xx.cn;  <span class="comment"># 修改成你的域名</span></span><br><span class="line"></span><br><span class="line">    <span class="attribute">client_max_body_size</span> <span class="number">100m</span>;  <span class="comment">#录像及文件上传大小限制</span></span><br><span class="line"></span><br><span class="line">    <span class="attribute">location</span> /luna/ &#123;</span><br><span class="line">        <span class="attribute">try_files</span> <span class="variable">$uri</span> / /index.html;</span><br><span class="line">        <span class="attribute">alias</span> /opt/luna/;    <span class="comment">#luna 路径，如果修改安装目录，此处需要修改</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">location</span> /media/ &#123;</span><br><span class="line">        <span class="attribute">add_header</span> Content-Encoding gzip;</span><br><span class="line">        <span class="attribute">root</span> /opt/jumpserver/data/;  <span class="comment">#录像位置，如果修改安装目录，此处需要修改</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">location</span> /static/ &#123;</span><br><span class="line">        <span class="attribute">root</span> /opt/jumpserver/data/;  <span class="comment">#静态资源，如果修改安装目录，此处需要修改</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">location</span> /socket.io/ &#123;</span><br><span class="line">        <span class="attribute">proxy_pass</span>       http://localhost:5000/socket.io/;  <span class="comment">#如果coco安装在别的服务器，请填写它的ip</span></span><br><span class="line">        <span class="attribute">proxy_buffering</span> <span class="literal">off</span>;</span><br><span class="line">        <span class="attribute">proxy_http_version</span> <span class="number">1</span>.<span class="number">1</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Upgrade <span class="variable">$http_upgrade</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Connection <span class="string">"upgrade"</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">        <span class="attribute">access_log</span> <span class="literal">off</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">location</span> /coco/ &#123;</span><br><span class="line">        <span class="attribute">proxy_pass</span>       http://localhost:5000/coco/;  <span class="comment">#如果coco安装在别的服务器，请填写它的ip</span></span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">        <span class="attribute">access_log</span> <span class="literal">off</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">location</span> / &#123;</span><br><span class="line">        <span class="attribute">proxy_pass</span> http://localhost:8080;  <span class="comment">#如果jumpserver安装在别的服务器，请填写它的ip</span></span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nginx -t   #检查nginx语法</span><br><span class="line">systemctl restart nginx</span><br></pre></td></tr></table></figure>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">nginx</span> -t   <span class="comment">#检查nginx语法</span></span><br><span class="line">systemctl restart nginx</span><br></pre></td></tr></table></figure>
 
-<h5 id="Web正常访问jumpserver"><a href="#Web正常访问jumpserver" class="headerlink" title="Web正常访问jumpserver"></a>Web正常访问jumpserver</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">windows配置host： 10.0.10.88 jumpserver.xx.cn</span><br><span class="line">Web访问Jumpserver:  http://jumpserver.xx.cn。</span><br><span class="line">账号和密码：admin</span><br></pre></td></tr></table></figure>
+<h5 id="Web正常访问jumpserver"><a href="#Web正常访问jumpserver" class="headerlink" title="Web正常访问jumpserver"></a>Web正常访问jumpserver</h5><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">windows配置host： <span class="number">10.0</span>.<span class="number">10.88</span> jumpserver<span class="selector-class">.xx</span><span class="selector-class">.cn</span></span><br><span class="line">Web访问Jumpserver:  http:<span class="comment">//jumpserver.xx.cn。</span></span><br><span class="line">账号和密码：admin</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">注：Jumpserver正常访问的前提是jumpserver服务正常启动。可以使用如下命令检查</span><br><span class="line">cd /opt/jumpserver</span><br><span class="line">./jms status  # 确定jumpserver已经运行，如果没有运行请重新启动jumpserver</span><br></pre></td></tr></table></figure>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">注：Jumpserver正常访问的前提是jumpserver服务正常启动。可以使用如下命令检查</span><br><span class="line"><span class="keyword">cd</span> <span class="string">/opt/jumpserver</span></span><br><span class="line"><span class="string">./jms</span> status  <span class="comment"># 确定jumpserver已经运行，如果没有运行请重新启动jumpserver</span></span><br></pre></td></tr></table></figure>
 
-<h5 id="接受Coco的API注册"><a href="#接受Coco的API注册" class="headerlink" title="接受Coco的API注册"></a>接受Coco的API注册</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">启动coco服务</span><br><span class="line">cd /opt/coco/</span><br><span class="line">./cocod start    #此时界面基本无响应，不过暂且不用管它</span><br><span class="line"></span><br><span class="line">注：新版本更新了运行脚本，使用方式./cocod start|stop|status|restart  后台运行请添加 -d 参数</span><br></pre></td></tr></table></figure>
+<h5 id="接受Coco的API注册"><a href="#接受Coco的API注册" class="headerlink" title="接受Coco的API注册"></a>接受Coco的API注册</h5><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">启动coco服务</span><br><span class="line"><span class="keyword">cd</span> <span class="string">/opt/coco/</span></span><br><span class="line"><span class="string">./cocod</span> start    <span class="comment">#此时界面基本无响应，不过暂且不用管它</span></span><br><span class="line"></span><br><span class="line">注：新版本更新了运行脚本，使用方式<span class="string">./cocod</span> start|stop|status|restart  后台运行请添加 -d 参数</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#接受COCO的API注册请求：</span><br><span class="line">(1)Web访问Jumpserver:  http://jumpserver.xx.cn。</span><br><span class="line">(2)会话管理-终端管理, 这里会看到一个以配置文件中指定的COCO名字的条目，点击最后的接受即可。</span><br><span class="line">(3)此时返回到服务器中，可以看到./cocod start命令正常启动了，可以看看5000和2222端口是否正常。</span><br></pre></td></tr></table></figure>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">#接受COCO的API注册请求：</span></span><br><span class="line"><span class="attr">(1</span>)Web访问Jumpserver:  http:<span class="comment">//jumpserver.xx.cn。</span></span><br><span class="line"><span class="comment">(2)</span>会话管理-终端管理, 这里会看到一个以配置文件中指定的COCO名字的条目，点击最后的接受即可。</span><br><span class="line"><span class="comment">(3)</span>此时返回到服务器中，可以看到./cocod start命令正常启动了，可以看看<span class="number">5000</span>和<span class="number">2222</span>端口是否正常。</span><br></pre></td></tr></table></figure>
 
 <p>排坑</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">执行 ./cocod start 后提示 Failed register terminal xxxx exist already</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">执行 ./cocod <span class="keyword">start</span> 后提示 <span class="keyword">Failed</span> <span class="keyword">register</span> terminal xxxx exist already</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">解决方案：</span><br><span class="line">这是由于 coco 注册未成功造成的，需要重新注册 (能正常访问 jumpserver 页面后再处理)</span><br><span class="line">到 Jumpserver后台 会话管理-终端管理  删掉 coco 的注册</span><br><span class="line">必须到 Jumpserver后台 会话管理-终端管理  删掉 coco 的注册</span><br><span class="line">一定要先到 Jumpserver后台 会话管理-终端管理  删掉 coco 的注册</span><br><span class="line">$ cd /opt/coco &amp;&amp; ./cocod stop</span><br><span class="line">$ rm /opt/coco/keys/.access_key  # coco, 如果你是按文档安装的，key应该在这里，如果不存在key文件直接下一步</span><br><span class="line">$ ./cocod start -d  # 正常运行后到Jumpserver 会话管理-终端管理 里面接受coco注册</span><br></pre></td></tr></table></figure>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">解决方案：</span><br><span class="line">这是由于 coco 注册未成功造成的，需要重新注册 <span class="params">(能正常访问 jumpserver 页面后再处理)</span></span><br><span class="line">到 Jumpserver后台 会话管理-终端管理  删掉 coco 的注册</span><br><span class="line">必须到 Jumpserver后台 会话管理-终端管理  删掉 coco 的注册</span><br><span class="line">一定要先到 Jumpserver后台 会话管理-终端管理  删掉 coco 的注册</span><br><span class="line">$ <span class="keyword">cd</span> <span class="string">/opt/coco</span> &amp;&amp; <span class="string">./cocod</span> stop</span><br><span class="line">$ rm <span class="string">/opt/coco/keys/.access_key</span>  <span class="comment"># coco, 如果你是按文档安装的，key应该在这里，如果不存在key文件直接下一步</span></span><br><span class="line">$ <span class="string">./cocod</span> start -d  <span class="comment"># 正常运行后到Jumpserver 会话管理-终端管理 里面接受coco注册</span></span><br></pre></td></tr></table></figure>
 
-<h5 id="Jumpserver和coco服务开机启动"><a href="#Jumpserver和coco服务开机启动" class="headerlink" title="Jumpserver和coco服务开机启动"></a>Jumpserver和coco服务开机启动</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ls -lh /etc/rc.d/rc.local</span><br><span class="line">chmod +x /etc/rc.d/rc.local</span><br></pre></td></tr></table></figure>
+<h5 id="Jumpserver和coco服务开机启动"><a href="#Jumpserver和coco服务开机启动" class="headerlink" title="Jumpserver和coco服务开机启动"></a>Jumpserver和coco服务开机启动</h5><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ls</span> -lh <span class="string">/etc/rc.d/rc.local</span></span><br><span class="line">chmod +x <span class="string">/etc/rc.d/rc.local</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">mkdir /var/scripts</span><br><span class="line">cd /var/scripts</span><br><span class="line"></span><br><span class="line">#cat jms.sh </span><br><span class="line">#!/bin/bash</span><br><span class="line">source /opt/py3/bin/activate</span><br><span class="line">/opt/jumpserver/jms start -d</span><br><span class="line">/opt/jumpserver/jms status</span><br><span class="line"></span><br><span class="line">#cat coco.sh </span><br><span class="line">#!/bin/bash</span><br><span class="line">source /opt/py3/bin/activate</span><br><span class="line">/opt/coco/cocod start -d</span><br><span class="line">/opt/coco/cocod status</span><br><span class="line"></span><br><span class="line">chmod +x jms.sh coco.sh</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">mkdir /var/scripts</span><br><span class="line"><span class="built_in">cd</span> /var/scripts</span><br><span class="line"></span><br><span class="line"><span class="comment">#cat jms.sh </span></span><br><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="built_in">source</span> /opt/py3/bin/activate</span><br><span class="line">/opt/jumpserver/jms start -d</span><br><span class="line">/opt/jumpserver/jms status</span><br><span class="line"></span><br><span class="line"><span class="comment">#cat coco.sh </span></span><br><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="built_in">source</span> /opt/py3/bin/activate</span><br><span class="line">/opt/coco/cocod start -d</span><br><span class="line">/opt/coco/cocod status</span><br><span class="line"></span><br><span class="line">chmod +x jms.sh coco.sh</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#开机启动Jumpserver</span><br><span class="line">echo &quot;/var/scripts/jms.sh &gt;&gt;/dev/null 2&gt;&amp;1&quot; &gt;&gt;/etc/rc.d/rc.local</span><br><span class="line"></span><br><span class="line">#开机启动Coco</span><br><span class="line">echo &quot;/var/scripts/coco.sh &gt;&gt;/dev/null 2&gt;&amp;1&quot;  &gt;&gt;/etc/rc.d/rc.local</span><br></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#开机启动Jumpserver</span></span><br><span class="line">echo <span class="string">"/var/scripts/jms.sh &gt;&gt;/dev/null 2&gt;&amp;1"</span> <span class="meta">&gt;&gt;</span>/etc/rc.d/rc.local</span><br><span class="line"></span><br><span class="line"><span class="comment">#开机启动Coco</span></span><br><span class="line">echo <span class="string">"/var/scripts/coco.sh &gt;&gt;/dev/null 2&gt;&amp;1"</span>  <span class="meta">&gt;&gt;</span>/etc/rc.d/rc.local</span><br></pre></td></tr></table></figure>
 
-<h5 id="最后整体验证Jumpserver-服务"><a href="#最后整体验证Jumpserver-服务" class="headerlink" title="最后整体验证Jumpserver 服务"></a>最后整体验证Jumpserver 服务</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ssh admin@192.168.244.144 2222</span><br><span class="line">sftp admin@192.168.244.144 2222</span><br><span class="line">密码: admin</span><br><span class="line">如果都能登陆代表部署成功</span><br><span class="line"></span><br><span class="line">注：</span><br><span class="line">sftp默认上传的位置在资产的 /tmp 目录下</span><br></pre></td></tr></table></figure>
+<h5 id="最后整体验证Jumpserver-服务"><a href="#最后整体验证Jumpserver-服务" class="headerlink" title="最后整体验证Jumpserver 服务"></a>最后整体验证Jumpserver 服务</h5><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">ssh</span> <span class="selector-tag">admin</span>@<span class="keyword">192</span>.<span class="keyword">168</span>.<span class="keyword">244</span>.<span class="keyword">144</span> <span class="number">2222</span></span><br><span class="line">sftp admin@<span class="number">192.168</span>.<span class="number">244.144</span> <span class="number">2222</span></span><br><span class="line">密码: admin</span><br><span class="line">如果都能登陆代表部署成功</span><br><span class="line"></span><br><span class="line">注：</span><br><span class="line">sftp默认上传的位置在资产的 /tmp 目录下</span><br></pre></td></tr></table></figure>
 
 <p>排错</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Web访问Luna(代理jumpserver) 502错误，这是因为SELINUX未从配置文件关闭，重启机器selinux又正常启动了。解决方法：关闭即可。</span><br></pre></td></tr></table></figure>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">Web</span>访问<span class="selector-tag">Luna</span>(代理jumpserver) <span class="selector-tag">502</span>错误，这是因为<span class="selector-tag">SELINUX</span>未从配置文件关闭，重启机器<span class="selector-tag">selinux</span>又正常启动了。解决方法：关闭即可。</span><br></pre></td></tr></table></figure>
 
 <p>官方文档：<a href="https://jumpserver.readthedocs.io/zh/docs/step_by_step.html" target="_blank" rel="noopener">https://jumpserver.readthedocs.io/zh/docs/step_by_step.html</a></p>
 
@@ -430,7 +434,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2019 John Doe
+    		&copy; 2019 Gary Wu
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -534,18 +538,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">apache</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">目录浏览</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">高级运维</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Apache</a>
               </li>
              
@@ -574,19 +566,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CDH</a>
+                <a href="javascript:void(0)" class="js-tag color5">高级运维</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JDBC</a>
+                <a href="javascript:void(0)" class="js-tag color2">apache</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">MySQL驱动</a>
+                <a href="javascript:void(0)" class="js-tag color5">目录浏览</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">KAFKA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CDH</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -599,6 +595,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">大数据</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">JDBC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">MySQL驱动</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -634,18 +638,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Cacti流量叠加图形</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Cacti整合图形</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Graph</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">cacti</a>
               </li>
              
@@ -663,6 +655,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">监控</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">bugzilla</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">bugs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Cacti流量叠加图形</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Cacti整合图形</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Graph</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -687,14 +699,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">SCL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">bugzilla</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">bugs</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -742,14 +746,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">DNS TLS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Public DNS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">shadowsocks</a>
               </li>
              
@@ -759,6 +755,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">加密代理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">DNS TLS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Public DNS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -838,18 +842,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ESXI PATH</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ESXI补丁升级</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">ESXI6.7</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">VMware vSphere Client</a>
               </li>
              
@@ -862,6 +854,26 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CPU</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">虚拟化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ESXI PATH</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ESXI补丁升级</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">ESXI6.7</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Openstack</a>
               </li>
              
@@ -871,22 +883,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">混杂模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CPU</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">虚拟化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">磁盘置备</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">disk</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -910,6 +906,26 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Gentoo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">编译内核</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">NFS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">磁盘置备</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">disk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">fuse</a>
               </li>
              
@@ -923,18 +939,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">HDFS挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Gentoo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">编译内核</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">NFS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -998,6 +1002,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">HTTP状态码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">301</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">302</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
@@ -1026,27 +1042,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">HTTP状态码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">301</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">302</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">hdfs空文件</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hadoop fs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1070,6 +1070,22 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Jenkins</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">持续集成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">持续交付</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
@@ -1086,26 +1102,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jenkins</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">持续集成</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">持续交付</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Jumpserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">备机部署</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">分区</a>
               </li>
              
@@ -1118,7 +1114,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">分区热迁移</a>
+                <a href="javascript:void(0)" class="js-tag color1">Jumpserver</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">备机部署</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1127,6 +1127,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">KAFKA版本升级</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">分区热迁移</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1186,18 +1190,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">文件句柄</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">lsof</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">空间释放</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">限速方案</a>
               </li>
              
@@ -1218,6 +1210,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">文件句柄</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">lsof</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">空间释放</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">logstash</a>
               </li>
              
@@ -1231,6 +1235,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Mars</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">HDFS Shell</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1250,15 +1262,27 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Mars</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">HDFS Shell</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Hadoop</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">spark</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">tez</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">单用户模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">多用户模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">远程模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1283,26 +1307,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">机架感知</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">spark</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">tez</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">单用户模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">多用户模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">远程模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1342,15 +1346,27 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">yarn</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hive</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">HQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">yarn</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mongodb</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">mongodump</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mongorestore</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1374,15 +1390,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mongodb</a>
+                <a href="javascript:void(0)" class="js-tag color3">STARTUP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">mongodump</a>
+                <a href="javascript:void(0)" class="js-tag color1">副本集成员</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mongorestore</a>
+                <a href="javascript:void(0)" class="js-tag color5">成员状态</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1402,15 +1418,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">STARTUP</a>
+                <a href="javascript:void(0)" class="js-tag color5">MongoDB集群</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">副本集成员</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">成员状态</a>
+                <a href="javascript:void(0)" class="js-tag color2">mongo集群管理维护</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1438,14 +1450,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">MongoDB集群</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mongo集群管理维护</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">MySQL主从切换</a>
               </li>
              
@@ -1454,19 +1458,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">MySQL主从复制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">全备还原</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">主从同步</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">主从复制监控</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">MySQL主从复制</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">全备还原</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1498,14 +1502,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">慢查询</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">mysqldumpslow</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">dba</a>
               </li>
              
@@ -1523,6 +1519,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">MySQL多实例远程登陆</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">慢查询</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">mysqldumpslow</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1562,14 +1566,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ntp</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">upstream</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">proxy-set-header</a>
               </li>
              
@@ -1582,15 +1578,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">favicon.ico</a>
+                <a href="javascript:void(0)" class="js-tag color4">upstream</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">access</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">log</a>
+                <a href="javascript:void(0)" class="js-tag color4">ntp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1607,6 +1599,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">垃圾UA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">favicon.ico</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">access</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">log</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1646,6 +1650,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Glance</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">openstack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">PHP</a>
               </li>
              
@@ -1658,11 +1670,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Glance</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">openstack</a>
+                <a href="javascript:void(0)" class="js-tag color4">Keystone</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1675,10 +1683,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">OpenStack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Keystone</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1714,23 +1718,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">RAID5</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">parted</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">fdisk</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">RAID5</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">阵列卡</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">缓存</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1754,6 +1750,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">阵列卡</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">缓存</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">rabbitmq</a>
               </li>
              
@@ -1774,15 +1778,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">NTP时间同步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NAT</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">双线</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">NTP时间同步</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1874,6 +1878,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">YARN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">NodeManager</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">udp</a>
               </li>
              
@@ -1891,14 +1903,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">GFW</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">YARN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">NodeManager</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1934,10 +1938,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">rrdtool</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">微信</a>
               </li>
              
@@ -1946,11 +1946,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">weathermap</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">plugin</a>
+                <a href="javascript:void(0)" class="js-tag color3">rrdtool</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1963,6 +1959,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">将Bites转换为Mbits</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">weathermap</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">plugin</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">脚本</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1990,7 +1998,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">脚本</a>
+                <a href="javascript:void(0)" class="js-tag color1">socket.gaierror</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1999,10 +2007,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">socket.gaierror</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2050,14 +2054,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">wget</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">curl请求url不使用缓存</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">unix</a>
               </li>
              
@@ -2074,7 +2070,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">wget</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">curl请求url不使用缓存</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">docker机制</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">exit退出码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2091,14 +2103,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">emerge命令</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">exit退出码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2134,18 +2138,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">磁盘挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">fstab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">开机挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">gentoo</a>
               </li>
              
@@ -2155,6 +2147,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">install</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">磁盘挂载</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">fstab</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">开机挂载</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2186,10 +2190,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hadoop用户</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">fs</a>
               </li>
              
@@ -2202,6 +2202,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">hadoop用户</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">sersync</a>
               </li>
              
@@ -2211,6 +2215,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">实时同步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell脚本</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ip自动配置</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2230,18 +2242,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell脚本</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ip自动配置</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">jumpserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">topic</a>
               </li>
              
@@ -2250,23 +2250,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">keepalived</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LVS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">多实例</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">双主</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">脑裂</a>
+                <a href="javascript:void(0)" class="js-tag color1">jumpserver</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2287,6 +2271,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">nopasswd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">keepalived</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">LVS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">多实例</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">双主</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">脑裂</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2314,10 +2318,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">dd</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">rm恢复</a>
               </li>
              
@@ -2334,23 +2334,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">dd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统备份</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统恢复</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Logstash</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Tomcat</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2363,6 +2355,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">rubydebug</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Logstash</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Tomcat</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2382,6 +2386,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">mongod</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">二进制版</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">mariadb主从</a>
               </li>
              
@@ -2395,14 +2407,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">主从复制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mongod</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">二进制版</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2422,11 +2426,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">主从复制错误</a>
+                <a href="javascript:void(0)" class="js-tag color5">主键错误</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">主键错误</a>
+                <a href="javascript:void(0)" class="js-tag color2">主从复制错误</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2435,14 +2439,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">同步个别库</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mysql slave</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">relay log</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2458,7 +2454,39 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">mysql slave</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">relay log</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">root远程登录</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">优化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">socket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ulimit</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">tcp_nopush</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">tcp_nodelay</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2522,38 +2550,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">优化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">socket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ulimit</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">tcp_nopush</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">tcp_nodelay</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">uri</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">屏蔽接口</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Ddos</a>
               </li>
              
@@ -2566,11 +2562,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">proxy cache</a>
+                <a href="javascript:void(0)" class="js-tag color4">uri</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Nginx缓存清理</a>
+                <a href="javascript:void(0)" class="js-tag color5">屏蔽接口</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2579,6 +2575,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">443</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">proxy cache</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Nginx缓存清理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2602,18 +2606,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SOCKS5</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">proxychains</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">命令代理</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">ps</a>
               </li>
              
@@ -2623,6 +2615,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">进程运行时间</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">SOCKS5</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">proxychains</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">命令代理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2638,14 +2642,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">tar</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">crontab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">自重启</a>
               </li>
              
@@ -2654,11 +2650,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">rsync限速</a>
+                <a href="javascript:void(0)" class="js-tag color4">tar</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">bwlimit</a>
+                <a href="javascript:void(0)" class="js-tag color3">crontab</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2667,6 +2663,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">模板</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">rsync限速</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">bwlimit</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2679,6 +2683,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">zabbix_agent</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">salt-master高可用</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">salt-API</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">salt-ssh</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2710,18 +2726,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">salt-master高可用</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">salt-API</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">salt-ssh</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统瓶颈</a>
               </li>
              
@@ -2742,6 +2746,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">变量传参</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell传参</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">小数判断</a>
               </li>
              
@@ -2751,14 +2763,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">浮点数判断</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">变量传参</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell传参</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2790,6 +2794,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">expect</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Ros</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">FTP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">dsa</a>
               </li>
              
@@ -2806,15 +2822,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">expect</a>
+                <a href="javascript:void(0)" class="js-tag color1">supervisor</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Ros</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">FTP</a>
+                <a href="javascript:void(0)" class="js-tag color4">supervisorctl</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2827,14 +2839,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">pid</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">supervisor</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">supervisorctl</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2874,19 +2878,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">vim</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">中文乱码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">vmware</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">虚拟机克隆</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vim</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">中文乱码</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2902,10 +2906,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">告警</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">traceroute</a>
               </li>
              
@@ -2915,6 +2915,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">MTR</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">告警</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2942,6 +2946,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">zk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">触发器</a>
               </li>
              
@@ -2955,10 +2963,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">触发器表达式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">zk</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2978,11 +2982,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">云计算</a>
+                <a href="javascript:void(0)" class="js-tag color5">Rack</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Rack</a>
+                <a href="javascript:void(0)" class="js-tag color4">云计算</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2998,6 +3002,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CDN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">IM</a>
               </li>
              
@@ -3007,18 +3015,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">开源IM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CDN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">jq</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">筛选大于某个值的数据到文件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3042,11 +3038,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">taskset</a>
+                <a href="javascript:void(0)" class="js-tag color3">jq</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">PID</a>
+                <a href="javascript:void(0)" class="js-tag color4">筛选大于某个值的数据到文件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3058,15 +3054,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">zerotier</a>
+                <a href="javascript:void(0)" class="js-tag color3">taskset</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">内网穿透</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">全球畅联</a>
+                <a href="javascript:void(0)" class="js-tag color4">PID</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3090,7 +3082,31 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">zerotier</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">内网穿透</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">全球畅联</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">RocketMQ</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">分布式消息队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nameserver</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">brokerserver</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3110,39 +3126,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">分布式消息队列</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">nameserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">brokerserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">外部命令</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">内部命令</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">只读模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">fatab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mount</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">remount</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3162,19 +3150,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OpenSSL</a>
+                <a href="javascript:void(0)" class="js-tag color5">只读模式</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">CA</a>
+                <a href="javascript:void(0)" class="js-tag color1">fatab</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SSL证书</a>
+                <a href="javascript:void(0)" class="js-tag color1">mount</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">csr</a>
+                <a href="javascript:void(0)" class="js-tag color3">remount</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3191,6 +3179,22 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">免交互</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">OpenSSL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">CA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">SSL证书</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">csr</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3218,6 +3222,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">SHELL编程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">kill</a>
               </li>
              
@@ -3230,7 +3238,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">SHELL编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">Yum源</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3239,10 +3247,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Shell脚本</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Yum源</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3262,15 +3266,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">consumer</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">内存</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">使用率</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">consumer</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3374,6 +3378,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">flock</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LVS连接数监控</a>
               </li>
              
@@ -3387,10 +3395,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">InActConn</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">flock</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3566,6 +3570,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">autostart</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">libvert</a>
               </li>
              
@@ -3575,10 +3583,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">动态迁移</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">autostart</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3734,6 +3738,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">lvs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">4层负载均衡</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">DR模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">LNMP</a>
               </li>
              
@@ -3751,18 +3767,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">mysql数据库迁移</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">lvs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">4层负载均衡</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">DR模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3822,15 +3826,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">pass_proxy</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">htpasswd</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">日志切割</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">pass_proxy</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4130,15 +4134,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">磁盘</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">awk数组</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">磁盘管理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">磁盘</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4174,19 +4178,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">redis cluster</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">ssdb</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">LevelDB</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">redis cluster</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4230,14 +4234,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">codis集群</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">memcache</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">GlusterFS</a>
               </li>
              
@@ -4247,6 +4243,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NAS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">codis集群</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">memcache</a>
               </li>
              
               <li class="article-tag-list-item">

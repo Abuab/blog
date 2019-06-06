@@ -6,22 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://garywu520.github.io/blog">
-  <title>OpenVPN编译安装部署 | Hexo</title>
+  <title>OpenVPN编译安装部署 | Gary Wu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="1整理下OpenVPN编译安装+部署过程，尤其是向客户端push路由、证书创建与吊销等相关技术。最后还会说明下客户端如何高可用实现逻辑负载均衡。">
 <meta name="keywords" content="高级运维,openvpn,ovpn,vpn,easy-rsa3">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OpenVPN编译安装部署">
 <meta property="og:url" content="https://garywu520.github.io/blog/2018/08/23/OpenVPN编译安装部署/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Gary Wu">
 <meta property="og:description" content="1整理下OpenVPN编译安装+部署过程，尤其是向客户端push路由、证书创建与吊销等相关技术。最后还会说明下客户端如何高可用实现逻辑负载均衡。">
-<meta property="og:locale" content="default">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2018-08-23T02:30:24.380Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OpenVPN编译安装部署">
 <meta name="twitter:description" content="1整理下OpenVPN编译安装+部署过程，尤其是向客户端push路由、证书创建与吊销等相关技术。最后还会说明下客户端如何高可用实现逻辑负载均衡。">
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="Gary Wu" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -47,12 +47,14 @@
 <div class="overlay" style="background: #4d4d4d"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
-		<a href="/blog/" class="profilepic">
-			<img src="https://raw.githubusercontent.com/discant520/garywu/master/images/touxiang.jpg" class="js-avatar">
+		<a href="/blog" class="profilepic">
+			<img src="http://pics0.baidu.com/feed/bd315c6034a85edf5f5b8bff8cf9cf27df54754d.png?token=c9857ef7ee73e1ffc14d3e3c4e9e3be3&amp;s=1E5207CAC64234F44988148A0300B090" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/blog/">John Doe</a></h1>
+		  <h1 class="header-author"><a href="/blog">Gary Wu</a></h1>
 		</hgroup>
+		
+		<p class="header-subtitle">运维架构师 - 从入门到放弃</p>
 		
 
 		<nav class="header-menu">
@@ -106,11 +108,13 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="https://raw.githubusercontent.com/discant520/garywu/master/images/touxiang.jpg" class="js-avatar">
+				<img src="http://pics0.baidu.com/feed/bd315c6034a85edf5f5b8bff8cf9cf27df54754d.png?token=c9857ef7ee73e1ffc14d3e3c4e9e3be3&amp;s=1E5207CAC64234F44988148A0300B090" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">John Doe</h1>
+			  <h1 class="header-author js-header-author">Gary Wu</h1>
 			</hgroup>
+			
+			<p class="header-subtitle"><i class="icon icon-quo-left"></i>运维架构师 - 从入门到放弃<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -185,41 +189,41 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">整理下OpenVPN编译安装+部署过程，尤其是向客户端push路由、证书创建与吊销等相关技术。最后还会说明下客户端如何高可用实现逻辑负载均衡。</span><br></pre></td></tr></table></figure>
+        <figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">整理下OpenVPN编译安装+部署过程，尤其是向客户端<span class="keyword">push</span>路由、证书创建与吊销等相关技术。最后还会说明下客户端如何高可用实现逻辑负载均衡。</span><br></pre></td></tr></table></figure>
 
 <a id="more"></a>
 
-<h3 id="编译安装"><a href="#编译安装" class="headerlink" title="编译安装"></a>编译安装</h3><h5 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">启动并清空iptables规则</span><br><span class="line">  # iptables -F</span><br><span class="line">  # service iptables save</span><br><span class="line">  # service iptables restart</span><br><span class="line"> </span><br><span class="line">关闭SELINUX</span><br><span class="line">  # setenforce 0</span><br><span class="line">  # vi /etc/sysconfig/selinux</span><br><span class="line">    修改为SELINUX=disabled</span><br><span class="line"> </span><br><span class="line">开启服务器端路由转发功能</span><br><span class="line">  # vi /etc/sysctl.conf</span><br><span class="line">    改为 net.ipv4.ip_forward = 1</span><br><span class="line">  # sysctl -p</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">设置nat转发（注：添加正确的OpenVPN客户端网络地址）</span><br><span class="line">  # iptables -t nat -A POSTROUTING -s 172.101.101.0/24 -o eth0 -j MASQUERADE</span><br><span class="line">  注：如果是VPS配置openvpn，需要把上面的“-o eth0”参数取消，否则无法上网。</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">设置iptables开放openvpn端口：</span><br><span class="line">  # iptables -A INPUT -p TCP --dport 1194 -j ACCEPT</span><br><span class="line">  # service iptables save</span><br><span class="line">  # service iptables restart</span><br><span class="line"> </span><br><span class="line">时间同步(重要)：</span><br><span class="line">  # yum install ntp</span><br><span class="line">  # ntpdate asia.pool.ntp.org</span><br><span class="line">  # vi /etc/rc.d/rc.local</span><br><span class="line">    添加 /usr/bin/ntpdate asia.pool.ntp.org</span><br><span class="line">  </span><br><span class="line">安装编译依赖库</span><br><span class="line">  # yum install -y openssl openssl-devel lzo lzo-devel pam pam-devel automake pkgconfig gcc gcc++</span><br></pre></td></tr></table></figure>
+<h3 id="编译安装"><a href="#编译安装" class="headerlink" title="编译安装"></a>编译安装</h3><h5 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h5><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">启动并清空iptables规则</span><br><span class="line">  # iptables -F</span><br><span class="line">  #<span class="built_in"> service </span>iptables save</span><br><span class="line">  #<span class="built_in"> service </span>iptables restart</span><br><span class="line"> </span><br><span class="line">关闭SELINUX</span><br><span class="line">  # setenforce 0</span><br><span class="line">  # vi /etc/sysconfig/selinux</span><br><span class="line">    修改为<span class="attribute">SELINUX</span>=disabled</span><br><span class="line"> </span><br><span class="line">开启服务器端路由转发功能</span><br><span class="line">  # vi /etc/sysctl.conf</span><br><span class="line">    改为 net.ipv4.ip_forward = 1</span><br><span class="line">  # sysctl -p</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">设置nat转发（注：添加正确的OpenVPN客户端网络地址）</span><br><span class="line">  # iptables -t<span class="built_in"> nat </span>-A POSTROUTING -s 172.101.101.0/24 -o eth0 -j MASQUERADE</span><br><span class="line">  注：如果是VPS配置openvpn，需要把上面的“-o eth0”参数取消，否则无法上网。</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">设置iptables开放openvpn端口：</span><br><span class="line">  # iptables -A INPUT -p TCP --dport 1194 -j ACCEPT</span><br><span class="line">  #<span class="built_in"> service </span>iptables save</span><br><span class="line">  #<span class="built_in"> service </span>iptables restart</span><br><span class="line"> </span><br><span class="line">时间同步(重要)：</span><br><span class="line">  # yum install ntp</span><br><span class="line">  # ntpdate asia.pool.ntp.org</span><br><span class="line">  # vi /etc/rc.d/rc.local</span><br><span class="line">    添加 /usr/bin/ntpdate asia.pool.ntp.org</span><br><span class="line">  </span><br><span class="line">安装编译依赖库</span><br><span class="line">  # yum install -y openssl openssl-devel lzo lzo-devel pam pam-devel automake pkgconfig gcc gcc++</span><br></pre></td></tr></table></figure>
 
-<h5 id="下载openvpn：-官网"><a href="#下载openvpn：-官网" class="headerlink" title="下载openvpn： 官网"></a>下载openvpn： <a href="https://openvpn.net/index.php/open-source/downloads.html" target="_blank" rel="noopener">官网</a></h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># tar -zxvf openvpn.2.3.10.tar.gz &amp;&amp; cd openvpn.2.3.10</span><br><span class="line"># ./configure --prefix=/usr/local/openvpn</span><br><span class="line"># make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<h5 id="下载openvpn：-官网"><a href="#下载openvpn：-官网" class="headerlink" title="下载openvpn： 官网"></a>下载openvpn： <a href="https://openvpn.net/index.php/open-source/downloads.html" target="_blank" rel="noopener">官网</a></h5><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># tar -zxvf openvpn<span class="number">.2</span><span class="number">.3</span><span class="number">.10</span>.tar.gz &amp;&amp; cd openvpn<span class="number">.2</span><span class="number">.3</span><span class="number">.10</span></span><br><span class="line"># ./configure --prefix=/usr/local/openvpn</span><br><span class="line"># make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">创建/etc/openvpn目录</span><br><span class="line"># mkdir -p /etc/openvpn</span><br><span class="line"># cp -rf /root/openvpn.2.3.10/sample /etc/openvpn</span><br><span class="line"># cp /etc/openvpn/sample/sample-config-files/server.conf /etc/openvpn</span><br></pre></td></tr></table></figure>
+<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">创建/etc/openvpn目录</span><br><span class="line"><span class="meta"># mkdir -p /etc/openvpn</span></span><br><span class="line"><span class="meta"># cp -rf /root/openvpn.2.3.10/sample /etc/openvpn</span></span><br><span class="line"><span class="meta"># cp /etc/openvpn/sample/sample-config-files/server.conf /etc/openvpn</span></span><br></pre></td></tr></table></figure>
 
-<h5 id="安装openvpn最新的easy-rsa，该包用来制作ca证书，服务端证书，客户端证书。最新的为easy-rsa3"><a href="#安装openvpn最新的easy-rsa，该包用来制作ca证书，服务端证书，客户端证书。最新的为easy-rsa3" class="headerlink" title="安装openvpn最新的easy-rsa，该包用来制作ca证书，服务端证书，客户端证书。最新的为easy-rsa3"></a>安装openvpn最新的easy-rsa，该包用来制作ca证书，服务端证书，客户端证书。最新的为easy-rsa3</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"># wget -c https://github.com/OpenVPN/easy-rsa/archive/master.zip</span><br><span class="line"># unzip master.zip</span><br><span class="line"># mv easy-ras-master easy-rsa</span><br><span class="line"># cp -rf easy-rsa /etc/openvpn</span><br><span class="line"># cd /etc/openvpn/easy-rsa/easyrsa3</span><br><span class="line"># cp vars.example vars</span><br><span class="line"># chmod +x vars</span><br><span class="line">修改Vars文件内的如下字段：</span><br><span class="line">set_var EASYRSA_REQ_COUNTRY &quot;CN&quot; //根据自己情况更改</span><br><span class="line">set_var EASYRSA_REQ_PROVINCE &quot;Beijing&quot;</span><br><span class="line">set_var EASYRSA_REQ_CITY &quot;Tong&quot;</span><br><span class="line">set_var EASYRSA_REQ_ORG &quot;qingliu Certificate&quot;</span><br><span class="line">set_var EASYRSA_REQ_EMAIL &quot;shuiqingliu14@gmail.com&quot;</span><br><span class="line">set_var EASYRSA_REQ_OU &quot;My OpenVPN&quot;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">创建服务端证书及Key</span><br><span class="line">A. 进入/etc/openvpn/easy-rsa/easyrsa3/目录初始化：</span><br><span class="line">   ./easyrsa init-pki</span><br><span class="line"> </span><br><span class="line">B. 创建根证书</span><br><span class="line">   ./easyrsa build-ca</span><br><span class="line">   B1. 根据提示输入PEM密码，密码为：P**4 【务必要记住改密码，否则以后不能为证书签名】</span><br><span class="line">   B2. 还需要输入common name 通用名，配置为Moxiu。  </span><br><span class="line"> </span><br><span class="line">C. 创建服务器端证书</span><br><span class="line">    ./easyrsa gen-req server nopass</span><br><span class="line"> </span><br><span class="line">D. 签约服务端证书</span><br><span class="line">   ./easyrsa sign server server</span><br><span class="line">   根据提示输入”yes ” ,再输入刚才设置的PEM密码</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">D. 创建Diffie-Hellman，确保key穿越不安全网络的命令</span><br><span class="line">   ./easyrsa gen-dh</span><br></pre></td></tr></table></figure>
+<h5 id="安装openvpn最新的easy-rsa，该包用来制作ca证书，服务端证书，客户端证书。最新的为easy-rsa3"><a href="#安装openvpn最新的easy-rsa，该包用来制作ca证书，服务端证书，客户端证书。最新的为easy-rsa3" class="headerlink" title="安装openvpn最新的easy-rsa，该包用来制作ca证书，服务端证书，客户端证书。最新的为easy-rsa3"></a>安装openvpn最新的easy-rsa，该包用来制作ca证书，服务端证书，客户端证书。最新的为easy-rsa3</h5><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># wget -c https://github.com/OpenVPN/easy-rsa/archive/master.zip</span></span><br><span class="line"><span class="comment"># unzip master.zip</span></span><br><span class="line"><span class="comment"># mv easy-ras-master easy-rsa</span></span><br><span class="line"><span class="comment"># cp -rf easy-rsa /etc/openvpn</span></span><br><span class="line"><span class="comment"># cd /etc/openvpn/easy-rsa/easyrsa3</span></span><br><span class="line"><span class="comment"># cp vars.example vars</span></span><br><span class="line"><span class="comment"># chmod +x vars</span></span><br><span class="line">修改Vars文件内的如下字段：</span><br><span class="line"><span class="keyword">set</span>_var EASYRSA_REQ_COUNTRY <span class="string">"CN"</span> <span class="string">//</span>根据自己情况更改</span><br><span class="line"><span class="keyword">set</span>_var EASYRSA_REQ_PROVINCE <span class="string">"Beijing"</span></span><br><span class="line"><span class="keyword">set</span>_var EASYRSA_REQ_CITY <span class="string">"Tong"</span></span><br><span class="line"><span class="keyword">set</span>_var EASYRSA_REQ_ORG <span class="string">"qingliu Certificate"</span></span><br><span class="line"><span class="keyword">set</span>_var EASYRSA_REQ_EMAIL <span class="string">"shuiqingliu14@gmail.com"</span></span><br><span class="line"><span class="keyword">set</span>_var EASYRSA_REQ_OU <span class="string">"My OpenVPN"</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">创建服务端证书及Key</span><br><span class="line">A. 进入<span class="string">/etc/openvpn/easy-rsa/easyrsa3/</span>目录初始化：</span><br><span class="line">   <span class="string">./easyrsa</span> init-pki</span><br><span class="line"> </span><br><span class="line">B. 创建根证书</span><br><span class="line">   <span class="string">./easyrsa</span> build-ca</span><br><span class="line">   B1. 根据提示输入PEM密码，密码为：P**4 【务必要记住改密码，否则以后不能为证书签名】</span><br><span class="line">   B2. 还需要输入common name 通用名，配置为Moxiu。  </span><br><span class="line"> </span><br><span class="line">C. 创建服务器端证书</span><br><span class="line">    <span class="string">./easyrsa</span> gen-req server nopass</span><br><span class="line"> </span><br><span class="line">D. 签约服务端证书</span><br><span class="line">   <span class="string">./easyrsa</span> sign server server</span><br><span class="line">   根据提示输入”yes ” ,再输入刚才设置的PEM密码</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">D. 创建Diffie-Hellman，确保key穿越不安全网络的命令</span><br><span class="line">   <span class="string">./easyrsa</span> gen-dh</span><br></pre></td></tr></table></figure>
 
-<h5 id="创建客户端证书"><a href="#创建客户端证书" class="headerlink" title="创建客户端证书"></a>创建客户端证书</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">A. 在/root目录下，创建openvpn_users文件夹来存储所有客户端证书文件。</span><br><span class="line">   # mkdir  /root/openvpn_users &amp;&amp; cd openvpn_users</span><br><span class="line">   # cp -R /root/easy-rsa  ./</span><br><span class="line">   # cd easy-rsa/easyrsa3/</span><br><span class="line">   # cp vars.example  vars</span><br><span class="line"> </span><br><span class="line">B. 初始化</span><br><span class="line">   # ./easyrsa init-pki</span><br><span class="line">  </span><br><span class="line">C. 创建客户端key以及生成证书（记住生成是自己输入的密码）</span><br><span class="line">   # ./easyrsa  gen-req  test   //名字自己定义</span><br><span class="line">  </span><br><span class="line">D. 切换到Server证书目录下，将得到的test.req导入，然后签约证书</span><br><span class="line"># cd  /etc/openvpn/easy-rsa/easyrsa3/</span><br><span class="line"># ./easyrsa  import-req /root/openvpn_users/easy-rsa/easyrsa3/pki/reqs/test.req test</span><br><span class="line">     </span><br><span class="line">D. 用户签约，根据提示输入服务端CA密码</span><br><span class="line">   # ./easyrsa sign client test</span><br><span class="line">  </span><br><span class="line">E. 这一步很重要，看看生成的全部文件</span><br><span class="line">    (1)Server:  [目录：/etc/openvpn/easy-rsa/文件夹]</span><br><span class="line">    </span><br><span class="line">    /etc/openvpn/easy-rsa/easyrsa3/pki/ca.crt</span><br><span class="line">    /etc/openvpn/easy-rsa/easyrsa3/pki/reqs/server.req</span><br><span class="line">    /etc/openvpn/easy-rsa/easyrsa3/pki/reqs/test.req</span><br><span class="line">    /etc/openvpn/easy-rsa/easyrsa3/pki/private/ca.key</span><br><span class="line">    /etc/openvpn/easy-rsa/easyrsa3/pki/private/server.key</span><br><span class="line">    /etc/openvpn/easy-rsa/easyrsa3/pki/issued/server.crt</span><br><span class="line">    /etc/openvpn/easy-rsa/easyrsa3/pki/issued/test.crt</span><br><span class="line">    /etc/openvpn/easy-rsa/easyrsa3/pki/dh.pem</span><br><span class="line"> </span><br><span class="line">    (2) Client: [目录：/etc/openvpn/clients/easy-rsa/文件夹]</span><br><span class="line">      /root/openvpn_users/easy-rsa/easyrsa3/pki/private/test.key</span><br><span class="line">      /root/openvpn_users/easy-rsa/easyrsa3/pki/reqs/test.req</span><br><span class="line">         这个文件被我们导入到了服务端文件所以那里也有</span><br><span class="line"> </span><br><span class="line">F. 拷贝服务器证书文件放到/etc/openvpn目录</span><br><span class="line">   进入/etc/openvpn/easy-rsa/easyrsa3目录</span><br><span class="line">   #cp pki/ca.crt  /etc/openvpn</span><br><span class="line">   #cp pki/private/server.key  /etc/openvpn</span><br><span class="line">   #cp pki/issued/server.crt  /etc/openvpn</span><br><span class="line">   #cp pki/dh.pem  /etc/openvpn</span><br><span class="line"> </span><br><span class="line">G. Client证书（集中放到一个文件夹下，给VPN用户使用）</span><br><span class="line">   # mkdir /root/users</span><br><span class="line">   # mkdir /root/users/test //内部文件夹以姓名全拼命名，方便下载这些密钥文件</span><br><span class="line">   # cd /root/users/test/</span><br><span class="line">   # cp /etc/openvpn/ca.crt ./          </span><br><span class="line">    拷贝CA证书到test目录下</span><br><span class="line">   # cp /etc/openvpn/easy-rsa/easyrsa3/pki/issued/test.crt ./      </span><br><span class="line">    拷贝（服务端路径）用户crt文件</span><br><span class="line">   # cp /root/openvpn_users/easy-rsa/easyrsa3/pki/private/test.key ./</span><br><span class="line">　　拷贝（客户端路径）用户key文件</span><br><span class="line">   </span><br><span class="line">   查看</span><br><span class="line">   [root@OpenVPN test]# ls</span><br><span class="line">   ca.crt  test.crt  test.key</span><br></pre></td></tr></table></figure>
+<h5 id="创建客户端证书"><a href="#创建客户端证书" class="headerlink" title="创建客户端证书"></a>创建客户端证书</h5><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">A. 在/root目录下，创建openvpn_users文件夹来存储所有客户端证书文件。</span><br><span class="line">   <span class="meta"># mkdir  /root/openvpn_users &amp;&amp; cd openvpn_users</span></span><br><span class="line">   <span class="meta"># cp -R /root/easy-rsa  ./</span></span><br><span class="line">   <span class="meta"># cd easy-rsa/easyrsa3/</span></span><br><span class="line">   <span class="meta"># cp vars.example  vars</span></span><br><span class="line"> </span><br><span class="line">B. 初始化</span><br><span class="line">   <span class="meta"># ./easyrsa init-pki</span></span><br><span class="line">  </span><br><span class="line">C. 创建客户端key以及生成证书（记住生成是自己输入的密码）</span><br><span class="line">   <span class="meta"># ./easyrsa  gen-req  test   <span class="comment">//名字自己定义</span></span></span><br><span class="line">  </span><br><span class="line">D. 切换到Server证书目录下，将得到的test.req导入，然后签约证书</span><br><span class="line"><span class="meta"># cd  /etc/openvpn/easy-rsa/easyrsa3/</span></span><br><span class="line"><span class="meta"># ./easyrsa  import-req /root/openvpn_users/easy-rsa/easyrsa3/pki/reqs/test.req test</span></span><br><span class="line">     </span><br><span class="line">D. 用户签约，根据提示输入服务端CA密码</span><br><span class="line">   <span class="meta"># ./easyrsa sign client test</span></span><br><span class="line">  </span><br><span class="line">E. 这一步很重要，看看生成的全部文件</span><br><span class="line">    (<span class="number">1</span>)Server:  [目录：<span class="meta-keyword">/etc/</span>openvpn<span class="meta-keyword">/easy-rsa/</span>文件夹]</span><br><span class="line">    </span><br><span class="line">    <span class="meta-keyword">/etc/</span>openvpn<span class="meta-keyword">/easy-rsa/</span>easyrsa3<span class="meta-keyword">/pki/</span>ca.crt</span><br><span class="line">    <span class="meta-keyword">/etc/</span>openvpn<span class="meta-keyword">/easy-rsa/</span>easyrsa3<span class="meta-keyword">/pki/</span>reqs/server.req</span><br><span class="line">    <span class="meta-keyword">/etc/</span>openvpn<span class="meta-keyword">/easy-rsa/</span>easyrsa3<span class="meta-keyword">/pki/</span>reqs/test.req</span><br><span class="line">    <span class="meta-keyword">/etc/</span>openvpn<span class="meta-keyword">/easy-rsa/</span>easyrsa3<span class="meta-keyword">/pki/</span>private/ca.key</span><br><span class="line">    <span class="meta-keyword">/etc/</span>openvpn<span class="meta-keyword">/easy-rsa/</span>easyrsa3<span class="meta-keyword">/pki/</span>private/server.key</span><br><span class="line">    <span class="meta-keyword">/etc/</span>openvpn<span class="meta-keyword">/easy-rsa/</span>easyrsa3<span class="meta-keyword">/pki/</span>issued/server.crt</span><br><span class="line">    <span class="meta-keyword">/etc/</span>openvpn<span class="meta-keyword">/easy-rsa/</span>easyrsa3<span class="meta-keyword">/pki/</span>issued/test.crt</span><br><span class="line">    <span class="meta-keyword">/etc/</span>openvpn<span class="meta-keyword">/easy-rsa/</span>easyrsa3<span class="meta-keyword">/pki/</span>dh.pem</span><br><span class="line"> </span><br><span class="line">    (<span class="number">2</span>) Client: [目录：<span class="meta-keyword">/etc/</span>openvpn<span class="meta-keyword">/clients/</span>easy-rsa/文件夹]</span><br><span class="line">      <span class="meta-keyword">/root/</span>openvpn_users<span class="meta-keyword">/easy-rsa/</span>easyrsa3<span class="meta-keyword">/pki/</span>private/test.key</span><br><span class="line">      <span class="meta-keyword">/root/</span>openvpn_users<span class="meta-keyword">/easy-rsa/</span>easyrsa3<span class="meta-keyword">/pki/</span>reqs/test.req</span><br><span class="line">         这个文件被我们导入到了服务端文件所以那里也有</span><br><span class="line"> </span><br><span class="line">F. 拷贝服务器证书文件放到<span class="meta-keyword">/etc/</span>openvpn目录</span><br><span class="line">   进入<span class="meta-keyword">/etc/</span>openvpn<span class="meta-keyword">/easy-rsa/</span>easyrsa3目录</span><br><span class="line">   <span class="meta">#cp pki/ca.crt  /etc/openvpn</span></span><br><span class="line">   <span class="meta">#cp pki/private/server.key  /etc/openvpn</span></span><br><span class="line">   <span class="meta">#cp pki/issued/server.crt  /etc/openvpn</span></span><br><span class="line">   <span class="meta">#cp pki/dh.pem  /etc/openvpn</span></span><br><span class="line"> </span><br><span class="line">G. Client证书（集中放到一个文件夹下，给VPN用户使用）</span><br><span class="line">   <span class="meta"># mkdir /root/users</span></span><br><span class="line">   <span class="meta"># mkdir /root/users/test <span class="comment">//内部文件夹以姓名全拼命名，方便下载这些密钥文件</span></span></span><br><span class="line">   <span class="meta"># cd /root/users/test/</span></span><br><span class="line">   <span class="meta"># cp /etc/openvpn/ca.crt ./          </span></span><br><span class="line">    拷贝CA证书到test目录下</span><br><span class="line">   <span class="meta"># cp /etc/openvpn/easy-rsa/easyrsa3/pki/issued/test.crt ./      </span></span><br><span class="line">    拷贝（服务端路径）用户crt文件</span><br><span class="line">   <span class="meta"># cp /root/openvpn_users/easy-rsa/easyrsa3/pki/private/test.key ./</span></span><br><span class="line">　　拷贝（客户端路径）用户key文件</span><br><span class="line">   </span><br><span class="line">   查看</span><br><span class="line">   [root@OpenVPN test]<span class="meta"># ls</span></span><br><span class="line">   ca.crt  test.crt  test.key</span><br></pre></td></tr></table></figure>
 
-<h5 id="生成ta-key【为了安全】"><a href="#生成ta-key【为了安全】" class="headerlink" title="生成ta.key【为了安全】"></a>生成ta.key【为了安全】</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">配置服务之前，需要生成配置文件需要的ta.key文件，并将ta.key放入/etc/openvpn目录下</span><br><span class="line">【注：客户端连接也要使用有此文件】</span><br><span class="line"># cd /root/</span><br><span class="line"># /usr/local/openvpn/sbin/openvpn --genkey --secret ta.key</span><br><span class="line"># ls</span><br><span class="line"># cp  ta.key  /etc/openvpn/</span><br><span class="line"># cp ta.key /root/users/test</span><br></pre></td></tr></table></figure>
+<h5 id="生成ta-key【为了安全】"><a href="#生成ta-key【为了安全】" class="headerlink" title="生成ta.key【为了安全】"></a>生成ta.key【为了安全】</h5><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">配置服务之前，需要生成配置文件需要的ta.key文件，并将ta.key放入/etc/openvpn目录下</span><br><span class="line">【注：客户端连接也要使用有此文件】</span><br><span class="line"><span class="meta"># cd /root/</span></span><br><span class="line"><span class="meta"># /usr/local/openvpn/sbin/openvpn --genkey --secret ta.key</span></span><br><span class="line"><span class="meta"># ls</span></span><br><span class="line"><span class="meta"># cp  ta.key  /etc/openvpn/</span></span><br><span class="line"><span class="meta"># cp ta.key /root/users/test</span></span><br></pre></td></tr></table></figure>
 
-<h5 id="服务端配置文件"><a href="#服务端配置文件" class="headerlink" title="服务端配置文件"></a>服务端配置文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"># vi /etc/openvpn/server.conf  </span><br><span class="line">    </span><br><span class="line">     local 10.0.8.28</span><br><span class="line">     #申明本机使用的IP地址，也可以不说明</span><br><span class="line">     port 1194</span><br><span class="line">     #申明使用的端口，默认1194</span><br><span class="line">     proto tcp</span><br><span class="line">     #申明使用的协议，默认使用UDP，如果使用HTTP proxy，必须使用TCP协议</span><br><span class="line">     dev tun</span><br><span class="line">     #申明使用的设备可选tap和tun，tap是二层设备，支持链路层协议。</span><br><span class="line">     ca /etc/openvpn/ca.crt</span><br><span class="line">     #指定ca证书的路径</span><br><span class="line">     cert /etc/openvpn/server.crt</span><br><span class="line">     #指定server.crt路径</span><br><span class="line">     key /etc/openvpn/server.key</span><br><span class="line">     #指定server.key路径</span><br><span class="line">     dh /etc/openvpn/dh.pem</span><br><span class="line">     #指定dh.pem路径</span><br><span class="line">     server 172.101.101.0 255.255.255.0</span><br><span class="line">     #为VPN客户端指定分配的网络地址（自己根据规划分配）</span><br><span class="line">     ifconfig-pool-persist ipp.txt</span><br><span class="line">     push &quot;redirect-gateway&quot;      </span><br><span class="line">     #向客户端push网关【push 网关后，客户端通过远程网络上网，作用类似NAT伪装；如果不想这么做，就需要向客户端直接push路由--后边故障解决部分有介绍】</span><br><span class="line">     push &quot;dhcp-option DNS 114.114.114.114&quot;  #向客户端push DNS</span><br><span class="line">     client-to-client  #让客户端彼此可以互相访问</span><br><span class="line">     tls-auth   /etc/openvpn/ta.key 0  </span><br><span class="line">     #注：此处客户端配置文件中该参数需要改为 tls-auth ta.key 1</span><br><span class="line">     comp-lzo</span><br><span class="line">     auth md5</span><br><span class="line">      cipher AES-256-CBC</span><br><span class="line">      max-clients 100</span><br><span class="line">      keepalive 10 120</span><br><span class="line">      persist-key</span><br><span class="line">      persist-tun</span><br><span class="line">      status openvpn-status.log</span><br><span class="line">      verb 3</span><br></pre></td></tr></table></figure>
+<h5 id="服务端配置文件"><a href="#服务端配置文件" class="headerlink" title="服务端配置文件"></a>服务端配置文件</h5><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vi /etc/openvpn/server.conf  </span></span><br><span class="line">    </span><br><span class="line">     local 10.0.8.28</span><br><span class="line">     #申明本机使用的IP地址，也可以不说明</span><br><span class="line">    <span class="built_in"> port </span>1194</span><br><span class="line">     #申明使用的端口，默认1194</span><br><span class="line">     proto tcp</span><br><span class="line">     #申明使用的协议，默认使用UDP，如果使用HTTP proxy，必须使用TCP协议</span><br><span class="line">     dev tun</span><br><span class="line">     #申明使用的设备可选tap和tun，tap是二层设备，支持链路层协议。</span><br><span class="line">     ca /etc/openvpn/ca.crt</span><br><span class="line">     #指定ca证书的路径</span><br><span class="line">     cert /etc/openvpn/server.crt</span><br><span class="line">     #指定server.crt路径</span><br><span class="line">     key /etc/openvpn/server.key</span><br><span class="line">     #指定server.key路径</span><br><span class="line">     dh /etc/openvpn/dh.pem</span><br><span class="line">     #指定dh.pem路径</span><br><span class="line">    <span class="built_in"> server </span>172.101.101.0 255.255.255.0</span><br><span class="line">     #为VPN客户端指定分配的网络地址（自己根据规划分配）</span><br><span class="line">     ifconfig-pool-persist ipp.txt</span><br><span class="line">     push <span class="string">"redirect-gateway"</span>      </span><br><span class="line">     #向客户端push网关【push 网关后，客户端通过远程网络上网，作用类似NAT伪装；如果不想这么做，就需要向客户端直接push路由--后边故障解决部分有介绍】</span><br><span class="line">     push <span class="string">"dhcp-option DNS 114.114.114.114"</span>  #向客户端push DNS</span><br><span class="line">     client-to-client  #让客户端彼此可以互相访问</span><br><span class="line">     tls-auth   /etc/openvpn/ta.key 0  </span><br><span class="line">     #注：此处客户端配置文件中该参数需要改为 tls-auth ta.key 1</span><br><span class="line">     comp-lzo</span><br><span class="line">     auth md5</span><br><span class="line">      cipher AES-256-CBC</span><br><span class="line">      max-clients 100</span><br><span class="line">      keepalive 10 120</span><br><span class="line">      persist-key</span><br><span class="line">      persist-tun</span><br><span class="line">      status openvpn-status.log</span><br><span class="line">      verb 3</span><br></pre></td></tr></table></figure>
 
-<h5 id="启动openvpn"><a href="#启动openvpn" class="headerlink" title="启动openvpn"></a>启动openvpn</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/openvpn/sbin/openvpn --config /etc/openvpn/server.conf &amp;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">加入开机启动项【手动创建开机启动脚本文件】</span><br><span class="line"># vi  /etc/init.d/openvpn </span><br><span class="line">输入以下内容，保存：</span><br><span class="line">#!/bin/bash</span><br><span class="line"># chkconfig: 2345 67 33</span><br><span class="line"># description: ntpd is the NTPv4 daemon.</span><br><span class="line">nohup /usr/local/openvpn/sbin/openvpn --config /etc/openvpn/server.conf &gt; /tmp/open.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
+<h5 id="启动openvpn"><a href="#启动openvpn" class="headerlink" title="启动openvpn"></a>启动openvpn</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/usr/<span class="built_in">local</span>/openvpn/sbin/openvpn --config /etc/openvpn/server.conf &amp;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">加入开机启动项【手动创建开机启动脚本文件】</span><br><span class="line"><span class="comment"># vi  /etc/init.d/openvpn </span></span><br><span class="line">输入以下内容，保存：</span><br><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># chkconfig: 2345 67 33</span></span><br><span class="line"><span class="comment"># description: ntpd is the NTPv4 daemon.</span></span><br><span class="line">nohup /usr/<span class="built_in">local</span>/openvpn/sbin/openvpn --config /etc/openvpn/server.conf &gt; /tmp/open.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># chmod  755  openvpn             //添加执行权限</span><br><span class="line"># chkconfig --add openvpn</span><br><span class="line"># chkconfig openvpn on           //加入开机启动项</span><br><span class="line"># netstat -ln                   //查看端口是否正确启动</span><br></pre></td></tr></table></figure>
+<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># chmod  755  openvpn             //添加执行权限</span></span><br><span class="line"><span class="meta"># chkconfig --add openvpn</span></span><br><span class="line"><span class="meta"># chkconfig openvpn on           //加入开机启动项</span></span><br><span class="line"><span class="meta"># netstat -ln                   //查看端口是否正确启动</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="客户端配置"><a href="#客户端配置" class="headerlink" title="客户端配置"></a>客户端配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">此处以windows客户端为例：安装Openvpn客户端并以管理员身份运行</span><br></pre></td></tr></table></figure>
 
 <p>配置创建client.ovpn文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">client</span><br><span class="line">dev tun</span><br><span class="line">proto udp</span><br><span class="line">remote 10.0.8.28   #主要这里修改成自己server ip</span><br><span class="line">resolv-retry infinite</span><br><span class="line">nobind</span><br><span class="line">persist-key</span><br><span class="line">persist-tun</span><br><span class="line">ca ca.crt               #这里需要证书</span><br><span class="line">cert test.crt</span><br><span class="line">key  test.key</span><br><span class="line">auth md5</span><br><span class="line">cipher AES-256-CBC</span><br><span class="line">tls-auth ta.key 1</span><br><span class="line">comp-lzo</span><br><span class="line">verb 3</span><br></pre></td></tr></table></figure>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">client</span><br><span class="line">dev tun</span><br><span class="line">proto udp</span><br><span class="line">remote <span class="number">10.0</span><span class="number">.8</span><span class="number">.28</span>   #主要这里修改成自己server ip</span><br><span class="line">resolv-retry infinite</span><br><span class="line">nobind</span><br><span class="line">persist-<span class="type">key</span></span><br><span class="line">persist-tun</span><br><span class="line">ca ca.crt               #这里需要证书</span><br><span class="line">cert test.crt</span><br><span class="line"><span class="type">key</span>  test.<span class="type">key</span></span><br><span class="line">auth md5</span><br><span class="line">cipher AES<span class="number">-256</span>-CBC</span><br><span class="line">tls-auth ta.<span class="type">key</span> <span class="number">1</span></span><br><span class="line">comp-lzo</span><br><span class="line">verb <span class="number">3</span></span><br></pre></td></tr></table></figure>
 
 <p>故障处理</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">故障描述：运行openvpn客户端后，VPN连接正常，但无法上网和Ping公司内网</span><br></pre></td></tr></table></figure>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">故障描述：运行openvpn客户端后，VPN连接正常，但无法上网和<span class="built_in">Ping</span>公司内网</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">解决方法：</span><br><span class="line">  1. 打开Openvpn服务端配置文件</span><br><span class="line">   # vi /etc/openvpn/server.conf</span><br><span class="line"> </span><br><span class="line">  添加如下静态路由(填写服务器这边的网络)</span><br><span class="line">  push &quot;route 10.0.8.0 255.255.254.0 net_gateway&quot;</span><br><span class="line">  push &quot;route 10.0.0.0 255.255.254.0 net_gateway&quot;</span><br><span class="line">  #push &quot;route 10.0.16.0 255.255.248.0 net_gateway&quot;</span><br><span class="line">  push &quot;route 0.0.0.0 0.0.0.0 net_gateway&quot;</span><br><span class="line">  </span><br><span class="line">重启openvpn服务，再进行测试即可</span><br></pre></td></tr></table></figure>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">解决方法：</span><br><span class="line">  <span class="number">1.</span> 打开Openvpn服务端配置文件</span><br><span class="line">   <span class="meta"># vi /etc/openvpn/server.conf</span></span><br><span class="line"> </span><br><span class="line">  添加如下静态路由(填写服务器这边的网络)</span><br><span class="line">  <span class="keyword">push</span> <span class="string">"route 10.0.8.0 255.255.254.0 net_gateway"</span></span><br><span class="line">  <span class="keyword">push</span> <span class="string">"route 10.0.0.0 255.255.254.0 net_gateway"</span></span><br><span class="line">  <span class="meta">#push "route 10.0.16.0 255.255.248.0 net_gateway"</span></span><br><span class="line">  <span class="keyword">push</span> <span class="string">"route 0.0.0.0 0.0.0.0 net_gateway"</span></span><br><span class="line">  </span><br><span class="line">重启openvpn服务，再进行测试即可</span><br></pre></td></tr></table></figure>
 
-<h5 id="证书吊销"><a href="#证书吊销" class="headerlink" title="证书吊销"></a>证书吊销</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">OpenVPN证书吊销</span><br><span class="line"></span><br><span class="line"># cd  /etc/openvpn/easy-rsa/easyrsa3/</span><br><span class="line"># ./easyrsa revoke  clientName              //name输入需要注销的用户名称</span><br><span class="line"># ./easyrsa  gen-crl</span><br><span class="line">此时会在/etc/openvpn/easy-rsa/easyrsa3/pki目录下生成crl.pem文件</span><br><span class="line"># cp  ./etc/openvpn/easy-rsa/easyrsa3/pki/crl.pem    /etc/openvpn</span><br><span class="line"># cd   /etc/openvpn</span><br><span class="line"></span><br><span class="line"># vim  server.conf</span><br><span class="line">添加如下内容：</span><br><span class="line">crl-verify  /etc/openvpn/crl.pem</span><br><span class="line">重启OpenVPN服务,使配置生效</span><br></pre></td></tr></table></figure>
+<h5 id="证书吊销"><a href="#证书吊销" class="headerlink" title="证书吊销"></a>证书吊销</h5><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">OpenVPN证书吊销</span><br><span class="line"></span><br><span class="line"><span class="meta"># cd  /etc/openvpn/easy-rsa/easyrsa3/</span></span><br><span class="line"><span class="meta"># ./easyrsa revoke  clientName              //name输入需要注销的用户名称</span></span><br><span class="line"><span class="meta"># ./easyrsa  gen-crl</span></span><br><span class="line">此时会在/etc/openvpn/easy-rsa/easyrsa3/pki目录下生成crl.pem文件</span><br><span class="line"><span class="meta"># cp  ./etc/openvpn/easy-rsa/easyrsa3/pki/crl.pem    /etc/openvpn</span></span><br><span class="line"><span class="meta"># cd   /etc/openvpn</span></span><br><span class="line"></span><br><span class="line"><span class="meta"># vim  server.conf</span></span><br><span class="line">添加如下内容：</span><br><span class="line">crl-verify  /etc/openvpn/crl.pem</span><br><span class="line">重启OpenVPN服务,使配置生效</span><br></pre></td></tr></table></figure>
 
-<h6 id="关于客户端逻辑负载均衡"><a href="#关于客户端逻辑负载均衡" class="headerlink" title="关于客户端逻辑负载均衡"></a>关于客户端逻辑负载均衡</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">为什么说客户端负载均衡是逻辑上的呢？</span><br><span class="line">实现逻辑是这样：部署多台独立的openvpn服务端，然后客户端配置多台server ip地址，客户端每次连接都会选择不同的server进行连接，如果失败，则自动连接下一个server。</span><br><span class="line">客户端轮询部分配置如下：</span><br><span class="line">remote server1 1194</span><br><span class="line">remote server2 1194</span><br><span class="line">remote server3 1194</span><br><span class="line">remote-random</span><br><span class="line">resolv-retry 2</span><br><span class="line"></span><br><span class="line">那么问题来了，如何保证多台server的配置文件和用户key能保持一致呢？</span><br><span class="line">解决方案：以其中一台server作为逻辑主server，也就是说所有的keys用户创建，都只在这个主server上进行，然后，将/etc/openvpn目录下的所有文件【注意：不包括server.conf主配置文件】覆盖到server2、server3上面【注意：不要覆盖server2和server3的主配置文件: server.conf,否则你就呵呵吧】，并重启他们的openvpn服务即可。</span><br></pre></td></tr></table></figure>
+<h6 id="关于客户端逻辑负载均衡"><a href="#关于客户端逻辑负载均衡" class="headerlink" title="关于客户端逻辑负载均衡"></a>关于客户端逻辑负载均衡</h6><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">为什么说客户端负载均衡是逻辑上的呢？</span><br><span class="line">实现逻辑是这样：部署多台独立的openvpn服务端，然后客户端配置多台<span class="keyword">server</span> ip地址，客户端每次连接都会选择不同的<span class="keyword">server</span>进行连接，如果失败，则自动连接下一个<span class="keyword">server</span>。</span><br><span class="line">客户端轮询部分配置如下：</span><br><span class="line">remote server1 <span class="number">1194</span></span><br><span class="line">remote server2 <span class="number">1194</span></span><br><span class="line">remote server3 <span class="number">1194</span></span><br><span class="line">remote-random</span><br><span class="line">resolv-retry <span class="number">2</span></span><br><span class="line"></span><br><span class="line">那么问题来了，如何保证多台<span class="keyword">server</span>的配置文件和用户key能保持一致呢？</span><br><span class="line">解决方案：以其中一台<span class="keyword">server</span>作为逻辑主<span class="keyword">server</span>，也就是说所有的keys用户创建，都只在这个主<span class="keyword">server</span>上进行，然后，将/etc/openvpn目录下的所有文件【注意：不包括<span class="keyword">server</span>.conf主配置文件】覆盖到server2、server3上面【注意：不要覆盖server2和server3的主配置文件: <span class="keyword">server</span>.conf,否则你就呵呵吧】，并重启他们的openvpn服务即可。</span><br></pre></td></tr></table></figure>
 
 
       
@@ -387,7 +391,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2019 John Doe
+    		&copy; 2019 Gary Wu
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -491,18 +495,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">apache</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">目录浏览</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">高级运维</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Apache</a>
               </li>
              
@@ -531,19 +523,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CDH</a>
+                <a href="javascript:void(0)" class="js-tag color5">高级运维</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JDBC</a>
+                <a href="javascript:void(0)" class="js-tag color2">apache</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">MySQL驱动</a>
+                <a href="javascript:void(0)" class="js-tag color5">目录浏览</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">KAFKA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CDH</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -556,6 +552,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">大数据</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">JDBC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">MySQL驱动</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -591,18 +595,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Cacti流量叠加图形</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Cacti整合图形</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Graph</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">cacti</a>
               </li>
              
@@ -620,6 +612,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">监控</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">bugzilla</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">bugs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Cacti流量叠加图形</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Cacti整合图形</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Graph</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -644,14 +656,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">SCL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">bugzilla</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">bugs</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -699,14 +703,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">DNS TLS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Public DNS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">shadowsocks</a>
               </li>
              
@@ -716,6 +712,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">加密代理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">DNS TLS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Public DNS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -795,18 +799,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ESXI PATH</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ESXI补丁升级</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">ESXI6.7</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">VMware vSphere Client</a>
               </li>
              
@@ -819,6 +811,26 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CPU</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">虚拟化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ESXI PATH</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ESXI补丁升级</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">ESXI6.7</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Openstack</a>
               </li>
              
@@ -828,22 +840,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">混杂模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CPU</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">虚拟化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">磁盘置备</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">disk</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -867,6 +863,26 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Gentoo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">编译内核</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">NFS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">磁盘置备</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">disk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">fuse</a>
               </li>
              
@@ -880,18 +896,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">HDFS挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Gentoo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">编译内核</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">NFS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -955,6 +959,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">HTTP状态码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">301</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">302</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
@@ -983,27 +999,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">HTTP状态码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">301</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">302</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">hdfs空文件</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hadoop fs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1027,6 +1027,22 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Jenkins</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">持续集成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">持续交付</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
@@ -1043,26 +1059,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jenkins</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">持续集成</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">持续交付</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Jumpserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">备机部署</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">分区</a>
               </li>
              
@@ -1075,7 +1071,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">分区热迁移</a>
+                <a href="javascript:void(0)" class="js-tag color1">Jumpserver</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">备机部署</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1084,6 +1084,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">KAFKA版本升级</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">分区热迁移</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1143,18 +1147,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">文件句柄</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">lsof</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">空间释放</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">限速方案</a>
               </li>
              
@@ -1175,6 +1167,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">文件句柄</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">lsof</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">空间释放</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">logstash</a>
               </li>
              
@@ -1188,6 +1192,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Mars</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">HDFS Shell</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1207,15 +1219,27 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Mars</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">HDFS Shell</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Hadoop</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">spark</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">tez</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">单用户模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">多用户模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">远程模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1240,26 +1264,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">机架感知</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">spark</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">tez</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">单用户模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">多用户模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">远程模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1299,15 +1303,27 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">yarn</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hive</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">HQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">yarn</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mongodb</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">mongodump</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mongorestore</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1331,15 +1347,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mongodb</a>
+                <a href="javascript:void(0)" class="js-tag color3">STARTUP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">mongodump</a>
+                <a href="javascript:void(0)" class="js-tag color1">副本集成员</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mongorestore</a>
+                <a href="javascript:void(0)" class="js-tag color5">成员状态</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1359,15 +1375,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">STARTUP</a>
+                <a href="javascript:void(0)" class="js-tag color5">MongoDB集群</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">副本集成员</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">成员状态</a>
+                <a href="javascript:void(0)" class="js-tag color2">mongo集群管理维护</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1395,14 +1407,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">MongoDB集群</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mongo集群管理维护</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">MySQL主从切换</a>
               </li>
              
@@ -1411,19 +1415,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">MySQL主从复制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">全备还原</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">主从同步</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">主从复制监控</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">MySQL主从复制</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">全备还原</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1455,14 +1459,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">慢查询</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">mysqldumpslow</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">dba</a>
               </li>
              
@@ -1480,6 +1476,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">MySQL多实例远程登陆</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">慢查询</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">mysqldumpslow</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1519,14 +1523,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ntp</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">upstream</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">proxy-set-header</a>
               </li>
              
@@ -1539,15 +1535,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">favicon.ico</a>
+                <a href="javascript:void(0)" class="js-tag color4">upstream</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">access</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">log</a>
+                <a href="javascript:void(0)" class="js-tag color4">ntp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1564,6 +1556,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">垃圾UA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">favicon.ico</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">access</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">log</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1603,6 +1607,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Glance</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">openstack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">PHP</a>
               </li>
              
@@ -1615,11 +1627,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Glance</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">openstack</a>
+                <a href="javascript:void(0)" class="js-tag color4">Keystone</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1632,10 +1640,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">OpenStack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Keystone</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1671,23 +1675,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">RAID5</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">parted</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">fdisk</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">RAID5</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">阵列卡</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">缓存</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1711,6 +1707,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">阵列卡</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">缓存</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">rabbitmq</a>
               </li>
              
@@ -1731,15 +1735,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">NTP时间同步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NAT</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">双线</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">NTP时间同步</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1831,6 +1835,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">YARN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">NodeManager</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">udp</a>
               </li>
              
@@ -1848,14 +1860,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">GFW</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">YARN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">NodeManager</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1891,10 +1895,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">rrdtool</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">微信</a>
               </li>
              
@@ -1903,11 +1903,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">weathermap</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">plugin</a>
+                <a href="javascript:void(0)" class="js-tag color3">rrdtool</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1920,6 +1916,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">将Bites转换为Mbits</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">weathermap</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">plugin</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">脚本</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1947,7 +1955,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">脚本</a>
+                <a href="javascript:void(0)" class="js-tag color1">socket.gaierror</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1956,10 +1964,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">socket.gaierror</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2007,14 +2011,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">wget</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">curl请求url不使用缓存</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">unix</a>
               </li>
              
@@ -2031,7 +2027,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">wget</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">curl请求url不使用缓存</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">docker机制</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">exit退出码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2048,14 +2060,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">emerge命令</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">exit退出码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2091,18 +2095,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">磁盘挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">fstab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">开机挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">gentoo</a>
               </li>
              
@@ -2112,6 +2104,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">install</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">磁盘挂载</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">fstab</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">开机挂载</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2143,10 +2147,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hadoop用户</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">fs</a>
               </li>
              
@@ -2159,6 +2159,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">hadoop用户</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">sersync</a>
               </li>
              
@@ -2168,6 +2172,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">实时同步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell脚本</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ip自动配置</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2187,18 +2199,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell脚本</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ip自动配置</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">jumpserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">topic</a>
               </li>
              
@@ -2207,23 +2207,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">keepalived</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LVS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">多实例</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">双主</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">脑裂</a>
+                <a href="javascript:void(0)" class="js-tag color1">jumpserver</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2244,6 +2228,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">nopasswd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">keepalived</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">LVS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">多实例</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">双主</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">脑裂</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2271,10 +2275,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">dd</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">rm恢复</a>
               </li>
              
@@ -2291,23 +2291,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">dd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统备份</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统恢复</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Logstash</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Tomcat</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2320,6 +2312,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">rubydebug</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Logstash</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Tomcat</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2339,6 +2343,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">mongod</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">二进制版</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">mariadb主从</a>
               </li>
              
@@ -2352,14 +2364,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">主从复制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mongod</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">二进制版</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2379,11 +2383,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">主从复制错误</a>
+                <a href="javascript:void(0)" class="js-tag color5">主键错误</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">主键错误</a>
+                <a href="javascript:void(0)" class="js-tag color2">主从复制错误</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2392,14 +2396,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">同步个别库</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mysql slave</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">relay log</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2415,7 +2411,39 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">mysql slave</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">relay log</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">root远程登录</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">优化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">socket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ulimit</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">tcp_nopush</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">tcp_nodelay</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2479,38 +2507,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">优化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">socket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ulimit</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">tcp_nopush</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">tcp_nodelay</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">uri</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">屏蔽接口</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Ddos</a>
               </li>
              
@@ -2523,11 +2519,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">proxy cache</a>
+                <a href="javascript:void(0)" class="js-tag color4">uri</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Nginx缓存清理</a>
+                <a href="javascript:void(0)" class="js-tag color5">屏蔽接口</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2536,6 +2532,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">443</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">proxy cache</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Nginx缓存清理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2559,18 +2563,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SOCKS5</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">proxychains</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">命令代理</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">ps</a>
               </li>
              
@@ -2580,6 +2572,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">进程运行时间</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">SOCKS5</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">proxychains</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">命令代理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2595,14 +2599,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">tar</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">crontab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">自重启</a>
               </li>
              
@@ -2611,11 +2607,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">rsync限速</a>
+                <a href="javascript:void(0)" class="js-tag color4">tar</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">bwlimit</a>
+                <a href="javascript:void(0)" class="js-tag color3">crontab</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2624,6 +2620,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">模板</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">rsync限速</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">bwlimit</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2636,6 +2640,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">zabbix_agent</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">salt-master高可用</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">salt-API</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">salt-ssh</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2667,18 +2683,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">salt-master高可用</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">salt-API</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">salt-ssh</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统瓶颈</a>
               </li>
              
@@ -2699,6 +2703,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">变量传参</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell传参</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">小数判断</a>
               </li>
              
@@ -2708,14 +2720,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">浮点数判断</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">变量传参</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell传参</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2747,6 +2751,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">expect</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Ros</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">FTP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">dsa</a>
               </li>
              
@@ -2763,15 +2779,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">expect</a>
+                <a href="javascript:void(0)" class="js-tag color1">supervisor</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Ros</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">FTP</a>
+                <a href="javascript:void(0)" class="js-tag color4">supervisorctl</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2784,14 +2796,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">pid</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">supervisor</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">supervisorctl</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2831,19 +2835,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">vim</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">中文乱码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">vmware</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">虚拟机克隆</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vim</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">中文乱码</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2859,10 +2863,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">告警</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">traceroute</a>
               </li>
              
@@ -2872,6 +2872,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">MTR</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">告警</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2899,6 +2903,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">zk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">触发器</a>
               </li>
              
@@ -2912,10 +2920,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">触发器表达式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">zk</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2935,11 +2939,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">云计算</a>
+                <a href="javascript:void(0)" class="js-tag color5">Rack</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Rack</a>
+                <a href="javascript:void(0)" class="js-tag color4">云计算</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2955,6 +2959,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CDN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">IM</a>
               </li>
              
@@ -2964,18 +2972,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">开源IM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CDN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">jq</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">筛选大于某个值的数据到文件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2999,11 +2995,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">taskset</a>
+                <a href="javascript:void(0)" class="js-tag color3">jq</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">PID</a>
+                <a href="javascript:void(0)" class="js-tag color4">筛选大于某个值的数据到文件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3015,15 +3011,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">zerotier</a>
+                <a href="javascript:void(0)" class="js-tag color3">taskset</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">内网穿透</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">全球畅联</a>
+                <a href="javascript:void(0)" class="js-tag color4">PID</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3047,7 +3039,31 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">zerotier</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">内网穿透</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">全球畅联</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">RocketMQ</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">分布式消息队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nameserver</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">brokerserver</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3067,39 +3083,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">分布式消息队列</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">nameserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">brokerserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">外部命令</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">内部命令</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">只读模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">fatab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mount</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">remount</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3119,19 +3107,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OpenSSL</a>
+                <a href="javascript:void(0)" class="js-tag color5">只读模式</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">CA</a>
+                <a href="javascript:void(0)" class="js-tag color1">fatab</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SSL证书</a>
+                <a href="javascript:void(0)" class="js-tag color1">mount</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">csr</a>
+                <a href="javascript:void(0)" class="js-tag color3">remount</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3148,6 +3136,22 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">免交互</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">OpenSSL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">CA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">SSL证书</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">csr</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3175,6 +3179,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">SHELL编程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">kill</a>
               </li>
              
@@ -3187,7 +3195,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">SHELL编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">Yum源</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3196,10 +3204,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Shell脚本</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Yum源</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3219,15 +3223,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">consumer</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">内存</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">使用率</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">consumer</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3331,6 +3335,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">flock</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LVS连接数监控</a>
               </li>
              
@@ -3344,10 +3352,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">InActConn</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">flock</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3523,6 +3527,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">autostart</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">libvert</a>
               </li>
              
@@ -3532,10 +3540,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">动态迁移</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">autostart</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3691,6 +3695,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">lvs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">4层负载均衡</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">DR模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">LNMP</a>
               </li>
              
@@ -3708,18 +3724,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">mysql数据库迁移</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">lvs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">4层负载均衡</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">DR模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3779,15 +3783,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">pass_proxy</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">htpasswd</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">日志切割</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">pass_proxy</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4087,15 +4091,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">磁盘</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">awk数组</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">磁盘管理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">磁盘</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4131,19 +4135,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">redis cluster</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">ssdb</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">LevelDB</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">redis cluster</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4187,14 +4191,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">codis集群</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">memcache</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">GlusterFS</a>
               </li>
              
@@ -4204,6 +4200,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NAS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">codis集群</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">memcache</a>
               </li>
              
               <li class="article-tag-list-item">

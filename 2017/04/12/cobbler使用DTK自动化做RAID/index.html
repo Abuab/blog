@@ -6,22 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://garywu520.github.io/blog">
-  <title>cobbler使用DTK自动化做RAID | Hexo</title>
+  <title>cobbler使用DTK自动化做RAID | Gary Wu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="1Dell提供一个叫做DTK(dell openmanage deployment toolkit)的套件, 套件包含了 raidcfg 这个工具。dtk导入cobbler之后，就可以自动化的完成RAID卡的设置；以及自动化完成修改BIOS设置.">
 <meta name="keywords" content="高级运维,RAID,cobbler,DTK,raidcfg">
 <meta property="og:type" content="article">
 <meta property="og:title" content="cobbler使用DTK自动化做RAID">
 <meta property="og:url" content="https://garywu520.github.io/blog/2017/04/12/cobbler使用DTK自动化做RAID/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Gary Wu">
 <meta property="og:description" content="1Dell提供一个叫做DTK(dell openmanage deployment toolkit)的套件, 套件包含了 raidcfg 这个工具。dtk导入cobbler之后，就可以自动化的完成RAID卡的设置；以及自动化完成修改BIOS设置.">
-<meta property="og:locale" content="default">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2018-04-17T12:53:12.357Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="cobbler使用DTK自动化做RAID">
 <meta name="twitter:description" content="1Dell提供一个叫做DTK(dell openmanage deployment toolkit)的套件, 套件包含了 raidcfg 这个工具。dtk导入cobbler之后，就可以自动化的完成RAID卡的设置；以及自动化完成修改BIOS设置.">
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="Gary Wu" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -47,12 +47,14 @@
 <div class="overlay" style="background: #4d4d4d"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
-		<a href="/blog/" class="profilepic">
-			<img src="https://raw.githubusercontent.com/discant520/garywu/master/images/touxiang.jpg" class="js-avatar">
+		<a href="/blog" class="profilepic">
+			<img src="http://pics0.baidu.com/feed/bd315c6034a85edf5f5b8bff8cf9cf27df54754d.png?token=c9857ef7ee73e1ffc14d3e3c4e9e3be3&amp;s=1E5207CAC64234F44988148A0300B090" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/blog/">John Doe</a></h1>
+		  <h1 class="header-author"><a href="/blog">Gary Wu</a></h1>
 		</hgroup>
+		
+		<p class="header-subtitle">运维架构师 - 从入门到放弃</p>
 		
 
 		<nav class="header-menu">
@@ -106,11 +108,13 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="https://raw.githubusercontent.com/discant520/garywu/master/images/touxiang.jpg" class="js-avatar">
+				<img src="http://pics0.baidu.com/feed/bd315c6034a85edf5f5b8bff8cf9cf27df54754d.png?token=c9857ef7ee73e1ffc14d3e3c4e9e3be3&amp;s=1E5207CAC64234F44988148A0300B090" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">John Doe</h1>
+			  <h1 class="header-author js-header-author">Gary Wu</h1>
 			</hgroup>
+			
+			<p class="header-subtitle"><i class="icon icon-quo-left"></i>运维架构师 - 从入门到放弃<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -185,45 +189,45 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Dell提供一个叫做DTK(dell openmanage deployment toolkit)的套件, 套件包含了 raidcfg 这个工具。dtk导入cobbler之后，就可以自动化的完成RAID卡的设置；以及自动化完成修改BIOS设置.</span><br></pre></td></tr></table></figure>
+        <figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Dell提供一个叫做DTK(dell openmanage deployment toolkit)的套件, 套件包含了 raidcfg 这个工具。dtk导入cobbler之后，就可以自动化的完成RAID卡的设置；以及自动化完成修改BIOS设置.</span><br></pre></td></tr></table></figure>
 
 <a id="more"></a>
 
 <h4 id="自动化配置RAID"><a href="#自动化配置RAID" class="headerlink" title="自动化配置RAID"></a>自动化配置RAID</h4><h5 id="下载DTK-ISO镜像"><a href="#下载DTK-ISO镜像" class="headerlink" title="下载DTK ISO镜像"></a>下载DTK ISO镜像</h5><p>  下载: <a href="https://www.dell.com/support/home/us/en/04/Drivers/DriversDetails?driverId=GYHHX" target="_blank" rel="noopener">DTK_v5.3(最新版)</a></p>
-<h5 id="挂载iso并安装rpm基础包"><a href="#挂载iso并安装rpm基础包" class="headerlink" title="挂载iso并安装rpm基础包"></a>挂载iso并安装rpm基础包</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">mount -o loop dtk_5.3.0_1908_Linux64_A00.iso /mnt</span><br><span class="line">cd /mnt/RPMs/rhel7/x86_64</span><br><span class="line">ls        </span><br><span class="line"></span><br><span class="line">#注:以下包安装有前后顺序</span><br><span class="line">yum install -y srvadmin*</span><br><span class="line">yum install -y raidcfg-5.3.0-1908.9058.el7.x86_64.rpm</span><br><span class="line">yum install -y syscfg-5.3.0-1908.9058.el7.x86_64.rpm</span><br><span class="line">yum install -y dtk-scripts-5.3.0-1908.9058.el7.x86_64.rpm</span><br><span class="line"></span><br><span class="line">命令软链</span><br><span class="line">ln -sv /opt/dell/toolkit/bin/raidcfg /usr/sbin/raidcfg</span><br><span class="line"></span><br><span class="line">注：我的cobbler部署在了CentOS7上，所以需要进入rhel7目录。</span><br></pre></td></tr></table></figure>
+<h5 id="挂载iso并安装rpm基础包"><a href="#挂载iso并安装rpm基础包" class="headerlink" title="挂载iso并安装rpm基础包"></a>挂载iso并安装rpm基础包</h5><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">mount -o loop dtk_5.3.0_1908_Linux64_A00.iso <span class="string">/mnt</span></span><br><span class="line"><span class="keyword">cd</span> <span class="string">/mnt/RPMs/rhel7/x86_64</span></span><br><span class="line"><span class="keyword">ls</span>        </span><br><span class="line"></span><br><span class="line"><span class="comment">#注:以下包安装有前后顺序</span></span><br><span class="line">yum install -y srvadmin*</span><br><span class="line">yum install -y raidcfg-5.3.0-1908.9058.el7.x86_64.rpm</span><br><span class="line">yum install -y syscfg-5.3.0-1908.9058.el7.x86_64.rpm</span><br><span class="line">yum install -y dtk-scripts-5.3.0-1908.9058.el7.x86_64.rpm</span><br><span class="line"></span><br><span class="line">命令软链</span><br><span class="line">ln -sv <span class="string">/opt/dell/toolkit/bin/raidcfg</span> <span class="string">/usr/sbin/raidcfg</span></span><br><span class="line"></span><br><span class="line">注：我的cobbler部署在了CentOS7上，所以需要进入rhel7目录。</span><br></pre></td></tr></table></figure>
 
-<h5 id="了解文件SA-1和SA-2"><a href="#了解文件SA-1和SA-2" class="headerlink" title="了解文件SA.1和SA.2"></a>了解文件SA.1和SA.2</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># ls -lh /mnt/isolinux/</span><br><span class="line">......</span><br><span class="line">-r--r--r-- 1 root root 4.0M Feb 15  2016 SA.1</span><br><span class="line">-r--r--r-- 1 root root 158M Feb 15  2016 SA.2</span><br><span class="line">......</span><br><span class="line"></span><br><span class="line"># file /mnt/isolinux/SA.1 </span><br><span class="line"># file /mnt/isolinux/SA.2</span><br><span class="line"></span><br><span class="line">上面可以看到有两个文件SA.1和SA.2, 这两个文件分别是kernel和initrd文件,稍后导入到cobbler的时候会用到它们。</span><br></pre></td></tr></table></figure>
+<h5 id="了解文件SA-1和SA-2"><a href="#了解文件SA-1和SA-2" class="headerlink" title="了解文件SA.1和SA.2"></a>了解文件SA.1和SA.2</h5><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># ls -lh /mnt/isolinux/</span><br><span class="line">......</span><br><span class="line">-r--r--r-- <span class="number">1</span> root root <span class="number">4.0</span>M Feb <span class="number">15</span>  <span class="number">2016</span> SA<span class="number">.1</span></span><br><span class="line">-r--r--r-- <span class="number">1</span> root root <span class="number">158</span>M Feb <span class="number">15</span>  <span class="number">2016</span> SA<span class="number">.2</span></span><br><span class="line">......</span><br><span class="line"></span><br><span class="line"># file /mnt/isolinux/SA<span class="number">.1</span> </span><br><span class="line"># file /mnt/isolinux/SA<span class="number">.2</span></span><br><span class="line"></span><br><span class="line">上面可以看到有两个文件SA<span class="number">.1</span>和SA<span class="number">.2</span>, 这两个文件分别是kernel和initrd文件,稍后导入到cobbler的时候会用到它们。</span><br></pre></td></tr></table></figure>
 
-<h5 id="手动添加dtk所需文件到cobbler启动菜单"><a href="#手动添加dtk所需文件到cobbler启动菜单" class="headerlink" title="手动添加dtk所需文件到cobbler启动菜单"></a>手动添加dtk所需文件到cobbler启动菜单</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">拷贝SA.1和SA.2到/var/www/cobbler/ks_mirror/目录中</span><br><span class="line"># mkdir /var/www/cobbler/ks_mirror/dtk5.3_raid5_n3x1/</span><br><span class="line"># cp /mnt/isolinux/SA* /var/www/cobbler/ks_mirror/dtk5.3_raid5_n3x1</span><br><span class="line"></span><br><span class="line">将dtk导入到cobbler</span><br><span class="line"># cobbler distro add --name=dtk5.3_raid5_n3x1 --kernel=/var/www/cobbler/ks_mirror/dtk5.3_raid5_n3x1/SA.1 --initrd=/var/www/cobbler/ks_mirror/dtk5.3_raid5_n3x1/SA.2</span><br><span class="line"># cobbler profile add --name=dtk5.3_raid5_n3x1 --distro=dtk5.3_raid5_n3x1</span><br><span class="line">注: name名称定义为&quot;dtk5.3_raid5_n3x1&quot;原因是便于识别,即3块盘做1组RAID5。</span><br><span class="line"></span><br><span class="line">查看确认</span><br><span class="line"># cobbler profile list </span><br><span class="line"># cobbler distro list</span><br></pre></td></tr></table></figure>
+<h5 id="手动添加dtk所需文件到cobbler启动菜单"><a href="#手动添加dtk所需文件到cobbler启动菜单" class="headerlink" title="手动添加dtk所需文件到cobbler启动菜单"></a>手动添加dtk所需文件到cobbler启动菜单</h5><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">拷贝<span class="keyword">SA</span>.1和<span class="keyword">SA</span>.2到/<span class="keyword">var</span>/www/cobbler/ks_mirror/目录中</span><br><span class="line"># <span class="keyword">mkdir</span> /<span class="keyword">var</span>/www/cobbler/ks_mirror/dtk5.3_raid5_n3x1/</span><br><span class="line"># cp /mnt/isolinux/<span class="keyword">SA</span>* /<span class="keyword">var</span>/www/cobbler/ks_mirror/dtk5.3_raid5_n3x1</span><br><span class="line"></span><br><span class="line">将dtk导入到cobbler</span><br><span class="line"># cobbler distro add --name=dtk5.3_raid5_n3x1 --kernel=/<span class="keyword">var</span>/www/cobbler/ks_mirror/dtk5.3_raid5_n3x1/<span class="keyword">SA</span>.1 --initrd=/<span class="keyword">var</span>/www/cobbler/ks_mirror/dtk5.3_raid5_n3x1/<span class="keyword">SA</span>.2</span><br><span class="line"># cobbler profile add --name=dtk5.3_raid5_n3x1 --distro=dtk5.3_raid5_n3x1</span><br><span class="line">注: name名称定义为<span class="string">"dtk5.3_raid5_n3x1"</span>原因是便于识别,即3块盘做1组RAID5。</span><br><span class="line"></span><br><span class="line">查看确认</span><br><span class="line"># cobbler profile <span class="keyword">list</span> </span><br><span class="line"># cobbler distro <span class="keyword">list</span></span><br></pre></td></tr></table></figure>
 
-<h5 id="配置RAID自动化脚本并与distro进行关联"><a href="#配置RAID自动化脚本并与distro进行关联" class="headerlink" title="配置RAID自动化脚本并与distro进行关联"></a>配置RAID自动化脚本并与distro进行关联</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">创建raid脚本文件存放目录</span><br><span class="line">mkdir /var/lib/tftpboot/raidcfg/raid5_n3x1  </span><br><span class="line"></span><br><span class="line">接下来配置raid5.sh脚本</span><br><span class="line">vim /var/lib/tftpboot/raidcfg/raid5_n3x1/raid5_n3x1.sh  内容如下：</span><br><span class="line"></span><br><span class="line">##-----------脚本内容开始-------------------------</span><br><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">cat &gt;&gt; /tmp/raid5.ini &lt;&lt;EOF</span><br><span class="line">[vdisk0]</span><br><span class="line">controllerid=0</span><br><span class="line">raid=5</span><br><span class="line">readpolicy=nra</span><br><span class="line">writepolicy=wt</span><br><span class="line">stripesize=64</span><br><span class="line">cachepolicy=e</span><br><span class="line">adisk=0:0:1,0:1:1,0:2:1</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">echo &quot;…………. reset all disks ………….&quot;   </span><br><span class="line">raidcfg -ctrl -c=0 -ac=rst</span><br><span class="line">echo &quot;………. 3 disks for raid5  ……….&quot;</span><br><span class="line">raidcfg -i=/tmp/raid5.ini</span><br><span class="line">echo &quot;…………… fast init ……………&quot;</span><br><span class="line">raidcfg -vd -c=0 -vd=0 -ac=fi </span><br><span class="line">echo &quot;…………… RAID5 is created, this is server will be shutdown... ……………&quot;</span><br><span class="line">shutdown</span><br><span class="line">##-------------脚本内容结束-----------------------</span><br><span class="line"></span><br><span class="line">脚本含义：</span><br><span class="line">首先使用raidcfg命令reset控制器，删除所有原有RAID配置，将磁盘置为&quot;JBOD&quot;模式。然后再次调用raidcfg，创建RAID5。创建好RAID之后，让系统重启(如果写shutdown则关机)</span><br><span class="line"></span><br><span class="line">chmod 755 /var/lib/tftpboot/raidcfg/raid5_n3x1/raid5_n3x1.sh</span><br><span class="line">注：cobbler服务器千万不要运行这个脚本,你懂得</span><br></pre></td></tr></table></figure>
+<h5 id="配置RAID自动化脚本并与distro进行关联"><a href="#配置RAID自动化脚本并与distro进行关联" class="headerlink" title="配置RAID自动化脚本并与distro进行关联"></a>配置RAID自动化脚本并与distro进行关联</h5><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">创建raid脚本文件存放目录</span><br><span class="line">mkdir /var/<span class="class"><span class="keyword">lib</span>/<span class="title">tftpboot</span>/<span class="title">raidcfg</span>/<span class="title">raid5_n3x1</span>  </span></span><br><span class="line"></span><br><span class="line">接下来配置raid5.sh脚本</span><br><span class="line">vim /var/<span class="class"><span class="keyword">lib</span>/<span class="title">tftpboot</span>/<span class="title">raidcfg</span>/<span class="title">raid5_n3x1</span>/<span class="title">raid5_n3x1</span>.<span class="title">sh</span>  内容如下：</span></span><br><span class="line"></span><br><span class="line"><span class="comment">##-----------脚本内容开始-------------------------</span></span><br><span class="line"><span class="comment">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">cat &gt;&gt; <span class="regexp">/tmp/raid</span>5.ini &lt;&lt;EOF</span><br><span class="line">[vdisk0]</span><br><span class="line">controllerid=<span class="number">0</span></span><br><span class="line">raid=<span class="number">5</span></span><br><span class="line">readpolicy=nra</span><br><span class="line">writepolicy=wt</span><br><span class="line">stripesize=<span class="number">64</span></span><br><span class="line">cachepolicy=e</span><br><span class="line">adisk=<span class="number">0</span>:<span class="number">0</span>:<span class="number">1</span>,<span class="number">0</span>:<span class="number">1</span>:<span class="number">1</span>,<span class="number">0</span>:<span class="number">2</span>:<span class="number">1</span></span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">echo <span class="string">"…………. reset all disks …………."</span>   </span><br><span class="line">raidcfg -ctrl -c=<span class="number">0</span> -ac=rst</span><br><span class="line">echo <span class="string">"………. 3 disks for raid5  ………."</span></span><br><span class="line">raidcfg -i=<span class="regexp">/tmp/raid</span>5.ini</span><br><span class="line">echo <span class="string">"…………… fast init ……………"</span></span><br><span class="line">raidcfg -vd -c=<span class="number">0</span> -vd=<span class="number">0</span> -ac=fi </span><br><span class="line">echo <span class="string">"…………… RAID5 is created, this is server will be shutdown... ……………"</span></span><br><span class="line">shutdown</span><br><span class="line"><span class="comment">##-------------脚本内容结束-----------------------</span></span><br><span class="line"></span><br><span class="line">脚本含义：</span><br><span class="line">首先使用raidcfg命令reset控制器，删除所有原有RAID配置，将磁盘置为<span class="string">"JBOD"</span>模式。然后再次调用raidcfg，创建RAID5。创建好RAID之后，让系统重启(如果写shutdown则关机)</span><br><span class="line"></span><br><span class="line">chmod <span class="number">755</span> /var/<span class="class"><span class="keyword">lib</span>/<span class="title">tftpboot</span>/<span class="title">raidcfg</span>/<span class="title">raid5_n3x1</span>/<span class="title">raid5_n3x1</span>.<span class="title">sh</span></span></span><br><span class="line">注：cobbler服务器千万不要运行这个脚本,你懂得</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">把raid5脚本与distro进行关联</span><br><span class="line">cobbler distro edit --name=dtk5.3_raid5_n3x1  --kopts=&quot;share_type=tftp share_location=/raidcfg/dtk5.3_raid5_n3x1 share_script=dtk5.3_raid5_n3x1.sh tftp_ip=x.x.x.x&quot;</span><br><span class="line"></span><br><span class="line">注: 这条命令修改的配置文件是/var/lib/tftpboot/pxelinux.cfg/default</span><br></pre></td></tr></table></figure>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">把raid5脚本与distro进行关联</span><br><span class="line">cobbler distro edit --name=dtk5.<span class="number">3_</span>raid5_n3x1  --kopts=<span class="string">"share_type=tftp share_location=/raidcfg/dtk5.3_raid5_n3x1 share_script=dtk5.3_raid5_n3x1.sh tftp_ip=x.x.x.x"</span></span><br><span class="line"></span><br><span class="line">注: 这条命令修改的配置文件是/var/<span class="class"><span class="keyword">lib</span>/<span class="title">tftpboot</span>/<span class="title">pxelinux</span>.<span class="title">cfg</span>/<span class="title">default</span></span></span><br></pre></td></tr></table></figure>
 
-<h5 id="最后执行cobbler-sync命令"><a href="#最后执行cobbler-sync命令" class="headerlink" title="最后执行cobbler sync命令"></a>最后执行cobbler sync命令</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">最后执行命令: cobbler sync</span><br><span class="line">目的：保存配置</span><br></pre></td></tr></table></figure>
+<h5 id="最后执行cobbler-sync命令"><a href="#最后执行cobbler-sync命令" class="headerlink" title="最后执行cobbler sync命令"></a>最后执行cobbler sync命令</h5><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">最后执行命令: cobbler <span class="keyword">sync</span></span><br><span class="line">目的：保存配置</span><br></pre></td></tr></table></figure>
 
-<h4 id="导入多个dtk满足不同raid自动化需求"><a href="#导入多个dtk满足不同raid自动化需求" class="headerlink" title="导入多个dtk满足不同raid自动化需求"></a>导入多个dtk满足不同raid自动化需求</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">例如：Dell R720,8块盘满配，4块一组RAID5，做两组。</span><br><span class="line"></span><br><span class="line">mount -o loop dtk_5.3.0_1908_Linux64_A00.iso /mnt</span><br><span class="line">cd /var/www/cobbler/ks_mirror/</span><br><span class="line">mkdir dtk5.3_raid5_n4x2</span><br><span class="line">cp /mnt/isolinux/SA* dtk5.3_raid5_n4x2/</span><br><span class="line">cd dtk5.3_raid5_n4x2/ &amp;&amp; ls</span><br><span class="line"></span><br><span class="line">cobbler distro add --name=dtk5.3_raid5_n4x2 --kernel=/var/www/cobbler/ks_mirror/dtk5.3_raid5_n4x2/SA.1 --initrd=/var/www/cobbler/ks_mirror/dtk5.3_raid5_n4x2/SA.2</span><br><span class="line"></span><br><span class="line">cobbler profile add --name=dtk5.3_raid5_n4x2 --distro=dtk5.3_raid5_n4x2</span><br><span class="line">cobbler profile list</span><br><span class="line">cobbler distro list</span><br><span class="line"></span><br><span class="line">cd /var/lib/tftpboot/raidcfg/</span><br><span class="line">mkdir raid5_n4x2</span><br><span class="line"></span><br><span class="line">接下来配置raid5_n4x2.sh脚本</span><br><span class="line">vim /var/lib/tftpboot/raidcfg/raid5/raid5_n4x2.sh</span><br><span class="line">(略)</span><br><span class="line">chmod 755 /var/lib/tftpboot/raidcfg/raid5/raid5_n4x2.sh</span><br><span class="line"></span><br><span class="line">cobbler distro edit --name=dtk5.3_raid5_n4x2  --kopts=&quot;share_type=tftp share_location=/raidcfg/raid5_n4x2 share_script=raid5_n4x2.sh tftp_ip=x.x.x.x&quot;</span><br><span class="line"></span><br><span class="line">cobbler sync</span><br></pre></td></tr></table></figure>
+<h4 id="导入多个dtk满足不同raid自动化需求"><a href="#导入多个dtk满足不同raid自动化需求" class="headerlink" title="导入多个dtk满足不同raid自动化需求"></a>导入多个dtk满足不同raid自动化需求</h4><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">例如：Dell R720,8块盘满配，4块一组RAID5，做两组。</span><br><span class="line"></span><br><span class="line">mount -o loop dtk_5.3.0_1908_Linux64_A00.iso /mnt</span><br><span class="line">cd /var/www/cobbler/ks_mirror/</span><br><span class="line">mkdir dtk5.3_raid5_n4x2</span><br><span class="line">cp /mnt/isolinux/SA* dtk5.3_raid5_n4x2/</span><br><span class="line">cd dtk5.3_raid5_n4x2/ &amp;&amp; ls</span><br><span class="line"></span><br><span class="line">cobbler distro <span class="builtin-name">add</span> <span class="attribute">--name</span>=dtk5.3_raid5_n4x2 <span class="attribute">--kernel</span>=/var/www/cobbler/ks_mirror/dtk5.3_raid5_n4x2/SA.1 <span class="attribute">--initrd</span>=/var/www/cobbler/ks_mirror/dtk5.3_raid5_n4x2/SA.2</span><br><span class="line"></span><br><span class="line">cobbler<span class="built_in"> profile </span><span class="builtin-name">add</span> <span class="attribute">--name</span>=dtk5.3_raid5_n4x2 <span class="attribute">--distro</span>=dtk5.3_raid5_n4x2</span><br><span class="line">cobbler<span class="built_in"> profile </span>list</span><br><span class="line">cobbler distro list</span><br><span class="line"></span><br><span class="line">cd /var/lib/tftpboot/raidcfg/</span><br><span class="line">mkdir raid5_n4x2</span><br><span class="line"></span><br><span class="line">接下来配置raid5_n4x2.sh脚本</span><br><span class="line">vim /var/lib/tftpboot/raidcfg/raid5/raid5_n4x2.sh</span><br><span class="line">(略)</span><br><span class="line">chmod 755 /var/lib/tftpboot/raidcfg/raid5/raid5_n4x2.sh</span><br><span class="line"></span><br><span class="line">cobbler distro <span class="builtin-name">edit</span> <span class="attribute">--name</span>=dtk5.3_raid5_n4x2  <span class="attribute">--kopts</span>=<span class="string">"share_type=tftp share_location=/raidcfg/raid5_n4x2 share_script=raid5_n4x2.sh tftp_ip=x.x.x.x"</span></span><br><span class="line"></span><br><span class="line">cobbler sync</span><br></pre></td></tr></table></figure>
 
 <h4 id="常用RAID脚本"><a href="#常用RAID脚本" class="headerlink" title="常用RAID脚本"></a>常用RAID脚本</h4><p>raid5-3块盘/组</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">cat &gt;&gt; /tmp/raid5.ini &lt;&lt;EOF</span><br><span class="line">[vdisk0]</span><br><span class="line">controllerid=0</span><br><span class="line">raid=5</span><br><span class="line">readpolicy=nra</span><br><span class="line">writepolicy=wt</span><br><span class="line">stripesize=64</span><br><span class="line">cachepolicy=e</span><br><span class="line">adisk=0:0:1,0:1:1,0:2:1</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">echo &quot;…………. reset Other Raid ………….&quot;</span><br><span class="line">raidcfg -ctrl -c=0 -ac=fgnclr</span><br><span class="line">echo &quot;…………. reset all disks ………….&quot;   </span><br><span class="line">raidcfg -ctrl -c=0 -ac=rst</span><br><span class="line">echo &quot;………. 3 disks for raid5  ……….&quot;</span><br><span class="line">raidcfg -i=/tmp/raid5.ini</span><br><span class="line">echo &quot;…………… fast init ……………&quot;</span><br><span class="line">raidcfg -vd -c=0 -vd=0 -ac=fi </span><br><span class="line">echo &quot;…………… RAID5 is created, this is server will be shutdown... ……………&quot;</span><br><span class="line">shutdown</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">cat &gt;&gt; /tmp/raid5.ini &lt;&lt;EOF</span><br><span class="line">[vdisk0]</span><br><span class="line"><span class="attribute">controllerid</span>=0</span><br><span class="line"><span class="attribute">raid</span>=5</span><br><span class="line"><span class="attribute">readpolicy</span>=nra</span><br><span class="line"><span class="attribute">writepolicy</span>=wt</span><br><span class="line"><span class="attribute">stripesize</span>=64</span><br><span class="line"><span class="attribute">cachepolicy</span>=e</span><br><span class="line"><span class="attribute">adisk</span>=0:0:1,0:1:1,0:2:1</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">echo <span class="string">"…………. reset Other Raid …………."</span></span><br><span class="line">raidcfg -ctrl <span class="attribute">-c</span>=0 <span class="attribute">-ac</span>=fgnclr</span><br><span class="line">echo <span class="string">"…………. reset all disks …………."</span>   </span><br><span class="line">raidcfg -ctrl <span class="attribute">-c</span>=0 <span class="attribute">-ac</span>=rst</span><br><span class="line">echo <span class="string">"………. 3 disks for raid5  ………."</span></span><br><span class="line">raidcfg <span class="attribute">-i</span>=/tmp/raid5.ini</span><br><span class="line">echo <span class="string">"…………… fast init ……………"</span></span><br><span class="line">raidcfg -vd <span class="attribute">-c</span>=0 <span class="attribute">-vd</span>=0 <span class="attribute">-ac</span>=fi </span><br><span class="line">echo <span class="string">"…………… RAID5 is created, this is server will be shutdown... ……………"</span></span><br><span class="line">shutdown</span><br></pre></td></tr></table></figure>
 
 <p>2组raid5-4块盘/组(Dell R720)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">cat &gt;&gt; /tmp/raid5_n4x2.ini &lt;&lt;EOF</span><br><span class="line">[vdisk0]</span><br><span class="line">controllerid=0</span><br><span class="line">raid=5</span><br><span class="line">readpolicy=nra</span><br><span class="line">writepolicy=wt</span><br><span class="line">stripesize=64</span><br><span class="line">cachepolicy=e</span><br><span class="line">adisk=0:0:1,0:1:1,0:2:1,0:3:1</span><br><span class="line"></span><br><span class="line">[vdisk1]</span><br><span class="line">controllerid=0</span><br><span class="line">raid=5</span><br><span class="line">readpolicy=nra</span><br><span class="line">writepolicy=wt</span><br><span class="line">stripesize=64</span><br><span class="line">cachepolicy=e</span><br><span class="line">adisk=0:4:1,0:5:1,0:6:1,0:7:1</span><br><span class="line"></span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">echo &quot;………….reset Other Raid ………….&quot;</span><br><span class="line">raidcfg -ctrl -c=0 -ac=fgnclr</span><br><span class="line">echo &quot;…………. reset all disks ………….&quot;</span><br><span class="line">raidcfg -ctrl -c=0 -ac=rst</span><br><span class="line">echo &quot;………. 4 disks for raid5  ……….&quot;</span><br><span class="line">raidcfg -i=/tmp/raid5_n4x2.ini</span><br><span class="line">echo &quot;…………… fast init ……………&quot;</span><br><span class="line">raidcfg -vd -c=0 -vd=0 -ac=fi </span><br><span class="line">raidcfg -vd -c=0 -vd=1 -ac=fi </span><br><span class="line">echo &quot;…………… This is server will be shutdown... ……………&quot;</span><br><span class="line">shutdown</span><br><span class="line"></span><br><span class="line">注：</span><br><span class="line">1.多组Raid下，controllerid都配置为0，因为共属于一个控制器，而vdisk可以有多个，如[vdisk=0]、[vdisk=1]</span><br><span class="line">2.多组Raid与硬盘容量无关，只需保证每组RAID容量一致即可。</span><br><span class="line">3.若原硬盘已有RAID信息, 这条指令可以清除：raidcfg -ctrl -c=0 -ac=fgnclr</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">cat &gt;&gt; /tmp/raid5_n4x2.ini &lt;&lt;EOF</span><br><span class="line">[vdisk0]</span><br><span class="line"><span class="attribute">controllerid</span>=0</span><br><span class="line"><span class="attribute">raid</span>=5</span><br><span class="line"><span class="attribute">readpolicy</span>=nra</span><br><span class="line"><span class="attribute">writepolicy</span>=wt</span><br><span class="line"><span class="attribute">stripesize</span>=64</span><br><span class="line"><span class="attribute">cachepolicy</span>=e</span><br><span class="line"><span class="attribute">adisk</span>=0:0:1,0:1:1,0:2:1,0:3:1</span><br><span class="line"></span><br><span class="line">[vdisk1]</span><br><span class="line"><span class="attribute">controllerid</span>=0</span><br><span class="line"><span class="attribute">raid</span>=5</span><br><span class="line"><span class="attribute">readpolicy</span>=nra</span><br><span class="line"><span class="attribute">writepolicy</span>=wt</span><br><span class="line"><span class="attribute">stripesize</span>=64</span><br><span class="line"><span class="attribute">cachepolicy</span>=e</span><br><span class="line"><span class="attribute">adisk</span>=0:4:1,0:5:1,0:6:1,0:7:1</span><br><span class="line"></span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">echo <span class="string">"………….reset Other Raid …………."</span></span><br><span class="line">raidcfg -ctrl <span class="attribute">-c</span>=0 <span class="attribute">-ac</span>=fgnclr</span><br><span class="line">echo <span class="string">"…………. reset all disks …………."</span></span><br><span class="line">raidcfg -ctrl <span class="attribute">-c</span>=0 <span class="attribute">-ac</span>=rst</span><br><span class="line">echo <span class="string">"………. 4 disks for raid5  ………."</span></span><br><span class="line">raidcfg <span class="attribute">-i</span>=/tmp/raid5_n4x2.ini</span><br><span class="line">echo <span class="string">"…………… fast init ……………"</span></span><br><span class="line">raidcfg -vd <span class="attribute">-c</span>=0 <span class="attribute">-vd</span>=0 <span class="attribute">-ac</span>=fi </span><br><span class="line">raidcfg -vd <span class="attribute">-c</span>=0 <span class="attribute">-vd</span>=1 <span class="attribute">-ac</span>=fi </span><br><span class="line">echo <span class="string">"…………… This is server will be shutdown... ……………"</span></span><br><span class="line">shutdown</span><br><span class="line"></span><br><span class="line">注：</span><br><span class="line">1.多组Raid下，controllerid都配置为0，因为共属于一个控制器，而vdisk可以有多个，如[<span class="attribute">vdisk</span>=0]、[<span class="attribute">vdisk</span>=1]</span><br><span class="line">2.多组Raid与硬盘容量无关，只需保证每组RAID容量一致即可。</span><br><span class="line">3.若原硬盘已有RAID信息, 这条指令可以清除：raidcfg -ctrl <span class="attribute">-c</span>=0 <span class="attribute">-ac</span>=fgnclr</span><br></pre></td></tr></table></figure>
 
 <p>raid5_n3x1+raid0_n1x1</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">cat &gt;&gt; /tmp/raid5_n3x1+raid0_n1x1.ini &lt;&lt;EOF</span><br><span class="line">[vdisk0]</span><br><span class="line">controllerid=0</span><br><span class="line">raid=5</span><br><span class="line">readpolicy=nra</span><br><span class="line">writepolicy=wt</span><br><span class="line">stripesize=64</span><br><span class="line">cachepolicy=e</span><br><span class="line">adisk=0:0:1,0:1:1,0:2:1</span><br><span class="line"></span><br><span class="line">[vdisk1]</span><br><span class="line">controllerid=0</span><br><span class="line">raid=0</span><br><span class="line">readpolicy=nra</span><br><span class="line">writepolicy=wt</span><br><span class="line">stripesize=64</span><br><span class="line">cachepolicy=e</span><br><span class="line">adisk=0:3:1</span><br><span class="line"></span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">echo &quot;………….reset Other Raid ………….&quot;</span><br><span class="line">raidcfg -ctrl -c=0 -ac=fgnclr</span><br><span class="line">echo &quot;…………. reset all disks ………….&quot;</span><br><span class="line">raidcfg -ctrl -c=0 -ac=rst</span><br><span class="line">echo &quot;………. raid5 + raid0  ……….&quot;</span><br><span class="line">raidcfg -i=/tmp/raid5_n3x1+raid0_n1x1.ini</span><br><span class="line">echo &quot;…………… fast init ……………&quot;</span><br><span class="line">raidcfg -vd -c=0 -vd=0 -ac=fi </span><br><span class="line">raidcfg -vd -c=0 -vd=1 -ac=fi </span><br><span class="line">echo &quot;…………… RAID is created, this is server will be shutdown... ……………&quot;</span><br><span class="line">shutdown</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">cat &gt;&gt; /tmp/raid5_n3x1+raid0_n1x1.ini &lt;&lt;EOF</span><br><span class="line">[vdisk0]</span><br><span class="line"><span class="attribute">controllerid</span>=0</span><br><span class="line"><span class="attribute">raid</span>=5</span><br><span class="line"><span class="attribute">readpolicy</span>=nra</span><br><span class="line"><span class="attribute">writepolicy</span>=wt</span><br><span class="line"><span class="attribute">stripesize</span>=64</span><br><span class="line"><span class="attribute">cachepolicy</span>=e</span><br><span class="line"><span class="attribute">adisk</span>=0:0:1,0:1:1,0:2:1</span><br><span class="line"></span><br><span class="line">[vdisk1]</span><br><span class="line"><span class="attribute">controllerid</span>=0</span><br><span class="line"><span class="attribute">raid</span>=0</span><br><span class="line"><span class="attribute">readpolicy</span>=nra</span><br><span class="line"><span class="attribute">writepolicy</span>=wt</span><br><span class="line"><span class="attribute">stripesize</span>=64</span><br><span class="line"><span class="attribute">cachepolicy</span>=e</span><br><span class="line"><span class="attribute">adisk</span>=0:3:1</span><br><span class="line"></span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">echo <span class="string">"………….reset Other Raid …………."</span></span><br><span class="line">raidcfg -ctrl <span class="attribute">-c</span>=0 <span class="attribute">-ac</span>=fgnclr</span><br><span class="line">echo <span class="string">"…………. reset all disks …………."</span></span><br><span class="line">raidcfg -ctrl <span class="attribute">-c</span>=0 <span class="attribute">-ac</span>=rst</span><br><span class="line">echo <span class="string">"………. raid5 + raid0  ………."</span></span><br><span class="line">raidcfg <span class="attribute">-i</span>=/tmp/raid5_n3x1+raid0_n1x1.ini</span><br><span class="line">echo <span class="string">"…………… fast init ……………"</span></span><br><span class="line">raidcfg -vd <span class="attribute">-c</span>=0 <span class="attribute">-vd</span>=0 <span class="attribute">-ac</span>=fi </span><br><span class="line">raidcfg -vd <span class="attribute">-c</span>=0 <span class="attribute">-vd</span>=1 <span class="attribute">-ac</span>=fi </span><br><span class="line">echo <span class="string">"…………… RAID is created, this is server will be shutdown... ……………"</span></span><br><span class="line">shutdown</span><br></pre></td></tr></table></figure>
 
-<h4 id="附录：RAID参数详解"><a href="#附录：RAID参数详解" class="headerlink" title="附录：RAID参数详解"></a>附录：RAID参数详解</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">上面这些指令从哪儿来？</span><br><span class="line">raidcfg -h 帮助都有使用方法，常用的如下：</span><br><span class="line"></span><br><span class="line">controller 简写为 -ctrl</span><br><span class="line">action 简写为 -ac</span><br><span class="line">controllerid 简写为 -c</span><br><span class="line">adisk, pdisk 简写为 -ad, -pd</span><br><span class="line">raid 简写为 -r</span><br><span class="line">size 简写为 -sz</span><br><span class="line">stripsize 简写为 -ssz</span><br><span class="line">cachepolicy 简写为 -cp</span><br><span class="line">writepolicy 简写为 -wp</span><br><span class="line">readpolicy 简写为 -rp</span><br><span class="line">vdisk 简写为 -vd</span><br></pre></td></tr></table></figure>
+<h4 id="附录：RAID参数详解"><a href="#附录：RAID参数详解" class="headerlink" title="附录：RAID参数详解"></a>附录：RAID参数详解</h4><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">上面这些指令从哪儿来？</span><br><span class="line"><span class="symbol">raidcfg</span> -h 帮助都有使用方法，常用的如下：</span><br><span class="line"></span><br><span class="line"><span class="symbol">controller</span> 简写为 -ctrl</span><br><span class="line"><span class="symbol">action</span> 简写为 -ac</span><br><span class="line"><span class="symbol">controllerid</span> 简写为 -c</span><br><span class="line"><span class="symbol">adisk</span>, pdisk 简写为 -ad, -pd</span><br><span class="line"><span class="symbol">raid</span> 简写为 -r</span><br><span class="line"><span class="symbol">size</span> 简写为 -sz</span><br><span class="line"><span class="keyword">stripsize </span>简写为 -ssz</span><br><span class="line"><span class="symbol">cachepolicy</span> 简写为 -<span class="meta">cp</span></span><br><span class="line"><span class="symbol">writepolicy</span> 简写为 -wp</span><br><span class="line"><span class="symbol">readpolicy</span> 简写为 -rp</span><br><span class="line"><span class="symbol">vdisk</span> 简写为 -vd</span><br></pre></td></tr></table></figure>
 
-<h4 id="raidcfg命令分类"><a href="#raidcfg命令分类" class="headerlink" title="raidcfg命令分类"></a>raidcfg命令分类</h4><h5 id="信息输出类"><a href="#信息输出类" class="headerlink" title="信息输出类"></a>信息输出类</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">#列出所有RAID控制器信息</span><br><span class="line">raidcfg &lt;-ctrl&gt;</span><br><span class="line"></span><br><span class="line">#列出指定ID的RAID控制器信息</span><br><span class="line">raidcfg &lt;-ctrl&gt; [-c=ID]</span><br><span class="line"></span><br><span class="line">#显示指定控制器上的所有物理磁盘信息</span><br><span class="line">raidcfg &lt;-ad|-pd&gt; &lt;-c=ID&gt;</span><br><span class="line"></span><br><span class="line">#显示指定控制器指定vdisk上的所有物理磁盘信息</span><br><span class="line">raidcfg &lt;-ad|-pd&gt; &lt;-c=ID&gt; [-vd=ID]</span><br><span class="line"></span><br><span class="line">#显示具体某块物理磁盘的信息</span><br><span class="line">raidcfg &lt;-ad|-pd&gt; &lt;-c=ID&gt; [-ad=ch:targ[:encl],ch:targ[:encl],...]</span><br><span class="line"></span><br><span class="line">#显示所有控制器上的所有vdisk信息</span><br><span class="line">raidcfg &lt;-vd&gt;</span><br><span class="line"></span><br><span class="line">#显示指定控制器上的所有vdisk信息</span><br><span class="line">raidcfg &lt;-vd&gt; [-c=ID]</span><br><span class="line"></span><br><span class="line">#显示指定控制器上的指定vdisk信息</span><br><span class="line">raidcfg &lt;-vd&gt; &lt;-c=ID&gt; [-vd=ID]</span><br><span class="line"></span><br><span class="line">#将系统函数调用的返回值赋予用户指定的环境变量</span><br><span class="line">raidcfg &lt;-se&gt; &lt;-envn=string&gt; &lt;-envc=function&gt; [-f=filename]</span><br><span class="line">        Function Calls: getcontrollerslots.</span><br><span class="line">       </span><br><span class="line">#将系统函数调用的返回值赋予用户指定的环境变量</span><br><span class="line">raidcfg &lt;-se&gt; &lt;-envn=string&gt; &lt;-envc=function&gt; &lt;-c=ID&gt; [-f=filename]</span><br><span class="line">        Function Calls:getfirmware,getcontrollertype,getadisks,getadiskcount,getfreeadisks, getfreeadiskcount,getfreeadisksize,gethotspares.</span><br></pre></td></tr></table></figure>
+<h4 id="raidcfg命令分类"><a href="#raidcfg命令分类" class="headerlink" title="raidcfg命令分类"></a>raidcfg命令分类</h4><h5 id="信息输出类"><a href="#信息输出类" class="headerlink" title="信息输出类"></a>信息输出类</h5><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#列出所有RAID控制器信息</span></span><br><span class="line">raidcfg &lt;-ctrl&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">#列出指定ID的RAID控制器信息</span></span><br><span class="line">raidcfg &lt;-ctrl&gt; [<span class="attribute">-c</span>=ID]</span><br><span class="line"></span><br><span class="line"><span class="comment">#显示指定控制器上的所有物理磁盘信息</span></span><br><span class="line">raidcfg &lt;-ad|-pd&gt; &lt;<span class="attribute">-c</span>=ID&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">#显示指定控制器指定vdisk上的所有物理磁盘信息</span></span><br><span class="line">raidcfg &lt;-ad|-pd&gt; &lt;<span class="attribute">-c</span>=ID&gt; [<span class="attribute">-vd</span>=ID]</span><br><span class="line"></span><br><span class="line"><span class="comment">#显示具体某块物理磁盘的信息</span></span><br><span class="line">raidcfg &lt;-ad|-pd&gt; &lt;<span class="attribute">-c</span>=ID&gt; [<span class="attribute">-ad</span>=ch:targ[:encl],ch:targ[:encl],<span class="built_in">..</span>.]</span><br><span class="line"></span><br><span class="line"><span class="comment">#显示所有控制器上的所有vdisk信息</span></span><br><span class="line">raidcfg &lt;-vd&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">#显示指定控制器上的所有vdisk信息</span></span><br><span class="line">raidcfg &lt;-vd&gt; [<span class="attribute">-c</span>=ID]</span><br><span class="line"></span><br><span class="line"><span class="comment">#显示指定控制器上的指定vdisk信息</span></span><br><span class="line">raidcfg &lt;-vd&gt; &lt;<span class="attribute">-c</span>=ID&gt; [<span class="attribute">-vd</span>=ID]</span><br><span class="line"></span><br><span class="line"><span class="comment">#将系统函数调用的返回值赋予用户指定的环境变量</span></span><br><span class="line">raidcfg &lt;-se&gt; &lt;<span class="attribute">-envn</span>=string&gt; &lt;<span class="attribute">-envc</span>=function&gt; [<span class="attribute">-f</span>=filename]</span><br><span class="line">        Function Calls: getcontrollerslots.</span><br><span class="line">       </span><br><span class="line"><span class="comment">#将系统函数调用的返回值赋予用户指定的环境变量</span></span><br><span class="line">raidcfg &lt;-se&gt; &lt;<span class="attribute">-envn</span>=string&gt; &lt;<span class="attribute">-envc</span>=function&gt; &lt;<span class="attribute">-c</span>=ID&gt; [<span class="attribute">-f</span>=filename]</span><br><span class="line">        Function Calls:getfirmware,getcontrollertype,getadisks,getadiskcount,getfreeadisks, getfreeadiskcount,getfreeadisksize,gethotspares.</span><br></pre></td></tr></table></figure>
 
-<h5 id="vdisk操作类"><a href="#vdisk操作类" class="headerlink" title="vdisk操作类"></a>vdisk操作类</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#创建vdisk</span><br><span class="line">raidcfg &lt;-ctrl&gt; &lt;-ac=cvd&gt; &lt;-c=ID&gt; &lt;-ad|-pd=ch:targ[:encl],ch:targ[:encl], ...&gt;</span><br><span class="line">        [-r=n] [-sz=n] [-ssz=n] [-cp=d | e]</span><br><span class="line">        [-rp=ra | ara | nra | rc | nrc] [-wp=wb | wt | fwb | wc | nwc]</span><br><span class="line">        [-fd=ch:targ,ch:targ,...] [-str=number] [-sp=number]</span><br><span class="line"></span><br><span class="line">#删除指定控制器上的所有vdisk</span><br><span class="line">raidcfg &lt;-vd&gt; &lt;-ac=dvd&gt; &lt;-c=ID&gt;</span><br><span class="line"></span><br><span class="line">#删除指定控制器上的指定vdisk</span><br><span class="line">raidcfg &lt;-vd&gt; &lt;-ac=dvd&gt; &lt;-c=ID&gt; [-vd=ID]</span><br><span class="line"></span><br><span class="line">#对指定控制器上的vdisk执行快速初始化</span><br><span class="line">raidcfg &lt;-vd&gt; &lt;-c=ID&gt; &lt;-vd=ID&gt; &lt;-ac=fi&gt;</span><br><span class="line"></span><br><span class="line">#对指定控制器上的vdisk执行完全(慢速)初始化</span><br><span class="line">raidcfg &lt;-vd&gt; &lt;-c=ID&gt; &lt;-vd=ID&gt; &lt;-ac=sli&gt;</span><br><span class="line"></span><br><span class="line">#取消指定vdisk的完全(慢速)初始化</span><br><span class="line">raidcfg &lt;-vd&gt; &lt;-c=ID&gt; &lt;-vd=ID&gt; &lt;-ac=ci&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="vdisk操作类"><a href="#vdisk操作类" class="headerlink" title="vdisk操作类"></a>vdisk操作类</h5><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#创建vdisk</span></span><br><span class="line">raidcfg &lt;-ctrl&gt; &lt;<span class="attribute">-ac</span>=cvd&gt; &lt;<span class="attribute">-c</span>=ID&gt; &lt;-ad|<span class="attribute">-pd</span>=ch:targ[:encl],ch:targ[:encl], <span class="built_in">..</span>.&gt;</span><br><span class="line">        [<span class="attribute">-r</span>=n] [<span class="attribute">-sz</span>=n] [<span class="attribute">-ssz</span>=n] [<span class="attribute">-cp</span>=d | e]</span><br><span class="line">        [<span class="attribute">-rp</span>=ra | ara | nra | rc | nrc] [<span class="attribute">-wp</span>=wb | wt | fwb | wc | nwc]</span><br><span class="line">        [<span class="attribute">-fd</span>=ch:targ,ch:targ,...] [<span class="attribute">-str</span>=number] [<span class="attribute">-sp</span>=number]</span><br><span class="line"></span><br><span class="line"><span class="comment">#删除指定控制器上的所有vdisk</span></span><br><span class="line">raidcfg &lt;-vd&gt; &lt;<span class="attribute">-ac</span>=dvd&gt; &lt;<span class="attribute">-c</span>=ID&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">#删除指定控制器上的指定vdisk</span></span><br><span class="line">raidcfg &lt;-vd&gt; &lt;<span class="attribute">-ac</span>=dvd&gt; &lt;<span class="attribute">-c</span>=ID&gt; [<span class="attribute">-vd</span>=ID]</span><br><span class="line"></span><br><span class="line"><span class="comment">#对指定控制器上的vdisk执行快速初始化</span></span><br><span class="line">raidcfg &lt;-vd&gt; &lt;<span class="attribute">-c</span>=ID&gt; &lt;<span class="attribute">-vd</span>=ID&gt; &lt;<span class="attribute">-ac</span>=fi&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">#对指定控制器上的vdisk执行完全(慢速)初始化</span></span><br><span class="line">raidcfg &lt;-vd&gt; &lt;<span class="attribute">-c</span>=ID&gt; &lt;<span class="attribute">-vd</span>=ID&gt; &lt;<span class="attribute">-ac</span>=sli&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">#取消指定vdisk的完全(慢速)初始化</span></span><br><span class="line">raidcfg &lt;-vd&gt; &lt;<span class="attribute">-c</span>=ID&gt; &lt;<span class="attribute">-vd</span>=ID&gt; &lt;<span class="attribute">-ac</span>=ci&gt;</span><br></pre></td></tr></table></figure>
 
-<h5 id="hotspare类"><a href="#hotspare类" class="headerlink" title="hotspare类"></a>hotspare类</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#分配全局hotspare磁盘</span><br><span class="line">raidcfg &lt;-ctrl&gt; &lt;-ac=sghs&gt; &lt;-c=ID&gt; &lt;-ad|-pd=ch:targ[:encl]&gt;</span><br><span class="line"></span><br><span class="line">#取消分配全局hotspare磁盘</span><br><span class="line">raidcfg &lt;-ctrl&gt; &lt;-ac=rghs&gt; &lt;-c=ID&gt; &lt;-ad|-pd=ch:targ[:encl]&gt;</span><br><span class="line"></span><br><span class="line">#在指定控制器上启用Controller Persistent Hot Spare</span><br><span class="line">raidcfg &lt;-ctrl&gt; &lt;-c=ID&gt; &lt;-ac=ephs&gt;</span><br><span class="line"></span><br><span class="line">#在指定控制器上禁用Controller Persistent Hot Spare</span><br><span class="line">raidcfg &lt;-ctrl&gt; &lt;-c=ID&gt; &lt;-ac=dphs&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="hotspare类"><a href="#hotspare类" class="headerlink" title="hotspare类"></a>hotspare类</h5><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#分配全局hotspare磁盘</span></span><br><span class="line">raidcfg &lt;-ctrl&gt; &lt;<span class="attribute">-ac</span>=sghs&gt; &lt;<span class="attribute">-c</span>=ID&gt; &lt;-ad|<span class="attribute">-pd</span>=ch:targ[:encl]&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">#取消分配全局hotspare磁盘</span></span><br><span class="line">raidcfg &lt;-ctrl&gt; &lt;<span class="attribute">-ac</span>=rghs&gt; &lt;<span class="attribute">-c</span>=ID&gt; &lt;-ad|<span class="attribute">-pd</span>=ch:targ[:encl]&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">#在指定控制器上启用Controller Persistent Hot Spare</span></span><br><span class="line">raidcfg &lt;-ctrl&gt; &lt;<span class="attribute">-c</span>=ID&gt; &lt;<span class="attribute">-ac</span>=ephs&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">#在指定控制器上禁用Controller Persistent Hot Spare</span></span><br><span class="line">raidcfg &lt;-ctrl&gt; &lt;<span class="attribute">-c</span>=ID&gt; &lt;<span class="attribute">-ac</span>=dphs&gt;</span><br></pre></td></tr></table></figure>
 
-<h5 id="raid控制类"><a href="#raid控制类" class="headerlink" title="raid控制类"></a>raid控制类</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#reset指定控制器</span><br><span class="line">raidcfg &lt;-ctrl&gt; &lt;-c=ID&gt; &lt;-ac=rst&gt;</span><br><span class="line">       </span><br><span class="line">#读取所有控制器上的RAID配置信息，输出到指定的ini文件</span><br><span class="line">raidcfg &lt;-o=filename&gt;</span><br><span class="line"></span><br><span class="line">#读取指定的ini文件,在配置文件指定的制器上创建RAID</span><br><span class="line">raidcfg &lt;-i=filename&gt;</span><br><span class="line"></span><br><span class="line">#在指定控制器上导入外部RAID配置信息</span><br><span class="line">raidcfg &lt;-ctrl&gt; &lt;-c=ID&gt; &lt;-ac=fgnimp&gt;</span><br><span class="line"></span><br><span class="line">#在指定控制器上清除外部RAID配置信息</span><br><span class="line">raidcfg &lt;-ctrl&gt; &lt;-c=ID&gt; &lt;-ac=fgnclr&gt;</span><br><span class="line"></span><br><span class="line">#在指定控制器上恢复外部RAID配置信息</span><br><span class="line">raidcfg &lt;-ctrl&gt; &lt;-c=ID&gt; &lt;-ac=fgnrvr&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="raid控制类"><a href="#raid控制类" class="headerlink" title="raid控制类"></a>raid控制类</h5><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#reset指定控制器</span></span><br><span class="line">raidcfg &lt;-ctrl&gt; &lt;<span class="attribute">-c</span>=ID&gt; &lt;<span class="attribute">-ac</span>=rst&gt;</span><br><span class="line">       </span><br><span class="line"><span class="comment">#读取所有控制器上的RAID配置信息，输出到指定的ini文件</span></span><br><span class="line">raidcfg &lt;<span class="attribute">-o</span>=filename&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">#读取指定的ini文件,在配置文件指定的制器上创建RAID</span></span><br><span class="line">raidcfg &lt;<span class="attribute">-i</span>=filename&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">#在指定控制器上导入外部RAID配置信息</span></span><br><span class="line">raidcfg &lt;-ctrl&gt; &lt;<span class="attribute">-c</span>=ID&gt; &lt;<span class="attribute">-ac</span>=fgnimp&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">#在指定控制器上清除外部RAID配置信息</span></span><br><span class="line">raidcfg &lt;-ctrl&gt; &lt;<span class="attribute">-c</span>=ID&gt; &lt;<span class="attribute">-ac</span>=fgnclr&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">#在指定控制器上恢复外部RAID配置信息</span></span><br><span class="line">raidcfg &lt;-ctrl&gt; &lt;<span class="attribute">-c</span>=ID&gt; &lt;<span class="attribute">-ac</span>=fgnrvr&gt;</span><br></pre></td></tr></table></figure>
 
-<h5 id="通用参数"><a href="#通用参数" class="headerlink" title="通用参数"></a>通用参数</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">除了[-ver]之外，可以应用于上边任何命令中:</span><br><span class="line"></span><br><span class="line">[-ver]                      -- 显示RAIDCFG版本</span><br><span class="line">[-l=logfilename]            -- 将输出写入到log文件中</span><br><span class="line">[-si]                       -- 静默，抑制console输出</span><br><span class="line"></span><br><span class="line">应用举例:</span><br><span class="line">假设系统总共有8块硬盘,前两块146G做RAID1,后5块900G做RAID5,最后一块做全局hotspare</span><br><span class="line">raidcfg -ctrl -ac=cvd -c=0 -ad=0:0:0,0:1:0 -r=1</span><br><span class="line">raidcfg -ctrl -ac=cvd -c=0 -ad=0:2:0,0:3:0,0:4:0,0:5:0,0:6:0 -r=5</span><br><span class="line">raidcfg -ctrl -ac=sghs -c=0 -ad=0:7:0</span><br></pre></td></tr></table></figure>
+<h5 id="通用参数"><a href="#通用参数" class="headerlink" title="通用参数"></a>通用参数</h5><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">除了[-ver]之外，可以应用于上边任何命令中:</span><br><span class="line"></span><br><span class="line">[-ver]                      -- 显示RAIDCFG版本</span><br><span class="line">[<span class="attribute">-l</span>=logfilename]            -- 将输出写入到log文件中</span><br><span class="line">[-si]                       -- 静默，抑制console输出</span><br><span class="line"></span><br><span class="line">应用举例:</span><br><span class="line">假设系统总共有8块硬盘,前两块146G做RAID1,后5块900G做RAID5,最后一块做全局hotspare</span><br><span class="line">raidcfg -ctrl <span class="attribute">-ac</span>=cvd <span class="attribute">-c</span>=0 <span class="attribute">-ad</span>=0:0:0,0:1:0 <span class="attribute">-r</span>=1</span><br><span class="line">raidcfg -ctrl <span class="attribute">-ac</span>=cvd <span class="attribute">-c</span>=0 <span class="attribute">-ad</span>=0:2:0,0:3:0,0:4:0,0:5:0,0:6:0 <span class="attribute">-r</span>=5</span><br><span class="line">raidcfg -ctrl <span class="attribute">-ac</span>=sghs <span class="attribute">-c</span>=0 <span class="attribute">-ad</span>=0:7:0</span><br></pre></td></tr></table></figure>
 
 <p>参考：<a href="http://www.dell.com/support/manuals/us/en/19/dell-opnmang-dplymnt-toolkit-v5.0.1/dtk_cli-v5/creating-virtual-disks?guid=guid-a664bc81-5700-4319-a906-3dcdba8b984a&lang=en-us" target="_blank" rel="noopener">官方参数说明</a></p>
 <p>参考：<a href="http://bbs.chinaunix.net/thread-4092992-1-1.html" target="_blank" rel="noopener">chinaunix</a></p>
@@ -393,7 +397,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2019 John Doe
+    		&copy; 2019 Gary Wu
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -497,18 +501,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">apache</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">目录浏览</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">高级运维</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Apache</a>
               </li>
              
@@ -537,19 +529,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CDH</a>
+                <a href="javascript:void(0)" class="js-tag color5">高级运维</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JDBC</a>
+                <a href="javascript:void(0)" class="js-tag color2">apache</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">MySQL驱动</a>
+                <a href="javascript:void(0)" class="js-tag color5">目录浏览</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">KAFKA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CDH</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -562,6 +558,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">大数据</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">JDBC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">MySQL驱动</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -597,18 +601,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Cacti流量叠加图形</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Cacti整合图形</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Graph</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">cacti</a>
               </li>
              
@@ -626,6 +618,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">监控</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">bugzilla</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">bugs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Cacti流量叠加图形</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Cacti整合图形</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Graph</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -650,14 +662,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">SCL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">bugzilla</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">bugs</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -705,14 +709,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">DNS TLS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Public DNS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">shadowsocks</a>
               </li>
              
@@ -722,6 +718,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">加密代理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">DNS TLS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Public DNS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -801,18 +805,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ESXI PATH</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ESXI补丁升级</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">ESXI6.7</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">VMware vSphere Client</a>
               </li>
              
@@ -825,6 +817,26 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CPU</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">虚拟化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ESXI PATH</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ESXI补丁升级</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">ESXI6.7</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Openstack</a>
               </li>
              
@@ -834,22 +846,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">混杂模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CPU</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">虚拟化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">磁盘置备</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">disk</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -873,6 +869,26 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Gentoo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">编译内核</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">NFS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">磁盘置备</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">disk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">fuse</a>
               </li>
              
@@ -886,18 +902,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">HDFS挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Gentoo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">编译内核</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">NFS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -961,6 +965,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">HTTP状态码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">301</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">302</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
@@ -989,27 +1005,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">HTTP状态码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">301</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">302</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">hdfs空文件</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hadoop fs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1033,6 +1033,22 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Jenkins</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">持续集成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">持续交付</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
@@ -1049,26 +1065,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jenkins</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">持续集成</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">持续交付</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Jumpserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">备机部署</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">分区</a>
               </li>
              
@@ -1081,7 +1077,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">分区热迁移</a>
+                <a href="javascript:void(0)" class="js-tag color1">Jumpserver</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">备机部署</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1090,6 +1090,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">KAFKA版本升级</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">分区热迁移</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1149,18 +1153,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">文件句柄</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">lsof</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">空间释放</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">限速方案</a>
               </li>
              
@@ -1181,6 +1173,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">文件句柄</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">lsof</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">空间释放</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">logstash</a>
               </li>
              
@@ -1194,6 +1198,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Mars</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">HDFS Shell</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1213,15 +1225,27 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Mars</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">HDFS Shell</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Hadoop</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">spark</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">tez</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">单用户模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">多用户模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">远程模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1246,26 +1270,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">机架感知</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">spark</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">tez</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">单用户模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">多用户模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">远程模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1305,15 +1309,27 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">yarn</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hive</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">HQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">yarn</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mongodb</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">mongodump</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mongorestore</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1337,15 +1353,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mongodb</a>
+                <a href="javascript:void(0)" class="js-tag color3">STARTUP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">mongodump</a>
+                <a href="javascript:void(0)" class="js-tag color1">副本集成员</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mongorestore</a>
+                <a href="javascript:void(0)" class="js-tag color5">成员状态</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1365,15 +1381,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">STARTUP</a>
+                <a href="javascript:void(0)" class="js-tag color5">MongoDB集群</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">副本集成员</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">成员状态</a>
+                <a href="javascript:void(0)" class="js-tag color2">mongo集群管理维护</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1401,14 +1413,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">MongoDB集群</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mongo集群管理维护</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">MySQL主从切换</a>
               </li>
              
@@ -1417,19 +1421,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">MySQL主从复制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">全备还原</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">主从同步</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">主从复制监控</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">MySQL主从复制</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">全备还原</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1461,14 +1465,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">慢查询</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">mysqldumpslow</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">dba</a>
               </li>
              
@@ -1486,6 +1482,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">MySQL多实例远程登陆</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">慢查询</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">mysqldumpslow</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1525,14 +1529,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ntp</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">upstream</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">proxy-set-header</a>
               </li>
              
@@ -1545,15 +1541,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">favicon.ico</a>
+                <a href="javascript:void(0)" class="js-tag color4">upstream</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">access</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">log</a>
+                <a href="javascript:void(0)" class="js-tag color4">ntp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1570,6 +1562,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">垃圾UA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">favicon.ico</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">access</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">log</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1609,6 +1613,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Glance</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">openstack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">PHP</a>
               </li>
              
@@ -1621,11 +1633,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Glance</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">openstack</a>
+                <a href="javascript:void(0)" class="js-tag color4">Keystone</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1638,10 +1646,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">OpenStack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Keystone</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1677,23 +1681,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">RAID5</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">parted</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">fdisk</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">RAID5</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">阵列卡</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">缓存</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1717,6 +1713,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">阵列卡</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">缓存</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">rabbitmq</a>
               </li>
              
@@ -1737,15 +1741,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">NTP时间同步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NAT</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">双线</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">NTP时间同步</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1837,6 +1841,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">YARN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">NodeManager</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">udp</a>
               </li>
              
@@ -1854,14 +1866,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">GFW</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">YARN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">NodeManager</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1897,10 +1901,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">rrdtool</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">微信</a>
               </li>
              
@@ -1909,11 +1909,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">weathermap</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">plugin</a>
+                <a href="javascript:void(0)" class="js-tag color3">rrdtool</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1926,6 +1922,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">将Bites转换为Mbits</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">weathermap</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">plugin</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">脚本</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1953,7 +1961,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">脚本</a>
+                <a href="javascript:void(0)" class="js-tag color1">socket.gaierror</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1962,10 +1970,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">socket.gaierror</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2013,14 +2017,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">wget</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">curl请求url不使用缓存</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">unix</a>
               </li>
              
@@ -2037,7 +2033,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">wget</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">curl请求url不使用缓存</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">docker机制</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">exit退出码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2054,14 +2066,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">emerge命令</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">exit退出码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2097,18 +2101,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">磁盘挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">fstab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">开机挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">gentoo</a>
               </li>
              
@@ -2118,6 +2110,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">install</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">磁盘挂载</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">fstab</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">开机挂载</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2149,10 +2153,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hadoop用户</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">fs</a>
               </li>
              
@@ -2165,6 +2165,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">hadoop用户</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">sersync</a>
               </li>
              
@@ -2174,6 +2178,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">实时同步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell脚本</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ip自动配置</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2193,18 +2205,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell脚本</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ip自动配置</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">jumpserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">topic</a>
               </li>
              
@@ -2213,23 +2213,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">keepalived</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LVS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">多实例</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">双主</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">脑裂</a>
+                <a href="javascript:void(0)" class="js-tag color1">jumpserver</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2250,6 +2234,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">nopasswd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">keepalived</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">LVS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">多实例</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">双主</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">脑裂</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2277,10 +2281,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">dd</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">rm恢复</a>
               </li>
              
@@ -2297,23 +2297,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">dd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统备份</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统恢复</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Logstash</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Tomcat</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2326,6 +2318,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">rubydebug</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Logstash</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Tomcat</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2345,6 +2349,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">mongod</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">二进制版</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">mariadb主从</a>
               </li>
              
@@ -2358,14 +2370,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">主从复制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mongod</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">二进制版</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2385,11 +2389,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">主从复制错误</a>
+                <a href="javascript:void(0)" class="js-tag color5">主键错误</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">主键错误</a>
+                <a href="javascript:void(0)" class="js-tag color2">主从复制错误</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2398,14 +2402,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">同步个别库</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mysql slave</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">relay log</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2421,7 +2417,39 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">mysql slave</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">relay log</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">root远程登录</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">优化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">socket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ulimit</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">tcp_nopush</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">tcp_nodelay</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2485,38 +2513,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">优化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">socket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ulimit</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">tcp_nopush</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">tcp_nodelay</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">uri</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">屏蔽接口</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Ddos</a>
               </li>
              
@@ -2529,11 +2525,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">proxy cache</a>
+                <a href="javascript:void(0)" class="js-tag color4">uri</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Nginx缓存清理</a>
+                <a href="javascript:void(0)" class="js-tag color5">屏蔽接口</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2542,6 +2538,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">443</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">proxy cache</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Nginx缓存清理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2565,18 +2569,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SOCKS5</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">proxychains</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">命令代理</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">ps</a>
               </li>
              
@@ -2586,6 +2578,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">进程运行时间</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">SOCKS5</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">proxychains</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">命令代理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2601,14 +2605,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">tar</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">crontab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">自重启</a>
               </li>
              
@@ -2617,11 +2613,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">rsync限速</a>
+                <a href="javascript:void(0)" class="js-tag color4">tar</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">bwlimit</a>
+                <a href="javascript:void(0)" class="js-tag color3">crontab</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2630,6 +2626,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">模板</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">rsync限速</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">bwlimit</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2642,6 +2646,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">zabbix_agent</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">salt-master高可用</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">salt-API</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">salt-ssh</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2673,18 +2689,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">salt-master高可用</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">salt-API</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">salt-ssh</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统瓶颈</a>
               </li>
              
@@ -2705,6 +2709,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">变量传参</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell传参</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">小数判断</a>
               </li>
              
@@ -2714,14 +2726,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">浮点数判断</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">变量传参</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell传参</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2753,6 +2757,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">expect</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Ros</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">FTP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">dsa</a>
               </li>
              
@@ -2769,15 +2785,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">expect</a>
+                <a href="javascript:void(0)" class="js-tag color1">supervisor</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Ros</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">FTP</a>
+                <a href="javascript:void(0)" class="js-tag color4">supervisorctl</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2790,14 +2802,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">pid</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">supervisor</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">supervisorctl</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2837,19 +2841,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">vim</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">中文乱码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">vmware</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">虚拟机克隆</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vim</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">中文乱码</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2865,10 +2869,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">告警</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">traceroute</a>
               </li>
              
@@ -2878,6 +2878,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">MTR</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">告警</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2905,6 +2909,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">zk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">触发器</a>
               </li>
              
@@ -2918,10 +2926,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">触发器表达式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">zk</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2941,11 +2945,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">云计算</a>
+                <a href="javascript:void(0)" class="js-tag color5">Rack</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Rack</a>
+                <a href="javascript:void(0)" class="js-tag color4">云计算</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2961,6 +2965,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CDN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">IM</a>
               </li>
              
@@ -2970,18 +2978,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">开源IM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CDN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">jq</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">筛选大于某个值的数据到文件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3005,11 +3001,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">taskset</a>
+                <a href="javascript:void(0)" class="js-tag color3">jq</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">PID</a>
+                <a href="javascript:void(0)" class="js-tag color4">筛选大于某个值的数据到文件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3021,15 +3017,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">zerotier</a>
+                <a href="javascript:void(0)" class="js-tag color3">taskset</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">内网穿透</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">全球畅联</a>
+                <a href="javascript:void(0)" class="js-tag color4">PID</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3053,7 +3045,31 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">zerotier</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">内网穿透</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">全球畅联</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">RocketMQ</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">分布式消息队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nameserver</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">brokerserver</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3073,39 +3089,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">分布式消息队列</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">nameserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">brokerserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">外部命令</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">内部命令</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">只读模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">fatab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mount</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">remount</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3125,19 +3113,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OpenSSL</a>
+                <a href="javascript:void(0)" class="js-tag color5">只读模式</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">CA</a>
+                <a href="javascript:void(0)" class="js-tag color1">fatab</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SSL证书</a>
+                <a href="javascript:void(0)" class="js-tag color1">mount</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">csr</a>
+                <a href="javascript:void(0)" class="js-tag color3">remount</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3154,6 +3142,22 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">免交互</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">OpenSSL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">CA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">SSL证书</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">csr</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3181,6 +3185,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">SHELL编程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">kill</a>
               </li>
              
@@ -3193,7 +3201,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">SHELL编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">Yum源</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3202,10 +3210,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Shell脚本</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Yum源</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3225,15 +3229,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">consumer</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">内存</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">使用率</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">consumer</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3337,6 +3341,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">flock</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LVS连接数监控</a>
               </li>
              
@@ -3350,10 +3358,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">InActConn</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">flock</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3529,6 +3533,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">autostart</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">libvert</a>
               </li>
              
@@ -3538,10 +3546,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">动态迁移</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">autostart</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3697,6 +3701,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">lvs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">4层负载均衡</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">DR模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">LNMP</a>
               </li>
              
@@ -3714,18 +3730,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">mysql数据库迁移</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">lvs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">4层负载均衡</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">DR模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3785,15 +3789,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">pass_proxy</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">htpasswd</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">日志切割</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">pass_proxy</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4093,15 +4097,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">磁盘</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">awk数组</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">磁盘管理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">磁盘</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4137,19 +4141,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">redis cluster</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">ssdb</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">LevelDB</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">redis cluster</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4193,14 +4197,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">codis集群</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">memcache</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">GlusterFS</a>
               </li>
              
@@ -4210,6 +4206,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NAS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">codis集群</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">memcache</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -6,16 +6,16 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://garywu520.github.io/blog">
-  <title>SSDB-NoSQL数据库部署 | Hexo</title>
+  <title>SSDB-NoSQL数据库部署 | Gary Wu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="概述  12345SSDB 是一个 C++ 开发的 NoSQL 数据库, 支持Key-value/Key-hashmap/zset(sorted set)等数据结构，十分适合存储数亿条级别的列表、排序表等集合数据，是redis的替代与增强方案。SSDB使用Google公司开源的LevelDB引擎作为底层的存储引擎。SSDB 采用 New BSD License 许可协议, 一个非常宽松灵活的协议">
 <meta name="keywords" content="NoSQL,redis,主从复制,负载均衡,ssdb,LevelDB">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SSDB-NoSQL数据库部署">
 <meta property="og:url" content="https://garywu520.github.io/blog/2017/09/26/SSDB-NoSQL数据库部署/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Gary Wu">
 <meta property="og:description" content="概述  12345SSDB 是一个 C++ 开发的 NoSQL 数据库, 支持Key-value/Key-hashmap/zset(sorted set)等数据结构，十分适合存储数亿条级别的列表、排序表等集合数据，是redis的替代与增强方案。SSDB使用Google公司开源的LevelDB引擎作为底层的存储引擎。SSDB 采用 New BSD License 许可协议, 一个非常宽松灵活的协议">
-<meta property="og:locale" content="default">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/wuyanteng/wuyanteng.github.io/master/images/ssdb_redis.png">
 <meta property="og:updated_time" content="2017-09-26T09:33:16.645Z">
 <meta name="twitter:card" content="summary">
@@ -23,7 +23,7 @@
 <meta name="twitter:description" content="概述  12345SSDB 是一个 C++ 开发的 NoSQL 数据库, 支持Key-value/Key-hashmap/zset(sorted set)等数据结构，十分适合存储数亿条级别的列表、排序表等集合数据，是redis的替代与增强方案。SSDB使用Google公司开源的LevelDB引擎作为底层的存储引擎。SSDB 采用 New BSD License 许可协议, 一个非常宽松灵活的协议">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/wuyanteng/wuyanteng.github.io/master/images/ssdb_redis.png">
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="Gary Wu" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -49,12 +49,14 @@
 <div class="overlay" style="background: #4d4d4d"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
-		<a href="/blog/" class="profilepic">
-			<img src="https://raw.githubusercontent.com/discant520/garywu/master/images/touxiang.jpg" class="js-avatar">
+		<a href="/blog" class="profilepic">
+			<img src="http://pics0.baidu.com/feed/bd315c6034a85edf5f5b8bff8cf9cf27df54754d.png?token=c9857ef7ee73e1ffc14d3e3c4e9e3be3&amp;s=1E5207CAC64234F44988148A0300B090" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/blog/">John Doe</a></h1>
+		  <h1 class="header-author"><a href="/blog">Gary Wu</a></h1>
 		</hgroup>
+		
+		<p class="header-subtitle">运维架构师 - 从入门到放弃</p>
 		
 
 		<nav class="header-menu">
@@ -108,11 +110,13 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="https://raw.githubusercontent.com/discant520/garywu/master/images/touxiang.jpg" class="js-avatar">
+				<img src="http://pics0.baidu.com/feed/bd315c6034a85edf5f5b8bff8cf9cf27df54754d.png?token=c9857ef7ee73e1ffc14d3e3c4e9e3be3&amp;s=1E5207CAC64234F44988148A0300B090" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">John Doe</h1>
+			  <h1 class="header-author js-header-author">Gary Wu</h1>
 			</hgroup>
+			
+			<p class="header-subtitle"><i class="icon icon-quo-left"></i>运维架构师 - 从入门到放弃<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -190,7 +194,7 @@
         <blockquote>
 <p>概述</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SSDB 是一个 C++ 开发的 NoSQL 数据库, 支持Key-value/Key-hashmap/zset(sorted set)等数据结构，十分适合存储数亿条级别的列表、排序表等集合数据，是redis的替代与增强方案。</span><br><span class="line"></span><br><span class="line">SSDB使用Google公司开源的LevelDB引擎作为底层的存储引擎。SSDB 采用 New BSD License 许可协议, 一个非常宽松灵活的协议，支持主从复制, 负载均衡。</span><br><span class="line"></span><br><span class="line">SSDB地址：http://ssdb.io/zh_cn/</span><br></pre></td></tr></table></figure>
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SSDB 是一个 C++ 开发的 NoSQL 数据库, 支持<span class="built_in">Key</span>-value/<span class="built_in">Key</span>-hashmap/<span class="built_in">zset</span>(sorted set)等数据结构，十分适合存储数亿条级别的列表、排序表等集合数据，是redis的替代与增强方案。</span><br><span class="line"></span><br><span class="line">SSDB使用Google公司开源的LevelDB引擎作为底层的存储引擎。SSDB 采用 <span class="keyword">New</span> BSD License 许可协议, 一个非常宽松灵活的协议，支持主从复制, 负载均衡。</span><br><span class="line"></span><br><span class="line">SSDB地址：http:<span class="comment">//ssdb.io/zh_cn/</span></span><br></pre></td></tr></table></figure>
 
 <a id="more"></a>
 
@@ -215,45 +219,45 @@
 <blockquote>
 <p>SSDB数据类型</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">KV(Key-value)数据类型KV 数据类型主要用于存储离散的、之间没有关系或者关系被忽略 的大数据, 如图片文件, 大段文本等. 一般 KV 类型都可以被 Hashmap 替代, 但KV会比Hashmap性能高一些.</span><br><span class="line"></span><br><span class="line">Hashmap 如果数据需要经常被遍历, 则应该使用 Hashmap 来替代 KV。对于只添加, 不更新和删除的有</span><br><span class="line">排序需求的数据集合, 可以用 Hashmap 来存储而不需要使用 Zset, 因为 Hashmap 会比Zset 性能高一些.</span><br><span class="line"></span><br><span class="line">Zset 是一种根据数据项的权重(score, 整数值)进行排序的集合, Zset 集合中的数据项是唯一,不可重复的. Zset 可以理解为关系数据中只有 ID 主键和整数 score 字段⼀一共两个字段的表.因为 Zset 的排序特性, 所以可用来存储排序列表, 如商品按价格的排序列表, 商品按上架日期的排序列表等等. 每一个排序列表对应一个 Zset 集合.</span><br><span class="line">Zset 不能用来存储大体积的数据, 因为它是一种&quot;索引&quot;数据类型, 被索引的东西(集合中的数据项)只能是 200 字节以内的字节数组(包括字符串).</span><br></pre></td></tr></table></figure>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">KV<span class="params">(Key-value)</span>数据类型KV 数据类型主要用于存储离散的、之间没有关系或者关系被忽略 的大数据, 如图片文件, 大段文本等. 一般 KV 类型都可以被 Hashmap 替代, 但KV会比Hashmap性能高一些.</span><br><span class="line"></span><br><span class="line">Hashmap 如果数据需要经常被遍历, 则应该使用 Hashmap 来替代 KV。对于只添加, 不更新和删除的有</span><br><span class="line">排序需求的数据集合, 可以用 Hashmap 来存储而不需要使用 Z<span class="keyword">set</span>, 因为 Hashmap 会比Z<span class="keyword">set</span> 性能高一些.</span><br><span class="line"></span><br><span class="line">Z<span class="keyword">set</span> 是一种根据数据项的权重<span class="params">(score, 整数值)</span>进行排序的集合, Z<span class="keyword">set</span> 集合中的数据项是唯一,不可重复的. Z<span class="keyword">set</span> 可以理解为关系数据中只有 ID 主键和整数 score 字段⼀一共两个字段的表.因为 Z<span class="keyword">set</span> 的排序特性, 所以可用来存储排序列表, 如商品按价格的排序列表, 商品按上架日期的排序列表等等. 每一个排序列表对应一个 Z<span class="keyword">set</span> 集合.</span><br><span class="line">Z<span class="keyword">set</span> 不能用来存储大体积的数据, 因为它是一种<span class="string">"索引"</span>数据类型, 被索引的东西<span class="params">(集合中的数据项)</span>只能是 200 字节以内的字节数组<span class="params">(包括字符串)</span>.</span><br></pre></td></tr></table></figure>
 
 <h4 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h4><blockquote>
 <p>编译安装</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">yum groupinstall &quot;Development tools&quot; -y</span><br><span class="line">wget --no-check-certificate https://github.com/ideawu/ssdb/archive/master.zip</span><br><span class="line">unzip master</span><br><span class="line">cd ssdb-master</span><br><span class="line">make</span><br><span class="line">make install PREFIX=/usr/local/ssdb</span><br></pre></td></tr></table></figure>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">yum groupinstall <span class="string">"Development tools"</span> -y</span><br><span class="line">wget --no-check-certificate https://github.com/ideawu/ssdb/archive/<span class="literal">master</span>.zip</span><br><span class="line">unzip <span class="literal">master</span></span><br><span class="line">cd ssdb-<span class="literal">master</span></span><br><span class="line">make</span><br><span class="line">make install <span class="attr">PREFIX=</span>/usr/local/ssdb</span><br></pre></td></tr></table></figure>
 
 <p>故障解决：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">如果出现如下错误:</span><br><span class="line">g++ ...deps/snappy-1.1.0/.libs/libsnappy.a: No such file or directory</span><br><span class="line">make[1]: *** [all] Error 1</span><br><span class="line"></span><br><span class="line">或者</span><br><span class="line"></span><br><span class="line">g++ ...deps/jemalloc-3.3.1/lib/libjemalloc.a: No such file or directory</span><br><span class="line">make[1]: *** [all] Error 1</span><br><span class="line"></span><br><span class="line">这是因为 Snappy 或者 Jemalloc 没有编译成功, 这一般是因为你的系统时钟有问题。</span><br><span class="line"></span><br><span class="line">解决方案:</span><br><span class="line">cd deps/snappy-1.1.0</span><br><span class="line">autoreconf --force --install</span><br><span class="line">./configure</span><br><span class="line">make</span><br><span class="line"></span><br><span class="line">或者</span><br><span class="line"></span><br><span class="line">cd deps/jemalloc-3.3.1</span><br><span class="line">autoreconf --force --install</span><br><span class="line">./configure</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">如果出现如下错误:</span><br><span class="line">g++ ...deps/snappy-<span class="number">1.1</span>.<span class="number">0</span>/.libs/libsnappy.<span class="variable">a:</span> No such <span class="keyword">file</span> <span class="built_in">or</span> directory</span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: *** [<span class="keyword">all</span>] Error <span class="number">1</span></span><br><span class="line"></span><br><span class="line">或者</span><br><span class="line"></span><br><span class="line">g++ ...deps/jemalloc-<span class="number">3.3</span>.<span class="number">1</span>/lib/libjemalloc.<span class="variable">a:</span> No such <span class="keyword">file</span> <span class="built_in">or</span> directory</span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: *** [<span class="keyword">all</span>] Error <span class="number">1</span></span><br><span class="line"></span><br><span class="line">这是因为 Snappy 或者 Jemalloc 没有编译成功, 这一般是因为你的系统时钟有问题。</span><br><span class="line"></span><br><span class="line">解决方案:</span><br><span class="line"><span class="keyword">cd</span> deps/snappy-<span class="number">1.1</span>.<span class="number">0</span></span><br><span class="line">autoreconf --force --install</span><br><span class="line">./configure</span><br><span class="line"><span class="keyword">make</span></span><br><span class="line"></span><br><span class="line">或者</span><br><span class="line"></span><br><span class="line"><span class="keyword">cd</span> deps/jemalloc-<span class="number">3.3</span>.<span class="number">1</span></span><br><span class="line">autoreconf --force --install</span><br><span class="line">./configure</span><br><span class="line"><span class="keyword">make</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="启动和停止"><a href="#启动和停止" class="headerlink" title="启动和停止"></a>启动和停止</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 启动主库, 此命令会阻塞住命令行</span><br><span class="line">./ssdb-server ssdb.conf</span><br><span class="line"></span><br><span class="line"># 或者启动为后台进程(不阻塞命令行)</span><br><span class="line">./ssdb-server -d ssdb.conf</span><br><span class="line"></span><br><span class="line"># 停止 ssdb-server</span><br><span class="line">./ssdb-server ssdb.conf -s stop</span><br><span class="line"></span><br><span class="line"># 重启</span><br><span class="line">./ssdb-server ssdb.conf -s restart</span><br></pre></td></tr></table></figure>
+<h4 id="启动和停止"><a href="#启动和停止" class="headerlink" title="启动和停止"></a>启动和停止</h4><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># 启动主库, 此命令会阻塞住命令行</span></span><br><span class="line">./ssdb-<span class="keyword">server</span> ssdb.conf</span><br><span class="line"></span><br><span class="line"><span class="meta"># 或者启动为后台进程(不阻塞命令行)</span></span><br><span class="line">./ssdb-<span class="keyword">server</span> -d ssdb.conf</span><br><span class="line"></span><br><span class="line"><span class="meta"># 停止 ssdb-server</span></span><br><span class="line">./ssdb-<span class="keyword">server</span> ssdb.conf -s stop</span><br><span class="line"></span><br><span class="line"><span class="meta"># 重启</span></span><br><span class="line">./ssdb-<span class="keyword">server</span> ssdb.conf -s restart</span><br></pre></td></tr></table></figure>
 
-<h4 id="SSDB启动脚本（随操作系统自启动）"><a href="#SSDB启动脚本（随操作系统自启动）" class="headerlink" title="SSDB启动脚本（随操作系统自启动）"></a>SSDB启动脚本（随操作系统自启动）</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">假设你已经安装 SSDB 在默认的 /usr/local/ssdb 目录, 把 tools/ssdb.sh 脚本放到 /etc/init.d 目录下.</span><br><span class="line"></span><br><span class="line">注意: 对于 CentOS 用户, 请将 ssdb.sh 重命名为 ssdb.</span><br></pre></td></tr></table></figure>
+<h4 id="SSDB启动脚本（随操作系统自启动）"><a href="#SSDB启动脚本（随操作系统自启动）" class="headerlink" title="SSDB启动脚本（随操作系统自启动）"></a>SSDB启动脚本（随操作系统自启动）</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">假设你已经安装 SSDB 在默认的 /usr/local/ssdb 目录, 把 tools/ssdb<span class="selector-class">.sh</span> 脚本放到 /etc/init<span class="selector-class">.d</span> 目录下.</span><br><span class="line"></span><br><span class="line">注意: 对于 CentOS 用户, 请将 ssdb<span class="selector-class">.sh</span> 重命名为 ssdb.</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">将 /data/ssdb_data/test/ssdb.conf 修改为你的 SSDB 配置文件的路径. 如果你有多个 SSDB 实例, 那么把它们写在一行, 用空格来分隔, 例如:</span><br><span class="line"></span><br><span class="line"># each config file for one instance</span><br><span class="line">configs=/usr/local/ssdb/ssdb.conf /usr/local/ssdb1/ssdb.conf</span><br></pre></td></tr></table></figure>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">将 <span class="regexp">/data/</span>ssdb_data<span class="regexp">/test/</span>ssdb.conf 修改为你的 SSDB 配置文件的路径. 如果你有多个 SSDB 实例, 那么把它们写在一行, 用空格来分隔, 例如:</span><br><span class="line"></span><br><span class="line"># <span class="keyword">each</span> config <span class="keyword">file</span> <span class="keyword">for</span> one instance</span><br><span class="line">configs=<span class="regexp">/usr/</span>local<span class="regexp">/ssdb/</span>ssdb.conf <span class="regexp">/usr/</span>local<span class="regexp">/ssdb1/</span>ssdb.conf</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chkconfig --add ssdb</span><br><span class="line">chkconfig ssdb on</span><br></pre></td></tr></table></figure>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chkconfig <span class="comment">--add ssdb</span></span><br><span class="line">chkconfig ssdb <span class="keyword">on</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="检查ssdb版本"><a href="#检查ssdb版本" class="headerlink" title="检查ssdb版本"></a>检查ssdb版本</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@gserver1 ssdb]# /usr/local/ssdb/ssdb-server -v</span><br><span class="line">ssdb-server 1.9.5</span><br><span class="line">Copyright (c) 2012-2015 ssdb.io</span><br></pre></td></tr></table></figure>
+<h4 id="检查ssdb版本"><a href="#检查ssdb版本" class="headerlink" title="检查ssdb版本"></a>检查ssdb版本</h4><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@gserver1 ssdb]# /usr/local/ssdb/ssdb-server -v</span><br><span class="line">ssdb-server <span class="number">1.9</span><span class="number">.5</span></span><br><span class="line">Copyright (c) <span class="number">2012</span><span class="number">-2015</span> ssdb.io</span><br></pre></td></tr></table></figure>
 
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">注：SSDB 的配置文件使用一个 TAB 来表示一级缩进, 不要使用空格来缩进, 无论你用1个, 2个, 3个, 4个, 5个, 6个, 7个, 8个或者无数个空格都不行!</span><br></pre></td></tr></table></figure>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">注：SSDB 的配置文件使用一个 TAB 来表示一级缩进, 不要使用空格来缩进, 无论你用<span class="number">1</span>个, <span class="number">2</span>个, <span class="number">3</span>个, <span class="number">4</span>个, <span class="number">5</span>个, <span class="number">6</span>个, <span class="number">7</span>个, <span class="number">8</span>个或者无数个空格都不行!</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">重要：一定要记得修改你的 Linux 内核参数, 关于 max open files(最大文件描述符数)的内容, 请参考 [1]. 否则, 你会在 log.txt 看到 Too many open files 类似的错误, 或者在客户端看到 Connection reset by peer 错误.</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">重要：一定要记得修改你的 Linux 内核参数, 关于 max open files(最大文件描述符数)的内容, 请参考 [1]. 否则, 你会在 log.txt 看到 Too many open files 类似的错误, 或者在客户端看到<span class="built_in"> Connection </span>reset by<span class="built_in"> peer </span>错误.</span><br></pre></td></tr></table></figure>
 
-<h4 id="CentOS7解决“打开文件数max-open-files”配置"><a href="#CentOS7解决“打开文件数max-open-files”配置" class="headerlink" title="CentOS7解决“打开文件数max open files”配置"></a>CentOS7解决“打开文件数max open files”配置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">在ssdb.conf中最后加入如下代码</span><br><span class="line"></span><br><span class="line">leveldb:</span><br><span class="line">	    max_open_files: 50000</span><br><span class="line"></span><br><span class="line">配置完成需要重启系统</span><br><span class="line">参考：https://www.oldcai.com/archives/1123	</span><br><span class="line">测试系统打开文件数(工具:c1000k): https://github.com/ideawu/c1000k</span><br></pre></td></tr></table></figure>
+<h4 id="CentOS7解决“打开文件数max-open-files”配置"><a href="#CentOS7解决“打开文件数max-open-files”配置" class="headerlink" title="CentOS7解决“打开文件数max open files”配置"></a>CentOS7解决“打开文件数max open files”配置</h4><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">在ssdb.<span class="keyword">conf</span>中最后加入如下代码</span><br><span class="line"></span><br><span class="line">leveld<span class="variable">b:</span></span><br><span class="line">	    max_open_file<span class="variable">s:</span> <span class="number">50000</span></span><br><span class="line"></span><br><span class="line">配置完成需要重启系统</span><br><span class="line">参考：http<span class="variable">s:</span>//www.oldcai.<span class="keyword">com</span>/archives/<span class="number">1123</span>	</span><br><span class="line">测试系统打开文件数(工具:c1000k): http<span class="variable">s:</span>//github.<span class="keyword">com</span>/ideawu/c1000k</span><br></pre></td></tr></table></figure>
 
-<h4 id="监听网络端口"><a href="#监听网络端口" class="headerlink" title="监听网络端口"></a>监听网络端口</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">work_dir = ./var</span><br><span class="line">pidfile = ./var/ssdb.pid</span><br><span class="line"></span><br><span class="line">server:</span><br><span class="line">	ip: 127.0.0.1   #本地回环网络。无法从其它机器上连接此 SSDB 服务器</span><br><span class="line">	port: 32121</span><br><span class="line"></span><br><span class="line">注：如果你希望从其它机器上连接 SSDB 服务器, 必须把 127.0.0.1 改为 0.0.0.0.</span><br><span class="line">    同时, 利用配置文件的 deny, allow 指令限制可信的来源 IP 访问.</span><br><span class="line"></span><br><span class="line">警告：如果不做网络限制便监听 0.0.0.0 IP 可能导致被任意机器访问到你的数据, 这很可能是一个安全问题! 你可以结合操作系统的 iptables 来限制网络访问.</span><br></pre></td></tr></table></figure>
+<h4 id="监听网络端口"><a href="#监听网络端口" class="headerlink" title="监听网络端口"></a>监听网络端口</h4><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">work_dir = ./var</span><br><span class="line">pidfile = ./var/ssdb.pid</span><br><span class="line"></span><br><span class="line">server:</span><br><span class="line">	ip: 127.0.0.1   #本地回环网络。无法从其它机器上连接此 SSDB 服务器</span><br><span class="line">	port: 32121</span><br><span class="line"></span><br><span class="line">注：如果你希望从其它机器上连接 SSDB 服务器, 必须把 127.0.0.1 改为 0.0.0.0.</span><br><span class="line">    同时, 利用配置文件的 deny, allow 指令限制可信的来源<span class="built_in"> IP </span>访问.</span><br><span class="line"></span><br><span class="line">警告：如果不做网络限制便监听 0.0.0.0<span class="built_in"> IP </span>可能导致被任意机器访问到你的数据, 这很可能是一个安全问题! 你可以结合操作系统的 iptables 来限制网络访问.</span><br></pre></td></tr></table></figure>
 
-<h4 id="只读模式"><a href="#只读模式" class="headerlink" title="只读模式"></a>只读模式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">server:</span><br><span class="line">	readonly: yes|no</span><br></pre></td></tr></table></figure>
+<h4 id="只读模式"><a href="#只读模式" class="headerlink" title="只读模式"></a>只读模式</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">	<span class="attr">readonly:</span> <span class="literal">yes</span><span class="string">|no</span></span><br></pre></td></tr></table></figure>
 
 <p>SSDB 可以工作在只读模式下, 在只读模式下, 所有的写操作命令都会被服务端拒绝:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ssdb 127.0.0.1:8888&gt; set a 2</span><br><span class="line">client_error: Forbidden Command: set</span><br><span class="line">(0.000 sec)</span><br><span class="line"></span><br><span class="line">默认配置文件不设置此选项, 那表示可读可写.</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">ssdb</span> 127<span class="selector-class">.0</span><span class="selector-class">.0</span><span class="selector-class">.1</span><span class="selector-pseudo">:8888</span>&gt; <span class="selector-tag">set</span> <span class="selector-tag">a</span> 2</span><br><span class="line"><span class="selector-tag">client_error</span>: <span class="selector-tag">Forbidden</span> <span class="selector-tag">Command</span>: <span class="selector-tag">set</span></span><br><span class="line">(0<span class="selector-class">.000</span> <span class="selector-tag">sec</span>)</span><br><span class="line"></span><br><span class="line">默认配置文件不设置此选项, 那表示可读可写.</span><br></pre></td></tr></table></figure>
 
-<h4 id="日志配置与分析"><a href="#日志配置与分析" class="headerlink" title="日志配置与分析"></a>日志配置与分析</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">logger:</span><br><span class="line">	level: debug     #支持的日志级别有: debug, info, warn, error, fatal</span><br><span class="line">	output: log.txt  #可直接写相对路径或者绝对路径, 如果相对路径, 则是相对配置文件所在的目录.</span><br><span class="line">	rotate:</span><br><span class="line">	       size: 1000000000   #设置日志拆分时的大小, 单位为字节数,默认100M大小进行切分</span><br><span class="line"></span><br><span class="line">注：logger.rorate.size 日志循环和清理; </span><br><span class="line">(1)日志切分后的文件名格式如：log.txt.20150723-230422, 切分后的日志文件不会自动被清理, 你需要自己写     crontab 脚本来清理.</span><br><span class="line"></span><br><span class="line">如果你想输出日志到终端屏幕, 编辑 ssdb.conf, 将</span><br><span class="line"></span><br><span class="line">logger:</span><br><span class="line">	output: log.txt</span><br><span class="line">修改为</span><br><span class="line"></span><br><span class="line">logger:</span><br><span class="line">	output: stdout</span><br></pre></td></tr></table></figure>
+<h4 id="日志配置与分析"><a href="#日志配置与分析" class="headerlink" title="日志配置与分析"></a>日志配置与分析</h4><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">logger:</span></span><br><span class="line"><span class="symbol">	level:</span> debug     <span class="meta">#支持的日志级别有: debug, info, warn, error, fatal</span></span><br><span class="line"><span class="symbol">	output:</span> log.txt  <span class="meta">#可直接写相对路径或者绝对路径, 如果相对路径, 则是相对配置文件所在的目录.</span></span><br><span class="line"><span class="symbol">	rotate:</span></span><br><span class="line"><span class="symbol">	       size:</span> <span class="number">1000000000</span>   <span class="meta">#设置日志拆分时的大小, 单位为字节数,默认100M大小进行切分</span></span><br><span class="line"></span><br><span class="line">注：logger.rorate.size 日志循环和清理; </span><br><span class="line">(<span class="number">1</span>)日志切分后的文件名格式如：log.txt<span class="number">.20150723</span><span class="number">-230422</span>, 切分后的日志文件不会自动被清理, 你需要自己写     crontab 脚本来清理.</span><br><span class="line"></span><br><span class="line">如果你想输出日志到终端屏幕, 编辑 ssdb.conf, 将</span><br><span class="line"></span><br><span class="line"><span class="symbol">logger:</span></span><br><span class="line"><span class="symbol">	output:</span> log.txt</span><br><span class="line">修改为</span><br><span class="line"></span><br><span class="line"><span class="symbol">logger:</span></span><br><span class="line"><span class="symbol">	output:</span> stdout</span><br></pre></td></tr></table></figure>
 
-<h4 id="日志解读"><a href="#日志解读" class="headerlink" title="日志解读"></a>日志解读</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">一般, 建议你将 logger.level 设置为 debug 级别.</span><br></pre></td></tr></table></figure>
+<h4 id="日志解读"><a href="#日志解读" class="headerlink" title="日志解读"></a>日志解读</h4><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">一般, 建议你将 logger.level 设置为 <span class="builtin-name">debug</span> 级别.</span><br></pre></td></tr></table></figure>
 
 <p><strong>请求处理</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2014-06-18 11:01:40.335 [DEBUG] serv.cpp(395): w:0.393,p:5.356, req: set a 1, resp: ok 1</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2014<span class="selector-tag">-06-18</span> 11<span class="selector-pseudo">:01</span><span class="selector-pseudo">:40.335</span> <span class="selector-attr">[DEBUG]</span> <span class="selector-tag">serv</span><span class="selector-class">.cpp</span>(395): <span class="selector-tag">w</span><span class="selector-pseudo">:0.393</span>,<span class="selector-tag">p</span><span class="selector-pseudo">:5.356</span>, <span class="selector-tag">req</span>: <span class="selector-tag">set</span> <span class="selector-tag">a</span> 1, <span class="selector-tag">resp</span>: <span class="selector-tag">ok</span> 1</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><code>w:0.393</code> 请求的排队时间, 毫秒</li>
@@ -262,108 +266,108 @@
 <li><code>resp:...</code> 响应内容</li>
 </ul>
 <p><strong>找出慢请求 , 命令是:</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tail -f log.txt | grep resp | grep &apos;[wp]:[1-9][0-9]\&#123;0,\&#125;\.&apos;</span><br><span class="line"># 或者</span><br><span class="line">cat log.txt | grep resp | grep &apos;[wp]:[1-9][0-9]\&#123;0,\&#125;\.&apos;</span><br></pre></td></tr></table></figure>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tail -f log.txt | grep resp | grep '[<span class="string">wp</span>]:[<span class="string">1-9</span>][<span class="symbol">0-9</span>]\&#123;0,\&#125;\.'</span><br><span class="line"><span class="section"># 或者</span></span><br><span class="line">cat log.txt | grep resp | grep '[<span class="string">wp</span>]:[<span class="string">1-9</span>][<span class="symbol">0-9</span>]\&#123;0,\&#125;\.'</span><br></pre></td></tr></table></figure>
 
 <p>这些命令用于找出排队时间, 或者处理时间大于等于 1 毫秒的请求.</p>
 <p><strong>找出大于 10 毫秒的请求:</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat log.txt | grep resp | grep &apos;[wp]:[1-9][0-9]\&#123;1,\&#125;\.&apos;</span><br></pre></td></tr></table></figure>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat log.txt | grep resp | grep '[<span class="string">wp</span>]:[<span class="string">1-9</span>][<span class="symbol">0-9</span>]\&#123;1,\&#125;\.'</span><br></pre></td></tr></table></figure>
 
 <p><strong>找出大于 100 毫秒的请求:</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat log.txt | grep resp | grep &apos;[wp]:[1-9][0-9]\&#123;2,\&#125;\.&apos;</span><br></pre></td></tr></table></figure>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat log.txt | grep resp | grep '[<span class="string">wp</span>]:[<span class="string">1-9</span>][<span class="symbol">0-9</span>]\&#123;2,\&#125;\.'</span><br></pre></td></tr></table></figure>
 
 <p><strong>SSDB 在工作中</strong></p>
 <p>ssdb-server 会每隔 5 分钟输出这样的一条 log</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2014-06-18 11:18:03.600 [INFO ] ssdb-server.cpp(215): ssdb working, links: 0</span><br><span class="line">2014-06-18 11:23:03.631 [INFO ] ssdb-server.cpp(215): ssdb working, links: 0</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2014<span class="selector-tag">-06-18</span> 11<span class="selector-pseudo">:18</span><span class="selector-pseudo">:03.600</span> <span class="selector-attr">[INFO ]</span> <span class="selector-tag">ssdb-server</span><span class="selector-class">.cpp</span>(215): <span class="selector-tag">ssdb</span> <span class="selector-tag">working</span>, <span class="selector-tag">links</span>: 0</span><br><span class="line">2014<span class="selector-tag">-06-18</span> 11<span class="selector-pseudo">:23</span><span class="selector-pseudo">:03.631</span> <span class="selector-attr">[INFO ]</span> <span class="selector-tag">ssdb-server</span><span class="selector-class">.cpp</span>(215): <span class="selector-tag">ssdb</span> <span class="selector-tag">working</span>, <span class="selector-tag">links</span>: 0</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><code>links: 0</code> 当前的连接数</li>
 </ul>
-<h4 id="LevelDB-配置"><a href="#LevelDB-配置" class="headerlink" title="LevelDB 配置"></a>LevelDB 配置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">leveldb.cache_size 内存缓存大小, 单位 MB</span><br><span class="line">一般地, 这个数字越大, 性能越好, 你可设置为物理内存的一半. 如果你的机器内存较小, 那就把它改小, 最小值是 16.</span><br><span class="line"></span><br><span class="line">leveldb.write_buffer_size 写缓冲区大小, 单位 MB</span><br><span class="line">如果你的机器内存小, 那就把它改小, 否则改大. 它应该在这个范围内: [4, 128];</span><br><span class="line"></span><br><span class="line">leveldb.compaction_speed</span><br><span class="line">一般情况下, 不用关心. 如果你的硬盘性能非常差, 同时, 你的数据几乎不变动, 也没有什么新数据写入, 可以把它改小(最好大于 50).</span><br><span class="line"></span><br><span class="line">leveldb.compression 压缩硬盘上的数据</span><br><span class="line">最好设置为 yes! 如果是 yes, 一般你能存储 10 倍硬盘空间的数据, 而且性能会更好.</span><br></pre></td></tr></table></figure>
+<h4 id="LevelDB-配置"><a href="#LevelDB-配置" class="headerlink" title="LevelDB 配置"></a>LevelDB 配置</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">leveldb</span><span class="selector-class">.cache_size</span> 内存缓存大小, 单位 <span class="selector-tag">MB</span></span><br><span class="line">一般地, 这个数字越大, 性能越好, 你可设置为物理内存的一半. 如果你的机器内存较小, 那就把它改小, 最小值是 16.</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">leveldb</span><span class="selector-class">.write_buffer_size</span> 写缓冲区大小, 单位 <span class="selector-tag">MB</span></span><br><span class="line">如果你的机器内存小, 那就把它改小, 否则改大. 它应该在这个范围内: <span class="selector-attr">[4, 128]</span>;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">leveldb</span><span class="selector-class">.compaction_speed</span></span><br><span class="line">一般情况下, 不用关心. 如果你的硬盘性能非常差, 同时, 你的数据几乎不变动, 也没有什么新数据写入, 可以把它改小(最好大于 50).</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">leveldb</span><span class="selector-class">.compression</span> 压缩硬盘上的数据</span><br><span class="line">最好设置为 <span class="selector-tag">yes</span>! 如果是 <span class="selector-tag">yes</span>, 一般你能存储 10 倍硬盘空间的数据, 而且性能会更好.</span><br></pre></td></tr></table></figure>
 
-<h4 id="内存占用"><a href="#内存占用" class="headerlink" title="内存占用"></a>内存占用</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">一个 ssdb-server 实例占用的内存瞬时(有可能, 而且即使达到, 也只是持续短时间)最高达到(MB):</span><br><span class="line"></span><br><span class="line">cache_size + write_buffer_size * 66 + 32</span><br><span class="line">这是对于压缩选项没有开启的情况. 如果 compression: yes, 计算公式是:</span><br><span class="line"></span><br><span class="line">cache_size + 10 * write_buffer_size * 66 + 32</span><br><span class="line">你可以调整配置参数, 限制 ssdb-server 的内存占用.</span><br><span class="line"></span><br><span class="line">对于一般负载的实例来说, 物理内存的持续占用是:</span><br><span class="line"></span><br><span class="line">cache_size + write_buffer_size * 4 + 32</span><br><span class="line">根据实际经验, 使用默认配置的实例, 会占用约 1GB 的内存. 这个经验你可以参考.</span><br></pre></td></tr></table></figure>
+<h4 id="内存占用"><a href="#内存占用" class="headerlink" title="内存占用"></a>内存占用</h4><figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">一个 ssdb-server 实例占用的内存瞬时(有可能, 而且即使达到, 也只是持续短时间)最高达到(MB):</span><br><span class="line"></span><br><span class="line">cache_size + write_buffer_size *<span class="number"> 66 </span>+ 32</span><br><span class="line">这是对于压缩选项没有开启的情况. 如果 compression: yes, 计算公式是:</span><br><span class="line"></span><br><span class="line">cache_size +<span class="number"> 10 </span>* write_buffer_size *<span class="number"> 66 </span>+ 32</span><br><span class="line">你可以调整配置参数, 限制 ssdb-server 的内存占用.</span><br><span class="line"></span><br><span class="line">对于一般负载的实例来说, 物理内存的持续占用是:</span><br><span class="line"></span><br><span class="line">cache_size + write_buffer_size *<span class="number"> 4 </span>+ 32</span><br><span class="line">根据实际经验, 使用默认配置的实例, 会占用约 1GB 的内存. 这个经验你可以参考.</span><br></pre></td></tr></table></figure>
 
 <p>设置内存上限</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">很抱歉, SSDB 无法设置内存占用上限. SSDB占用的内存大小, 和下列因素相关:</span><br><span class="line"></span><br><span class="line">cache_size 参数配置, 这是最主要的因素.</span><br><span class="line">客户端连接的数量, 一般来说, 每一个连接要占用 2MB 的内存, 但也和连接的使用繁忙度请求响应的大小等有关.</span><br><span class="line">文件缓存, 虽然是被 ssdb-server 进程占用, 但是可被操作系统回收的, 可能会占用数十 GB.</span><br><span class="line">SSDB 的繁忙程度, 服务越繁忙, SSDB 会倾向于使用更多的内存, 以提高响应速度.</span><br><span class="line">总体来说, cache_size 参数是你可以控制的, 后面的因素你无法控制. 例如, 在一个比较空闲的 SSDB 上, 如果物理内存是 16G, 而你设置 cache_size 是 8000(8G), 那么你通过 top 命令会看到 ssdb-server 进程占用 RES 内存可能在 12G 左右. 如果是一个比较繁忙的实例, RES 可能达到 15G.</span><br></pre></td></tr></table></figure>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">很抱歉, SSDB 无法设置内存占用上限. SSDB占用的内存大小, 和下列因素相关:</span><br><span class="line"></span><br><span class="line">cache_size 参数配置, 这是最主要的因素.</span><br><span class="line">客户端连接的数量, 一般来说, 每一个连接要占用 <span class="number">2</span>MB 的内存, 但也和连接的使用繁忙度请求响应的大小等有关.</span><br><span class="line">文件缓存, 虽然是被 ssdb-server 进程占用, 但是可被操作系统回收的, 可能会占用数十 GB.</span><br><span class="line">SSDB 的繁忙程度, 服务越繁忙, SSDB 会倾向于使用更多的内存, 以提高响应速度.</span><br><span class="line">总体来说, cache_size 参数是你可以控制的, 后面的因素你无法控制. 例如, 在一个比较空闲的 SSDB 上, 如果物理内存是 <span class="number">16</span>G, 而你设置 cache_size 是 <span class="number">8000</span>(<span class="number">8</span>G), 那么你通过 top 命令会看到 ssdb-server 进程占用 RES 内存可能在 <span class="number">12</span>G 左右. 如果是一个比较繁忙的实例, RES 可能达到 <span class="number">15</span>G.</span><br></pre></td></tr></table></figure>
 
-<h2 id="命令行工具ssdb-cli使用"><a href="#命令行工具ssdb-cli使用" class="headerlink" title="命令行工具ssdb-cli使用"></a>命令行工具ssdb-cli使用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">连接到SSDB服务器</span><br><span class="line">/usr/local/ssdb/ssdb-cli -h 127.0.0.1 -p 8888    本地连接</span><br><span class="line">/usr/local/ssdb/ssdb-cli -h 192.168.56.101 -p 32121 远程连接</span><br></pre></td></tr></table></figure>
+<h2 id="命令行工具ssdb-cli使用"><a href="#命令行工具ssdb-cli使用" class="headerlink" title="命令行工具ssdb-cli使用"></a>命令行工具ssdb-cli使用</h2><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">连接到SSDB服务器</span><br><span class="line">/usr/local/ssdb/ssdb-cli -h <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> -p <span class="number">8888</span>    本地连接</span><br><span class="line">/usr/local/ssdb/ssdb-cli -h <span class="number">192.168</span><span class="number">.56</span><span class="number">.101</span> -p <span class="number">32121</span> 远程连接</span><br></pre></td></tr></table></figure>
 
 <p>输入 ‘h’, 然后按<code>回车</code>查看帮助信息. 下面是操作的演示:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">ssdb 127.0.0.1:8888&gt; set k 1</span><br><span class="line">ok</span><br><span class="line">(0.000 sec)</span><br><span class="line">ssdb 127.0.0.1:8888&gt; get k</span><br><span class="line">1</span><br><span class="line">(0.000 sec)</span><br><span class="line">ssdb 127.0.0.1:8888&gt; del k</span><br><span class="line">ok</span><br><span class="line">(0.000 sec)</span><br><span class="line">ssdb 127.0.0.1:8888&gt; get k</span><br><span class="line">error: not_found</span><br><span class="line">(0.000 sec)</span><br><span class="line">ssdb 127.0.0.1:8888&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">ssdb</span> 127<span class="selector-class">.0</span><span class="selector-class">.0</span><span class="selector-class">.1</span><span class="selector-pseudo">:8888</span>&gt; <span class="selector-tag">set</span> <span class="selector-tag">k</span> 1</span><br><span class="line"><span class="selector-tag">ok</span></span><br><span class="line">(0<span class="selector-class">.000</span> <span class="selector-tag">sec</span>)</span><br><span class="line"><span class="selector-tag">ssdb</span> 127<span class="selector-class">.0</span><span class="selector-class">.0</span><span class="selector-class">.1</span><span class="selector-pseudo">:8888</span>&gt; <span class="selector-tag">get</span> <span class="selector-tag">k</span></span><br><span class="line">1</span><br><span class="line">(0<span class="selector-class">.000</span> <span class="selector-tag">sec</span>)</span><br><span class="line"><span class="selector-tag">ssdb</span> 127<span class="selector-class">.0</span><span class="selector-class">.0</span><span class="selector-class">.1</span><span class="selector-pseudo">:8888</span>&gt; <span class="selector-tag">del</span> <span class="selector-tag">k</span></span><br><span class="line"><span class="selector-tag">ok</span></span><br><span class="line">(0<span class="selector-class">.000</span> <span class="selector-tag">sec</span>)</span><br><span class="line"><span class="selector-tag">ssdb</span> 127<span class="selector-class">.0</span><span class="selector-class">.0</span><span class="selector-class">.1</span><span class="selector-pseudo">:8888</span>&gt; <span class="selector-tag">get</span> <span class="selector-tag">k</span></span><br><span class="line"><span class="selector-tag">error</span>: <span class="selector-tag">not_found</span></span><br><span class="line">(0<span class="selector-class">.000</span> <span class="selector-tag">sec</span>)</span><br><span class="line"><span class="selector-tag">ssdb</span> 127<span class="selector-class">.0</span><span class="selector-class">.0</span><span class="selector-class">.1</span><span class="selector-pseudo">:8888</span>&gt;</span><br></pre></td></tr></table></figure>
 
 <h4 id="SSDB命令列表"><a href="#SSDB命令列表" class="headerlink" title="SSDB命令列表"></a>SSDB命令列表</h4><p>参考：<a href="http://ssdb.io/docs/zh_cn/commands/index.html" target="_blank" rel="noopener">立即转到-SSDB命令</a></p>
 <h2 id="同步和复制的配置与监控"><a href="#同步和复制的配置与监控" class="headerlink" title="同步和复制的配置与监控"></a>同步和复制的配置与监控</h2><blockquote>
 <p>一主多从</p>
 </blockquote>
 <p>server1 【IP:192.168.56.101】</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">server:</span><br><span class="line">        ip: 0.0.0.0</span><br><span class="line">        port: 32121</span><br><span class="line">        deny: all</span><br><span class="line">        allow: 192.168</span><br><span class="line"></span><br><span class="line">replication:</span><br><span class="line">        binlog: yes</span><br><span class="line">        sync_speed: -1</span><br><span class="line">        slaveof:</span><br><span class="line">                id: svc_1</span><br><span class="line">                type: mirror</span><br><span class="line">                host: 192.168.56.101</span><br><span class="line">                port: 32121</span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">        ip:</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span></span><br><span class="line"><span class="attr">        port:</span> <span class="number">32121</span></span><br><span class="line"><span class="attr">        deny:</span> <span class="string">all</span></span><br><span class="line"><span class="attr">        allow:</span> <span class="number">192.168</span></span><br><span class="line"></span><br><span class="line"><span class="attr">replication:</span></span><br><span class="line"><span class="attr">        binlog:</span> <span class="literal">yes</span></span><br><span class="line"><span class="attr">        sync_speed:</span> <span class="bullet">-1</span></span><br><span class="line"><span class="attr">        slaveof:</span></span><br><span class="line"><span class="attr">                id:</span> <span class="string">svc_1</span></span><br><span class="line"><span class="attr">                type:</span> <span class="string">mirror</span></span><br><span class="line"><span class="attr">                host:</span> <span class="number">192.168</span><span class="number">.56</span><span class="number">.101</span></span><br><span class="line"><span class="attr">                port:</span> <span class="number">32121</span></span><br></pre></td></tr></table></figure>
 
 <p>server2</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">replication:</span><br><span class="line">        binlog: yes</span><br><span class="line">        sync_speed: -1</span><br><span class="line">        slaveof:      </span><br><span class="line">                id: svc_2       </span><br><span class="line">                type: sync</span><br><span class="line">                host: 192.168.56.101</span><br><span class="line">                port: 32121</span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">replication:</span></span><br><span class="line"><span class="attr">        binlog:</span> <span class="literal">yes</span></span><br><span class="line"><span class="attr">        sync_speed:</span> <span class="bullet">-1</span></span><br><span class="line"><span class="attr">        slaveof:</span>      </span><br><span class="line"><span class="attr">                id:</span> <span class="string">svc_2</span>       </span><br><span class="line"><span class="attr">                type:</span> <span class="string">sync</span></span><br><span class="line"><span class="attr">                host:</span> <span class="number">192.168</span><span class="number">.56</span><span class="number">.101</span></span><br><span class="line"><span class="attr">                port:</span> <span class="number">32121</span></span><br></pre></td></tr></table></figure>
 
 <p>server3</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">replication:</span><br><span class="line">        binlog: yes</span><br><span class="line">        sync_speed: -1</span><br><span class="line">        slaveof:      </span><br><span class="line">                id: svc_3      </span><br><span class="line">                type: sync</span><br><span class="line">                host: 192.168.56.101</span><br><span class="line">                port: 32121</span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">replication:</span></span><br><span class="line"><span class="attr">        binlog:</span> <span class="literal">yes</span></span><br><span class="line"><span class="attr">        sync_speed:</span> <span class="bullet">-1</span></span><br><span class="line"><span class="attr">        slaveof:</span>      </span><br><span class="line"><span class="attr">                id:</span> <span class="string">svc_3</span>      </span><br><span class="line"><span class="attr">                type:</span> <span class="string">sync</span></span><br><span class="line"><span class="attr">                host:</span> <span class="number">192.168</span><span class="number">.56</span><span class="number">.101</span></span><br><span class="line"><span class="attr">                port:</span> <span class="number">32121</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>多主多从</p>
 </blockquote>
 <p>server1【IP:192.168.56.101】</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">server:</span><br><span class="line">        ip: 0.0.0.0</span><br><span class="line">        port: 32121</span><br><span class="line">        deny: all</span><br><span class="line">        allow: 192.168</span><br><span class="line"></span><br><span class="line">replication:</span><br><span class="line">        binlog: yes</span><br><span class="line">        sync_speed: -1</span><br><span class="line">        slaveof:</span><br><span class="line">                id: svc_1</span><br><span class="line">                type: mirror</span><br><span class="line">                host: 192.168.56.101</span><br><span class="line">                port: 32121</span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">        ip:</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span></span><br><span class="line"><span class="attr">        port:</span> <span class="number">32121</span></span><br><span class="line"><span class="attr">        deny:</span> <span class="string">all</span></span><br><span class="line"><span class="attr">        allow:</span> <span class="number">192.168</span></span><br><span class="line"></span><br><span class="line"><span class="attr">replication:</span></span><br><span class="line"><span class="attr">        binlog:</span> <span class="literal">yes</span></span><br><span class="line"><span class="attr">        sync_speed:</span> <span class="bullet">-1</span></span><br><span class="line"><span class="attr">        slaveof:</span></span><br><span class="line"><span class="attr">                id:</span> <span class="string">svc_1</span></span><br><span class="line"><span class="attr">                type:</span> <span class="string">mirror</span></span><br><span class="line"><span class="attr">                host:</span> <span class="number">192.168</span><span class="number">.56</span><span class="number">.101</span></span><br><span class="line"><span class="attr">                port:</span> <span class="number">32121</span></span><br></pre></td></tr></table></figure>
 
 <p>server2</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">server:</span><br><span class="line">        ip: 0.0.0.0</span><br><span class="line">        port: 32121</span><br><span class="line">        deny: all</span><br><span class="line">        allow: 192.168</span><br><span class="line"></span><br><span class="line">replication:</span><br><span class="line">        binlog: yes</span><br><span class="line">        sync_speed: -1</span><br><span class="line">        slaveof:</span><br><span class="line">                id: svc_2</span><br><span class="line">                type: mirror</span><br><span class="line">                host: 192.168.56.101</span><br><span class="line">                port: 32121</span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">        ip:</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span></span><br><span class="line"><span class="attr">        port:</span> <span class="number">32121</span></span><br><span class="line"><span class="attr">        deny:</span> <span class="string">all</span></span><br><span class="line"><span class="attr">        allow:</span> <span class="number">192.168</span></span><br><span class="line"></span><br><span class="line"><span class="attr">replication:</span></span><br><span class="line"><span class="attr">        binlog:</span> <span class="literal">yes</span></span><br><span class="line"><span class="attr">        sync_speed:</span> <span class="bullet">-1</span></span><br><span class="line"><span class="attr">        slaveof:</span></span><br><span class="line"><span class="attr">                id:</span> <span class="string">svc_2</span></span><br><span class="line"><span class="attr">                type:</span> <span class="string">mirror</span></span><br><span class="line"><span class="attr">                host:</span> <span class="number">192.168</span><span class="number">.56</span><span class="number">.101</span></span><br><span class="line"><span class="attr">                port:</span> <span class="number">32121</span></span><br></pre></td></tr></table></figure>
 
 <p>server3</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">replication:</span><br><span class="line">        binlog: yes</span><br><span class="line">        sync_speed: -1</span><br><span class="line">        slaveof:      </span><br><span class="line">                id: svc_3      </span><br><span class="line">                type: sync</span><br><span class="line">                host: 192.168.56.101</span><br><span class="line">                port: 32121</span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">replication:</span></span><br><span class="line"><span class="attr">        binlog:</span> <span class="literal">yes</span></span><br><span class="line"><span class="attr">        sync_speed:</span> <span class="bullet">-1</span></span><br><span class="line"><span class="attr">        slaveof:</span>      </span><br><span class="line"><span class="attr">                id:</span> <span class="string">svc_3</span>      </span><br><span class="line"><span class="attr">                type:</span> <span class="string">sync</span></span><br><span class="line"><span class="attr">                host:</span> <span class="number">192.168</span><span class="number">.56</span><span class="number">.101</span></span><br><span class="line"><span class="attr">                port:</span> <span class="number">32121</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>单台服务器包含n个实例</p>
 </blockquote>
 <p>在一组一共包含 n 个实例的 SSDB 实例群中, 每一个实例必须 slaveof 其余的 n-1 个实例.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">replication:</span><br><span class="line">	slaveof:</span><br><span class="line">		id: svc_1</span><br><span class="line">		# sync|mirror, default is sync</span><br><span class="line">		type: mirror</span><br><span class="line">		# use ip for older version</span><br><span class="line">		#ip: 127.0.0.1</span><br><span class="line">		# use host since 1.9.2</span><br><span class="line">		host: localhost</span><br><span class="line">		port: 8888</span><br><span class="line">	slaveof:</span><br><span class="line">		id: svc_2</span><br><span class="line">		# sync|mirror, default is sync</span><br><span class="line">		type: mirror</span><br><span class="line">		# use ip for older version</span><br><span class="line">		#ip: 127.0.0.1</span><br><span class="line">		# use host since 1.9.2</span><br><span class="line">		host: localhost</span><br><span class="line">		port: 8889</span><br><span class="line">	# ... more slaveof</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">replication:</span><br><span class="line">	slaveof:</span><br><span class="line">		id: svc_1</span><br><span class="line">		# sync|mirror,<span class="built_in"> default </span>is sync</span><br><span class="line">		type: mirror</span><br><span class="line">		# use<span class="built_in"> ip </span><span class="keyword">for</span> older version</span><br><span class="line">		#ip: 127.0.0.1</span><br><span class="line">		# use host since 1.9.2</span><br><span class="line">		host: localhost</span><br><span class="line">		port: 8888</span><br><span class="line">	slaveof:</span><br><span class="line">		id: svc_2</span><br><span class="line">		# sync|mirror,<span class="built_in"> default </span>is sync</span><br><span class="line">		type: mirror</span><br><span class="line">		# use<span class="built_in"> ip </span><span class="keyword">for</span> older version</span><br><span class="line">		#ip: 127.0.0.1</span><br><span class="line">		# use host since 1.9.2</span><br><span class="line">		host: localhost</span><br><span class="line">		port: 8889</span><br><span class="line">	# <span class="built_in">..</span>. more slaveof</span><br></pre></td></tr></table></figure>
 
-<h4 id="监控同步状态"><a href="#监控同步状态" class="headerlink" title="监控同步状态"></a>监控同步状态</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">[root@gserver1 ssdb]# ./ssdb-cli -h 192.168.56.101 -p 32121</span><br><span class="line">ssdb 192.168.56.101:32121&gt; info</span><br><span class="line">version</span><br><span class="line">	1.9.5</span><br><span class="line">links</span><br><span class="line">	1</span><br><span class="line">total_calls</span><br><span class="line">	3</span><br><span class="line">dbsize</span><br><span class="line">	398</span><br><span class="line">binlogs</span><br><span class="line">	    capacity : 20000000    #capacity: binlog 队列的最大长度</span><br><span class="line">	    min_seq  : 1           #min_seq: 当前队列中的最小 binlog 序号</span><br><span class="line">	    max_seq  : 14          #max_seq: 当前队列中的最大 binlog 序号</span><br><span class="line">replication</span><br><span class="line">	client 192.168.56.103:33194   #slaveof|client host:port, 远端 master/slave 的 host:port.</span><br><span class="line">	    type     : sync           #type: 类型, sync|mirror.</span><br><span class="line">	    status   : SYNC           #status: 当前同步状态, DISCONNECTED|INIT|OUT_OF_SYNC|COPY|SYNC.</span><br><span class="line">	    last_seq : 14             #last_seq: 上一条发送或者收到的 binlog 的序号.</span><br><span class="line">replication</span><br><span class="line">	client 192.168.56.102:52412</span><br><span class="line">	    type     : mirror</span><br><span class="line">	    status   : SYNC</span><br><span class="line">	    last_seq : 14</span><br><span class="line">replication</span><br><span class="line">	client 192.168.56.101:59664</span><br><span class="line">	    type     : mirror</span><br><span class="line">	    status   : SYNC</span><br><span class="line">	    last_seq : 14</span><br><span class="line">replication</span><br><span class="line">	slaveof 192.168.56.101:32121</span><br><span class="line">	    id         : svc_1</span><br><span class="line">	    type       : mirror</span><br><span class="line">	    status     : SYNC</span><br><span class="line">	    last_seq   : 14</span><br><span class="line">	    copy_count : 4</span><br><span class="line">	    sync_count : 0</span><br></pre></td></tr></table></figure>
+<h4 id="监控同步状态"><a href="#监控同步状态" class="headerlink" title="监控同步状态"></a>监控同步状态</h4><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">[root@gserver1 ssdb]# ./ssdb-cli -h 192.168.56.101 -p 32121</span><br><span class="line">ssdb 192.168.56.101:32121&gt; info</span><br><span class="line">version</span><br><span class="line">	1.9.5</span><br><span class="line">links</span><br><span class="line">	1</span><br><span class="line">total_calls</span><br><span class="line">	3</span><br><span class="line">dbsize</span><br><span class="line">	398</span><br><span class="line">binlogs</span><br><span class="line">	    capacity : 20000000    #capacity: binlog 队列的最大长度</span><br><span class="line">	    min_seq  : 1           #min_seq: 当前队列中的最小 binlog 序号</span><br><span class="line">	    max_seq  : 14          #max_seq: 当前队列中的最大 binlog 序号</span><br><span class="line">replication</span><br><span class="line"><span class="built_in">	client </span>192.168.56.103:33194   #slaveof|client host:port, 远端 master/slave 的 host:port.</span><br><span class="line">	   <span class="built_in"> type </span>    : sync           #type: 类型, sync|mirror.</span><br><span class="line">	    status   : SYNC           #status: 当前同步状态, DISCONNECTED|INIT|OUT_OF_SYNC|COPY|SYNC.</span><br><span class="line">	    last_seq : 14             #last_seq: 上一条发送或者收到的 binlog 的序号.</span><br><span class="line">replication</span><br><span class="line"><span class="built_in">	client </span>192.168.56.102:52412</span><br><span class="line">	   <span class="built_in"> type </span>    : mirror</span><br><span class="line">	    status   : SYNC</span><br><span class="line">	    last_seq : 14</span><br><span class="line">replication</span><br><span class="line"><span class="built_in">	client </span>192.168.56.101:59664</span><br><span class="line">	   <span class="built_in"> type </span>    : mirror</span><br><span class="line">	    status   : SYNC</span><br><span class="line">	    last_seq : 14</span><br><span class="line">replication</span><br><span class="line">	slaveof 192.168.56.101:32121</span><br><span class="line">	    id         : svc_1</span><br><span class="line">	   <span class="built_in"> type </span>      : mirror</span><br><span class="line">	    status     : SYNC</span><br><span class="line">	    last_seq   : 14</span><br><span class="line">	    copy_count : 4</span><br><span class="line">	    sync_count : 0</span><br></pre></td></tr></table></figure>
 
 <p>关于status状态</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">DISCONNECTED: 与 master 断开了连接, 一般是网络中断或者是配置文件限制了访问.</span><br><span class="line">INIT: 初始化状态.</span><br><span class="line">OUT_OF_SYNC: 由于短时间内在 master 有大量写操作, 导致 binlog 队列淘汰, slave 丢失同步点, 只好重新复制全部的数据.</span><br><span class="line">COPY: 正在复制基准数据的过程中, 新的写操作可能无法及时地同步.</span><br><span class="line">SYNC: 同步状态是健康的.</span><br></pre></td></tr></table></figure>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">DISCONNECTED: 与 <span class="keyword">master</span> <span class="title">断开了连接, 一般是网络中断或者是配置文件限制了访问.</span></span><br><span class="line"><span class="title">INIT</span>: 初始化状态.</span><br><span class="line">OUT_OF_SYNC: 由于短时间内在 <span class="keyword">master</span> <span class="title">有大量写操作, 导致 binlog</span> 队列淘汰, <span class="literal">slave</span> 丢失同步点, 只好重新复制全部的数据.</span><br><span class="line">COPY: 正在复制基准数据的过程中, 新的写操作可能无法及时地同步.</span><br><span class="line">SYNC: 同步状态是健康的.</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>判断同步状态–是否正常</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">对于 master, binlogs.max_seq 是指当前实例上的最新一次的写(写/更新/删除)操作的序号, replication.client.last_seq 是指已发送给 slave 的最新一条 binlog 的序号.</span><br><span class="line"></span><br><span class="line">所以, 如果你想判断主从同步是否已经同步到位(实时更新), 那么就判断 binlogs.max_seq 和 replication.client.last_seq 是否相等, 同时 status 是 SYNC.</span><br><span class="line"></span><br><span class="line">上面的例子中，比对max_seq  : 14 与last_seq : 14 数值即可。</span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">对于 master, binlogs<span class="selector-class">.max_seq</span> 是指当前实例上的最新一次的写(写/更新/删除)操作的序号, replication<span class="selector-class">.client</span><span class="selector-class">.last_seq</span> 是指已发送给 slave 的最新一条 binlog 的序号.</span><br><span class="line"></span><br><span class="line">所以, 如果你想判断主从同步是否已经同步到位(实时更新), 那么就判断 binlogs<span class="selector-class">.max_seq</span> 和 replication<span class="selector-class">.client</span><span class="selector-class">.last_seq</span> 是否相等, 同时 status 是 SYNC.</span><br><span class="line"></span><br><span class="line">上面的例子中，比对max_seq  : <span class="number">14</span> 与last_seq : <span class="number">14</span> 数值即可。</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>info cmd</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">ssdb 192.168.56.101:32121&gt; info cmd</span><br><span class="line">version</span><br><span class="line">	1.9.5</span><br><span class="line">cmd.zincr</span><br><span class="line">	calls: 0	time_wait: 0	time_proc: 0</span><br><span class="line">cmd.cluster_set_kv_status</span><br><span class="line">	calls: 0	time_wait: 0	time_proc: 0</span><br><span class="line">cmd.sync140</span><br><span class="line">	calls: 0	time_wait: 0	time_proc: 0</span><br><span class="line">cmd.ttl</span><br><span class="line">	calls: 0	time_wait: 0	time_proc: 0</span><br><span class="line">cmd.qfix</span><br><span class="line">	calls: 0	time_wait: 0	time_proc: 0</span><br><span class="line">cmd.qtrim_front</span><br><span class="line"></span><br><span class="line">calls: 该命令总共处理了多少次.</span><br><span class="line">time_wait: 命令在被处理前等待的总共时间(单位毫秒).</span><br><span class="line">time_proc: 命令处理总共消耗的时间(单位毫秒).</span><br></pre></td></tr></table></figure>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">ssdb <span class="number">192.168</span>.<span class="number">56.101</span>:<span class="number">32121</span>&gt; info cmd</span><br><span class="line"><span class="keyword">version</span></span><br><span class="line">	<span class="number">1.9</span>.<span class="number">5</span></span><br><span class="line">cmd.zincr</span><br><span class="line">	<span class="keyword">call</span><span class="variable">s:</span> <span class="number">0</span>	time_wai<span class="variable">t:</span> <span class="number">0</span>	time_proc: <span class="number">0</span></span><br><span class="line">cmd.cluster_set_kv_status</span><br><span class="line">	<span class="keyword">call</span><span class="variable">s:</span> <span class="number">0</span>	time_wai<span class="variable">t:</span> <span class="number">0</span>	time_proc: <span class="number">0</span></span><br><span class="line">cmd.sync140</span><br><span class="line">	<span class="keyword">call</span><span class="variable">s:</span> <span class="number">0</span>	time_wai<span class="variable">t:</span> <span class="number">0</span>	time_proc: <span class="number">0</span></span><br><span class="line">cmd.ttl</span><br><span class="line">	<span class="keyword">call</span><span class="variable">s:</span> <span class="number">0</span>	time_wai<span class="variable">t:</span> <span class="number">0</span>	time_proc: <span class="number">0</span></span><br><span class="line">cmd.qfix</span><br><span class="line">	<span class="keyword">call</span><span class="variable">s:</span> <span class="number">0</span>	time_wai<span class="variable">t:</span> <span class="number">0</span>	time_proc: <span class="number">0</span></span><br><span class="line">cmd.qtrim_front</span><br><span class="line"></span><br><span class="line"><span class="keyword">call</span><span class="variable">s:</span> 该命令总共处理了多少次.</span><br><span class="line">time_wai<span class="variable">t:</span> 命令在被处理前等待的总共时间(单位毫秒).</span><br><span class="line">time_proc: 命令处理总共消耗的时间(单位毫秒).</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>对数据库进行强制收缩</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ssdb 192.168.56.101:32121&gt; compact</span><br><span class="line">ok</span><br><span class="line">(0.010 sec)</span><br><span class="line">这个命令强制 SSDB 服务器对数据进行收缩(compaction), 收缩之后, 操作通常会变得更快.但是, compact 的过程可能会拖慢正常服务, 特别是是当数据库比较大时. 所以, 建议在空闲时使用.</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">ssdb</span> 192<span class="selector-class">.168</span><span class="selector-class">.56</span><span class="selector-class">.101</span><span class="selector-pseudo">:32121</span>&gt; <span class="selector-tag">compact</span></span><br><span class="line"><span class="selector-tag">ok</span></span><br><span class="line">(0<span class="selector-class">.010</span> <span class="selector-tag">sec</span>)</span><br><span class="line">这个命令强制 <span class="selector-tag">SSDB</span> 服务器对数据进行收缩(<span class="selector-tag">compaction</span>), 收缩之后, 操作通常会变得更快.但是, <span class="selector-tag">compact</span> 的过程可能会拖慢正常服务, 特别是是当数据库比较大时. 所以, 建议在空闲时使用.</span><br></pre></td></tr></table></figure>
 
 <h2 id="SSDB备份-导入导出"><a href="#SSDB备份-导入导出" class="headerlink" title="SSDB备份(导入导出)"></a>SSDB备份(导入导出)</h2><blockquote>
 <p>使用ssdb-cli</p>
 </blockquote>
 <p>导出</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">导出整个数据库</span><br><span class="line">cd /usr/local/ssdb</span><br><span class="line">./ssdb-cli -h 192.168.56.101 -p 32121</span><br><span class="line">ssdb 192.168.56.101:32121&gt; export backup.ssdb</span><br><span class="line">100%</span><br><span class="line">done.</span><br><span class="line"></span><br><span class="line">默认导出路径在/usr/local/ssdb目录下</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">导出整个数据库</span><br><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/ssdb</span><br><span class="line">./ssdb-cli -h 192.168.56.101 -p 32121</span><br><span class="line">ssdb 192.168.56.101:32121&gt; <span class="built_in">export</span> backup.ssdb</span><br><span class="line">100%</span><br><span class="line"><span class="keyword">done</span>.</span><br><span class="line"></span><br><span class="line">默认导出路径在/usr/<span class="built_in">local</span>/ssdb目录下</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">按照key区间导出数据库（导出/导入）</span><br><span class="line"></span><br><span class="line">ssdb 192.168.56.101:32121&gt; export -i 2017.9.26_backup.ssdb</span><br><span class="line">input KV range[start, end]: </span><br><span class="line">  start(inclusive, default none): a</span><br><span class="line">    end(inclusive, default none): z</span><br><span class="line">input HASH range: </span><br><span class="line">  start(inclusive, default none): </span><br><span class="line">    end(inclusive, default none): </span><br><span class="line">input ZSET range: </span><br><span class="line">  start(inclusive, default none): </span><br><span class="line">    end(inclusive, default none): </span><br><span class="line">input QUEUE range: </span><br><span class="line">  start(inclusive, default none): </span><br><span class="line">    end(inclusive, default none): </span><br><span class="line">100%</span><br><span class="line">done.</span><br><span class="line"></span><br><span class="line">注：命令 export -i backup.ssdb将导出区间 [a, z] 内的 KV 和 所有的 HASH, ZSET, QUEUE.</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">按照key区间导出数据库（导出/导入）</span><br><span class="line"></span><br><span class="line">ssdb 192.168.56.101:32121&gt; <span class="builtin-name">export</span> -i 2017.9.26_backup.ssdb</span><br><span class="line">input KV range[start, end]: </span><br><span class="line">  start(inclusive,<span class="built_in"> default </span>none): a</span><br><span class="line">    end(inclusive,<span class="built_in"> default </span>none): z</span><br><span class="line">input HASH range: </span><br><span class="line">  start(inclusive,<span class="built_in"> default </span>none): </span><br><span class="line">    end(inclusive,<span class="built_in"> default </span>none): </span><br><span class="line">input ZSET range: </span><br><span class="line">  start(inclusive,<span class="built_in"> default </span>none): </span><br><span class="line">    end(inclusive,<span class="built_in"> default </span>none): </span><br><span class="line">input<span class="built_in"> QUEUE </span>range: </span><br><span class="line">  start(inclusive,<span class="built_in"> default </span>none): </span><br><span class="line">    end(inclusive,<span class="built_in"> default </span>none): </span><br><span class="line">100%</span><br><span class="line">done.</span><br><span class="line"></span><br><span class="line">注：命令 <span class="builtin-name">export</span> -i backup.ssdb将导出区间 [a, z] 内的 KV 和 所有的 HASH, ZSET, QUEUE.</span><br></pre></td></tr></table></figure>
 
 <p>导入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ssdb 192.168.56.101:32121&gt; import backup.ssdb</span><br><span class="line">或</span><br><span class="line">ssdb 192.168.56.101:32121&gt; import 2017.9.26_backup.ssdb</span><br><span class="line">33%</span><br><span class="line">64%</span><br><span class="line">79%</span><br><span class="line">100%</span><br><span class="line">done.</span><br><span class="line"></span><br><span class="line">注意： import 命令会把数据库中的相同 key 给替换.</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">ssdb</span> 192<span class="selector-class">.168</span><span class="selector-class">.56</span><span class="selector-class">.101</span><span class="selector-pseudo">:32121</span>&gt; <span class="selector-tag">import</span> <span class="selector-tag">backup</span><span class="selector-class">.ssdb</span></span><br><span class="line">或</span><br><span class="line"><span class="selector-tag">ssdb</span> 192<span class="selector-class">.168</span><span class="selector-class">.56</span><span class="selector-class">.101</span><span class="selector-pseudo">:32121</span>&gt; <span class="selector-tag">import</span> 2017<span class="selector-class">.9</span><span class="selector-class">.26_backup</span><span class="selector-class">.ssdb</span></span><br><span class="line">33%</span><br><span class="line">64%</span><br><span class="line">79%</span><br><span class="line">100%</span><br><span class="line"><span class="selector-tag">done</span>.</span><br><span class="line"></span><br><span class="line">注意： <span class="selector-tag">import</span> 命令会把数据库中的相同 <span class="selector-tag">key</span> 给替换.</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>使用ssdb-dump命令</p>
 </blockquote>
 <p>备份导出</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">用法：/usr/local/ssdb/ssdb-dump  ip   port   output_folder</span><br><span class="line">选项：</span><br><span class="line">ip - ssdb 服务器监听的 IP 地址</span><br><span class="line">port - ssdb 服务器监听的端口号</span><br><span class="line">output_folder - 将要创建备份数据的本地目录</span><br><span class="line"></span><br><span class="line">注：目录 output_folder 必须不存在, 因为 ssdb-dump 会创建这个目录. 导出之后, 这个目录里将有两个子目录, data 目录里包含着数据, 还有一个空的 meta 目录.</span><br><span class="line"></span><br><span class="line">##############################################################################################</span><br><span class="line"></span><br><span class="line">[root@gserver1 ssdb]# ./ssdb-dump 192.168.56.101 32121 ./bak</span><br><span class="line">ssdb-dump - SSDB backup command</span><br><span class="line">Copyright (c) 2012-2015 ssdb.io</span><br><span class="line"></span><br><span class="line">recv begin...</span><br><span class="line">received 1 entry(s)</span><br><span class="line">received 4 entry(s)</span><br><span class="line">recv end</span><br><span class="line"></span><br><span class="line">total dumped 4 entry(s)</span><br><span class="line">                               Compactions</span><br><span class="line">Level  Files Size(MB) Time(sec) Read(MB) Write(MB)</span><br><span class="line">--------------------------------------------------</span><br><span class="line"></span><br><span class="line">compacting data...</span><br><span class="line">                               Compactions</span><br><span class="line">Level  Files Size(MB) Time(sec) Read(MB) Write(MB)</span><br><span class="line">--------------------------------------------------</span><br><span class="line">  2        1        0         0        0         0</span><br><span class="line"></span><br><span class="line">backup has been made to folder: ./bak</span><br><span class="line"></span><br><span class="line">[root@gserver1 ssdb]# cd bak/</span><br><span class="line">[root@gserver1 bak]# ls -lh</span><br><span class="line">total 0</span><br><span class="line">drwxr-xr-x 2 root root 103 Sep 26 05:04 data</span><br><span class="line">drwxr-xr-x 2 root root   6 Sep 26 05:04 meta</span><br></pre></td></tr></table></figure>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">用法：/usr/local/ssdb/ssdb-dump  ip   port   output_folder</span><br><span class="line">选项：</span><br><span class="line">ip - ssdb 服务器监听的 IP 地址</span><br><span class="line">port - ssdb 服务器监听的端口号</span><br><span class="line">output_folder - 将要创建备份数据的本地目录</span><br><span class="line"></span><br><span class="line">注：目录 output_folder 必须不存在, 因为 ssdb-dump 会创建这个目录. 导出之后, 这个目录里将有两个子目录, data 目录里包含着数据, 还有一个空的 meta 目录.</span><br><span class="line"></span><br><span class="line">##############################################################################################</span><br><span class="line"></span><br><span class="line">[root@gserver1 ssdb]# ./ssdb-dump <span class="number">192.168</span><span class="number">.56</span><span class="number">.101</span> <span class="number">32121</span> ./bak</span><br><span class="line">ssdb-dump - SSDB backup command</span><br><span class="line">Copyright (c) <span class="number">2012</span><span class="number">-2015</span> ssdb.io</span><br><span class="line"></span><br><span class="line">recv begin...</span><br><span class="line">received <span class="number">1</span> entry(s)</span><br><span class="line">received <span class="number">4</span> entry(s)</span><br><span class="line">recv end</span><br><span class="line"></span><br><span class="line">total dumped <span class="number">4</span> entry(s)</span><br><span class="line">                               Compactions</span><br><span class="line">Level  Files Size(MB) Time(sec) Read(MB) Write(MB)</span><br><span class="line">--------------------------------------------------</span><br><span class="line"></span><br><span class="line">compacting data...</span><br><span class="line">                               Compactions</span><br><span class="line">Level  Files Size(MB) Time(sec) Read(MB) Write(MB)</span><br><span class="line">--------------------------------------------------</span><br><span class="line">  <span class="number">2</span>        <span class="number">1</span>        <span class="number">0</span>         <span class="number">0</span>        <span class="number">0</span>         <span class="number">0</span></span><br><span class="line"></span><br><span class="line">backup has been made to folder: ./bak</span><br><span class="line"></span><br><span class="line">[root@gserver1 ssdb]# cd bak/</span><br><span class="line">[root@gserver1 bak]# ls -lh</span><br><span class="line">total <span class="number">0</span></span><br><span class="line">drwxr-xr-x <span class="number">2</span> root root <span class="number">103</span> Sep <span class="number">26</span> <span class="number">05</span>:<span class="number">04</span> data</span><br><span class="line">drwxr-xr-x <span class="number">2</span> root root   <span class="number">6</span> Sep <span class="number">26</span> <span class="number">05</span>:<span class="number">04</span> meta</span><br></pre></td></tr></table></figure>
 
 <p>恢复</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">将 output_folder 目录拷贝到你的服务器上面, 你可能需要将它改名. 然后修改你的 ssdb.conf 配置文件, 将 work_dir 指向output_folder 目录, 然后重启 ssdb-server.</span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">将 output_folder 目录拷贝到你的服务器上面, 你可能需要将它改名. 然后修改你的 ssdb<span class="selector-class">.conf</span> 配置文件, 将 work_dir 指向output_folder 目录, 然后重启 ssdb-server.</span><br></pre></td></tr></table></figure>
 
-<h2 id="从redis迁移数据到SSDB"><a href="#从redis迁移数据到SSDB" class="headerlink" title="从redis迁移数据到SSDB"></a>从redis迁移数据到SSDB</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">SSDB源码包中，Tools目录下的“ redis-import.php ” PHP 脚本可以用来将 Redis 服务器上的数据, 拷贝到 SSDB 服务器上.</span><br><span class="line"></span><br><span class="line">用法：php redis-import.php redis_host redis_port redis_db ssdb_host ssdb_port</span><br><span class="line"></span><br><span class="line">参数:</span><br><span class="line">redis_host: Redis 运行所在的 IP 或者主机名</span><br><span class="line">redis_port: Redis 监听的端口</span><br><span class="line">redis_db: Redis 的 DB 编号</span><br><span class="line">ssdb_host: SSDB 运行所在的 IP 或者主机名</span><br><span class="line">ssdb_port: SSDB 监听的端口</span><br><span class="line"></span><br><span class="line">注：需确保你的 PHP Redis 模块 https://github.com/nicolasff/phpredis 已经安装.</span><br></pre></td></tr></table></figure>
+<h2 id="从redis迁移数据到SSDB"><a href="#从redis迁移数据到SSDB" class="headerlink" title="从redis迁移数据到SSDB"></a>从redis迁移数据到SSDB</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">SSDB源码包中，Tools目录下的“ redis-<span class="keyword">import</span>.php ” PHP 脚本可以用来将 Redis 服务器上的数据, 拷贝到 SSDB 服务器上.</span><br><span class="line"></span><br><span class="line">用法：php redis-<span class="keyword">import</span>.php redis_host redis_port redis_db ssdb_host ssdb_port</span><br><span class="line"></span><br><span class="line">参数:</span><br><span class="line"><span class="string">redis_host:</span> Redis 运行所在的 IP 或者主机名</span><br><span class="line"><span class="string">redis_port:</span> Redis 监听的端口</span><br><span class="line"><span class="string">redis_db:</span> Redis 的 DB 编号</span><br><span class="line"><span class="string">ssdb_host:</span> SSDB 运行所在的 IP 或者主机名</span><br><span class="line"><span class="string">ssdb_port:</span> SSDB 监听的端口</span><br><span class="line"></span><br><span class="line">注：需确保你的 PHP Redis 模块 <span class="string">https:</span><span class="comment">//github.com/nicolasff/phpredis 已经安装.</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="将现有的LevelDB数据导入SSDB"><a href="#将现有的LevelDB数据导入SSDB" class="headerlink" title="将现有的LevelDB数据导入SSDB"></a>将现有的LevelDB数据导入SSDB</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">SSDB 提供了 leveldb-import 工具来将 LevelDB 的数据导入到 SSDB 数据库中. 该工具的使用非常简单</span><br><span class="line"></span><br><span class="line">用法:</span><br><span class="line">./tools/leveldb-import ip port input_folder</span><br><span class="line"></span><br><span class="line">选项:</span><br><span class="line">ip - SSDB服务器的 IP</span><br><span class="line">port - SSDB服务器的端口号</span><br><span class="line">input_folder - 本地LevelDB数据库的目录</span><br><span class="line"></span><br><span class="line">示例:</span><br><span class="line">./tools/leveldb-import 127.0.0.1 8888 ./leveldb/</span><br><span class="line"></span><br><span class="line">注：你不能直接复制 LevelDB 的文件到 SSDB 目录, 这种方式是错误的.</span><br></pre></td></tr></table></figure>
+<h2 id="将现有的LevelDB数据导入SSDB"><a href="#将现有的LevelDB数据导入SSDB" class="headerlink" title="将现有的LevelDB数据导入SSDB"></a>将现有的LevelDB数据导入SSDB</h2><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">SSDB 提供了 leveldb-import 工具来将 LevelDB 的数据导入到 SSDB 数据库中. 该工具的使用非常简单</span><br><span class="line"></span><br><span class="line">用法:</span><br><span class="line">./tools/leveldb-import<span class="built_in"> ip port </span>input_folder</span><br><span class="line"></span><br><span class="line">选项:</span><br><span class="line">ip - SSDB服务器的 IP</span><br><span class="line">port - SSDB服务器的端口号</span><br><span class="line">input_folder - 本地LevelDB数据库的目录</span><br><span class="line"></span><br><span class="line">示例:</span><br><span class="line">./tools/leveldb-import 127.0.0.1 8888 ./leveldb/</span><br><span class="line"></span><br><span class="line">注：你不能直接复制 LevelDB 的文件到 SSDB 目录, 这种方式是错误的.</span><br></pre></td></tr></table></figure>
 
 
       
@@ -535,7 +539,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2019 John Doe
+    		&copy; 2019 Gary Wu
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -639,18 +643,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">apache</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">目录浏览</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">高级运维</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Apache</a>
               </li>
              
@@ -679,19 +671,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CDH</a>
+                <a href="javascript:void(0)" class="js-tag color5">高级运维</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JDBC</a>
+                <a href="javascript:void(0)" class="js-tag color2">apache</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">MySQL驱动</a>
+                <a href="javascript:void(0)" class="js-tag color5">目录浏览</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">KAFKA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CDH</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -704,6 +700,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">大数据</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">JDBC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">MySQL驱动</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -739,18 +743,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Cacti流量叠加图形</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Cacti整合图形</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Graph</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">cacti</a>
               </li>
              
@@ -768,6 +760,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">监控</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">bugzilla</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">bugs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Cacti流量叠加图形</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Cacti整合图形</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Graph</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -792,14 +804,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">SCL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">bugzilla</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">bugs</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -847,14 +851,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">DNS TLS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Public DNS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">shadowsocks</a>
               </li>
              
@@ -864,6 +860,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">加密代理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">DNS TLS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Public DNS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -943,18 +947,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ESXI PATH</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ESXI补丁升级</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">ESXI6.7</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">VMware vSphere Client</a>
               </li>
              
@@ -967,6 +959,26 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CPU</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">虚拟化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ESXI PATH</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ESXI补丁升级</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">ESXI6.7</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Openstack</a>
               </li>
              
@@ -976,22 +988,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">混杂模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CPU</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">虚拟化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">磁盘置备</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">disk</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1015,6 +1011,26 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Gentoo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">编译内核</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">NFS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">磁盘置备</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">disk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">fuse</a>
               </li>
              
@@ -1028,18 +1044,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">HDFS挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Gentoo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">编译内核</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">NFS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1103,6 +1107,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">HTTP状态码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">301</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">302</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
@@ -1131,27 +1147,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">HTTP状态码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">301</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">302</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">hdfs空文件</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hadoop fs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1175,6 +1175,22 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Jenkins</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">持续集成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">持续交付</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
@@ -1191,26 +1207,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jenkins</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">持续集成</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">持续交付</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Jumpserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">备机部署</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">分区</a>
               </li>
              
@@ -1223,7 +1219,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">分区热迁移</a>
+                <a href="javascript:void(0)" class="js-tag color1">Jumpserver</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">备机部署</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1232,6 +1232,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">KAFKA版本升级</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">分区热迁移</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1291,18 +1295,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">文件句柄</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">lsof</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">空间释放</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">限速方案</a>
               </li>
              
@@ -1323,6 +1315,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">文件句柄</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">lsof</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">空间释放</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">logstash</a>
               </li>
              
@@ -1336,6 +1340,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Mars</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">HDFS Shell</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1355,15 +1367,27 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Mars</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">HDFS Shell</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Hadoop</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">spark</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">tez</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">单用户模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">多用户模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">远程模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1388,26 +1412,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">机架感知</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">spark</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">tez</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">单用户模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">多用户模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">远程模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1447,15 +1451,27 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">yarn</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hive</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">HQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">yarn</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mongodb</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">mongodump</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mongorestore</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1479,15 +1495,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mongodb</a>
+                <a href="javascript:void(0)" class="js-tag color3">STARTUP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">mongodump</a>
+                <a href="javascript:void(0)" class="js-tag color1">副本集成员</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mongorestore</a>
+                <a href="javascript:void(0)" class="js-tag color5">成员状态</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1507,15 +1523,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">STARTUP</a>
+                <a href="javascript:void(0)" class="js-tag color5">MongoDB集群</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">副本集成员</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">成员状态</a>
+                <a href="javascript:void(0)" class="js-tag color2">mongo集群管理维护</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1543,14 +1555,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">MongoDB集群</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mongo集群管理维护</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">MySQL主从切换</a>
               </li>
              
@@ -1559,19 +1563,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">MySQL主从复制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">全备还原</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">主从同步</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">主从复制监控</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">MySQL主从复制</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">全备还原</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1603,14 +1607,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">慢查询</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">mysqldumpslow</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">dba</a>
               </li>
              
@@ -1628,6 +1624,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">MySQL多实例远程登陆</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">慢查询</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">mysqldumpslow</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1667,14 +1671,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ntp</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">upstream</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">proxy-set-header</a>
               </li>
              
@@ -1687,15 +1683,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">favicon.ico</a>
+                <a href="javascript:void(0)" class="js-tag color4">upstream</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">access</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">log</a>
+                <a href="javascript:void(0)" class="js-tag color4">ntp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1712,6 +1704,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">垃圾UA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">favicon.ico</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">access</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">log</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1751,6 +1755,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Glance</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">openstack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">PHP</a>
               </li>
              
@@ -1763,11 +1775,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Glance</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">openstack</a>
+                <a href="javascript:void(0)" class="js-tag color4">Keystone</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1780,10 +1788,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">OpenStack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Keystone</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1819,23 +1823,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">RAID5</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">parted</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">fdisk</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">RAID5</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">阵列卡</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">缓存</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1859,6 +1855,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">阵列卡</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">缓存</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">rabbitmq</a>
               </li>
              
@@ -1879,15 +1883,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">NTP时间同步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NAT</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">双线</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">NTP时间同步</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1979,6 +1983,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">YARN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">NodeManager</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">udp</a>
               </li>
              
@@ -1996,14 +2008,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">GFW</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">YARN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">NodeManager</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2039,10 +2043,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">rrdtool</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">微信</a>
               </li>
              
@@ -2051,11 +2051,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">weathermap</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">plugin</a>
+                <a href="javascript:void(0)" class="js-tag color3">rrdtool</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2068,6 +2064,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">将Bites转换为Mbits</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">weathermap</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">plugin</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">脚本</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2095,7 +2103,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">脚本</a>
+                <a href="javascript:void(0)" class="js-tag color1">socket.gaierror</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2104,10 +2112,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">socket.gaierror</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2155,14 +2159,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">wget</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">curl请求url不使用缓存</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">unix</a>
               </li>
              
@@ -2179,7 +2175,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">wget</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">curl请求url不使用缓存</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">docker机制</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">exit退出码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2196,14 +2208,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">emerge命令</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">exit退出码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2239,18 +2243,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">磁盘挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">fstab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">开机挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">gentoo</a>
               </li>
              
@@ -2260,6 +2252,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">install</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">磁盘挂载</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">fstab</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">开机挂载</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2291,10 +2295,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hadoop用户</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">fs</a>
               </li>
              
@@ -2307,6 +2307,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">hadoop用户</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">sersync</a>
               </li>
              
@@ -2316,6 +2320,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">实时同步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell脚本</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ip自动配置</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2335,18 +2347,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell脚本</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ip自动配置</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">jumpserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">topic</a>
               </li>
              
@@ -2355,23 +2355,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">keepalived</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LVS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">多实例</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">双主</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">脑裂</a>
+                <a href="javascript:void(0)" class="js-tag color1">jumpserver</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2392,6 +2376,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">nopasswd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">keepalived</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">LVS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">多实例</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">双主</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">脑裂</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2419,10 +2423,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">dd</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">rm恢复</a>
               </li>
              
@@ -2439,23 +2439,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">dd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统备份</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统恢复</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Logstash</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Tomcat</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2468,6 +2460,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">rubydebug</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Logstash</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Tomcat</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2487,6 +2491,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">mongod</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">二进制版</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">mariadb主从</a>
               </li>
              
@@ -2500,14 +2512,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">主从复制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mongod</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">二进制版</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2527,11 +2531,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">主从复制错误</a>
+                <a href="javascript:void(0)" class="js-tag color5">主键错误</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">主键错误</a>
+                <a href="javascript:void(0)" class="js-tag color2">主从复制错误</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2540,14 +2544,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">同步个别库</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mysql slave</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">relay log</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2563,7 +2559,39 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">mysql slave</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">relay log</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">root远程登录</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">优化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">socket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ulimit</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">tcp_nopush</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">tcp_nodelay</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2627,38 +2655,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">优化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">socket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ulimit</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">tcp_nopush</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">tcp_nodelay</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">uri</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">屏蔽接口</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Ddos</a>
               </li>
              
@@ -2671,11 +2667,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">proxy cache</a>
+                <a href="javascript:void(0)" class="js-tag color4">uri</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Nginx缓存清理</a>
+                <a href="javascript:void(0)" class="js-tag color5">屏蔽接口</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2684,6 +2680,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">443</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">proxy cache</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Nginx缓存清理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2707,18 +2711,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SOCKS5</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">proxychains</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">命令代理</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">ps</a>
               </li>
              
@@ -2728,6 +2720,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">进程运行时间</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">SOCKS5</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">proxychains</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">命令代理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2743,14 +2747,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">tar</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">crontab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">自重启</a>
               </li>
              
@@ -2759,11 +2755,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">rsync限速</a>
+                <a href="javascript:void(0)" class="js-tag color4">tar</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">bwlimit</a>
+                <a href="javascript:void(0)" class="js-tag color3">crontab</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2772,6 +2768,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">模板</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">rsync限速</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">bwlimit</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2784,6 +2788,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">zabbix_agent</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">salt-master高可用</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">salt-API</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">salt-ssh</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2815,18 +2831,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">salt-master高可用</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">salt-API</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">salt-ssh</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统瓶颈</a>
               </li>
              
@@ -2847,6 +2851,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">变量传参</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell传参</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">小数判断</a>
               </li>
              
@@ -2856,14 +2868,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">浮点数判断</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">变量传参</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell传参</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2895,6 +2899,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">expect</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Ros</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">FTP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">dsa</a>
               </li>
              
@@ -2911,15 +2927,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">expect</a>
+                <a href="javascript:void(0)" class="js-tag color1">supervisor</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Ros</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">FTP</a>
+                <a href="javascript:void(0)" class="js-tag color4">supervisorctl</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2932,14 +2944,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">pid</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">supervisor</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">supervisorctl</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2979,19 +2983,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">vim</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">中文乱码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">vmware</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">虚拟机克隆</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vim</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">中文乱码</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3007,10 +3011,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">告警</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">traceroute</a>
               </li>
              
@@ -3020,6 +3020,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">MTR</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">告警</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3047,6 +3051,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">zk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">触发器</a>
               </li>
              
@@ -3060,10 +3068,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">触发器表达式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">zk</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3083,11 +3087,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">云计算</a>
+                <a href="javascript:void(0)" class="js-tag color5">Rack</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Rack</a>
+                <a href="javascript:void(0)" class="js-tag color4">云计算</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3103,6 +3107,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CDN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">IM</a>
               </li>
              
@@ -3112,18 +3120,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">开源IM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CDN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">jq</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">筛选大于某个值的数据到文件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3147,11 +3143,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">taskset</a>
+                <a href="javascript:void(0)" class="js-tag color3">jq</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">PID</a>
+                <a href="javascript:void(0)" class="js-tag color4">筛选大于某个值的数据到文件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3163,15 +3159,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">zerotier</a>
+                <a href="javascript:void(0)" class="js-tag color3">taskset</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">内网穿透</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">全球畅联</a>
+                <a href="javascript:void(0)" class="js-tag color4">PID</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3195,7 +3187,31 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">zerotier</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">内网穿透</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">全球畅联</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">RocketMQ</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">分布式消息队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nameserver</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">brokerserver</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3215,39 +3231,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">分布式消息队列</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">nameserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">brokerserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">外部命令</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">内部命令</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">只读模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">fatab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mount</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">remount</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3267,19 +3255,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OpenSSL</a>
+                <a href="javascript:void(0)" class="js-tag color5">只读模式</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">CA</a>
+                <a href="javascript:void(0)" class="js-tag color1">fatab</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SSL证书</a>
+                <a href="javascript:void(0)" class="js-tag color1">mount</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">csr</a>
+                <a href="javascript:void(0)" class="js-tag color3">remount</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3296,6 +3284,22 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">免交互</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">OpenSSL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">CA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">SSL证书</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">csr</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3323,6 +3327,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">SHELL编程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">kill</a>
               </li>
              
@@ -3335,7 +3343,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">SHELL编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">Yum源</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3344,10 +3352,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Shell脚本</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Yum源</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3367,15 +3371,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">consumer</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">内存</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">使用率</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">consumer</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3479,6 +3483,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">flock</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LVS连接数监控</a>
               </li>
              
@@ -3492,10 +3500,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">InActConn</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">flock</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3671,6 +3675,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">autostart</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">libvert</a>
               </li>
              
@@ -3680,10 +3688,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">动态迁移</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">autostart</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3839,6 +3843,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">lvs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">4层负载均衡</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">DR模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">LNMP</a>
               </li>
              
@@ -3856,18 +3872,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">mysql数据库迁移</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">lvs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">4层负载均衡</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">DR模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3927,15 +3931,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">pass_proxy</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">htpasswd</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">日志切割</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">pass_proxy</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4235,15 +4239,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">磁盘</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">awk数组</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">磁盘管理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">磁盘</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4279,19 +4283,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">redis cluster</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">ssdb</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">LevelDB</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">redis cluster</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4335,14 +4339,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">codis集群</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">memcache</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">GlusterFS</a>
               </li>
              
@@ -4352,6 +4348,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NAS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">codis集群</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">memcache</a>
               </li>
              
               <li class="article-tag-list-item">

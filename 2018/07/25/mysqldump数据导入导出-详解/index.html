@@ -6,22 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://garywu520.github.io/blog">
-  <title>mysqldump数据导入导出-详解 | Hexo</title>
+  <title>mysqldump数据导入导出-详解 | Gary Wu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="介绍1在日常维护工作当中经常会需要对数据进行导出操作，而mysqldump是导出数据过程中使用非常频繁的一个工具；它自带的功能参数非常多，可以轻松完成看似很复杂的需求。  本文摘选自：Pursuer.chen">
 <meta name="keywords" content="高级运维,mysql,mysqldump详解,mysql导入导出">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysqldump数据导入导出-详解">
 <meta property="og:url" content="https://garywu520.github.io/blog/2018/07/25/mysqldump数据导入导出-详解/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Gary Wu">
 <meta property="og:description" content="介绍1在日常维护工作当中经常会需要对数据进行导出操作，而mysqldump是导出数据过程中使用非常频繁的一个工具；它自带的功能参数非常多，可以轻松完成看似很复杂的需求。  本文摘选自：Pursuer.chen">
-<meta property="og:locale" content="default">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2018-07-27T10:04:32.576Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysqldump数据导入导出-详解">
 <meta name="twitter:description" content="介绍1在日常维护工作当中经常会需要对数据进行导出操作，而mysqldump是导出数据过程中使用非常频繁的一个工具；它自带的功能参数非常多，可以轻松完成看似很复杂的需求。  本文摘选自：Pursuer.chen">
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="Gary Wu" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -47,12 +47,14 @@
 <div class="overlay" style="background: #4d4d4d"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
-		<a href="/blog/" class="profilepic">
-			<img src="https://raw.githubusercontent.com/discant520/garywu/master/images/touxiang.jpg" class="js-avatar">
+		<a href="/blog" class="profilepic">
+			<img src="http://pics0.baidu.com/feed/bd315c6034a85edf5f5b8bff8cf9cf27df54754d.png?token=c9857ef7ee73e1ffc14d3e3c4e9e3be3&amp;s=1E5207CAC64234F44988148A0300B090" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/blog/">John Doe</a></h1>
+		  <h1 class="header-author"><a href="/blog">Gary Wu</a></h1>
 		</hgroup>
+		
+		<p class="header-subtitle">运维架构师 - 从入门到放弃</p>
 		
 
 		<nav class="header-menu">
@@ -106,11 +108,13 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="https://raw.githubusercontent.com/discant520/garywu/master/images/touxiang.jpg" class="js-avatar">
+				<img src="http://pics0.baidu.com/feed/bd315c6034a85edf5f5b8bff8cf9cf27df54754d.png?token=c9857ef7ee73e1ffc14d3e3c4e9e3be3&amp;s=1E5207CAC64234F44988148A0300B090" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">John Doe</h1>
+			  <h1 class="header-author js-header-author">Gary Wu</h1>
 			</hgroup>
+			
+			<p class="header-subtitle"><i class="icon icon-quo-left"></i>运维架构师 - 从入门到放弃<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -190,48 +194,48 @@
 <p>本文摘选自：<a href="http://www.cnblogs.com/chenmh/p/5300370.html" target="_blank" rel="noopener">Pursuer.chen</a></p>
 <a id="more"></a>
 
-<h4 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Usage: mysqldump [OPTIONS] database [tables]</span><br><span class="line">OR     mysqldump [OPTIONS] --databases [OPTIONS] DB1 [DB2 DB3...]</span><br><span class="line">OR     mysqldump [OPTIONS] --all-databases [OPTIONS]</span><br></pre></td></tr></table></figure>
+<h4 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h4><figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Usage: mysqldump [<span class="keyword">OPTIONS</span>] database [tables]</span><br><span class="line"><span class="keyword">OR</span>     mysqldump [<span class="keyword">OPTIONS</span>] --databases [<span class="keyword">OPTIONS</span>] DB1 [DB2 DB3...]</span><br><span class="line"><span class="keyword">OR</span>     mysqldump [<span class="keyword">OPTIONS</span>] --<span class="keyword">all</span>-databases [<span class="keyword">OPTIONS</span>]</span><br></pre></td></tr></table></figure>
 
-<h4 id="1-导出所有数据库"><a href="#1-导出所有数据库" class="headerlink" title="1.导出所有数据库"></a>1.导出所有数据库</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -proot --all-databases &gt;/tmp/all.sql</span><br></pre></td></tr></table></figure>
+<h4 id="1-导出所有数据库"><a href="#1-导出所有数据库" class="headerlink" title="1.导出所有数据库"></a>1.导出所有数据库</h4><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">mysqldump</span> -uroot -proot --<span class="literal">all</span>-databases &gt;/tmp/<span class="literal">all</span>.sql</span><br></pre></td></tr></table></figure>
 
-<h4 id="2-导出db1、db2两个数据库的所有数据"><a href="#2-导出db1、db2两个数据库的所有数据" class="headerlink" title="2.导出db1、db2两个数据库的所有数据"></a>2.导出db1、db2两个数据库的所有数据</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -proot --databases db1 db2 &gt;/tmp/user.sql</span><br></pre></td></tr></table></figure>
+<h4 id="2-导出db1、db2两个数据库的所有数据"><a href="#2-导出db1、db2两个数据库的所有数据" class="headerlink" title="2.导出db1、db2两个数据库的所有数据"></a>2.导出db1、db2两个数据库的所有数据</h4><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -proot <span class="params">--databases</span> db1 db2 &gt;<span class="string">/tmp/user.sql</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="3-导出db1中的a1、a2表"><a href="#3-导出db1中的a1、a2表" class="headerlink" title="3.导出db1中的a1、a2表"></a>3.导出db1中的a1、a2表</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -proot db1 table1 table2  &gt;/tmp/db1.sql</span><br><span class="line"></span><br><span class="line">注意: 导出指定表只能针对一个数据库进行导出;恢复时，需要确保目标库中没有该表数据，否则可能出现主键冲突等。</span><br></pre></td></tr></table></figure>
+<h4 id="3-导出db1中的a1、a2表"><a href="#3-导出db1中的a1、a2表" class="headerlink" title="3.导出db1中的a1、a2表"></a>3.导出db1中的a1、a2表</h4><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -proot db1 table1 table2  &gt;<span class="regexp">/tmp/</span>db1.sql</span><br><span class="line"></span><br><span class="line">注意: 导出指定表只能针对一个数据库进行导出;恢复时，需要确保目标库中没有该表数据，否则可能出现主键冲突等。</span><br></pre></td></tr></table></figure>
 
-<h4 id="4-条件导出"><a href="#4-条件导出" class="headerlink" title="4.条件导出"></a>4.条件导出</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">(1)当字段是整数，使用如下命令：</span><br><span class="line">mysqldump -uroot -proot db1 table1 -w &apos;id=1&apos; &gt;/tmp/a1.sql</span><br><span class="line"></span><br><span class="line">(2)当字段是字符串,使用如下命令：</span><br><span class="line">mysqldump -uroot -proot db1 table1 -w &apos;id=&apos;a&apos;&apos;  &gt;/tmp/a1.sql</span><br><span class="line"></span><br><span class="line">(3)当字段在shell中作为变量调用</span><br><span class="line">mysqldump -uroot -proot db1 table1 -w &apos;DATE&gt;=&apos;$&#123;days31_ago&#125;&apos;&apos; &gt;/tmp/a1.sql</span><br><span class="line">注：如果多个表的条件相同可以一次性导出多个表</span><br></pre></td></tr></table></figure>
+<h4 id="4-条件导出"><a href="#4-条件导出" class="headerlink" title="4.条件导出"></a>4.条件导出</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">(<span class="number">1</span>)当字段是整数，使用如下命令：</span><br><span class="line">mysqldump -uroot -proot db1 table1 -w <span class="string">'id=1'</span> &gt;/tmp/a1.sql</span><br><span class="line"></span><br><span class="line">(<span class="number">2</span>)当字段是字符串,使用如下命令：</span><br><span class="line">mysqldump -uroot -proot db1 table1 -w <span class="string">'id='</span>a<span class="string">''</span>  &gt;/tmp/a1.sql</span><br><span class="line"></span><br><span class="line">(<span class="number">3</span>)当字段在shell中作为变量调用</span><br><span class="line">mysqldump -uroot -proot db1 table1 -w <span class="string">'DATE&gt;='</span>$&#123;days31_ago&#125;<span class="string">''</span> &gt;/tmp/a1.sql</span><br><span class="line">注：如果多个表的条件相同可以一次性导出多个表</span><br></pre></td></tr></table></figure>
 
 <p>附录：一次查询或删除同一个库的多张表</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -p  -e &quot;use $&#123;remote_db2&#125;; </span><br><span class="line">DELETE FROM $&#123;table2_1&#125; WHERE DATE&gt;=&apos;$&#123;days31_ago&#125;&apos;;</span><br><span class="line">DELETE FROM $&#123;table2_2&#125; WHERE DATE&gt;=&apos;$&#123;days31_ago&#125;&apos;;</span><br><span class="line">DELETE FROM $&#123;table2_3&#125; WHERE DATE&gt;=&apos;$&#123;days31_ago&#125;&apos;;&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -p  -e "<span class="keyword">use</span> $&#123;remote_db2&#125;; </span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> $&#123;table2_1&#125; <span class="keyword">WHERE</span> <span class="built_in">DATE</span>&gt;=<span class="string">'$&#123;days31_ago&#125;'</span>;</span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> $&#123;table2_2&#125; <span class="keyword">WHERE</span> <span class="built_in">DATE</span>&gt;=<span class="string">'$&#123;days31_ago&#125;'</span>;</span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> $&#123;table2_3&#125; <span class="keyword">WHERE</span> <span class="built_in">DATE</span>&gt;=<span class="string">'$&#123;days31_ago&#125;'</span>;"</span><br></pre></td></tr></table></figure>
 
-<h4 id="5-生成新的binlog文件"><a href="#5-生成新的binlog文件" class="headerlink" title="5.生成新的binlog文件"></a>5.生成新的binlog文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">有时候会希望导出数据之后生成一个新的binlog文件,只需要加上-F参数即可</span><br><span class="line"></span><br><span class="line">mysqldump -uroot -proot --databases db1 -F &gt;/tmp/db1.sql</span><br></pre></td></tr></table></figure>
+<h4 id="5-生成新的binlog文件"><a href="#5-生成新的binlog文件" class="headerlink" title="5.生成新的binlog文件"></a>5.生成新的binlog文件</h4><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">有时候会希望导出数据之后生成一个新的binlog文件,只需要加上-F参数即可</span><br><span class="line"></span><br><span class="line">mysqldump -uroot -proot <span class="params">--databases</span> db1 -F &gt;<span class="string">/tmp/db1.sql</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="6-只导出表结构不导出数据，–no-data"><a href="#6-只导出表结构不导出数据，–no-data" class="headerlink" title="6.只导出表结构不导出数据，–no-data"></a>6.只导出表结构不导出数据，–no-data</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -proot --no-data --databases db1 &gt;/tmp/db1.sql</span><br></pre></td></tr></table></figure>
+<h4 id="6-只导出表结构不导出数据，–no-data"><a href="#6-只导出表结构不导出数据，–no-data" class="headerlink" title="6.只导出表结构不导出数据，–no-data"></a>6.只导出表结构不导出数据，–no-data</h4><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -proot <span class="params">--no-data</span> <span class="params">--databases</span> db1 &gt;<span class="string">/tmp/db1.sql</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="7-跨服务器导出导入数据"><a href="#7-跨服务器导出导入数据" class="headerlink" title="7.跨服务器导出导入数据"></a>7.跨服务器导出导入数据</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysqldump --host=h1 -uroot -proot --databases db1 |mysql --host=h2 -uroot -proot db2</span><br><span class="line"></span><br><span class="line">注：将h1服务器中的db1数据库的所有数据导入到h2中的db2数据库中，db2的数据库必须存在否则会报错</span><br></pre></td></tr></table></figure>
+<h4 id="7-跨服务器导出导入数据"><a href="#7-跨服务器导出导入数据" class="headerlink" title="7.跨服务器导出导入数据"></a>7.跨服务器导出导入数据</h4><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysqldump <span class="attribute">--host</span>=h1 -uroot -proot --databases db1 |mysql <span class="attribute">--host</span>=h2 -uroot -proot db2</span><br><span class="line"></span><br><span class="line">注：将h1服务器中的db1数据库的所有数据导入到h2中的db2数据库中，db2的数据库必须存在否则会报错</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysqldump --host=h1 -uroot -proot -C --databases db1 |mysql --host=h2 -uroot -proot db2</span><br><span class="line"></span><br><span class="line">加上-C参数启用压缩传递</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysqldump <span class="attribute">--host</span>=h1 -uroot -proot -C --databases db1 |mysql <span class="attribute">--host</span>=h2 -uroot -proot db2</span><br><span class="line"></span><br><span class="line">加上-C参数启用压缩传递</span><br></pre></td></tr></table></figure>
 
-<h4 id="8-将主库的binlog位置和文件名追加到导出数据的文件中-–dump-slave"><a href="#8-将主库的binlog位置和文件名追加到导出数据的文件中-–dump-slave" class="headerlink" title="8.将主库的binlog位置和文件名追加到导出数据的文件中,–dump-slave"></a>8.将主库的binlog位置和文件名追加到导出数据的文件中,–dump-slave</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">注意：</span><br><span class="line">如果当前服务器是slave服务器那么使用该命令会执行stop slave来获取master binlog的文件和位置，等备份完后会自动执行start slave启动该slave服务器。</span><br><span class="line"></span><br><span class="line">但是如果是大的数据量备份会给slave和master的延时变的更大，使用--dump-slave获取到的只是当前的从服务器的数据执行到的主的binglog的位置是（relay_mater_log_file,exec_master_log_pos),而不是主服务器当前的binlog执行的位置，主要是取决于主从的数据延时。</span><br></pre></td></tr></table></figure>
+<h4 id="8-将主库的binlog位置和文件名追加到导出数据的文件中-–dump-slave"><a href="#8-将主库的binlog位置和文件名追加到导出数据的文件中-–dump-slave" class="headerlink" title="8.将主库的binlog位置和文件名追加到导出数据的文件中,–dump-slave"></a>8.将主库的binlog位置和文件名追加到导出数据的文件中,–dump-slave</h4><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">注意：</span><br><span class="line">如果当前服务器是<span class="literal">slave</span>服务器那么使用该命令会执行<span class="literal">stop</span> <span class="literal">slave</span>来获取<span class="keyword">master</span> <span class="title">binlog</span>的文件和位置，等备份完后会自动执行<span class="literal">start</span> <span class="literal">slave</span>启动该<span class="literal">slave</span>服务器。</span><br><span class="line"></span><br><span class="line">但是如果是大的数据量备份会给<span class="literal">slave</span>和<span class="literal">master</span>的延时变的更大，使用--dump-<span class="literal">slave</span>获取到的只是当前的从服务器的数据执行到的主的binglog的位置是（relay_mater_log_file,exec_master_log_pos),而不是主服务器当前的binlog执行的位置，主要是取决于主从的数据延时。</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">当该参数在slave服务器上执行时，相当于执行show slave status。当设置为1时，将会以CHANGE MASTER命令输出到数据文件；设置为2时，会在change前加上注释。</span><br><span class="line"></span><br><span class="line">mysqldump -uroot -proot --dump-slave=1 --databases db1 &gt;/tmp/db1.sql</span><br><span class="line">mysqldump -uroot -proot --dump-slave=2 --database db1 &gt;/tmp/db1.sql</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">当该参数在slave服务器上执行时，相当于执行<span class="keyword">show</span> <span class="keyword">slave</span> <span class="keyword">status</span>。当设置为<span class="number">1</span>时，将会以<span class="keyword">CHANGE</span> <span class="keyword">MASTER</span>命令输出到数据文件；设置为<span class="number">2</span>时，会在<span class="keyword">change</span>前加上注释。</span><br><span class="line"></span><br><span class="line">mysqldump -uroot -proot <span class="comment">--dump-slave=1 --databases db1 &gt;/tmp/db1.sql</span></span><br><span class="line">mysqldump -uroot -proot <span class="comment">--dump-slave=2 --database db1 &gt;/tmp/db1.sql</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="9-将当前服务器的binlog的位置和文件名追加输出到文件，–master-data"><a href="#9-将当前服务器的binlog的位置和文件名追加输出到文件，–master-data" class="headerlink" title="9.将当前服务器的binlog的位置和文件名追加输出到文件，–master-data"></a>9.将当前服务器的binlog的位置和文件名追加输出到文件，–master-data</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">该参数和--dump-slave方法一样，只是它是记录的是当前服务器的binlog，相当于执行show master status，状态（file,position)的值。</span><br><span class="line"></span><br><span class="line">注意：--master-data不会停止当前服务器的主从服务</span><br></pre></td></tr></table></figure>
+<h4 id="9-将当前服务器的binlog的位置和文件名追加输出到文件，–master-data"><a href="#9-将当前服务器的binlog的位置和文件名追加输出到文件，–master-data" class="headerlink" title="9.将当前服务器的binlog的位置和文件名追加输出到文件，–master-data"></a>9.将当前服务器的binlog的位置和文件名追加输出到文件，–master-data</h4><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">该参数和--dump-<span class="literal">slave</span>方法一样，只是它是记录的是当前服务器的binlog，相当于执行show <span class="keyword">master</span> <span class="title">status</span>，状态（file,position)的值。</span><br><span class="line"></span><br><span class="line">注意：--<span class="literal">master</span>-data不会停止当前服务器的主从服务</span><br></pre></td></tr></table></figure>
 
-<h4 id="10-–opt和–skip-opt"><a href="#10-–opt和–skip-opt" class="headerlink" title="10.–opt和–skip-opt"></a>10.–opt和–skip-opt</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">等同于--add-drop-table, --add-locks, --create-options, --quick, --extended-insert, --lock-tables, --set-charset, --disable-keys 该选项默认开启, 可以用--skip-opt禁用，来避免锁表。</span><br><span class="line"></span><br><span class="line">#避免备份过程中锁表</span><br><span class="line">mysqldump -uroot -p --host=h1 --all-databases --skip-opt</span><br></pre></td></tr></table></figure>
+<h4 id="10-–opt和–skip-opt"><a href="#10-–opt和–skip-opt" class="headerlink" title="10.–opt和–skip-opt"></a>10.–opt和–skip-opt</h4><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">等同于<span class="params">--add-drop-table</span>, <span class="params">--add-locks</span>, <span class="params">--create-options</span>, <span class="params">--quick</span>, <span class="params">--extended-insert</span>, <span class="params">--lock-tables</span>, <span class="params">--set-charset</span>, <span class="params">--disable-keys</span> 该选项默认开启, 可以用<span class="params">--skip-opt</span>禁用，来避免锁表。</span><br><span class="line"></span><br><span class="line"><span class="comment">#避免备份过程中锁表</span></span><br><span class="line">mysqldump -uroot -p <span class="params">--host=h1</span> <span class="params">--all-databases</span> <span class="params">--skip-opt</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="11-保证导出的一致性状态-–single-transaction"><a href="#11-保证导出的一致性状态-–single-transaction" class="headerlink" title="11.保证导出的一致性状态, –single-transaction"></a>11.保证导出的一致性状态, –single-transaction</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">该选项在导出数据之前提交一个BEGIN SQL语句，BEGIN 不会阻塞任何应用程序且能保证导出时数据库的一致性状态。它只适用于多版本存储引擎（它不显示加锁通过判断版本来对比数据），仅InnoDB。本选项和--lock-tables 选项是互斥的，因为LOCK TABLES 会使任何挂起的事务隐含提交。要想导出大表的话，应结合使用--quick 选项。</span><br></pre></td></tr></table></figure>
+<h4 id="11-保证导出的一致性状态-–single-transaction"><a href="#11-保证导出的一致性状态-–single-transaction" class="headerlink" title="11.保证导出的一致性状态, –single-transaction"></a>11.保证导出的一致性状态, –single-transaction</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">该选项在导出数据之前提交一个<span class="keyword">BEGIN</span> <span class="keyword">SQL</span>语句，<span class="keyword">BEGIN</span> 不会阻塞任何应用程序且能保证导出时数据库的一致性状态。它只适用于多版本存储引擎（它不显示加锁通过判断版本来对比数据），仅<span class="keyword">InnoDB</span>。本选项和<span class="comment">--lock-tables 选项是互斥的，因为LOCK TABLES 会使任何挂起的事务隐含提交。要想导出大表的话，应结合使用--quick 选项。</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">--quick, -q</span><br><span class="line">不缓冲查询，直接导出到标准输出。默认为打开状态，使用--skip-quick取消该选项。</span><br></pre></td></tr></table></figure>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--quick, -q</span></span><br><span class="line">不缓冲查询，直接导出到标准输出。默认为打开状态，使用<span class="comment">--skip-quick取消该选项。</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="12-开始导出前，锁定所有表-–lock-tables-l"><a href="#12-开始导出前，锁定所有表-–lock-tables-l" class="headerlink" title="12.开始导出前，锁定所有表, –lock-tables,-l"></a>12.开始导出前，锁定所有表, –lock-tables,-l</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">用READ LOCAL锁定表以允许MyISAM表并行插入。对于支持事务的表例如InnoDB和BDB，--single-transaction是一个更好的选择，因为它根本不需要锁定表。</span><br><span class="line"></span><br><span class="line">请注意当导出多个数据库时，--lock-tables分别为每个数据库锁定表。因此，该选项不能保证导出文件中的表在数据库之间的逻辑一致性。不同数据库表的导出状态可以完全不同。</span><br></pre></td></tr></table></figure>
+<h4 id="12-开始导出前，锁定所有表-–lock-tables-l"><a href="#12-开始导出前，锁定所有表-–lock-tables-l" class="headerlink" title="12.开始导出前，锁定所有表, –lock-tables,-l"></a>12.开始导出前，锁定所有表, –lock-tables,-l</h4><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">用READ LOCAL锁定表以允许MyISAM表并行插入。对于支持事务的表例如InnoDB和BDB，<span class="comment">--single-transaction是一个更好的选择，因为它根本不需要锁定表。</span></span><br><span class="line"></span><br><span class="line">请注意当导出多个数据库时，<span class="comment">--lock-tables分别为每个数据库锁定表。因此，该选项不能保证导出文件中的表在数据库之间的逻辑一致性。不同数据库表的导出状态可以完全不同。</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="13-导出存储过程和自定义函数-–routines-R"><a href="#13-导出存储过程和自定义函数-–routines-R" class="headerlink" title="13.导出存储过程和自定义函数, –routines, -R"></a>13.导出存储过程和自定义函数, –routines, -R</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump  -uroot -p --host=localhost --all-databases --routines</span><br></pre></td></tr></table></figure>
+<h4 id="13-导出存储过程和自定义函数-–routines-R"><a href="#13-导出存储过程和自定义函数-–routines-R" class="headerlink" title="13.导出存储过程和自定义函数, –routines, -R"></a>13.导出存储过程和自定义函数, –routines, -R</h4><figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">mysqldump</span>  <span class="literal">-</span><span class="comment">uroot</span> <span class="literal">-</span><span class="comment">p</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">host=localhost</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">all</span><span class="literal">-</span><span class="comment">databases</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">routines</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="14-压缩备份-还原"><a href="#14-压缩备份-还原" class="headerlink" title="14.压缩备份+还原"></a>14.压缩备份+还原</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">压缩备份</span><br><span class="line">mysqldump -uroot -p -P3306 -q -Q --default-character-set=utf8 --hex-blob --skip-lock-tables --databases abc 2&gt;/abc.err |gzip &gt;/abc.sql.gz</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">注：</span><br><span class="line">-q或--quick :不缓冲查询，直接导出到标准输出。默认为打开状态，使用--skip-quick取消该选项。</span><br><span class="line">-Q或--quote-names: 使用（`）引起表和列名。默认为打开状态，使用--skip-quote-names取消该选项。</span><br><span class="line">--default-character-set: 设置默认字符集,默认为utf-8</span><br><span class="line">--hex-blob:使用十六进制格式导出二进制字符串字段。如果有二进制数据就必须使用该选项。影响到的字段类型有BINARY、VARBINARY、BLOB。</span><br></pre></td></tr></table></figure>
+<h4 id="14-压缩备份-还原"><a href="#14-压缩备份-还原" class="headerlink" title="14.压缩备份+还原"></a>14.压缩备份+还原</h4><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">压缩备份</span><br><span class="line">mysqldump -uroot -p -P3306 -q -Q <span class="params">--default-character-set=utf8</span> <span class="params">--hex-blob</span> <span class="params">--skip-lock-tables</span> <span class="params">--databases</span> abc 2&gt;<span class="string">/abc.err</span> |gzip &gt;<span class="string">/abc.sql.gz</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">注：</span><br><span class="line">-q或<span class="params">--quick</span> :不缓冲查询，直接导出到标准输出。默认为打开状态，使用<span class="params">--skip-quick</span>取消该选项。</span><br><span class="line">-Q或<span class="params">--quote-names</span>: 使用（`）引起表和列名。默认为打开状态，使用<span class="params">--skip-quote-names</span>取消该选项。</span><br><span class="line"><span class="params">--default-character-set</span>: 设置默认字符集,默认为utf-8</span><br><span class="line"><span class="params">--hex-blob</span>:使用十六进制格式导出二进制字符串字段。如果有二进制数据就必须使用该选项。影响到的字段类型有BINARY、VARBINARY、BLOB。</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">还原</span><br><span class="line">gunzip -c abc.sql.gz |mysql -uroot -p -vvv -P3306 --default-character-set=utf8 abc 1&gt; abc.log 2&gt;abc.err</span><br></pre></td></tr></table></figure>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">还原</span><br><span class="line">gunzip -<span class="keyword">c</span> <span class="keyword">abc</span>.sql.gz |mysql -uroot -<span class="keyword">p</span> -vvv -P3306 --default-character-<span class="keyword">set</span>=utf8 <span class="keyword">abc</span> <span class="number">1</span>&gt; <span class="keyword">abc</span>.<span class="built_in">log</span> <span class="number">2</span>&gt;<span class="keyword">abc</span>.err</span><br></pre></td></tr></table></figure>
 
-<h2 id="附录：参数说明："><a href="#附录：参数说明：" class="headerlink" title="附录：参数说明："></a>附录：参数说明：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br></pre></td><td class="code"><pre><span class="line">--all-databases  , -A: 导出全部数据库。</span><br><span class="line">mysqldump  -uroot -p --all-databases</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--all-tablespaces  , -Y: 导出全部表空间。</span><br><span class="line">mysqldump  -uroot -p --all-databases --all-tablespaces</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--no-tablespaces  , -y: 不导出任何表空间信息。</span><br><span class="line">mysqldump  -uroot -p --all-databases --no-tablespaces</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--add-drop-database: 每个数据库创建之前添加drop数据库语句。</span><br><span class="line">mysqldump  -uroot -p --all-databases --add-drop-database --add-drop-table</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">每个数据表创建之前添加drop数据表语句。(默认为打开状态，使用--skip-add-drop-table取消选项)</span><br><span class="line">mysqldump  -uroot -p --all-databases  (默认添加drop语句)</span><br><span class="line">mysqldump  -uroot -p --all-databases –skip-add-drop-table  (取消drop语句)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--add-locks: 在每个表导出之前增加LOCK TABLES并且之后UNLOCK TABLE。(默认为打开状态，使用--skip-add-locks取消选项)</span><br><span class="line">mysqldump  -uroot -p --all-databases  (默认添加LOCK语句)</span><br><span class="line">mysqldump  -uroot -p --all-databases –skip-add-locks   (取消LOCK语句)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--allow-keywords: 允许创建是关键词的列名字。这由表名前缀于每个列名做到。</span><br><span class="line">mysqldump  -uroot -p --all-databases --allow-keywords</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--apply-slave-statements: 在&apos;CHANGE MASTER&apos;前添加&apos;STOP SLAVE&apos;，并且在导出的最后添加&apos;START SLAVE&apos;。</span><br><span class="line">mysqldump  -uroot -p --all-databases --apply-slave-statements</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--character-sets-dir:字符集文件的目录</span><br><span class="line">mysqldump  -uroot -p --all-databases  --character-sets-dir=/usr/local/mysql/share/mysql/charsets</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--comments: 附加注释信息。默认为打开，可以用--skip-comments取消</span><br><span class="line">mysqldump  -uroot -p --all-databases  (默认记录注释)</span><br><span class="line">mysqldump  -uroot -p --all-databases --skip-comments   (取消注释)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--compatible: 导出的数据将和其它数据库或旧版本的MySQL 相兼容。值可以为ansi、mysql323、mysql40、postgresql、oracle、mssql、db2、maxdb、no_key_options、no_tables_options、no_field_options等，</span><br><span class="line">要使用几个值，用逗号将它们隔开。它并不保证能完全兼容，而是尽量兼容。</span><br><span class="line">mysqldump  -uroot -p --all-databases --compatible=ansi</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--compact: 导出更少的输出信息(用于调试)。去掉注释和头尾等结构。</span><br><span class="line">mysqldump  -uroot -p --all-databases --compact</span><br><span class="line"></span><br><span class="line">--complete-insert,  -c</span><br><span class="line">使用完整的insert语句(包含列名称)。这么做能提高插入效率，但是可能会受到max_allowed_packet参数的影响而导致插入失败。</span><br><span class="line">mysqldump  -uroot -p --all-databases --complete-insert</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--compress, -C :在客户端和服务器之间启用压缩传递所有信息</span><br><span class="line">mysqldump  -uroot -p --all-databases --compress</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--create-options,-a :在CREATE TABLE语句中包括所有MySQL特性选项。(默认为打开状态)</span><br><span class="line">mysqldump  -uroot -p --all-databases</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--databases,-B:导出几个数据库。参数后面所有名字参量都被看作数据库名。</span><br><span class="line">mysqldump  -uroot -p --databases test mysql</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--debug: 输出debug信息，用于调试。默认值为：d:t,/tmp/mysqldump.trace</span><br><span class="line">mysqldump  -uroot -p --all-databases --debug</span><br><span class="line">mysqldump  -uroot -p --all-databases --debug=” d:t,/tmp/debug.trace”</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--debug-check: 检查内存和打开文件使用说明并退出。</span><br><span class="line">mysqldump  -uroot -p --all-databases --debug-check</span><br><span class="line"></span><br><span class="line">--debug-info: 输出调试信息并退出</span><br><span class="line">mysqldump  -uroot -p --all-databases --debug-info</span><br><span class="line"></span><br><span class="line">--default-character-set: 设置默认字符集，默认值为utf8</span><br><span class="line">mysqldump  -uroot -p --all-databases --default-character-set=utf8</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--delayed-insert: 采用延时插入方式（INSERT DELAYED）导出数据</span><br><span class="line">mysqldump  -uroot -p --all-databases --delayed-insert</span><br><span class="line"></span><br><span class="line">--delete-master-logs: master备份后删除日志. 这个参数将自动激活--master-data。</span><br><span class="line">mysqldump  -uroot -p --all-databases --delete-master-logs</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--disable-keys</span><br><span class="line">对于每个表，用/*!40000 ALTER TABLE tbl_name DISABLE KEYS */;和/*!40000 ALTER TABLE tbl_name ENABLE KEYS */;语句引用INSERT语句。这样可以更快地导入dump出来的文件，因为它是在插入所有行后创建索引的。该选项只适合MyISAM表，默认为打开状态。</span><br><span class="line">mysqldump  -uroot -p --all-databases </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--dump-slave</span><br><span class="line">该选项将主的binlog位置和文件名追加到导出数据的文件中(show slave status)。设置为1时，将会以CHANGE MASTER命令输出到数据文件；设置为2时，会在change前加上注释。该选项将会打开--lock-all-tables，除非--single-transaction被指定。该选项会自动关闭--lock-tables选项。默认值为0。</span><br><span class="line">mysqldump  -uroot -p --all-databases --dump-slave=1</span><br><span class="line">mysqldump  -uroot -p --all-databases --dump-slave=2</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--master-data</span><br><span class="line">该选项将当前服务器的binlog的位置和文件名追加到输出文件中(show master status)。如果为1，将会输出CHANGE MASTER 命令；如果为2，输出的CHANGE  MASTER命令前添加注释信息。该选项将打开--lock-all-tables 选项，除非--single-transaction也被指定（在这种情况下，全局读锁在开始导出时获得很短的时间；其他内容参考下面的--single-transaction选项）。该选项自动关闭--lock-tables选项。</span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases --master-data=1;</span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases --master-data=2;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--events, -E : 导出事件。</span><br><span class="line">mysqldump  -uroot -p --all-databases --events</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--extended-insert,  -e</span><br><span class="line">使用具有多个VALUES列的INSERT语法。这样使导出文件更小，并加速导入时的速度。默认为打开状态，使用--skip-extended-insert取消选项。</span><br><span class="line">mysqldump  -uroot -p --all-databases</span><br><span class="line">mysqldump  -uroot -p --all-databases--skip-extended-insert   (取消选项)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--fields-terminated-by</span><br><span class="line">导出文件中忽略给定字段。与--tab选项一起使用，不能用于--databases和--all-databases选项</span><br><span class="line">mysqldump  -uroot -p test test --tab=”/home/mysql” --fields-terminated-by=”#”</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--fields-enclosed-by</span><br><span class="line">输出文件中的各个字段用给定字符包裹。与--tab选项一起使用，不能用于--databases和--all-databases选项</span><br><span class="line">mysqldump  -uroot -p test test --tab=”/home/mysql” --fields-enclosed-by=”#”</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--fields-optionally-enclosed-by</span><br><span class="line">输出文件中的各个字段用给定字符选择性包裹。与--tab选项一起使用，不能用于--databases和--all-databases选项</span><br><span class="line">mysqldump  -uroot -p test test --tab=”/home/mysql”  --fields-enclosed-by=”#” --fields-optionally-enclosed-by=”#”</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--fields-escaped-by</span><br><span class="line">输出文件中的各个字段忽略给定字符。与--tab选项一起使用，不能用于--databases和--all-databases选项</span><br><span class="line">mysqldump  -uroot -p mysql user --tab=”/home/mysql” --fields-escaped-by=”#”</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--flush-logs : 开始导出之前刷新日志。</span><br><span class="line">请注意：假如一次导出多个数据库(使用选项--databases或者--all-databases)，将会逐个数据库刷新日志。除使用--lock-all-tables或者--master-data外。在这种情况下，日志将会被刷新一次，相应的所以表同时被锁定。因此，如果打算同时导出和刷新日志应该使用--lock-all-tables 或者--master-data 和--flush-logs。</span><br><span class="line">mysqldump  -uroot -p --all-databases --flush-logs</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--flush-privileges</span><br><span class="line">在导出mysql数据库之后，发出一条FLUSH  PRIVILEGES语句。为了正确恢复，该选项应该用于导出mysql数据库和依赖mysql数据库数据的任何时候。</span><br><span class="line">mysqldump  -uroot -p --all-databases --flush-privileges</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--force: 在导出过程中忽略出现的SQL错误。</span><br><span class="line">mysqldump  -uroot -p --all-databases --force</span><br><span class="line"></span><br><span class="line">--help: 显示帮助信息并退出。</span><br><span class="line">mysqldump  --help</span><br><span class="line"></span><br><span class="line">--hex-blob</span><br><span class="line">使用十六进制格式导出二进制字符串字段。如果有二进制数据就必须使用该选项。影响到的字段类型有BINARY、VARBINARY、BLOB。</span><br><span class="line">mysqldump  -uroot -p --all-databases --hex-blob</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--host, -h : 需要导出的主机信息</span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--ignore-table</span><br><span class="line">不导出指定表。指定忽略多个表时，需要重复多次，每次一个表。每个表必须同时指定数据库和表名。例如：--ignore-table=database.table1 --ignore-table=database.table2 ……</span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases --ignore-table=mysql.user</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--include-master-host-port</span><br><span class="line">在--dump-slave产生的&apos;CHANGE  MASTER TO..&apos;语句中增加&apos;MASTER_HOST=&lt;host&gt;，MASTER_PORT=&lt;port&gt;&apos;  </span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases --include-master-host-port</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--insert-ignore: 在插入行时使用INSERT IGNORE语句.</span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases --insert-ignore</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--lines-terminated-by</span><br><span class="line">输出文件的每行用给定字符串划分。与--tab选项一起使用，不能用于--databases和--all-databases选项。</span><br><span class="line">mysqldump  -uroot -p --host=localhost test test --tab=”/tmp/mysql”  --lines-terminated-by=”##”</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--lock-all-tables,  -x</span><br><span class="line">提交请求锁定所有数据库中的所有表，以保证数据的一致性。这是一个全局读锁，并且自动关闭--single-transaction 和--lock-tables 选项。</span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases --lock-all-tables</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--lock-tables,  -l</span><br><span class="line">开始导出前，锁定所有表。用READ  LOCAL锁定表以允许MyISAM表并行插入。对于支持事务的表例如InnoDB和BDB，--single-transaction是一个更好的选择，因为它根本不需要锁定表。</span><br><span class="line">请注意当导出多个数据库时，--lock-tables分别为每个数据库锁定表。因此，该选项不能保证导出文件中的表在数据库之间的逻辑一致性。不同数据库表的导出状态可以完全不同。</span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases --lock-tables</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--log-error: 附加警告和错误信息到给定文件</span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases  --log-error=/tmp/mysqldump_error_log.err</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--max_allowed_packet: 服务器发送和接受的最大包长度。</span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases --max_allowed_packet=10240</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--net_buffer_length : TCP/IP和socket连接的缓存大小。</span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases --net_buffer_length=1024</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--no-autocommit: 使用autocommit/commit 语句包裹表。</span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases --no-autocommit</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--no-create-db,  -n: 只导出数据，而不添加CREATE DATABASE 语句。</span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases --no-create-db</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--no-create-info,-t :只导出数据，而不添加CREATE TABLE 语句。</span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases --no-create-info</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--no-data, -d : 不导出任何数据，只导出数据库表结构。</span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases --no-data</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--no-set-names,-N :等同于--skip-set-charset</span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases --no-set-names</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--opt</span><br><span class="line">等同于--add-drop-table,  --add-locks, --create-options, --quick, --extended-insert, --lock-tables,  --set-charset, --disable-keys 该选项默认开启,  可以用--skip-opt禁用.</span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases --opt</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--order-by-primary</span><br><span class="line">如果存在主键，或者第一个唯一键，对每个表的记录进行排序。在导出MyISAM表到InnoDB表时有效，但会使得导出工作花费很长时间。 </span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases --order-by-primary</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--password, -p :连接数据库密码</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--port, -P :连接数据库端口号</span><br><span class="line">--protocol :使用的连接协议，包括：tcp, socket, pipe, memory.</span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases --protocol=tcp</span><br><span class="line"></span><br><span class="line">--quick, -q :不缓冲查询，直接导出到标准输出。默认为打开状态，使用--skip-quick取消该选项。</span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases </span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases --skip-quick</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--quote-names,-Q :使用（`）引起表和列名。默认为打开状态，使用--skip-quote-names取消该选项。</span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases</span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases --skip-quote-names</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--replace :使用REPLACE INTO 取代INSERT INTO.</span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases --replace</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--result-file,  -r</span><br><span class="line">直接输出到指定文件中。该选项应该用在使用回车换行对（\\r\\n）换行的系统上（例如：DOS，Windows）。该选项确保只有一行被使用。</span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases --result-file=/tmp/mysqldump_result_file.txt</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--routines, -R :导出存储过程以及自定义函数。</span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases --routines</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--set-charset</span><br><span class="line">添加&apos;SET NAMES  default_character_set&apos;到输出文件。默认为打开状态，使用--skip-set-charset关闭选项。</span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases </span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases --skip-set-charset</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--single-transaction</span><br><span class="line">该选项在导出数据之前提交一个BEGIN SQL语句，BEGIN 不会阻塞任何应用程序且能保证导出时数据库的一致性状态。它只适用于多版本存储引擎，仅InnoDB。本选项和--lock-tables 选项是互斥的，因为LOCK  TABLES 会使任何挂起的事务隐含提交。要想导出大表的话，应结合使用--quick 选项。</span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases --single-transaction</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--dump-date :将导出时间添加到输出文件中。默认为打开状态，使用--skip-dump-date关闭选项。</span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases</span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases --skip-dump-date</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--skip-opt: 禁用–opt选项.</span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases --skip-opt</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--socket,-S</span><br><span class="line">指定连接mysql的socket文件位置，默认路径/tmp/mysql.sock</span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases --socket=/tmp/mysqld.sock</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--tab,-T</span><br><span class="line">为每个表在给定路径创建tab分割的文本文件。注意：仅仅用于mysqldump和mysqld服务器运行在相同机器上。注意使用--tab不能指定--databases参数</span><br><span class="line">mysqldump  -uroot -p --host=localhost test test --tab=&quot;/home/mysql&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--tables</span><br><span class="line">覆盖--databases (-B)参数，指定需要导出的表名，在后面的版本会使用table取代tables。</span><br><span class="line">mysqldump  -uroot -p --host=localhost --databases test --tables test</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--triggers: 导出触发器。该选项默认启用，用--skip-triggers禁用它。</span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases --triggers</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--tz-utc</span><br><span class="line">在导出顶部设置时区TIME_ZONE=&apos;+00:00&apos; ，以保证在不同时区导出的TIMESTAMP 数据或者数据被移动其他时区时的正确性。</span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases --tz-utc</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--user, -u :指定连接的用户名。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--verbose, --v :输出多种平台信息。</span><br><span class="line">--version, -V  :输出mysqldump版本信息并退出</span><br><span class="line">--where, -w</span><br><span class="line">只转储给定的WHERE条件选择的记录。请注意如果条件包含命令解释符专用空格或字符，一定要将条件引用起来。</span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases --where=” user=’root’”</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--xml, -X :导出XML格式.</span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases --xml</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--plugin_dir :客户端插件的目录，用于兼容不同的插件版本。</span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases --plugin_dir=”/usr/local/lib/plugin”</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--default_auth :客户端插件默认使用权限。</span><br><span class="line">mysqldump  -uroot -p --host=localhost --all-databases --default-auth=”/usr/local/lib/plugin/&lt;PLUGIN&gt;”</span><br></pre></td></tr></table></figure>
+<h2 id="附录：参数说明："><a href="#附录：参数说明：" class="headerlink" title="附录：参数说明："></a>附录：参数说明：</h2><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br></pre></td><td class="code"><pre><span class="line"><span class="params">--all-databases</span>  , -A: 导出全部数据库。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--all-databases</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--all-tablespaces</span>  , -Y: 导出全部表空间。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--all-databases</span> <span class="params">--all-tablespaces</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--no-tablespaces</span>  , -y: 不导出任何表空间信息。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--all-databases</span> <span class="params">--no-tablespaces</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--add-drop-database</span>: 每个数据库创建之前添加drop数据库语句。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--all-databases</span> <span class="params">--add-drop-database</span> <span class="params">--add-drop-table</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">每个数据表创建之前添加drop数据表语句。<span class="params">(默认为打开状态，使用--skip-add-drop-table取消选项)</span></span><br><span class="line">mysqldump  -uroot -p <span class="params">--all-databases</span>  <span class="params">(默认添加drop语句)</span></span><br><span class="line">mysqldump  -uroot -p <span class="params">--all-databases</span> –skip-add-drop-table  <span class="params">(取消drop语句)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--add-locks</span>: 在每个表导出之前增加LOCK TABLES并且之后UNLOCK TABLE。<span class="params">(默认为打开状态，使用--skip-add-locks取消选项)</span></span><br><span class="line">mysqldump  -uroot -p <span class="params">--all-databases</span>  <span class="params">(默认添加LOCK语句)</span></span><br><span class="line">mysqldump  -uroot -p <span class="params">--all-databases</span> –skip-add-locks   <span class="params">(取消LOCK语句)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--allow-keywords</span>: 允许创建是关键词的列名字。这由表名前缀于每个列名做到。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--all-databases</span> <span class="params">--allow-keywords</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--apply-slave-statements</span>: 在'CHANGE MASTER'前添加'STOP SLAVE'，并且在导出的最后添加'START SLAVE'。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--all-databases</span> <span class="params">--apply-slave-statements</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--character-sets-dir</span>:字符集文件的目录</span><br><span class="line">mysqldump  -uroot -p <span class="params">--all-databases</span>  <span class="params">--character-sets-dir=/usr/local/mysql/share/mysql/charsets</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--comments</span>: 附加注释信息。默认为打开，可以用<span class="params">--skip-comments</span>取消</span><br><span class="line">mysqldump  -uroot -p <span class="params">--all-databases</span>  <span class="params">(默认记录注释)</span></span><br><span class="line">mysqldump  -uroot -p <span class="params">--all-databases</span> <span class="params">--skip-comments</span>   <span class="params">(取消注释)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--compatible</span>: 导出的数据将和其它数据库或旧版本的MySQL 相兼容。值可以为ansi、mysql323、mysql40、postgresql、oracle、mssql、db2、maxdb、no_key_options、no_tables_options、no_field_options等，</span><br><span class="line">要使用几个值，用逗号将它们隔开。它并不保证能完全兼容，而是尽量兼容。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--all-databases</span> <span class="params">--compatible=ansi</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--compact</span>: 导出更少的输出信息<span class="params">(用于调试)</span>。去掉注释和头尾等结构。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--all-databases</span> <span class="params">--compact</span></span><br><span class="line"></span><br><span class="line"><span class="params">--complete-insert</span>,  -c</span><br><span class="line">使用完整的insert语句<span class="params">(包含列名称)</span>。这么做能提高插入效率，但是可能会受到max_allowed_packet参数的影响而导致插入失败。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--all-databases</span> <span class="params">--complete-insert</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--compress</span>, -C :在客户端和服务器之间启用压缩传递所有信息</span><br><span class="line">mysqldump  -uroot -p <span class="params">--all-databases</span> <span class="params">--compress</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--create-options</span>,-a :在CREATE TABLE语句中包括所有MySQL特性选项。<span class="params">(默认为打开状态)</span></span><br><span class="line">mysqldump  -uroot -p <span class="params">--all-databases</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--databases</span>,-B:导出几个数据库。参数后面所有名字参量都被看作数据库名。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--databases</span> test mysql</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--debug</span>: 输出debug信息，用于调试。默认值为：d<span class="function">:t</span>,<span class="string">/tmp/mysqldump.trace</span></span><br><span class="line">mysqldump  -uroot -p <span class="params">--all-databases</span> <span class="params">--debug</span></span><br><span class="line">mysqldump  -uroot -p <span class="params">--all-databases</span> <span class="params">--debug=</span>” d<span class="function">:t</span>,<span class="string">/tmp/debug.trace</span>”</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--debug-check</span>: 检查内存和打开文件使用说明并退出。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--all-databases</span> <span class="params">--debug-check</span></span><br><span class="line"></span><br><span class="line"><span class="params">--debug-info</span>: 输出调试信息并退出</span><br><span class="line">mysqldump  -uroot -p <span class="params">--all-databases</span> <span class="params">--debug-info</span></span><br><span class="line"></span><br><span class="line"><span class="params">--default-character-set</span>: 设置默认字符集，默认值为utf8</span><br><span class="line">mysqldump  -uroot -p <span class="params">--all-databases</span> <span class="params">--default-character-set=utf8</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--delayed-insert</span>: 采用延时插入方式（INSERT DELAYED）导出数据</span><br><span class="line">mysqldump  -uroot -p <span class="params">--all-databases</span> <span class="params">--delayed-insert</span></span><br><span class="line"></span><br><span class="line"><span class="params">--delete-master-logs</span>: master备份后删除日志. 这个参数将自动激活<span class="params">--master-data</span>。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--all-databases</span> <span class="params">--delete-master-logs</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--disable-keys</span></span><br><span class="line">对于每个表，用/*!40000 ALTER TABLE tbl_name DISABLE KEYS */;和/*!40000 ALTER TABLE tbl_name ENABLE KEYS */;语句引用INSERT语句。这样可以更快地导入dump出来的文件，因为它是在插入所有行后创建索引的。该选项只适合MyISAM表，默认为打开状态。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--all-databases</span> </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--dump-slave</span></span><br><span class="line">该选项将主的binlog位置和文件名追加到导出数据的文件中<span class="params">(show slave status)</span>。设置为1时，将会以CHANGE MASTER命令输出到数据文件；设置为2时，会在change前加上注释。该选项将会打开<span class="params">--lock-all-tables</span>，除非<span class="params">--single-transaction</span>被指定。该选项会自动关闭<span class="params">--lock-tables</span>选项。默认值为0。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--all-databases</span> <span class="params">--dump-slave=1</span></span><br><span class="line">mysqldump  -uroot -p <span class="params">--all-databases</span> <span class="params">--dump-slave=2</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--master-data</span></span><br><span class="line">该选项将当前服务器的binlog的位置和文件名追加到输出文件中<span class="params">(show master status)</span>。如果为1，将会输出CHANGE MASTER 命令；如果为2，输出的CHANGE  MASTER命令前添加注释信息。该选项将打开<span class="params">--lock-all-tables</span> 选项，除非<span class="params">--single-transaction</span>也被指定（在这种情况下，全局读锁在开始导出时获得很短的时间；其他内容参考下面的<span class="params">--single-transaction</span>选项）。该选项自动关闭<span class="params">--lock-tables</span>选项。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span> <span class="params">--master-data=1</span>;</span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span> <span class="params">--master-data=2</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--events</span>, -E : 导出事件。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--all-databases</span> <span class="params">--events</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--extended-insert</span>,  -e</span><br><span class="line">使用具有多个VALUES列的INSERT语法。这样使导出文件更小，并加速导入时的速度。默认为打开状态，使用<span class="params">--skip-extended-insert</span>取消选项。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--all-databases</span></span><br><span class="line">mysqldump  -uroot -p <span class="params">--all-databases--skip-extended-insert</span>   <span class="params">(取消选项)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--fields-terminated-by</span></span><br><span class="line">导出文件中忽略给定字段。与<span class="params">--tab</span>选项一起使用，不能用于<span class="params">--databases</span>和<span class="params">--all-databases</span>选项</span><br><span class="line">mysqldump  -uroot -p test test <span class="params">--tab=</span>”<span class="string">/home/mysql</span>” <span class="params">--fields-terminated-by=</span>”<span class="comment">#”</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--fields-enclosed-by</span></span><br><span class="line">输出文件中的各个字段用给定字符包裹。与<span class="params">--tab</span>选项一起使用，不能用于<span class="params">--databases</span>和<span class="params">--all-databases</span>选项</span><br><span class="line">mysqldump  -uroot -p test test <span class="params">--tab=</span>”<span class="string">/home/mysql</span>” <span class="params">--fields-enclosed-by=</span>”<span class="comment">#”</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--fields-optionally-enclosed-by</span></span><br><span class="line">输出文件中的各个字段用给定字符选择性包裹。与<span class="params">--tab</span>选项一起使用，不能用于<span class="params">--databases</span>和<span class="params">--all-databases</span>选项</span><br><span class="line">mysqldump  -uroot -p test test <span class="params">--tab=</span>”<span class="string">/home/mysql</span>”  <span class="params">--fields-enclosed-by=</span>”<span class="comment">#” --fields-optionally-enclosed-by=”#”</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--fields-escaped-by</span></span><br><span class="line">输出文件中的各个字段忽略给定字符。与<span class="params">--tab</span>选项一起使用，不能用于<span class="params">--databases</span>和<span class="params">--all-databases</span>选项</span><br><span class="line">mysqldump  -uroot -p mysql user <span class="params">--tab=</span>”<span class="string">/home/mysql</span>” <span class="params">--fields-escaped-by=</span>”<span class="comment">#”</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--flush-logs</span> : 开始导出之前刷新日志。</span><br><span class="line">请注意：假如一次导出多个数据库<span class="params">(使用选项--databases或者--all-databases)</span>，将会逐个数据库刷新日志。除使用<span class="params">--lock-all-tables</span>或者<span class="params">--master-data</span>外。在这种情况下，日志将会被刷新一次，相应的所以表同时被锁定。因此，如果打算同时导出和刷新日志应该使用<span class="params">--lock-all-tables</span> 或者<span class="params">--master-data</span> 和<span class="params">--flush-logs</span>。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--all-databases</span> <span class="params">--flush-logs</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--flush-privileges</span></span><br><span class="line">在导出mysql数据库之后，发出一条FLUSH  PRIVILEGES语句。为了正确恢复，该选项应该用于导出mysql数据库和依赖mysql数据库数据的任何时候。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--all-databases</span> <span class="params">--flush-privileges</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--force</span>: 在导出过程中忽略出现的SQL错误。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--all-databases</span> <span class="params">--force</span></span><br><span class="line"></span><br><span class="line"><span class="params">--help</span>: 显示帮助信息并退出。</span><br><span class="line">mysqldump  <span class="params">--help</span></span><br><span class="line"></span><br><span class="line"><span class="params">--hex-blob</span></span><br><span class="line">使用十六进制格式导出二进制字符串字段。如果有二进制数据就必须使用该选项。影响到的字段类型有BINARY、VARBINARY、BLOB。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--all-databases</span> <span class="params">--hex-blob</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--host</span>, -h : 需要导出的主机信息</span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--ignore-table</span></span><br><span class="line">不导出指定表。指定忽略多个表时，需要重复多次，每次一个表。每个表必须同时指定数据库和表名。例如：<span class="params">--ignore-table=database</span>.table1 <span class="params">--ignore-table=database</span>.table2 ……</span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span> <span class="params">--ignore-table=mysql</span>.user</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--include-master-host-port</span></span><br><span class="line">在<span class="params">--dump-slave</span>产生的'CHANGE  MASTER TO..'语句中增加'MASTER_HOST=&lt;host&gt;，MASTER_PORT=&lt;port&gt;'  </span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span> <span class="params">--include-master-host-port</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--insert-ignore</span>: 在插入行时使用INSERT IGNORE语句.</span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span> <span class="params">--insert-ignore</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--lines-terminated-by</span></span><br><span class="line">输出文件的每行用给定字符串划分。与<span class="params">--tab</span>选项一起使用，不能用于<span class="params">--databases</span>和<span class="params">--all-databases</span>选项。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> test test <span class="params">--tab=</span>”<span class="string">/tmp/mysql</span>”  <span class="params">--lines-terminated-by=</span>”<span class="comment">##”</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--lock-all-tables</span>,  -x</span><br><span class="line">提交请求锁定所有数据库中的所有表，以保证数据的一致性。这是一个全局读锁，并且自动关闭<span class="params">--single-transaction</span> 和<span class="params">--lock-tables</span> 选项。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span> <span class="params">--lock-all-tables</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--lock-tables</span>,  -l</span><br><span class="line">开始导出前，锁定所有表。用READ  LOCAL锁定表以允许MyISAM表并行插入。对于支持事务的表例如InnoDB和BDB，<span class="params">--single-transaction</span>是一个更好的选择，因为它根本不需要锁定表。</span><br><span class="line">请注意当导出多个数据库时，<span class="params">--lock-tables</span>分别为每个数据库锁定表。因此，该选项不能保证导出文件中的表在数据库之间的逻辑一致性。不同数据库表的导出状态可以完全不同。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span> <span class="params">--lock-tables</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--log-error</span>: 附加警告和错误信息到给定文件</span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span>  <span class="params">--log-error=/tmp/mysqldump_error_log</span>.err</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--max_allowed_packet</span>: 服务器发送和接受的最大包长度。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span> <span class="params">--max_allowed_packet=10240</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--net_buffer_length</span> : TCP/IP和socket连接的缓存大小。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span> <span class="params">--net_buffer_length=1024</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--no-autocommit</span>: 使用autocommit/commit 语句包裹表。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span> <span class="params">--no-autocommit</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--no-create-db</span>,  -n: 只导出数据，而不添加CREATE DATABASE 语句。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span> <span class="params">--no-create-db</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--no-create-info</span>,-t :只导出数据，而不添加CREATE TABLE 语句。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span> <span class="params">--no-create-info</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--no-data</span>, -d : 不导出任何数据，只导出数据库表结构。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span> <span class="params">--no-data</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--no-set-names</span>,-N :等同于<span class="params">--skip-set-charset</span></span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span> <span class="params">--no-set-names</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--opt</span></span><br><span class="line">等同于<span class="params">--add-drop-table</span>,  <span class="params">--add-locks</span>, <span class="params">--create-options</span>, <span class="params">--quick</span>, <span class="params">--extended-insert</span>, <span class="params">--lock-tables</span>,  <span class="params">--set-charset</span>, <span class="params">--disable-keys</span> 该选项默认开启,  可以用<span class="params">--skip-opt</span>禁用.</span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span> <span class="params">--opt</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--order-by-primary</span></span><br><span class="line">如果存在主键，或者第一个唯一键，对每个表的记录进行排序。在导出MyISAM表到InnoDB表时有效，但会使得导出工作花费很长时间。 </span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span> <span class="params">--order-by-primary</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--password</span>, -p :连接数据库密码</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--port</span>, -P :连接数据库端口号</span><br><span class="line"><span class="params">--protocol</span> :使用的连接协议，包括：tcp, socket, pipe, memory.</span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span> <span class="params">--protocol=tcp</span></span><br><span class="line"></span><br><span class="line"><span class="params">--quick</span>, -q :不缓冲查询，直接导出到标准输出。默认为打开状态，使用<span class="params">--skip-quick</span>取消该选项。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span> </span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span> <span class="params">--skip-quick</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--quote-names</span>,-Q :使用（`）引起表和列名。默认为打开状态，使用<span class="params">--skip-quote-names</span>取消该选项。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span></span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span> <span class="params">--skip-quote-names</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--replace</span> :使用REPLACE INTO 取代INSERT INTO.</span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span> <span class="params">--replace</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--result-file</span>,  -r</span><br><span class="line">直接输出到指定文件中。该选项应该用在使用回车换行对（\\r\\n）换行的系统上（例如：DOS，Windows）。该选项确保只有一行被使用。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span> <span class="params">--result-file=/tmp/mysqldump_result_file</span>.txt</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--routines</span>, -R :导出存储过程以及自定义函数。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span> <span class="params">--routines</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--set-charset</span></span><br><span class="line">添加'SET NAMES  default_character_<span class="keyword">set</span>'到输出文件。默认为打开状态，使用<span class="params">--skip-set-charset</span>关闭选项。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span> </span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span> <span class="params">--skip-set-charset</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--single-transaction</span></span><br><span class="line">该选项在导出数据之前提交一个BEGIN SQL语句，BEGIN 不会阻塞任何应用程序且能保证导出时数据库的一致性状态。它只适用于多版本存储引擎，仅InnoDB。本选项和<span class="params">--lock-tables</span> 选项是互斥的，因为LOCK  TABLES 会使任何挂起的事务隐含提交。要想导出大表的话，应结合使用<span class="params">--quick</span> 选项。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span> <span class="params">--single-transaction</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--dump-date</span> :将导出时间添加到输出文件中。默认为打开状态，使用<span class="params">--skip-dump-date</span>关闭选项。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span></span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span> <span class="params">--skip-dump-date</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--skip-opt</span>: 禁用–opt选项.</span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span> <span class="params">--skip-opt</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--socket</span>,-S</span><br><span class="line">指定连接mysql的socket文件位置，默认路径<span class="string">/tmp/mysql.sock</span></span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span> <span class="params">--socket=/tmp/mysqld</span>.sock</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--tab</span>,-T</span><br><span class="line">为每个表在给定路径创建tab分割的文本文件。注意：仅仅用于mysqldump和mysqld服务器运行在相同机器上。注意使用<span class="params">--tab</span>不能指定<span class="params">--databases</span>参数</span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> test test <span class="params">--tab=</span><span class="string">"/home/mysql"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--tables</span></span><br><span class="line">覆盖<span class="params">--databases</span> <span class="params">(-B)</span>参数，指定需要导出的表名，在后面的版本会使用table取代tables。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--databases</span> test <span class="params">--tables</span> test</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--triggers</span>: 导出触发器。该选项默认启用，用<span class="params">--skip-triggers</span>禁用它。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span> <span class="params">--triggers</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--tz-utc</span></span><br><span class="line">在导出顶部设置时区TIME_ZONE='+00<span class="function">:00</span>' ，以保证在不同时区导出的TIMESTAMP 数据或者数据被移动其他时区时的正确性。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span> <span class="params">--tz-utc</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--user</span>, -u :指定连接的用户名。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--verbose</span>, <span class="params">--v</span> :输出多种平台信息。</span><br><span class="line"><span class="params">--version</span>, -V  :输出mysqldump版本信息并退出</span><br><span class="line"><span class="params">--where</span>, -w</span><br><span class="line">只转储给定的WHERE条件选择的记录。请注意如果条件包含命令解释符专用空格或字符，一定要将条件引用起来。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span> <span class="params">--where=</span>” user=’root’”</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--xml</span>, -X :导出XML格式.</span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span> <span class="params">--xml</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--plugin_dir</span> :客户端插件的目录，用于兼容不同的插件版本。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span> <span class="params">--plugin_dir=</span>”<span class="string">/usr/local/lib/plugin</span>”</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="params">--default_auth</span> :客户端插件默认使用权限。</span><br><span class="line">mysqldump  -uroot -p <span class="params">--host=localhost</span> <span class="params">--all-databases</span> <span class="params">--default-auth=</span>”<span class="string">/usr/local/lib/plugin/</span>&lt;PLUGIN&gt;”</span><br></pre></td></tr></table></figure>
 
 
       
@@ -395,7 +399,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2019 John Doe
+    		&copy; 2019 Gary Wu
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -499,18 +503,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">apache</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">目录浏览</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">高级运维</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Apache</a>
               </li>
              
@@ -539,19 +531,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CDH</a>
+                <a href="javascript:void(0)" class="js-tag color5">高级运维</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JDBC</a>
+                <a href="javascript:void(0)" class="js-tag color2">apache</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">MySQL驱动</a>
+                <a href="javascript:void(0)" class="js-tag color5">目录浏览</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">KAFKA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CDH</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -564,6 +560,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">大数据</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">JDBC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">MySQL驱动</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -599,18 +603,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Cacti流量叠加图形</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Cacti整合图形</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Graph</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">cacti</a>
               </li>
              
@@ -628,6 +620,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">监控</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">bugzilla</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">bugs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Cacti流量叠加图形</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Cacti整合图形</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Graph</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -652,14 +664,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">SCL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">bugzilla</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">bugs</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -707,14 +711,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">DNS TLS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Public DNS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">shadowsocks</a>
               </li>
              
@@ -724,6 +720,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">加密代理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">DNS TLS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Public DNS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -803,18 +807,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ESXI PATH</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ESXI补丁升级</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">ESXI6.7</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">VMware vSphere Client</a>
               </li>
              
@@ -827,6 +819,26 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CPU</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">虚拟化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ESXI PATH</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ESXI补丁升级</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">ESXI6.7</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Openstack</a>
               </li>
              
@@ -836,22 +848,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">混杂模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CPU</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">虚拟化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">磁盘置备</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">disk</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -875,6 +871,26 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Gentoo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">编译内核</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">NFS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">磁盘置备</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">disk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">fuse</a>
               </li>
              
@@ -888,18 +904,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">HDFS挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Gentoo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">编译内核</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">NFS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -963,6 +967,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">HTTP状态码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">301</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">302</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
@@ -991,27 +1007,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">HTTP状态码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">301</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">302</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">hdfs空文件</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hadoop fs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1035,6 +1035,22 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Jenkins</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">持续集成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">持续交付</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
@@ -1051,26 +1067,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jenkins</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">持续集成</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">持续交付</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Jumpserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">备机部署</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">分区</a>
               </li>
              
@@ -1083,7 +1079,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">分区热迁移</a>
+                <a href="javascript:void(0)" class="js-tag color1">Jumpserver</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">备机部署</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1092,6 +1092,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">KAFKA版本升级</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">分区热迁移</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1151,18 +1155,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">文件句柄</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">lsof</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">空间释放</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">限速方案</a>
               </li>
              
@@ -1183,6 +1175,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">文件句柄</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">lsof</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">空间释放</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">logstash</a>
               </li>
              
@@ -1196,6 +1200,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Mars</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">HDFS Shell</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1215,15 +1227,27 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Mars</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">HDFS Shell</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Hadoop</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">spark</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">tez</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">单用户模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">多用户模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">远程模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1248,26 +1272,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">机架感知</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">spark</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">tez</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">单用户模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">多用户模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">远程模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1307,15 +1311,27 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">yarn</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hive</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">HQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">yarn</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mongodb</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">mongodump</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mongorestore</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1339,15 +1355,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mongodb</a>
+                <a href="javascript:void(0)" class="js-tag color3">STARTUP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">mongodump</a>
+                <a href="javascript:void(0)" class="js-tag color1">副本集成员</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mongorestore</a>
+                <a href="javascript:void(0)" class="js-tag color5">成员状态</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1367,15 +1383,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">STARTUP</a>
+                <a href="javascript:void(0)" class="js-tag color5">MongoDB集群</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">副本集成员</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">成员状态</a>
+                <a href="javascript:void(0)" class="js-tag color2">mongo集群管理维护</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1403,14 +1415,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">MongoDB集群</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mongo集群管理维护</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">MySQL主从切换</a>
               </li>
              
@@ -1419,19 +1423,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">MySQL主从复制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">全备还原</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">主从同步</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">主从复制监控</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">MySQL主从复制</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">全备还原</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1463,14 +1467,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">慢查询</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">mysqldumpslow</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">dba</a>
               </li>
              
@@ -1488,6 +1484,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">MySQL多实例远程登陆</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">慢查询</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">mysqldumpslow</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1527,14 +1531,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ntp</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">upstream</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">proxy-set-header</a>
               </li>
              
@@ -1547,15 +1543,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">favicon.ico</a>
+                <a href="javascript:void(0)" class="js-tag color4">upstream</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">access</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">log</a>
+                <a href="javascript:void(0)" class="js-tag color4">ntp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1572,6 +1564,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">垃圾UA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">favicon.ico</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">access</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">log</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1611,6 +1615,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Glance</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">openstack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">PHP</a>
               </li>
              
@@ -1623,11 +1635,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Glance</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">openstack</a>
+                <a href="javascript:void(0)" class="js-tag color4">Keystone</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1640,10 +1648,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">OpenStack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Keystone</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1679,23 +1683,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">RAID5</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">parted</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">fdisk</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">RAID5</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">阵列卡</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">缓存</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1719,6 +1715,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">阵列卡</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">缓存</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">rabbitmq</a>
               </li>
              
@@ -1739,15 +1743,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">NTP时间同步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NAT</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">双线</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">NTP时间同步</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1839,6 +1843,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">YARN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">NodeManager</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">udp</a>
               </li>
              
@@ -1856,14 +1868,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">GFW</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">YARN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">NodeManager</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1899,10 +1903,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">rrdtool</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">微信</a>
               </li>
              
@@ -1911,11 +1911,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">weathermap</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">plugin</a>
+                <a href="javascript:void(0)" class="js-tag color3">rrdtool</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1928,6 +1924,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">将Bites转换为Mbits</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">weathermap</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">plugin</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">脚本</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1955,7 +1963,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">脚本</a>
+                <a href="javascript:void(0)" class="js-tag color1">socket.gaierror</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1964,10 +1972,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">socket.gaierror</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2015,14 +2019,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">wget</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">curl请求url不使用缓存</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">unix</a>
               </li>
              
@@ -2039,7 +2035,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">wget</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">curl请求url不使用缓存</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">docker机制</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">exit退出码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2056,14 +2068,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">emerge命令</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">exit退出码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2099,18 +2103,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">磁盘挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">fstab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">开机挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">gentoo</a>
               </li>
              
@@ -2120,6 +2112,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">install</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">磁盘挂载</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">fstab</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">开机挂载</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2151,10 +2155,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hadoop用户</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">fs</a>
               </li>
              
@@ -2167,6 +2167,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">hadoop用户</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">sersync</a>
               </li>
              
@@ -2176,6 +2180,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">实时同步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell脚本</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ip自动配置</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2195,18 +2207,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell脚本</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ip自动配置</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">jumpserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">topic</a>
               </li>
              
@@ -2215,23 +2215,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">keepalived</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LVS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">多实例</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">双主</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">脑裂</a>
+                <a href="javascript:void(0)" class="js-tag color1">jumpserver</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2252,6 +2236,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">nopasswd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">keepalived</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">LVS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">多实例</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">双主</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">脑裂</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2279,10 +2283,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">dd</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">rm恢复</a>
               </li>
              
@@ -2299,23 +2299,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">dd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统备份</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统恢复</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Logstash</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Tomcat</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2328,6 +2320,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">rubydebug</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Logstash</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Tomcat</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2347,6 +2351,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">mongod</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">二进制版</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">mariadb主从</a>
               </li>
              
@@ -2360,14 +2372,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">主从复制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mongod</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">二进制版</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2387,11 +2391,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">主从复制错误</a>
+                <a href="javascript:void(0)" class="js-tag color5">主键错误</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">主键错误</a>
+                <a href="javascript:void(0)" class="js-tag color2">主从复制错误</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2400,14 +2404,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">同步个别库</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mysql slave</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">relay log</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2423,7 +2419,39 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">mysql slave</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">relay log</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">root远程登录</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">优化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">socket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ulimit</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">tcp_nopush</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">tcp_nodelay</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2487,38 +2515,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">优化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">socket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ulimit</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">tcp_nopush</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">tcp_nodelay</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">uri</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">屏蔽接口</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Ddos</a>
               </li>
              
@@ -2531,11 +2527,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">proxy cache</a>
+                <a href="javascript:void(0)" class="js-tag color4">uri</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Nginx缓存清理</a>
+                <a href="javascript:void(0)" class="js-tag color5">屏蔽接口</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2544,6 +2540,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">443</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">proxy cache</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Nginx缓存清理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2567,18 +2571,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SOCKS5</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">proxychains</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">命令代理</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">ps</a>
               </li>
              
@@ -2588,6 +2580,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">进程运行时间</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">SOCKS5</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">proxychains</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">命令代理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2603,14 +2607,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">tar</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">crontab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">自重启</a>
               </li>
              
@@ -2619,11 +2615,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">rsync限速</a>
+                <a href="javascript:void(0)" class="js-tag color4">tar</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">bwlimit</a>
+                <a href="javascript:void(0)" class="js-tag color3">crontab</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2632,6 +2628,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">模板</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">rsync限速</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">bwlimit</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2644,6 +2648,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">zabbix_agent</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">salt-master高可用</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">salt-API</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">salt-ssh</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2675,18 +2691,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">salt-master高可用</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">salt-API</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">salt-ssh</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统瓶颈</a>
               </li>
              
@@ -2707,6 +2711,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">变量传参</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell传参</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">小数判断</a>
               </li>
              
@@ -2716,14 +2728,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">浮点数判断</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">变量传参</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell传参</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2755,6 +2759,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">expect</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Ros</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">FTP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">dsa</a>
               </li>
              
@@ -2771,15 +2787,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">expect</a>
+                <a href="javascript:void(0)" class="js-tag color1">supervisor</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Ros</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">FTP</a>
+                <a href="javascript:void(0)" class="js-tag color4">supervisorctl</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2792,14 +2804,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">pid</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">supervisor</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">supervisorctl</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2839,19 +2843,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">vim</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">中文乱码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">vmware</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">虚拟机克隆</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vim</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">中文乱码</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2867,10 +2871,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">告警</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">traceroute</a>
               </li>
              
@@ -2880,6 +2880,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">MTR</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">告警</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2907,6 +2911,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">zk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">触发器</a>
               </li>
              
@@ -2920,10 +2928,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">触发器表达式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">zk</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2943,11 +2947,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">云计算</a>
+                <a href="javascript:void(0)" class="js-tag color5">Rack</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Rack</a>
+                <a href="javascript:void(0)" class="js-tag color4">云计算</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2963,6 +2967,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CDN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">IM</a>
               </li>
              
@@ -2972,18 +2980,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">开源IM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CDN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">jq</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">筛选大于某个值的数据到文件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3007,11 +3003,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">taskset</a>
+                <a href="javascript:void(0)" class="js-tag color3">jq</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">PID</a>
+                <a href="javascript:void(0)" class="js-tag color4">筛选大于某个值的数据到文件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3023,15 +3019,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">zerotier</a>
+                <a href="javascript:void(0)" class="js-tag color3">taskset</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">内网穿透</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">全球畅联</a>
+                <a href="javascript:void(0)" class="js-tag color4">PID</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3055,7 +3047,31 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">zerotier</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">内网穿透</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">全球畅联</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">RocketMQ</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">分布式消息队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nameserver</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">brokerserver</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3075,39 +3091,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">分布式消息队列</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">nameserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">brokerserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">外部命令</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">内部命令</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">只读模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">fatab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mount</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">remount</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3127,19 +3115,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OpenSSL</a>
+                <a href="javascript:void(0)" class="js-tag color5">只读模式</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">CA</a>
+                <a href="javascript:void(0)" class="js-tag color1">fatab</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SSL证书</a>
+                <a href="javascript:void(0)" class="js-tag color1">mount</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">csr</a>
+                <a href="javascript:void(0)" class="js-tag color3">remount</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3156,6 +3144,22 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">免交互</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">OpenSSL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">CA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">SSL证书</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">csr</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3183,6 +3187,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">SHELL编程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">kill</a>
               </li>
              
@@ -3195,7 +3203,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">SHELL编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">Yum源</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3204,10 +3212,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Shell脚本</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Yum源</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3227,15 +3231,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">consumer</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">内存</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">使用率</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">consumer</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3339,6 +3343,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">flock</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LVS连接数监控</a>
               </li>
              
@@ -3352,10 +3360,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">InActConn</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">flock</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3531,6 +3535,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">autostart</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">libvert</a>
               </li>
              
@@ -3540,10 +3548,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">动态迁移</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">autostart</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3699,6 +3703,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">lvs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">4层负载均衡</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">DR模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">LNMP</a>
               </li>
              
@@ -3716,18 +3732,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">mysql数据库迁移</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">lvs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">4层负载均衡</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">DR模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3787,15 +3791,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">pass_proxy</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">htpasswd</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">日志切割</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">pass_proxy</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4095,15 +4099,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">磁盘</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">awk数组</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">磁盘管理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">磁盘</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4139,19 +4143,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">redis cluster</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">ssdb</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">LevelDB</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">redis cluster</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4195,14 +4199,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">codis集群</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">memcache</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">GlusterFS</a>
               </li>
              
@@ -4212,6 +4208,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NAS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">codis集群</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">memcache</a>
               </li>
              
               <li class="article-tag-list-item">

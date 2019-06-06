@@ -6,16 +6,16 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://garywu520.github.io/blog">
-  <title>NFS文件存储系统-部署 | Hexo</title>
+  <title>NFS文件存储系统-部署 | Gary Wu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="NFS工作流程">
 <meta name="keywords" content="高级运维,fastdfs,nfs,分布式存储">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NFS文件存储系统-部署">
 <meta property="og:url" content="https://garywu520.github.io/blog/2017/08/19/NFS文件存储系统-部署/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Gary Wu">
 <meta property="og:description" content="NFS工作流程">
-<meta property="og:locale" content="default">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/wuyanteng/wuyanteng.github.io/master/images/nfs_ys.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/wuyanteng/wuyanteng.github.io/master/images/NFS%E6%9C%8D%E5%8A%A1-%E7%94%A8%E6%88%B7%E6%98%A0%E5%B0%84.png">
 <meta property="og:updated_time" content="2017-08-21T01:22:22.757Z">
@@ -24,7 +24,7 @@
 <meta name="twitter:description" content="NFS工作流程">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/wuyanteng/wuyanteng.github.io/master/images/nfs_ys.png">
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="Gary Wu" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -50,12 +50,14 @@
 <div class="overlay" style="background: #4d4d4d"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
-		<a href="/blog/" class="profilepic">
-			<img src="https://raw.githubusercontent.com/discant520/garywu/master/images/touxiang.jpg" class="js-avatar">
+		<a href="/blog" class="profilepic">
+			<img src="http://pics0.baidu.com/feed/bd315c6034a85edf5f5b8bff8cf9cf27df54754d.png?token=c9857ef7ee73e1ffc14d3e3c4e9e3be3&amp;s=1E5207CAC64234F44988148A0300B090" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/blog/">John Doe</a></h1>
+		  <h1 class="header-author"><a href="/blog">Gary Wu</a></h1>
 		</hgroup>
+		
+		<p class="header-subtitle">运维架构师 - 从入门到放弃</p>
 		
 
 		<nav class="header-menu">
@@ -109,11 +111,13 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="https://raw.githubusercontent.com/discant520/garywu/master/images/touxiang.jpg" class="js-avatar">
+				<img src="http://pics0.baidu.com/feed/bd315c6034a85edf5f5b8bff8cf9cf27df54754d.png?token=c9857ef7ee73e1ffc14d3e3c4e9e3be3&amp;s=1E5207CAC64234F44988148A0300B090" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">John Doe</h1>
+			  <h1 class="header-author js-header-author">Gary Wu</h1>
 			</hgroup>
+			
+			<p class="header-subtitle"><i class="icon icon-quo-left"></i>运维架构师 - 从入门到放弃<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -193,41 +197,41 @@
 </blockquote>
 <a id="more"></a>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">NFS（文件存储系统）服务器启动后会随机启动N个进程并生成N个随机端口，NFS服务启动后首先会向PRC服务注册，注册后这些NFS进程和端口信息由RPC(类似房产中介)统一管理，然后NFS客户端统一使用RPC端口与NFS服务进行通信。rpc服务端口号：111</span><br><span class="line"></span><br><span class="line">服务启动：/etc/init.d/rpcbind start</span><br></pre></td></tr></table></figure>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">NFS（文件存储系统）服务器启动后会随机启动<span class="built_in">N</span>个进程并生成<span class="built_in">N</span>个随机端口，NFS服务启动后首先会向PRC服务注册，注册后这些NFS进程和端口信息由RPC(类似房产中介)统一管理，然后NFS客户端统一使用RPC端口与NFS服务进行通信。rpc服务端口号：<span class="number">111</span></span><br><span class="line"></span><br><span class="line">服务启动：/etc/init.d/rpcbind start</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://raw.githubusercontent.com/wuyanteng/wuyanteng.github.io/master/images/nfs_ys.png" alt="nfs_ys"></p>
 <blockquote>
 <p>环境：</p>
 <p>NFS服务器：172.16.1.31</p>
 </blockquote>
-<h4 id="NFS服务端部署"><a href="#NFS服务端部署" class="headerlink" title="NFS服务端部署"></a>NFS服务端部署</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 检查nfs和rpc是否安装(注：CentOS5 rpcbind软件为portmap)</span><br><span class="line">rpm -qa nfs-utils rpcbind</span><br><span class="line">yum install -y nfs-utils rpcbind</span><br><span class="line"></span><br><span class="line">#查看安装了哪些软件</span><br><span class="line">rpm -ql nfs-utils rpcbind</span><br></pre></td></tr></table></figure>
+<h4 id="NFS服务端部署"><a href="#NFS服务端部署" class="headerlink" title="NFS服务端部署"></a>NFS服务端部署</h4><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 检查<span class="built_in">nfs</span>和rpc是否安装(注：CentOS5 rpcbind软件为portmap)</span><br><span class="line">rpm -qa <span class="built_in">nfs</span>-utils rpcbind</span><br><span class="line">yum install -y <span class="built_in">nfs</span>-utils rpcbind</span><br><span class="line"></span><br><span class="line">#查看安装了哪些软件</span><br><span class="line">rpm -ql <span class="built_in">nfs</span>-utils rpcbind</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>启动NFS文件系统服务</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">#先启动rpc服务</span><br><span class="line">/etc/init.d/rpcbind start</span><br><span class="line">chkconfig rpcbind on</span><br><span class="line">#再启动nfs服务</span><br><span class="line">/etc/init.d/nfs start</span><br><span class="line">chkconfig nfs on</span><br><span class="line"></span><br><span class="line">#查看nfs服务注册端口信息</span><br><span class="line">[root@nfs01 ~]# rpcinfo -p localhost</span><br><span class="line"></span><br><span class="line">#新建配置文件</span><br><span class="line">cat &gt;&gt;/etc/exports&lt;&lt;EOF</span><br><span class="line">/data  172.16.1.0/24(rw,sync,all_squash)</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">############################################</span><br><span class="line">参数释义：</span><br><span class="line">/home/nfs/share 为共享的目录，使用绝对路径。</span><br><span class="line">192.168.1.0/24或10.10.10.1/32   允许访问的客户端主机IP</span><br><span class="line">rw：read-write，可读写；</span><br><span class="line">ro：read-only，只读；</span><br><span class="line">sync：文件直接写入硬盘；-- 同步数据</span><br><span class="line">async：文件暂存内存，再写入磁盘；数据易丢失 -- 异步同步</span><br><span class="line">no_root_squash：NFS客户端连接服务端时如果使用的是root的话，那么对服务端分享的目录来说，也拥有root权限。显然开启这项是不安全的。</span><br><span class="line">root_squash：NFS客户端连接服务端时如果使用的是root的话，那么对服务端分享的目录来说，拥有匿名用户权限，通常他将使用nobody或nfsnobody身份；</span><br><span class="line">all_squash：不论NFS客户端连接服务端时使用什么用户，对服务端分享的目录来说都是拥有nfsnobody身份用户权限；</span><br><span class="line">anonuid：指定匿名用户；</span><br><span class="line">anongid：匿名用户的GID值。</span><br><span class="line">##############################################</span><br><span class="line"></span><br><span class="line">#创建共享目录</span><br><span class="line">mkdir /data -p</span><br><span class="line"></span><br><span class="line">#检查NFS共享目录管理专用用户</span><br><span class="line">id nfsnobody</span><br><span class="line"></span><br><span class="line">#授权</span><br><span class="line">chown -R nfsnobody:nfsnobody /data</span><br><span class="line">ls -ld /data</span><br><span class="line">drwxr-xr-x 2 nfsnobody nfsnobody 4096 Aug  5 22:19 /data</span><br><span class="line"></span><br><span class="line">#重启nfs服务(只修改了NFS信息，所以无需重启rpc服务)</span><br><span class="line">/etc/init.d/nfs reload     平滑重启</span><br><span class="line"></span><br><span class="line">#排错</span><br><span class="line">[root@nfs01 data]# rpcinfo -p localhost    #检查nfs服务注册端口信息</span><br><span class="line">[root@nfs01 data]# showmount -e 172.16.1.31  #检查共享目录</span><br><span class="line">Export list for 172.16.1.31:</span><br><span class="line">/data/r 172.16.1.41/32</span><br><span class="line">/data/w 172.16.1.8/32</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@nfs01 data]# mount -t nfs 172.16.1.31:/data /mnt  #本地挂载测试</span><br><span class="line">[root@nfs01 data]# df -h</span><br></pre></td></tr></table></figure>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">#先启动rpc服务</span><br><span class="line">/etc/init.d/rpcbind start</span><br><span class="line">chkconfig rpcbind on</span><br><span class="line">#再启动nfs服务</span><br><span class="line">/etc/init.d/nfs start</span><br><span class="line">chkconfig nfs on</span><br><span class="line"></span><br><span class="line">#查看nfs服务注册端口信息</span><br><span class="line">[root@nfs01 ~]# rpcinfo -p localhost</span><br><span class="line"></span><br><span class="line">#新建配置文件</span><br><span class="line">cat &gt;&gt;/etc/exports&lt;&lt;EOF</span><br><span class="line">/data  <span class="number">172.16</span><span class="number">.1</span><span class="number">.0</span>/<span class="number">24</span>(rw,sync,all_squash)</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">############################################</span><br><span class="line">参数释义：</span><br><span class="line">/home/nfs/share 为共享的目录，使用绝对路径。</span><br><span class="line"><span class="number">192.168</span><span class="number">.1</span><span class="number">.0</span>/<span class="number">24</span>或<span class="number">10.10</span><span class="number">.10</span><span class="number">.1</span>/<span class="number">32</span>   允许访问的客户端主机IP</span><br><span class="line">rw：read-write，可读写；</span><br><span class="line">ro：read-only，只读；</span><br><span class="line">sync：文件直接写入硬盘；-- 同步数据</span><br><span class="line">async：文件暂存内存，再写入磁盘；数据易丢失 -- 异步同步</span><br><span class="line">no_root_squash：NFS客户端连接服务端时如果使用的是root的话，那么对服务端分享的目录来说，也拥有root权限。显然开启这项是不安全的。</span><br><span class="line">root_squash：NFS客户端连接服务端时如果使用的是root的话，那么对服务端分享的目录来说，拥有匿名用户权限，通常他将使用nobody或nfsnobody身份；</span><br><span class="line">all_squash：不论NFS客户端连接服务端时使用什么用户，对服务端分享的目录来说都是拥有nfsnobody身份用户权限；</span><br><span class="line">anonuid：指定匿名用户；</span><br><span class="line">anongid：匿名用户的GID值。</span><br><span class="line">##############################################</span><br><span class="line"></span><br><span class="line">#创建共享目录</span><br><span class="line">mkdir /data -p</span><br><span class="line"></span><br><span class="line">#检查NFS共享目录管理专用用户</span><br><span class="line">id nfsnobody</span><br><span class="line"></span><br><span class="line">#授权</span><br><span class="line">chown -R nfsnobody:nfsnobody /data</span><br><span class="line">ls -ld /data</span><br><span class="line">drwxr-xr-x <span class="number">2</span> nfsnobody nfsnobody <span class="number">4096</span> Aug  <span class="number">5</span> <span class="number">22</span>:<span class="number">19</span> /data</span><br><span class="line"></span><br><span class="line">#重启nfs服务(只修改了NFS信息，所以无需重启rpc服务)</span><br><span class="line">/etc/init.d/nfs reload     平滑重启</span><br><span class="line"></span><br><span class="line">#排错</span><br><span class="line">[root@nfs01 data]# rpcinfo -p localhost    #检查nfs服务注册端口信息</span><br><span class="line">[root@nfs01 data]# showmount -e <span class="number">172.16</span><span class="number">.1</span><span class="number">.31</span>  #检查共享目录</span><br><span class="line">Export list for <span class="number">172.16</span><span class="number">.1</span><span class="number">.31</span>:</span><br><span class="line">/data/r <span class="number">172.16</span><span class="number">.1</span><span class="number">.41</span>/<span class="number">32</span></span><br><span class="line">/data/w <span class="number">172.16</span><span class="number">.1</span><span class="number">.8</span>/<span class="number">32</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@nfs01 data]# mount -t nfs <span class="number">172.16</span><span class="number">.1</span><span class="number">.31</span>:/data /mnt  #本地挂载测试</span><br><span class="line">[root@nfs01 data]# df -h</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">查看服务器进程</span><br><span class="line">[root@nfs01 mnt]# ps -ef |egrep &quot;rpc|nfs&quot;</span><br><span class="line">rpc        2847      1  0 22:12 ?        00:00:00 rpcbind</span><br><span class="line">root       2902      2  0 22:14 ?        00:00:00 [rpciod/0]</span><br><span class="line">root       2903      2  0 22:14 ?        00:00:00 [rpciod/1]</span><br><span class="line">root       2912      1  0 22:14 ?        00:00:00 rpc.mountd</span><br><span class="line">root       2919      2  0 22:14 ?        00:00:00 [nfsd4]</span><br><span class="line">root       2920      2  0 22:14 ?        00:00:00 [nfsd4_callbacks]</span><br><span class="line">root       2921      2  0 22:14 ?        00:00:00 [nfsd]</span><br><span class="line">root       2922      2  0 22:14 ?        00:00:00 [nfsd]</span><br><span class="line">root       2923      2  0 22:14 ?        00:00:00 [nfsd]</span><br><span class="line">root       2924      2  0 22:14 ?        00:00:00 [nfsd]</span><br><span class="line">root       2925      2  0 22:14 ?        00:00:00 [nfsd]</span><br><span class="line">root       2926      2  0 22:14 ?        00:00:00 [nfsd]</span><br><span class="line">root       2927      2  0 22:14 ?        00:00:00 [nfsd]</span><br><span class="line">root       2928      2  0 22:14 ?        00:00:00 [nfsd]</span><br><span class="line">root       2959      1  0 22:14 ?        00:00:00 rpc.idmapd</span><br><span class="line">root       3045      2  0 22:32 ?        00:00:00 [nfsiod]</span><br><span class="line">root       3046      2  0 22:32 ?        00:00:00 [nfsv4.0-svc]</span><br><span class="line">root       3112   2692  0 22:58 pts/0    00:00:00 egrep rpc|nfs</span><br></pre></td></tr></table></figure>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">查看服务器进程</span><br><span class="line">[root@nfs01 mnt]<span class="comment"># ps -ef |egrep "rpc|nfs"</span></span><br><span class="line">rpc       <span class="number"> 2847 </span>    <span class="number"> 1 </span><span class="number"> 0 </span>22:12 ?        00:00:00 rpcbind</span><br><span class="line">root      <span class="number"> 2902 </span>    <span class="number"> 2 </span><span class="number"> 0 </span>22:14 ?        00:00:00 [rpciod/0]</span><br><span class="line">root      <span class="number"> 2903 </span>    <span class="number"> 2 </span><span class="number"> 0 </span>22:14 ?        00:00:00 [rpciod/1]</span><br><span class="line">root      <span class="number"> 2912 </span>    <span class="number"> 1 </span><span class="number"> 0 </span>22:14 ?        00:00:00 rpc.mountd</span><br><span class="line">root      <span class="number"> 2919 </span>    <span class="number"> 2 </span><span class="number"> 0 </span>22:14 ?        00:00:00 [nfsd4]</span><br><span class="line">root      <span class="number"> 2920 </span>    <span class="number"> 2 </span><span class="number"> 0 </span>22:14 ?        00:00:00 [nfsd4_callbacks]</span><br><span class="line">root      <span class="number"> 2921 </span>    <span class="number"> 2 </span><span class="number"> 0 </span>22:14 ?        00:00:00 [nfsd]</span><br><span class="line">root      <span class="number"> 2922 </span>    <span class="number"> 2 </span><span class="number"> 0 </span>22:14 ?        00:00:00 [nfsd]</span><br><span class="line">root      <span class="number"> 2923 </span>    <span class="number"> 2 </span><span class="number"> 0 </span>22:14 ?        00:00:00 [nfsd]</span><br><span class="line">root      <span class="number"> 2924 </span>    <span class="number"> 2 </span><span class="number"> 0 </span>22:14 ?        00:00:00 [nfsd]</span><br><span class="line">root      <span class="number"> 2925 </span>    <span class="number"> 2 </span><span class="number"> 0 </span>22:14 ?        00:00:00 [nfsd]</span><br><span class="line">root      <span class="number"> 2926 </span>    <span class="number"> 2 </span><span class="number"> 0 </span>22:14 ?        00:00:00 [nfsd]</span><br><span class="line">root      <span class="number"> 2927 </span>    <span class="number"> 2 </span><span class="number"> 0 </span>22:14 ?        00:00:00 [nfsd]</span><br><span class="line">root      <span class="number"> 2928 </span>    <span class="number"> 2 </span><span class="number"> 0 </span>22:14 ?        00:00:00 [nfsd]</span><br><span class="line">root      <span class="number"> 2959 </span>    <span class="number"> 1 </span><span class="number"> 0 </span>22:14 ?        00:00:00 rpc.idmapd</span><br><span class="line">root      <span class="number"> 3045 </span>    <span class="number"> 2 </span><span class="number"> 0 </span>22:32 ?        00:00:00 [nfsiod]</span><br><span class="line">root      <span class="number"> 3046 </span>    <span class="number"> 2 </span><span class="number"> 0 </span>22:32 ?        00:00:00 [nfsv4.0-svc]</span><br><span class="line">root      <span class="number"> 3112 </span> <span class="number"> 2692 </span><span class="number"> 0 </span>22:58 pts/0    00:00:00 egrep rpc|nfs</span><br></pre></td></tr></table></figure>
 
-<h4 id="客户端配置（多个客户端可多次挂载）"><a href="#客户端配置（多个客户端可多次挂载）" class="headerlink" title="客户端配置（多个客户端可多次挂载）"></a>客户端配置（多个客户端可多次挂载）</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 检查nfs和rpc是否安装(注：CentOS5 rpcbind软件为portmap)</span><br><span class="line">rpm -qa nfs-utils rpcbind</span><br><span class="line">yum install -y nfs-utils rpcbind</span><br><span class="line">#注：如果不安装nfs-utils软件就没有showmount命令，也没有不能正常挂载nfs。但服务无需启动！</span><br><span class="line"></span><br><span class="line">showmount -e 172.16.1.31  #查看共享</span><br><span class="line">mount -t nfs 172.16.1.31:/data /mnt  #挂载共享</span><br><span class="line">df -h  #查看</span><br><span class="line"></span><br><span class="line">#卸载共享目录</span><br><span class="line">方式1:退出共享目录</span><br><span class="line">方式2:在共享目录强制卸载</span><br><span class="line">命令：umount -lf /mnt     </span><br><span class="line">--l参数表示懒惰的卸载；-f参数表示强制卸载</span><br></pre></td></tr></table></figure>
+<h4 id="客户端配置（多个客户端可多次挂载）"><a href="#客户端配置（多个客户端可多次挂载）" class="headerlink" title="客户端配置（多个客户端可多次挂载）"></a>客户端配置（多个客户端可多次挂载）</h4><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 检查nfs和rpc是否安装(注：CentOS5 rpcbind软件为portmap)</span></span><br><span class="line">rpm -qa nfs-utils rpcbind</span><br><span class="line">yum install -y nfs-utils rpcbind</span><br><span class="line"><span class="comment">#注：如果不安装nfs-utils软件就没有showmount命令，也没有不能正常挂载nfs。但服务无需启动！</span></span><br><span class="line"></span><br><span class="line">showmount -e 172.16.1.31  <span class="comment">#查看共享</span></span><br><span class="line">mount -t nfs 172.16.1.31:<span class="string">/data</span> <span class="string">/mnt</span>  <span class="comment">#挂载共享</span></span><br><span class="line">df -h  <span class="comment">#查看</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#卸载共享目录</span></span><br><span class="line">方式1:退出共享目录</span><br><span class="line">方式2:在共享目录强制卸载</span><br><span class="line">命令：umount -lf <span class="string">/mnt</span>     </span><br><span class="line"><span class="params">--l</span>参数表示懒惰的卸载；-f参数表示强制卸载</span><br></pre></td></tr></table></figure>
 
-<h6 id="修改共享目录管理用户（不使用默认的nfsnobody）-实践"><a href="#修改共享目录管理用户（不使用默认的nfsnobody）-实践" class="headerlink" title="修改共享目录管理用户（不使用默认的nfsnobody）-实践"></a>修改共享目录管理用户（不使用默认的nfsnobody）-实践</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">####服务端测试</span><br><span class="line">#创建指定匿名用户</span><br><span class="line">注：要求服务端与客户端的匿名用户uid和gid必须一致</span><br><span class="line">useradd -s /sbin/nologin -M www -u 888</span><br><span class="line"></span><br><span class="line">[root@nfs01 mnt]# id www</span><br><span class="line">uid=888(www) gid=888(www) groups=888(www)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#修改配置文件</span><br><span class="line">vim /etc/exports</span><br><span class="line">/data  172.16.1.0/24(rw,sync,all_squash,anonuid=888,anongid=888)</span><br><span class="line"></span><br><span class="line">#重新授权共享目录</span><br><span class="line">chown -R www:www /data</span><br><span class="line"></span><br><span class="line">#重启nfs服务</span><br><span class="line">/etc/init.d/nfs reload</span><br></pre></td></tr></table></figure>
+<h6 id="修改共享目录管理用户（不使用默认的nfsnobody）-实践"><a href="#修改共享目录管理用户（不使用默认的nfsnobody）-实践" class="headerlink" title="修改共享目录管理用户（不使用默认的nfsnobody）-实践"></a>修改共享目录管理用户（不使用默认的nfsnobody）-实践</h6><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">####服务端测试</span></span><br><span class="line"><span class="comment">#创建指定匿名用户</span></span><br><span class="line">注：要求服务端与客户端的匿名用户uid和gid必须一致</span><br><span class="line">useradd -s <span class="string">/sbin/nologin</span> -M www -u 888</span><br><span class="line"></span><br><span class="line">[root@nfs01 mnt]<span class="comment"># id www</span></span><br><span class="line">uid=888<span class="params">(www)</span> gid=888<span class="params">(www)</span> groups=888<span class="params">(www)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#修改配置文件</span></span><br><span class="line">vim <span class="string">/etc/exports</span></span><br><span class="line"><span class="string">/data</span>  172.16.1.0/24<span class="params">(rw,sync,all_squash,<span class="attr">anonuid</span>=888,<span class="attr">anongid</span>=888)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#重新授权共享目录</span></span><br><span class="line">chown -R www<span class="function">:www</span> <span class="string">/data</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#重启nfs服务</span></span><br><span class="line"><span class="string">/etc/init.d/nfs</span> <span class="keyword">reload</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">客户端-挂载测试</span><br><span class="line">mount -t nfs  172.16.1.31:/data /mnt</span><br><span class="line">cd /mnt</span><br><span class="line">touch 111.txt </span><br><span class="line"></span><br><span class="line">[root@web01 mnt]# ls -l</span><br><span class="line">total 0</span><br><span class="line">-rw-r--r-- 1 nobody nobody 0 Aug  6 01:37 111.txt</span><br><span class="line">#查看发现文件的属主属组依然是之前的nobody，因为默认匿名用户变化时要与服务端的匿名用户uid和gid必须一致</span><br><span class="line"></span><br><span class="line">#创建用户并指定uid和gid为888</span><br><span class="line">[root@web01 mnt]# useradd -s /sbin/nologin -M www -u 888</span><br><span class="line"></span><br><span class="line">接下来是个重点了...否则不生效。。。</span><br><span class="line"></span><br><span class="line">服务端与客户端需要同时重启以下rpc服务</span><br><span class="line">/etc/init.d/rpcidmapd restart</span><br><span class="line">然后，客户端等待约2-3分钟，再次挂载，里面的文件属主属组就变为了www</span><br><span class="line">mount -t nfs 172.16.1.31:/data /mnt</span><br></pre></td></tr></table></figure>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">客户端-挂载测试</span><br><span class="line">mount -t nfs  172.16.1.31:<span class="string">/data</span> <span class="string">/mnt</span></span><br><span class="line"><span class="keyword">cd</span> <span class="string">/mnt</span></span><br><span class="line">touch 111.txt </span><br><span class="line"></span><br><span class="line">[root@web01 mnt]<span class="comment"># ls -l</span></span><br><span class="line">total 0</span><br><span class="line">-rw-r<span class="params">--r--</span> 1 nobody nobody 0 Aug  6 01<span class="function">:37</span> 111.txt</span><br><span class="line"><span class="comment">#查看发现文件的属主属组依然是之前的nobody，因为默认匿名用户变化时要与服务端的匿名用户uid和gid必须一致</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#创建用户并指定uid和gid为888</span></span><br><span class="line">[root@web01 mnt]<span class="comment"># useradd -s /sbin/nologin -M www -u 888</span></span><br><span class="line"></span><br><span class="line">接下来是个重点了<span class="string">...</span>否则不生效。。。</span><br><span class="line"></span><br><span class="line">服务端与客户端需要同时重启以下rpc服务</span><br><span class="line"><span class="string">/etc/init.d/rpcidmapd</span> restart</span><br><span class="line">然后，客户端等待约2-3分钟，再次挂载，里面的文件属主属组就变为了www</span><br><span class="line">mount -t nfs 172.16.1.31:<span class="string">/data</span> <span class="string">/mnt</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="客户端挂载排错思路"><a href="#客户端挂载排错思路" class="headerlink" title="客户端挂载排错思路"></a>客户端挂载排错思路</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">1. 检查服务端NFS进程（房源）等信息</span><br><span class="line">   rpcinfo -p 172.16.1.31</span><br><span class="line">   如果没有注册房源信息，原因可能如下：</span><br><span class="line">   1) 服务器：nfs服务没有启动</span><br><span class="line">   2) 服务器：nfs服务与rpc服务启动顺序不正确。</span><br><span class="line">   </span><br><span class="line">2. 检查服务端共享目录信息是否存在</span><br><span class="line">   showmount -e 172.16.1.31</span><br><span class="line">   如果共享目录没有，可能是nfs配置文件编写错误</span><br><span class="line">   </span><br><span class="line">3. 直接进行目录挂载测试</span><br><span class="line">   mount -t nfs 172.16.1.31:/data  /mnt</span><br><span class="line">   挂载后进入挂载点创建或编辑文件测试权限</span><br></pre></td></tr></table></figure>
+<h4 id="客户端挂载排错思路"><a href="#客户端挂载排错思路" class="headerlink" title="客户端挂载排错思路"></a>客户端挂载排错思路</h4><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>. 检查服务端NFS进程（房源）等信息</span><br><span class="line">   rpcinfo -p <span class="number">172.16</span><span class="meta">.1</span><span class="meta">.31</span></span><br><span class="line">   如果没有注册房源信息，原因可能如下：</span><br><span class="line">   <span class="number">1</span>) 服务器：nfs服务没有启动</span><br><span class="line">   <span class="number">2</span>) 服务器：nfs服务与rpc服务启动顺序不正确。</span><br><span class="line">   </span><br><span class="line"><span class="number">2</span>. 检查服务端共享目录信息是否存在</span><br><span class="line">   showmount -e <span class="number">172.16</span><span class="meta">.1</span><span class="meta">.31</span></span><br><span class="line">   如果共享目录没有，可能是nfs配置文件编写错误</span><br><span class="line">   </span><br><span class="line"><span class="number">3</span>. 直接进行目录挂载测试</span><br><span class="line">   mount -t nfs <span class="number">172.16</span><span class="meta">.1</span><span class="meta">.31</span>:/data  /mnt</span><br><span class="line">   挂载后进入挂载点创建或编辑文件测试权限</span><br></pre></td></tr></table></figure>
 
-<h4 id="客户端-系统开机自动挂载"><a href="#客户端-系统开机自动挂载" class="headerlink" title="客户端-系统开机自动挂载"></a>客户端-系统开机自动挂载</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">方式1：</span><br><span class="line">echo &quot;/bin/mount -t nfs 172.16.1.31:/data  /mnt&quot; &gt;&gt;/etc/rc.local</span><br><span class="line"></span><br><span class="line">方式2：</span><br><span class="line">vim /etc/fstab</span><br><span class="line">172.16.1.31:/data/r  /data/r      nfs     defaults    0 0</span><br><span class="line">注：系统启动过程中，/etc/fstab在系统网卡启动之前被加载，所以系统启动后NFS挂载失败。</span><br><span class="line">解决方案：配合netfs服务实现/etc/fstab开机启动之后进行重新加载</span><br><span class="line">开机自启动netfs服务</span><br><span class="line">chkconfig netfs on</span><br></pre></td></tr></table></figure>
+<h4 id="客户端-系统开机自动挂载"><a href="#客户端-系统开机自动挂载" class="headerlink" title="客户端-系统开机自动挂载"></a>客户端-系统开机自动挂载</h4><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">方式1：</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"/bin/mount -t nfs 172.16.1.31:/data  /mnt"</span> &gt;&gt;<span class="string">/etc/rc.local</span></span><br><span class="line"></span><br><span class="line">方式2：</span><br><span class="line">vim <span class="string">/etc/fstab</span></span><br><span class="line">172.16.1.31:<span class="string">/data/r</span>  <span class="string">/data/r</span>      nfs     defaults    0 0</span><br><span class="line">注：系统启动过程中，<span class="string">/etc/fstab</span>在系统网卡启动之前被加载，所以系统启动后NFS挂载失败。</span><br><span class="line">解决方案：配合netfs服务实现<span class="string">/etc/fstab</span>开机启动之后进行重新加载</span><br><span class="line">开机自启动netfs服务</span><br><span class="line">chkconfig netfs on</span><br></pre></td></tr></table></figure>
 
-<h4 id="客户端参数-扩展"><a href="#客户端参数-扩展" class="headerlink" title="客户端参数-扩展"></a>客户端参数-扩展</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mount挂载时使用以下参数：</span><br><span class="line">rsize 单位:bytes；高并发请求时，读取内存缓存可以降低磁盘IO，比如:200000bytes 200M </span><br><span class="line">wsize 单位:bytes；高并发请求时，读取内存缓存可以降低磁盘IO</span><br><span class="line">注：具体大小由内存总量以及业务整体使用占比而定</span><br><span class="line">示例：</span><br><span class="line">[root@web01 ~]# mount -t nfs -o rsize=20000,wsize=20000 172.16.1.31:/data/w /data/w</span><br><span class="line"></span><br><span class="line">exec   文件具有可执行权限</span><br><span class="line">noexec 文件无可执行权限（推荐）</span><br><span class="line">示例：</span><br><span class="line">mount -t nfs -o noexec,rsize=20000,wsize=20000 172.16.1.31:/data/w /data/w</span><br></pre></td></tr></table></figure>
+<h4 id="客户端参数-扩展"><a href="#客户端参数-扩展" class="headerlink" title="客户端参数-扩展"></a>客户端参数-扩展</h4><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mount挂载时使用以下参数：</span><br><span class="line">rsize 单位<span class="symbol">:bytes</span>；高并发请求时，读取内存缓存可以降低磁盘IO，比如<span class="symbol">:</span><span class="number">200000</span>bytes <span class="number">200</span>M </span><br><span class="line">wsize 单位<span class="symbol">:bytes</span>；高并发请求时，读取内存缓存可以降低磁盘IO</span><br><span class="line">注：具体大小由内存总量以及业务整体使用占比而定</span><br><span class="line">示例：</span><br><span class="line">[root<span class="variable">@web01</span> ~]<span class="comment"># mount -t nfs -o rsize=20000,wsize=20000 172.16.1.31:/data/w /data/w</span></span><br><span class="line"></span><br><span class="line">exec   文件具有可执行权限</span><br><span class="line">noexec 文件无可执行权限（推荐）</span><br><span class="line">示例：</span><br><span class="line">mount -t nfs -o noexec,rsize=<span class="number">20000</span>,wsize=<span class="number">20000</span> <span class="number">172.16</span>.<span class="number">1.31</span><span class="symbol">:/data/w</span> /data/w</span><br></pre></td></tr></table></figure>
 
-<h4 id="系统进入只读模式-修复"><a href="#系统进入只读模式-修复" class="headerlink" title="系统进入只读模式-修复"></a>系统进入只读模式-修复</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">remount命令</span><br><span class="line">案例：系统意外进入只读模式</span><br><span class="line">修复方案：</span><br><span class="line">在root用户下</span><br><span class="line">mount -o remount,rw  /     #重新挂载为读写模式</span><br><span class="line">remoot</span><br></pre></td></tr></table></figure>
+<h4 id="系统进入只读模式-修复"><a href="#系统进入只读模式-修复" class="headerlink" title="系统进入只读模式-修复"></a>系统进入只读模式-修复</h4><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">remount命令</span><br><span class="line">案例：系统意外进入只读模式</span><br><span class="line">修复方案：</span><br><span class="line">在root用户下</span><br><span class="line">mount -o remount,rw  /     <span class="meta">#重新挂载为读写模式</span></span><br><span class="line">remoot</span><br></pre></td></tr></table></figure>
 
-<h4 id="扩展-使用命令共享目录"><a href="#扩展-使用命令共享目录" class="headerlink" title="扩展-使用命令共享目录"></a>扩展-使用命令共享目录</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">exportfs -o rw,sync  172.16.1.0/24:/data</span><br><span class="line">showmount -e localhost  #查看共享目录信息</span><br><span class="line"></span><br><span class="line">注；命令方式共享目录可以临时生效，重启服务共享则消失。</span><br><span class="line"></span><br><span class="line">##################################################</span><br><span class="line">/etc/init.d/nfs restart</span><br><span class="line">注：nfs服务器使用上述命令重启后，冷却时间需要等待90秒（无敌时间），之后客户端进行挂载后，才能进行写入操作。</span><br><span class="line"></span><br><span class="line">此文件中有指定,可以进行修改:</span><br><span class="line">vim /etc/sysconfig/nfs </span><br><span class="line">#NFSD_V4_GRACE=90</span><br><span class="line">#NFSD_V4_LEASE=90</span><br><span class="line">#NLM_GRACE_PERIOD=90</span><br><span class="line"></span><br><span class="line">################################################</span><br><span class="line">客户端实际挂载与否，不能依据df -h，需要查看cat /proc/mounts。</span><br><span class="line">df -h没有的话，如果/proc/mounts文件中还存在挂载信息的话，就需要再多次卸载。否则再次挂载会出现“Stale file handle”的错误</span><br></pre></td></tr></table></figure>
+<h4 id="扩展-使用命令共享目录"><a href="#扩展-使用命令共享目录" class="headerlink" title="扩展-使用命令共享目录"></a>扩展-使用命令共享目录</h4><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">exportfs -o rw,sync  <span class="number">172.16</span><span class="number">.1</span><span class="number">.0</span>/<span class="number">24</span>:/data</span><br><span class="line">showmount -e localhost  #查看共享目录信息</span><br><span class="line"></span><br><span class="line">注；命令方式共享目录可以临时生效，重启服务共享则消失。</span><br><span class="line"></span><br><span class="line">##################################################</span><br><span class="line">/etc/init.d/nfs restart</span><br><span class="line">注：nfs服务器使用上述命令重启后，冷却时间需要等待<span class="number">90</span>秒（无敌时间），之后客户端进行挂载后，才能进行写入操作。</span><br><span class="line"></span><br><span class="line">此文件中有指定,可以进行修改:</span><br><span class="line">vim /etc/sysconfig/nfs </span><br><span class="line">#NFSD_V4_GRACE=<span class="number">90</span></span><br><span class="line">#NFSD_V4_LEASE=<span class="number">90</span></span><br><span class="line">#NLM_GRACE_PERIOD=<span class="number">90</span></span><br><span class="line"></span><br><span class="line">################################################</span><br><span class="line">客户端实际挂载与否，不能依据df -h，需要查看cat /proc/mounts。</span><br><span class="line">df -h没有的话，如果/proc/mounts文件中还存在挂载信息的话，就需要再多次卸载。否则再次挂载会出现“Stale file handle”的错误</span><br></pre></td></tr></table></figure>
 
-<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#查看默认nfs服务端配置文件信息（如果定义了/etc/exports文件后，优先使用/etc/exports文件）</span><br><span class="line"></span><br><span class="line">[root@nfs01 ~]# cat /var/lib/nfs/etab</span><br><span class="line"></span><br><span class="line">注：在配置共享目录时，需要考虑共享目录的权限；如果存在多级目录，数据存储也会受到上级目录的权限影响。</span><br><span class="line"></span><br><span class="line">PS：</span><br><span class="line">suid命令，当一个普通用户没有权限查看root权限文件内容，给命令添加s权限后，就可以查看了。-- 不常用</span><br></pre></td></tr></table></figure>
+<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#查看默认nfs服务端配置文件信息（如果定义了<span class="regexp">/etc/</span>exports文件后，优先使用<span class="regexp">/etc/</span>exports文件）</span><br><span class="line"></span><br><span class="line">[root@nfs01 ~]# cat <span class="regexp">/var/</span>lib<span class="regexp">/nfs/</span>etab</span><br><span class="line"></span><br><span class="line">注：在配置共享目录时，需要考虑共享目录的权限；如果存在多级目录，数据存储也会受到上级目录的权限影响。</span><br><span class="line"></span><br><span class="line">PS：</span><br><span class="line">suid命令，当一个普通用户没有权限查看root权限文件内容，给命令添加s权限后，就可以查看了。-- 不常用</span><br></pre></td></tr></table></figure>
 
-<h4 id="NFS单点故障问题"><a href="#NFS单点故障问题" class="headerlink" title="NFS单点故障问题"></a>NFS单点故障问题</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">drbd+heartbeat 可以解决NFS单点故障。</span><br><span class="line"></span><br><span class="line">对于大中小网站（参考点：2000万以下的PV）可以使用NFS文件存储系统。</span><br></pre></td></tr></table></figure>
+<h4 id="NFS单点故障问题"><a href="#NFS单点故障问题" class="headerlink" title="NFS单点故障问题"></a>NFS单点故障问题</h4><figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">drbd+heartbeat 可以解决NFS单点故障。</span><br><span class="line"></span><br><span class="line">对于大中小网站（参考点：<span class="number">2000</span>万以下的<span class="built_in">PV</span>）可以使用NFS文件存储系统。</span><br></pre></td></tr></table></figure>
 
 <h4 id="用户压缩映射-流程图"><a href="#用户压缩映射-流程图" class="headerlink" title="用户压缩映射-流程图"></a>用户压缩映射-流程图</h4><blockquote>
 <p>两种映射方式</p>
@@ -397,7 +401,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2019 John Doe
+    		&copy; 2019 Gary Wu
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -501,18 +505,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">apache</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">目录浏览</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">高级运维</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Apache</a>
               </li>
              
@@ -541,19 +533,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CDH</a>
+                <a href="javascript:void(0)" class="js-tag color5">高级运维</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JDBC</a>
+                <a href="javascript:void(0)" class="js-tag color2">apache</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">MySQL驱动</a>
+                <a href="javascript:void(0)" class="js-tag color5">目录浏览</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">KAFKA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CDH</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -566,6 +562,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">大数据</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">JDBC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">MySQL驱动</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -601,18 +605,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Cacti流量叠加图形</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Cacti整合图形</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Graph</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">cacti</a>
               </li>
              
@@ -630,6 +622,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">监控</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">bugzilla</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">bugs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Cacti流量叠加图形</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Cacti整合图形</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Graph</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -654,14 +666,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">SCL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">bugzilla</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">bugs</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -709,14 +713,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">DNS TLS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Public DNS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">shadowsocks</a>
               </li>
              
@@ -726,6 +722,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">加密代理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">DNS TLS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Public DNS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -805,18 +809,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ESXI PATH</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ESXI补丁升级</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">ESXI6.7</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">VMware vSphere Client</a>
               </li>
              
@@ -829,6 +821,26 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CPU</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">虚拟化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ESXI PATH</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ESXI补丁升级</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">ESXI6.7</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Openstack</a>
               </li>
              
@@ -838,22 +850,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">混杂模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CPU</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">虚拟化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">磁盘置备</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">disk</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -877,6 +873,26 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Gentoo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">编译内核</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">NFS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">磁盘置备</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">disk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">fuse</a>
               </li>
              
@@ -890,18 +906,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">HDFS挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Gentoo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">编译内核</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">NFS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -965,6 +969,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">HTTP状态码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">301</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">302</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
@@ -993,27 +1009,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">HTTP状态码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">301</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">302</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">hdfs空文件</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hadoop fs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1037,6 +1037,22 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Jenkins</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">持续集成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">持续交付</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
@@ -1053,26 +1069,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jenkins</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">持续集成</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">持续交付</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Jumpserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">备机部署</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">分区</a>
               </li>
              
@@ -1085,7 +1081,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">分区热迁移</a>
+                <a href="javascript:void(0)" class="js-tag color1">Jumpserver</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">备机部署</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1094,6 +1094,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">KAFKA版本升级</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">分区热迁移</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1153,18 +1157,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">文件句柄</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">lsof</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">空间释放</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">限速方案</a>
               </li>
              
@@ -1185,6 +1177,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">文件句柄</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">lsof</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">空间释放</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">logstash</a>
               </li>
              
@@ -1198,6 +1202,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Mars</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">HDFS Shell</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1217,15 +1229,27 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Mars</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">HDFS Shell</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Hadoop</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">spark</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">tez</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">单用户模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">多用户模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">远程模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1250,26 +1274,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">机架感知</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">spark</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">tez</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">单用户模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">多用户模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">远程模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1309,15 +1313,27 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">yarn</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hive</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">HQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">yarn</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mongodb</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">mongodump</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mongorestore</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1341,15 +1357,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mongodb</a>
+                <a href="javascript:void(0)" class="js-tag color3">STARTUP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">mongodump</a>
+                <a href="javascript:void(0)" class="js-tag color1">副本集成员</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mongorestore</a>
+                <a href="javascript:void(0)" class="js-tag color5">成员状态</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1369,15 +1385,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">STARTUP</a>
+                <a href="javascript:void(0)" class="js-tag color5">MongoDB集群</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">副本集成员</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">成员状态</a>
+                <a href="javascript:void(0)" class="js-tag color2">mongo集群管理维护</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1405,14 +1417,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">MongoDB集群</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mongo集群管理维护</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">MySQL主从切换</a>
               </li>
              
@@ -1421,19 +1425,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">MySQL主从复制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">全备还原</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">主从同步</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">主从复制监控</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">MySQL主从复制</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">全备还原</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1465,14 +1469,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">慢查询</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">mysqldumpslow</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">dba</a>
               </li>
              
@@ -1490,6 +1486,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">MySQL多实例远程登陆</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">慢查询</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">mysqldumpslow</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1529,14 +1533,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ntp</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">upstream</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">proxy-set-header</a>
               </li>
              
@@ -1549,15 +1545,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">favicon.ico</a>
+                <a href="javascript:void(0)" class="js-tag color4">upstream</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">access</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">log</a>
+                <a href="javascript:void(0)" class="js-tag color4">ntp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1574,6 +1566,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">垃圾UA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">favicon.ico</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">access</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">log</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1613,6 +1617,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Glance</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">openstack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">PHP</a>
               </li>
              
@@ -1625,11 +1637,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Glance</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">openstack</a>
+                <a href="javascript:void(0)" class="js-tag color4">Keystone</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1642,10 +1650,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">OpenStack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Keystone</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1681,23 +1685,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">RAID5</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">parted</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">fdisk</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">RAID5</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">阵列卡</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">缓存</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1721,6 +1717,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">阵列卡</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">缓存</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">rabbitmq</a>
               </li>
              
@@ -1741,15 +1745,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">NTP时间同步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NAT</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">双线</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">NTP时间同步</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1841,6 +1845,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">YARN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">NodeManager</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">udp</a>
               </li>
              
@@ -1858,14 +1870,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">GFW</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">YARN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">NodeManager</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1901,10 +1905,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">rrdtool</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">微信</a>
               </li>
              
@@ -1913,11 +1913,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">weathermap</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">plugin</a>
+                <a href="javascript:void(0)" class="js-tag color3">rrdtool</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1930,6 +1926,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">将Bites转换为Mbits</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">weathermap</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">plugin</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">脚本</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1957,7 +1965,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">脚本</a>
+                <a href="javascript:void(0)" class="js-tag color1">socket.gaierror</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1966,10 +1974,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">socket.gaierror</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2017,14 +2021,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">wget</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">curl请求url不使用缓存</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">unix</a>
               </li>
              
@@ -2041,7 +2037,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">wget</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">curl请求url不使用缓存</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">docker机制</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">exit退出码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2058,14 +2070,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">emerge命令</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">exit退出码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2101,18 +2105,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">磁盘挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">fstab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">开机挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">gentoo</a>
               </li>
              
@@ -2122,6 +2114,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">install</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">磁盘挂载</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">fstab</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">开机挂载</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2153,10 +2157,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hadoop用户</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">fs</a>
               </li>
              
@@ -2169,6 +2169,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">hadoop用户</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">sersync</a>
               </li>
              
@@ -2178,6 +2182,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">实时同步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell脚本</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ip自动配置</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2197,18 +2209,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell脚本</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ip自动配置</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">jumpserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">topic</a>
               </li>
              
@@ -2217,23 +2217,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">keepalived</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LVS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">多实例</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">双主</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">脑裂</a>
+                <a href="javascript:void(0)" class="js-tag color1">jumpserver</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2254,6 +2238,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">nopasswd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">keepalived</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">LVS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">多实例</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">双主</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">脑裂</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2281,10 +2285,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">dd</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">rm恢复</a>
               </li>
              
@@ -2301,23 +2301,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">dd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统备份</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统恢复</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Logstash</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Tomcat</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2330,6 +2322,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">rubydebug</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Logstash</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Tomcat</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2349,6 +2353,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">mongod</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">二进制版</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">mariadb主从</a>
               </li>
              
@@ -2362,14 +2374,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">主从复制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mongod</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">二进制版</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2389,11 +2393,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">主从复制错误</a>
+                <a href="javascript:void(0)" class="js-tag color5">主键错误</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">主键错误</a>
+                <a href="javascript:void(0)" class="js-tag color2">主从复制错误</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2402,14 +2406,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">同步个别库</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mysql slave</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">relay log</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2425,7 +2421,39 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">mysql slave</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">relay log</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">root远程登录</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">优化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">socket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ulimit</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">tcp_nopush</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">tcp_nodelay</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2489,38 +2517,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">优化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">socket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ulimit</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">tcp_nopush</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">tcp_nodelay</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">uri</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">屏蔽接口</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Ddos</a>
               </li>
              
@@ -2533,11 +2529,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">proxy cache</a>
+                <a href="javascript:void(0)" class="js-tag color4">uri</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Nginx缓存清理</a>
+                <a href="javascript:void(0)" class="js-tag color5">屏蔽接口</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2546,6 +2542,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">443</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">proxy cache</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Nginx缓存清理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2569,18 +2573,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SOCKS5</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">proxychains</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">命令代理</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">ps</a>
               </li>
              
@@ -2590,6 +2582,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">进程运行时间</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">SOCKS5</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">proxychains</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">命令代理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2605,14 +2609,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">tar</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">crontab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">自重启</a>
               </li>
              
@@ -2621,11 +2617,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">rsync限速</a>
+                <a href="javascript:void(0)" class="js-tag color4">tar</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">bwlimit</a>
+                <a href="javascript:void(0)" class="js-tag color3">crontab</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2634,6 +2630,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">模板</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">rsync限速</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">bwlimit</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2646,6 +2650,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">zabbix_agent</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">salt-master高可用</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">salt-API</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">salt-ssh</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2677,18 +2693,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">salt-master高可用</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">salt-API</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">salt-ssh</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统瓶颈</a>
               </li>
              
@@ -2709,6 +2713,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">变量传参</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell传参</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">小数判断</a>
               </li>
              
@@ -2718,14 +2730,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">浮点数判断</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">变量传参</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell传参</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2757,6 +2761,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">expect</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Ros</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">FTP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">dsa</a>
               </li>
              
@@ -2773,15 +2789,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">expect</a>
+                <a href="javascript:void(0)" class="js-tag color1">supervisor</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Ros</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">FTP</a>
+                <a href="javascript:void(0)" class="js-tag color4">supervisorctl</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2794,14 +2806,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">pid</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">supervisor</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">supervisorctl</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2841,19 +2845,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">vim</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">中文乱码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">vmware</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">虚拟机克隆</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vim</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">中文乱码</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2869,10 +2873,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">告警</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">traceroute</a>
               </li>
              
@@ -2882,6 +2882,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">MTR</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">告警</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2909,6 +2913,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">zk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">触发器</a>
               </li>
              
@@ -2922,10 +2930,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">触发器表达式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">zk</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2945,11 +2949,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">云计算</a>
+                <a href="javascript:void(0)" class="js-tag color5">Rack</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Rack</a>
+                <a href="javascript:void(0)" class="js-tag color4">云计算</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2965,6 +2969,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CDN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">IM</a>
               </li>
              
@@ -2974,18 +2982,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">开源IM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CDN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">jq</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">筛选大于某个值的数据到文件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3009,11 +3005,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">taskset</a>
+                <a href="javascript:void(0)" class="js-tag color3">jq</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">PID</a>
+                <a href="javascript:void(0)" class="js-tag color4">筛选大于某个值的数据到文件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3025,15 +3021,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">zerotier</a>
+                <a href="javascript:void(0)" class="js-tag color3">taskset</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">内网穿透</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">全球畅联</a>
+                <a href="javascript:void(0)" class="js-tag color4">PID</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3057,7 +3049,31 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">zerotier</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">内网穿透</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">全球畅联</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">RocketMQ</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">分布式消息队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nameserver</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">brokerserver</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3077,39 +3093,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">分布式消息队列</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">nameserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">brokerserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">外部命令</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">内部命令</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">只读模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">fatab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mount</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">remount</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3129,19 +3117,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OpenSSL</a>
+                <a href="javascript:void(0)" class="js-tag color5">只读模式</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">CA</a>
+                <a href="javascript:void(0)" class="js-tag color1">fatab</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SSL证书</a>
+                <a href="javascript:void(0)" class="js-tag color1">mount</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">csr</a>
+                <a href="javascript:void(0)" class="js-tag color3">remount</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3158,6 +3146,22 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">免交互</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">OpenSSL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">CA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">SSL证书</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">csr</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3185,6 +3189,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">SHELL编程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">kill</a>
               </li>
              
@@ -3197,7 +3205,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">SHELL编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">Yum源</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3206,10 +3214,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Shell脚本</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Yum源</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3229,15 +3233,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">consumer</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">内存</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">使用率</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">consumer</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3341,6 +3345,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">flock</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LVS连接数监控</a>
               </li>
              
@@ -3354,10 +3362,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">InActConn</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">flock</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3533,6 +3537,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">autostart</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">libvert</a>
               </li>
              
@@ -3542,10 +3550,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">动态迁移</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">autostart</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3701,6 +3705,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">lvs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">4层负载均衡</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">DR模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">LNMP</a>
               </li>
              
@@ -3718,18 +3734,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">mysql数据库迁移</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">lvs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">4层负载均衡</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">DR模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3789,15 +3793,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">pass_proxy</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">htpasswd</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">日志切割</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">pass_proxy</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4097,15 +4101,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">磁盘</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">awk数组</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">磁盘管理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">磁盘</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4141,19 +4145,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">redis cluster</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">ssdb</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">LevelDB</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">redis cluster</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4197,14 +4201,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">codis集群</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">memcache</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">GlusterFS</a>
               </li>
              
@@ -4214,6 +4210,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NAS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">codis集群</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">memcache</a>
               </li>
              
               <li class="article-tag-list-item">

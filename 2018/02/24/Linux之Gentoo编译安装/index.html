@@ -6,22 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://garywu520.github.io/blog">
-  <title>Linux之Gentoo编译安装 | Hexo</title>
+  <title>Linux之Gentoo编译安装 | Gary Wu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="123前段时间搞过一次Gentoo，最终以失败告终,新年开工正好有时间卷土重来。配置过程相当复杂，需要很强的耐心，但整个过程下来后，会学到很多东西。  官方文档: Gentoo AMD64手册">
 <meta name="keywords" content="高级运维,Linux,Gentoo,Kernel,内核编译">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux之Gentoo编译安装">
 <meta property="og:url" content="https://garywu520.github.io/blog/2018/02/24/Linux之Gentoo编译安装/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Gary Wu">
 <meta property="og:description" content="123前段时间搞过一次Gentoo，最终以失败告终,新年开工正好有时间卷土重来。配置过程相当复杂，需要很强的耐心，但整个过程下来后，会学到很多东西。  官方文档: Gentoo AMD64手册">
-<meta property="og:locale" content="default">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2018-02-27T10:50:25.002Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux之Gentoo编译安装">
 <meta name="twitter:description" content="123前段时间搞过一次Gentoo，最终以失败告终,新年开工正好有时间卷土重来。配置过程相当复杂，需要很强的耐心，但整个过程下来后，会学到很多东西。  官方文档: Gentoo AMD64手册">
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="Gary Wu" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -47,12 +47,14 @@
 <div class="overlay" style="background: #4d4d4d"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
-		<a href="/blog/" class="profilepic">
-			<img src="https://raw.githubusercontent.com/discant520/garywu/master/images/touxiang.jpg" class="js-avatar">
+		<a href="/blog" class="profilepic">
+			<img src="http://pics0.baidu.com/feed/bd315c6034a85edf5f5b8bff8cf9cf27df54754d.png?token=c9857ef7ee73e1ffc14d3e3c4e9e3be3&amp;s=1E5207CAC64234F44988148A0300B090" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/blog/">John Doe</a></h1>
+		  <h1 class="header-author"><a href="/blog">Gary Wu</a></h1>
 		</hgroup>
+		
+		<p class="header-subtitle">运维架构师 - 从入门到放弃</p>
 		
 
 		<nav class="header-menu">
@@ -106,11 +108,13 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="https://raw.githubusercontent.com/discant520/garywu/master/images/touxiang.jpg" class="js-avatar">
+				<img src="http://pics0.baidu.com/feed/bd315c6034a85edf5f5b8bff8cf9cf27df54754d.png?token=c9857ef7ee73e1ffc14d3e3c4e9e3be3&amp;s=1E5207CAC64234F44988148A0300B090" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">John Doe</h1>
+			  <h1 class="header-author js-header-author">Gary Wu</h1>
 			</hgroup>
+			
+			<p class="header-subtitle"><i class="icon icon-quo-left"></i>运维架构师 - 从入门到放弃<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -190,104 +194,104 @@
 <p>官方文档: <a href="https://wiki.gentoo.org/wiki/Handbook:AMD64" target="_blank" rel="noopener">Gentoo AMD64手册</a></p>
 <a id="more"></a>
 
-<h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h4><h5 id="下载minimal镜像"><a href="#下载minimal镜像" class="headerlink" title="下载minimal镜像"></a>下载minimal镜像</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">官方镜像地址：http://distfiles.gentoo.org/releases/</span><br><span class="line">网易镜像地址：http://mirrors.163.com/gentoo/releases/</span><br></pre></td></tr></table></figure>
+<h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h4><h5 id="下载minimal镜像"><a href="#下载minimal镜像" class="headerlink" title="下载minimal镜像"></a>下载minimal镜像</h5><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">官方镜像地址：http:<span class="regexp">//</span>distfiles.gentoo.org<span class="regexp">/releases/</span></span><br><span class="line">网易镜像地址：http:<span class="regexp">//mi</span>rrors.<span class="number">163</span>.com<span class="regexp">/gentoo/</span>releases<span class="regexp">/</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">截止目前最新的是install-amd64-minimal-20180222T214502Z.iso</span><br><span class="line"></span><br><span class="line">minimal镜像和stage3下载地址：</span><br><span class="line">http://mirrors.163.com/gentoo/releases/amd64/autobuilds/current-stage3-amd64/</span><br><span class="line"></span><br><span class="line">portage下载地址: </span><br><span class="line">http://mirrors.163.com/gentoo/releases/snapshots/current/portage-20180220.tar.bz2 </span><br><span class="line"></span><br><span class="line">注：如果网络较好可以通过网络下载stage3和portage。如果提前下载需要拷贝到U盘里，需要的时候挂载解压。</span><br><span class="line">我这边网络比较好，选择在安装的过程中从网上下载。</span><br></pre></td></tr></table></figure>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">截止目前最新的是install-amd64-minimal-<span class="number">20180222</span>T214502Z.iso</span><br><span class="line"></span><br><span class="line">minimal镜像和stage3下载地址：</span><br><span class="line"><span class="symbol">http:</span>/<span class="regexp">/mirrors.163.com/gentoo</span><span class="regexp">/releases/amd</span>64/autobuilds/current-stage3-amd64/</span><br><span class="line"></span><br><span class="line">portage下载地址: </span><br><span class="line"><span class="symbol">http:</span>/<span class="regexp">/mirrors.163.com/gentoo</span><span class="regexp">/releases/snapshots</span><span class="regexp">/current/portage</span>-<span class="number">20180220</span>.tar.bz2 </span><br><span class="line"></span><br><span class="line">注：如果网络较好可以通过网络下载stage3和portage。如果提前下载需要拷贝到U盘里，需要的时候挂载解压。</span><br><span class="line">我这边网络比较好，选择在安装的过程中从网上下载。</span><br></pre></td></tr></table></figure>
 
-<h5 id="制作引导U盘"><a href="#制作引导U盘" class="headerlink" title="制作引导U盘"></a>制作引导U盘</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">把iso刻录到U盘里，用来启动引导，这里推荐使用UltraISO，启动-&gt;写入硬盘镜像</span><br></pre></td></tr></table></figure>
+<h5 id="制作引导U盘"><a href="#制作引导U盘" class="headerlink" title="制作引导U盘"></a>制作引导U盘</h5><figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">把<span class="function"><span class="title">iso</span>刻录到U盘里，用来启动引导，这里推荐使用UltraISO，启动-&gt;</span>写入硬盘镜像</span><br></pre></td></tr></table></figure>
 
-<h5 id="记录服务器硬件配置"><a href="#记录服务器硬件配置" class="headerlink" title="记录服务器硬件配置"></a>记录服务器硬件配置</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">因为在安装的过程中要自己编译内核，需要配置一些硬件驱动信息，主要是CPU、显卡、网卡，可以自行查看，配置选好的话可以节省很多编译时间和内核资源。</span><br></pre></td></tr></table></figure>
+<h5 id="记录服务器硬件配置"><a href="#记录服务器硬件配置" class="headerlink" title="记录服务器硬件配置"></a>记录服务器硬件配置</h5><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">因为在安装的过程中要自己编译内核，需要配置一些硬件驱动信息，主要是<span class="meta">CPU</span>、显卡、网卡，可以自行查看，配置选好的话可以节省很多编译时间和内核资源。</span><br></pre></td></tr></table></figure>
 
-<h4 id="安装基本系统"><a href="#安装基本系统" class="headerlink" title="安装基本系统"></a>安装基本系统</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">从U盘启动，在boot处输入: gentoo dopcmcia ,根据引导进入命令行模式,接下来安装基本系统。</span><br></pre></td></tr></table></figure>
+<h4 id="安装基本系统"><a href="#安装基本系统" class="headerlink" title="安装基本系统"></a>安装基本系统</h4><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">从U盘启动，在<span class="keyword">boot处输入: </span>gentoo dopcmcia ,根据引导进入命令行模式,接下来安装基本系统。</span><br></pre></td></tr></table></figure>
 
-<h5 id="分区"><a href="#分区" class="headerlink" title="分区"></a>分区</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">建议分区规划</span><br><span class="line">bios_grub        BIOS启动分区，官方是2M,我这里给9M  </span><br><span class="line">boot    300M     启动系统目录,挂载目录: /mnt/gentoo/boot</span><br><span class="line">swap   8192M     </span><br><span class="line">/     剩余All      挂载目录: /mnt/gentoo</span><br><span class="line"></span><br><span class="line">注：系统使用BIOS引导方式,所以不需要EFI分区</span><br></pre></td></tr></table></figure>
+<h5 id="分区"><a href="#分区" class="headerlink" title="分区"></a>分区</h5><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">建议分区规划</span><br><span class="line"><span class="keyword">bios_grub </span>       <span class="keyword">BIOS启动分区，官方是2M,我这里给9M </span> </span><br><span class="line"><span class="keyword">boot </span>   <span class="number">300</span>M     启动系统目录,挂载目录: /mnt/gentoo/<span class="keyword">boot</span></span><br><span class="line"><span class="keyword">swap </span>  <span class="number">8192</span>M     </span><br><span class="line">/     剩余All      挂载目录: /mnt/gentoo</span><br><span class="line"></span><br><span class="line">注：系统使用<span class="keyword">BIOS引导方式,所以不需要EFI分区</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">分区格式（MBR或GPT）直接影响到后边的GRUB引导,本例是MBR分区（BIOS引导方式）</span><br><span class="line">livecd # parted</span><br><span class="line">select /dev/sda   #选择操作的磁盘</span><br><span class="line">mklabel gpt    #分区格式使用MBR</span><br><span class="line">mkpart primary 1M 10M   #BIOS启动分区必须有,否则grub安装出错</span><br><span class="line">name 1 grub</span><br><span class="line">set 1 bios_grub on   #设置BIOS分区可启动</span><br><span class="line"></span><br><span class="line">mkpart primary 10M 310M   #boot系统分区</span><br><span class="line">name 2 boot</span><br><span class="line">set 2 boot on    #设置boot分区为可启动</span><br><span class="line"></span><br><span class="line">mkpart primary 310M 8502M   #swap分区</span><br><span class="line">name 3 swap</span><br><span class="line">mkpart primary 8502M -1  #剩余全部给根分区</span><br><span class="line">name 4 bootfs</span><br><span class="line">p     查看分区</span><br><span class="line">quit  退出parted</span><br><span class="line">----------------------------------------------</span><br><span class="line">格式化</span><br><span class="line">mkfs.ext2  /dev/sda1  格式化预留空间分区</span><br><span class="line">mkfs.ext2  /dev/sda2  格式化boot分区</span><br><span class="line">mkswap /dev/sda3        格式化swap分区</span><br><span class="line">mkfs.ext4 /dev/sda4     格式化根分区</span><br><span class="line">----------------------------------------------</span><br><span class="line">挂载到/mnt/下</span><br><span class="line">mount /dev/sda4 /mnt/gentoo   先挂载根分区</span><br><span class="line">mkdir -p /mnt/gentoo/boot  创建boot挂载目录</span><br><span class="line">mount /dev/sda2 /mnt/gentoo/boot  挂载boot</span><br><span class="line">swapon /dev/sda3   挂载swap</span><br></pre></td></tr></table></figure>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">分区格式（MBR或GPT）直接影响到后边的GRUB引导,本例是MBR分区（BIOS引导方式）</span><br><span class="line">livecd # parted</span><br><span class="line">select /dev/sda   #选择操作的磁盘</span><br><span class="line">mklabel gpt    #分区格式使用MBR</span><br><span class="line">mkpart primary <span class="number">1</span>M <span class="number">10</span>M   #BIOS启动分区必须有,否则grub安装出错</span><br><span class="line">name <span class="number">1</span> grub</span><br><span class="line"><span class="keyword">set</span> 1 bios_grub <span class="comment">on   #</span>设置<span class="comment">BIOS</span>分区可启动</span><br><span class="line"></span><br><span class="line">mkpart <span class="comment">primary 10M 310M   #boot</span>系统分区</span><br><span class="line">name <span class="comment">2 boot</span></span><br><span class="line"><span class="keyword">set</span> <span class="comment">2 boot on    #</span>设置<span class="comment">boot</span>分区为可启动</span><br><span class="line"></span><br><span class="line">mkpart <span class="comment">primary 310M 8502M   #swap</span>分区</span><br><span class="line">name <span class="comment">3 swap</span></span><br><span class="line">mkpart <span class="comment">primary 8502M -1  #</span>剩余全部给根分区</span><br><span class="line">name <span class="comment">4 bootfs</span></span><br><span class="line">p     查看分区</span><br><span class="line">quit  退出<span class="comment">parted</span></span><br><span class="line">----------------------------------------------</span><br><span class="line">格式化</span><br><span class="line">mkfs.ext2  /dev/<span class="comment">sda1</span>  格式化预留空间分区</span><br><span class="line">mkfs.ext2  /dev/<span class="comment">sda2</span>  格式化<span class="comment">boot</span>分区</span><br><span class="line">mkswap /dev/<span class="comment">sda3</span>        格式化<span class="comment">swap</span>分区</span><br><span class="line">mkfs.ext4 /dev/<span class="comment">sda4</span>     格式化根分区</span><br><span class="line">----------------------------------------------</span><br><span class="line">挂载到/mnt/下</span><br><span class="line">mount /dev/<span class="comment">sda4</span> /mnt/<span class="comment">gentoo</span>   先挂载根分区</span><br><span class="line">mkdir <span class="comment">-p</span> /mnt/<span class="comment">gentoo</span>/boot  创建boot挂载目录</span><br><span class="line">mount /<span class="comment">dev</span>/sda2 /<span class="comment">mnt</span>/gentoo/<span class="comment">boot</span>  挂载<span class="comment">boot</span></span><br><span class="line">swapon /dev/<span class="comment">sda3</span>   挂载<span class="comment">swap</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">分区相关-知识点总结:</span><br><span class="line"></span><br><span class="line">(1)如果是MBR分区的磁盘，使用以下方法创建ESP：</span><br><span class="line">parted创建的boot_grub和boot分区, 使用mkfs.ext2格式化</span><br><span class="line">-----------------------------------------------------------------------------------------------</span><br><span class="line">(2)关于parted set命令的flag类型,可参考官方文档: https://www.gnu.org/software/parted/manual/html_node/set.html</span><br></pre></td></tr></table></figure>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">分区相关-知识点总结:</span><br><span class="line"></span><br><span class="line">(1)如果是MBR分区的磁盘，使用以下方法创建ESP：</span><br><span class="line">parted创建的boot<span class="emphasis">_grub和boot分区, 使用mkfs.ext2格式化</span></span><br><span class="line"><span class="emphasis">-----------------------------------------------------------------------------------------------</span></span><br><span class="line"><span class="emphasis">(2)关于parted set命令的flag类型,可参考官方文档: https://www.gnu.org/software/parted/manual/html_</span>node/set.html</span><br></pre></td></tr></table></figure>
 
-<h5 id="配置网络"><a href="#配置网络" class="headerlink" title="配置网络"></a>配置网络</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">配置网络主要是用来下载portage和stage,如果已经下载到U盘里,直接挂载U盘拷贝到/mnt/gentoo/os目录下。</span><br><span class="line">使用如下命令来配置网络:</span><br><span class="line">ifconfig   查看网络标识</span><br><span class="line">net-setup eno16777728  根据提示输入IP地址、broadcast、netmask、gateway、DNS和dns search suffix地址(如:qq.com)</span><br><span class="line">使用ping qq.com来测试网络是否可用</span><br><span class="line"></span><br><span class="line">官方网络配置参考：https://wiki.gentoo.org/wiki/Handbook:X86/Installation/Networking#Manual_network_configuration</span><br></pre></td></tr></table></figure>
+<h5 id="配置网络"><a href="#配置网络" class="headerlink" title="配置网络"></a>配置网络</h5><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">配置网络主要是用来下载portage和stage,如果已经下载到U盘里,直接挂载U盘拷贝到/mnt/gentoo/os目录下。</span><br><span class="line">使用如下命令来配置网络<span class="symbol">:</span></span><br><span class="line">ifconfig   查看网络标识</span><br><span class="line">net-setup eno16777728  根据提示输入IP地址、broadcast、netmask、gateway、DNS和dns search suffix地址(如<span class="symbol">:qq</span>.com)</span><br><span class="line">使用ping qq.com来测试网络是否可用</span><br><span class="line"></span><br><span class="line">官方网络配置参考：<span class="symbol">https:</span>/<span class="regexp">/wiki.gentoo.org/wiki</span><span class="regexp">/Handbook:X86/</span>Installation/Networking<span class="comment">#Manual_network_configuration</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">开启ssh，配置后边的东西会方便很多，比如:命令粘贴或文件粘贴</span><br><span class="line">/etc/init.d/sshd start  #启动ssh服务</span><br><span class="line">passwd root   #修改root密码</span><br><span class="line"></span><br><span class="line">此时就可以使用xshell连接了</span><br></pre></td></tr></table></figure>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">开启ssh，配置后边的东西会方便很多，比如:命令粘贴或文件粘贴</span><br><span class="line">/etc/init.d/sshd <span class="literal">start</span>  <span class="comment">#启动ssh服务</span></span><br><span class="line">passwd root   <span class="comment">#修改root密码</span></span><br><span class="line"></span><br><span class="line">此时就可以使用xshell连接了</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">使用links命令把portage和stage下载到/mnt/gentoo里</span><br><span class="line">cd /mnt/gentoo/  #切换到挂载的根分区下载包(只有这个有大空间)</span><br><span class="line">links mirrors.163.com/gentoo</span><br><span class="line">注: stage在releases/x86/current-iso/目录下; portage在snapshots/目录下</span><br><span class="line"></span><br><span class="line">#解压(按照下面顺序解压)</span><br><span class="line">xz -d stage3-amd64-20180225T214502Z.tar.xz &amp;&amp; tar -xf stage3-amd64-20180225T214502Z.tar  </span><br><span class="line">tar -xjf portage-20180220.tar.bz2 -C /mnt/gentoo/usr/</span><br></pre></td></tr></table></figure>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">使用links命令把portage和stage下载到<span class="meta-keyword">/mnt/</span>gentoo里</span><br><span class="line">cd <span class="meta-keyword">/mnt/</span>gentoo/  <span class="meta">#切换到挂载的根分区下载包(只有这个有大空间)</span></span><br><span class="line">links mirrors<span class="number">.163</span>.com/gentoo</span><br><span class="line">注: stage在releases<span class="meta-keyword">/x86/</span>current-iso/目录下; portage在snapshots/目录下</span><br><span class="line"></span><br><span class="line"><span class="meta">#解压(按照下面顺序解压)</span></span><br><span class="line">xz -d stage3-amd64<span class="number">-20180225</span>T214502Z.tar.xz &amp;&amp; tar -xf stage3-amd64<span class="number">-20180225</span>T214502Z.tar  </span><br><span class="line">tar -xjf portage<span class="number">-20180220.</span>tar.bz2 -C <span class="meta-keyword">/mnt/</span>gentoo<span class="meta-keyword">/usr/</span></span><br></pre></td></tr></table></figure>
 
-<h5 id="配置make-conf"><a href="#配置make-conf" class="headerlink" title="配置make.conf"></a>配置make.conf</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">为了优化Gentoo，必须在软件编译的时候指定某些参数，这样编译出来的程序运行效率将非常高，系统在编译用到的参数就在make.conf里，文件路径是/mnt/gentoo/etc/portage/make.conf.</span><br><span class="line">Gentoo给了我们一个配置的sample在/mnt/gentoo/usr/share/portage/config/make.conf.example，他里面讲的很详细，下面的是我的make.conf。</span><br></pre></td></tr></table></figure>
+<h5 id="配置make-conf"><a href="#配置make-conf" class="headerlink" title="配置make.conf"></a>配置make.conf</h5><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">为了优化Gentoo，必须在软件编译的时候指定某些参数，这样编译出来的程序运行效率将非常高，系统在编译用到的参数就在<span class="keyword">make</span>.<span class="keyword">conf</span>里，文件路径是/mnt/gentoo/etc/portage/<span class="keyword">make</span>.<span class="keyword">conf</span>.</span><br><span class="line">Gentoo给了我们一个配置的sample在/mnt/gentoo/usr/share/portage/config/<span class="keyword">make</span>.<span class="keyword">conf</span>.example，他里面讲的很详细，下面的是我的<span class="keyword">make</span>.<span class="keyword">conf</span>。</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">vi /mnt/gentoo/etc/portage/make.conf</span><br><span class="line"></span><br><span class="line">#USE用于控制软件的安装</span><br><span class="line">USE=&quot;bindist mmx sse sse2&quot;  </span><br><span class="line">#这两个变量使用相同的值,这两个变量定义gcc和c++编译器的优化</span><br><span class="line">CFLAGS=&quot;-march=native -mtune=native -O2 -pipe&quot; </span><br><span class="line">CXXFLAGS=&quot;$&#123;CFLAGS&#125;&quot; </span><br><span class="line">#指定gcc同时编译的数量,一般是CPU个数(或核心数）+1</span><br><span class="line">MAKEOPTS=&quot;-j9&quot; </span><br><span class="line"></span><br><span class="line">注:&quot;-march=native&quot;参数,native意思是让系统自动检测cpu型号进行配置</span><br></pre></td></tr></table></figure>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">vi /mnt/gentoo/etc/portage/make.conf</span><br><span class="line"></span><br><span class="line"><span class="comment">#USE用于控制软件的安装</span></span><br><span class="line">USE=<span class="string">"bindist mmx sse sse2"</span>  </span><br><span class="line"><span class="comment">#这两个变量使用相同的值,这两个变量定义gcc和c++编译器的优化</span></span><br><span class="line">CFLAGS=<span class="string">"-march=native -mtune=native -O2 -pipe"</span> </span><br><span class="line">CXXFLAGS=<span class="string">"$&#123;CFLAGS&#125;"</span> </span><br><span class="line"><span class="comment">#指定gcc同时编译的数量,一般是CPU个数(或核心数）+1</span></span><br><span class="line">MAKEOPTS=<span class="string">"-j9"</span> </span><br><span class="line"></span><br><span class="line"><span class="section">注:"-march=native"参数,native意思是让系统自动检测cpu型号进行配置</span></span><br></pre></td></tr></table></figure>
 
-<h5 id="进入新环境"><a href="#进入新环境" class="headerlink" title="进入新环境"></a>进入新环境</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">接下来就可以进入新环境/mnt/gentoo, 在chroot进入新环境前需要做一些设备的挂载和DNS文件复制</span><br><span class="line">cp -L /etc/resolv.conf /mnt/gentoo/etc/</span><br><span class="line">mount -t proc none /mnt/gentoo/proc </span><br><span class="line">mount --rbind /sys /mnt/gentoo/sys</span><br><span class="line">mount --make-rslave /mnt/gentoo/sys</span><br><span class="line">mount --rbind /dev /mnt/gentoo/dev</span><br><span class="line">mount --make-rslave /mnt/gentoo/dev</span><br></pre></td></tr></table></figure>
+<h5 id="进入新环境"><a href="#进入新环境" class="headerlink" title="进入新环境"></a>进入新环境</h5><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">接下来就可以进入新环境<span class="string">/mnt/gentoo</span>, 在chroot进入新环境前需要做一些设备的挂载和DNS文件复制</span><br><span class="line">cp -L <span class="string">/etc/resolv.conf</span> <span class="string">/mnt/gentoo/etc/</span></span><br><span class="line">mount -t proc none <span class="string">/mnt/gentoo/proc</span> </span><br><span class="line">mount <span class="params">--rbind</span> <span class="string">/sys</span> <span class="string">/mnt/gentoo/sys</span></span><br><span class="line">mount <span class="params">--make-rslave</span> <span class="string">/mnt/gentoo/sys</span></span><br><span class="line">mount <span class="params">--rbind</span> <span class="string">/dev</span> <span class="string">/mnt/gentoo/dev</span></span><br><span class="line">mount <span class="params">--make-rslave</span> <span class="string">/mnt/gentoo/dev</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">使用chroot进入新环境,并更新环境变量</span><br><span class="line">chroot /mnt/gentoo /bin/bash</span><br><span class="line">env-update</span><br><span class="line">source /etc/profile</span><br><span class="line"></span><br><span class="line">为了使portage里的软件保持最新，最好同步一下</span><br><span class="line">emerge --sync   </span><br><span class="line">注:如果同步出错，需要检查/etc/portage/make.conf文件中的参数</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">使用chroot进入新环境,并更新环境变量</span><br><span class="line">chroot /mnt/gentoo /bin/bash</span><br><span class="line">env-update</span><br><span class="line">source /etc/profile</span><br><span class="line"></span><br><span class="line">为了使portage里的软件保持最新，最好同步一下</span><br><span class="line">emerge --sync   </span><br><span class="line">注:如果同步出错，需要检查/etc/portage/make.conf文件中的参数</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Gentoo中除了USE和CFLAGS用于优化外还有一个重要的profile，这个是Gentoo自带的配置文件，我们只要选择合适的就行了。</span><br><span class="line"></span><br><span class="line">eselect profile list   #列出所有的子版本(带*号的是默认选项)</span><br><span class="line">  [1]   default/linux/amd64/13.0 (stable)*</span><br><span class="line">  [2]   default/linux/amd64/13.0/selinux (dev)</span><br><span class="line">  [3]   default/linux/amd64/13.0/desktop (stable)</span><br><span class="line">  [4]   default/linux/amd64/13.0/desktop/gnome (stable)</span><br><span class="line">  [5]   default/linux/amd64/13.0/desktop/gnome/systemd (stable)</span><br><span class="line">  ......</span><br><span class="line">  </span><br><span class="line">eselect profile set 12  #选择对应版本</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Gentoo中除了USE和CFLAGS用于优化外还有一个重要的profile，这个是Gentoo自带的配置文件，我们只要选择合适的就行了。</span><br><span class="line"></span><br><span class="line">eselect<span class="built_in"> profile </span>list   #列出所有的子版本(带*号的是默认选项)</span><br><span class="line">  [1]   default/linux/amd64/13.0 (stable)*</span><br><span class="line">  [2]   default/linux/amd64/13.0/selinux (dev)</span><br><span class="line">  [3]   default/linux/amd64/13.0/desktop (stable)</span><br><span class="line">  [4]   default/linux/amd64/13.0/desktop/gnome (stable)</span><br><span class="line">  [5]   default/linux/amd64/13.0/desktop/gnome/systemd (stable)</span><br><span class="line">  <span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span></span><br><span class="line">  </span><br><span class="line">eselect<span class="built_in"> profile </span><span class="builtin-name">set</span> 12  #选择对应版本</span><br></pre></td></tr></table></figure>
 
-<h5 id="编译内核"><a href="#编译内核" class="headerlink" title="编译内核"></a>编译内核</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">选择一个内核并进行安装</span><br><span class="line">emerge --ask sys-kernel/gentoo-sources</span><br><span class="line"></span><br><span class="line">进入内核源码</span><br><span class="line">cd /usr/src/linux</span><br><span class="line"></span><br><span class="line">手动配置内核</span><br><span class="line">make menuconfig</span><br><span class="line"></span><br><span class="line">注：make menuconfig显示错误“Your display is too small to run Menuconfig!”</span><br><span class="line">如果在终端执行 make menuconfig ,显示错误：</span><br><span class="line">Your display is too small to run Menuconfig!</span><br><span class="line">It must be at least 19 lines by 80 columns.</span><br><span class="line">make[1]: *** [menuconfig] Error 1</span><br><span class="line">make: *** [menuconfig] Error 2</span><br><span class="line">表示xshell终端窗口太小。把终端窗口适当的调大（或是直接最大化）就行了。</span><br></pre></td></tr></table></figure>
+<h5 id="编译内核"><a href="#编译内核" class="headerlink" title="编译内核"></a>编译内核</h5><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">选择一个内核并进行安装</span><br><span class="line">emerge --ask sys-kernel/gentoo-sources</span><br><span class="line"></span><br><span class="line">进入内核源码</span><br><span class="line"><span class="keyword">cd</span> /usr/src/linux</span><br><span class="line"></span><br><span class="line">手动配置内核</span><br><span class="line"><span class="keyword">make</span> menuconfig</span><br><span class="line"></span><br><span class="line">注：<span class="keyword">make</span> menuconfig显示错误“Your <span class="keyword">display</span> <span class="keyword">is</span> too small <span class="keyword">to</span> run Menuconfig!”</span><br><span class="line">如果在终端执行 <span class="keyword">make</span> menuconfig ,显示错误：</span><br><span class="line">Your <span class="keyword">display</span> <span class="keyword">is</span> too small <span class="keyword">to</span> run Menuconfig!</span><br><span class="line">It must <span class="keyword">be</span> at least <span class="number">19</span> lines by <span class="number">80</span> columns.</span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: *** [menuconfig] Error <span class="number">1</span></span><br><span class="line"><span class="keyword">make</span>: *** [menuconfig] Error <span class="number">2</span></span><br><span class="line">表示xshell终端窗口太小。把终端窗口适当的调大（或是直接最大化）就行了。</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">注：内核的配置可以参考官方文档:https://wiki.gentoo.org/wiki/Handbook:X86/Installation/Kernel</span><br></pre></td></tr></table></figure>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">注：内核的配置可以参考官方文档<span class="symbol">:https</span><span class="symbol">://wiki</span>.gentoo.org/wiki/<span class="symbol">Handbook:</span>X86/Installation/Kernel</span><br></pre></td></tr></table></figure>
 
-<h6 id="内核-启用devtmpfs支持"><a href="#内核-启用devtmpfs支持" class="headerlink" title="内核:启用devtmpfs支持"></a>内核:启用devtmpfs支持</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">作用：用来挂载/dev,以便在启动过程中使用关键设备文件</span><br><span class="line"></span><br><span class="line">Device Drivers ---&gt;</span><br><span class="line">  Generic Driver Options ---&gt;</span><br><span class="line">    [*] Maintain a devtmpfs filesystem to mount at /dev</span><br><span class="line">    [*] Automount devtmpfs at /dev, after the kernel mounted the rootfs</span><br></pre></td></tr></table></figure>
+<h6 id="内核-启用devtmpfs支持"><a href="#内核-启用devtmpfs支持" class="headerlink" title="内核:启用devtmpfs支持"></a>内核:启用devtmpfs支持</h6><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">作用：用来挂载/dev,以便在启动过程中使用关键设备文件</span><br><span class="line"></span><br><span class="line">Device Drivers <span class="comment">---&gt;</span></span><br><span class="line">  Generic Driver Options <span class="comment">---&gt;</span></span><br><span class="line">    [*] Maintain <span class="keyword">a</span> devtmpfs filesystem <span class="built_in">to</span> mount <span class="keyword">at</span> /dev</span><br><span class="line">    [*] Automount devtmpfs <span class="keyword">at</span> /dev, <span class="keyword">after</span> <span class="keyword">the</span> kernel mounted <span class="keyword">the</span> rootfs</span><br></pre></td></tr></table></figure>
 
-<h6 id="内核-启用SCSI磁盘支持"><a href="#内核-启用SCSI磁盘支持" class="headerlink" title="内核: 启用SCSI磁盘支持"></a>内核: 启用SCSI磁盘支持</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Device Drivers ---&gt;</span><br><span class="line">   SCSI device support  ---&gt;</span><br><span class="line">      &lt;*&gt; SCSI disk support</span><br></pre></td></tr></table></figure>
+<h6 id="内核-启用SCSI磁盘支持"><a href="#内核-启用SCSI磁盘支持" class="headerlink" title="内核: 启用SCSI磁盘支持"></a>内核: 启用SCSI磁盘支持</h6><figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">D<span class="function"><span class="title">evice</span> Drivers ---&gt;</span></span><br><span class="line">   SCSI <span class="function"><span class="title">device</span> support  ---&gt;</span></span><br><span class="line">      &lt;*&gt; SCSI disk support</span><br></pre></td></tr></table></figure>
 
-<h6 id="内核-选择必要的文件系统"><a href="#内核-选择必要的文件系统" class="headerlink" title="内核: 选择必要的文件系统"></a>内核: 选择必要的文件系统</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">建议常用的文件系统格式都选择上，免得用的时候抓瞎</span><br><span class="line">File systems ---&gt;</span><br><span class="line">  &lt;*&gt; Second extended fs support</span><br><span class="line">  &lt;*&gt; The Extended 3 (ext3) filesystem</span><br><span class="line">  &lt;*&gt; The Extended 4 (ext4) filesystem</span><br><span class="line">  &lt;*&gt; Reiserfs support</span><br><span class="line">  &lt;*&gt; JFS filesystem support</span><br><span class="line">  &lt;*&gt; XFS filesystem support</span><br><span class="line">  &lt;*&gt; Btrfs filesystem support</span><br><span class="line">  DOS/FAT/NT Filesystems  ---&gt;</span><br><span class="line">    &lt;*&gt; MSDOS fs support</span><br><span class="line">    &lt;*&gt; VFAT (Windows-95) fs support</span><br></pre></td></tr></table></figure>
+<h6 id="内核-选择必要的文件系统"><a href="#内核-选择必要的文件系统" class="headerlink" title="内核: 选择必要的文件系统"></a>内核: 选择必要的文件系统</h6><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">建议常用的文件系统格式都选择上，免得用的时候抓瞎</span><br><span class="line">File systems ---&gt;</span><br><span class="line">  <span class="tag">&lt;<span class="name">*</span>&gt;</span> Second extended fs support</span><br><span class="line">  <span class="tag">&lt;<span class="name">*</span>&gt;</span> The Extended 3 (ext3) filesystem</span><br><span class="line">  <span class="tag">&lt;<span class="name">*</span>&gt;</span> The Extended 4 (ext4) filesystem</span><br><span class="line">  <span class="tag">&lt;<span class="name">*</span>&gt;</span> Reiserfs support</span><br><span class="line">  <span class="tag">&lt;<span class="name">*</span>&gt;</span> JFS filesystem support</span><br><span class="line">  <span class="tag">&lt;<span class="name">*</span>&gt;</span> XFS filesystem support</span><br><span class="line">  <span class="tag">&lt;<span class="name">*</span>&gt;</span> Btrfs filesystem support</span><br><span class="line">  DOS/FAT/NT Filesystems  ---&gt;</span><br><span class="line">    <span class="tag">&lt;<span class="name">*</span>&gt;</span> MSDOS fs support</span><br><span class="line">    <span class="tag">&lt;<span class="name">*</span>&gt;</span> VFAT (Windows-95) fs support</span><br></pre></td></tr></table></figure>
 
-<h6 id="内核-选择PPPoE必要的驱动程序"><a href="#内核-选择PPPoE必要的驱动程序" class="headerlink" title="内核: 选择PPPoE必要的驱动程序"></a>内核: 选择PPPoE必要的驱动程序</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Device Drivers ---&gt;</span><br><span class="line">  Network device support ---&gt;</span><br><span class="line">    &lt;*&gt; PPP (point-to-point protocol) support</span><br><span class="line">    &lt;*&gt;   PPP support for async serial ports</span><br><span class="line">    &lt;*&gt;   PPP support for sync tty ports</span><br></pre></td></tr></table></figure>
+<h6 id="内核-选择PPPoE必要的驱动程序"><a href="#内核-选择PPPoE必要的驱动程序" class="headerlink" title="内核: 选择PPPoE必要的驱动程序"></a>内核: 选择PPPoE必要的驱动程序</h6><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Device Drivers ---&gt;</span><br><span class="line"> <span class="built_in"> Network </span>device support ---&gt;</span><br><span class="line">    &lt;*&gt;<span class="built_in"> PPP </span>(point-to-point protocol) support</span><br><span class="line">    &lt;*&gt;  <span class="built_in"> PPP </span>support <span class="keyword">for</span> async serial ports</span><br><span class="line">    &lt;*&gt;  <span class="built_in"> PPP </span>support <span class="keyword">for</span> sync tty ports</span><br></pre></td></tr></table></figure>
 
-<h6 id="内核-激活SMP支持"><a href="#内核-激活SMP支持" class="headerlink" title="内核: 激活SMP支持"></a>内核: 激活SMP支持</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">作用：用于支持多内核存在,用来在多个内核间进行切换</span><br><span class="line"></span><br><span class="line">Processor type and features  ---&gt;</span><br><span class="line">  [*] Symmetric multi-processing support</span><br></pre></td></tr></table></figure>
+<h6 id="内核-激活SMP支持"><a href="#内核-激活SMP支持" class="headerlink" title="内核: 激活SMP支持"></a>内核: 激活SMP支持</h6><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">作用：用于支持多内核存在,用来在多个内核间进行切换</span><br><span class="line"></span><br><span class="line">Processor<span class="built_in"> type </span><span class="keyword">and</span> features  ---&gt;</span><br><span class="line">  [*] Symmetric multi-processing support</span><br></pre></td></tr></table></figure>
 
 <p>内核: 启用输入设备的USB支持</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Device Drivers ---&gt;</span><br><span class="line">  HID support  ---&gt;</span><br><span class="line">    -*- HID bus support</span><br><span class="line">    &lt;*&gt;   Generic HID driver</span><br><span class="line">    [*]   Battery level reporting for HID devices</span><br><span class="line">      USB HID support  ---&gt;</span><br><span class="line">        &lt;*&gt; USB HID transport layer</span><br><span class="line">  [*] USB support  ---&gt;</span><br><span class="line">    &lt;*&gt;     xHCI HCD (USB 3.0) support</span><br><span class="line">    &lt;*&gt;     EHCI HCD (USB 2.0) support</span><br><span class="line">    &lt;*&gt;     OHCI HCD (USB 1.1) support</span><br></pre></td></tr></table></figure>
+<figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Device</span> <span class="type">Drivers</span> <span class="comment">---&gt;</span></span><br><span class="line">  <span class="type">HID</span> sup<span class="keyword">port</span>  <span class="comment">---&gt;</span></span><br><span class="line">    -*- HID bus support</span><br><span class="line">    &lt;*&gt;   Generic HID driver</span><br><span class="line">    [*]   Battery level reporting for HID devices</span><br><span class="line">      USB HID support  <span class="comment">---&gt;</span></span><br><span class="line">        &lt;*&gt; USB HID transport layer</span><br><span class="line">  [*] USB support  <span class="comment">---&gt;</span></span><br><span class="line">    &lt;*&gt;     xHCI HCD (<span class="type">USB</span> 3.0) support</span><br><span class="line">    &lt;*&gt;     EHCI HCD (<span class="type">USB</span> 2.0) support</span><br><span class="line">    &lt;*&gt;     OHCI HCD (<span class="type">USB</span> 1.1) support</span><br></pre></td></tr></table></figure>
 
-<h6 id="内核-选择处理器类型和特点"><a href="#内核-选择处理器类型和特点" class="headerlink" title="内核: 选择处理器类型和特点"></a>内核: 选择处理器类型和特点</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Processor type and features  ---&gt;</span><br><span class="line">   [ ] Machine Check / overheating reporting </span><br><span class="line">   [ ]   Intel MCE Features</span><br><span class="line">   [ ]   AMD MCE Features</span><br><span class="line">   Processor family (AMD-Opteron/Athlon64)  ---&gt;</span><br><span class="line">      ( ) Opteron/Athlon64/Hammer/K8</span><br><span class="line">      ( ) Intel P4 / older Netburst based Xeon</span><br><span class="line">      ( ) Core 2/newer Xeon</span><br><span class="line">      ( ) Intel Atom</span><br><span class="line">      ( ) Generic-x86-64</span><br><span class="line">Executable file formats / Emulations  ---&gt;</span><br><span class="line">   [*] IA32 Emulation</span><br></pre></td></tr></table></figure>
+<h6 id="内核-选择处理器类型和特点"><a href="#内核-选择处理器类型和特点" class="headerlink" title="内核: 选择处理器类型和特点"></a>内核: 选择处理器类型和特点</h6><figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Processor</span> <span class="keyword">type</span> and features  <span class="comment">---&gt;</span></span><br><span class="line">   [ ] <span class="type">Machine</span> <span class="type">Check</span> / overheating reporting </span><br><span class="line">   [ ]   Intel MCE Features</span><br><span class="line">   [ ]   AMD MCE Features</span><br><span class="line">   Processor family (<span class="type">AMD</span>-<span class="type">Opteron</span>/<span class="type">Athlon64</span>)  <span class="comment">---&gt;</span></span><br><span class="line">      ( ) Opteron/Athlon64/Hammer/K8</span><br><span class="line">      ( ) Intel P4 / older Netburst based Xeon</span><br><span class="line">      ( ) Core 2/newer Xeon</span><br><span class="line">      ( ) Intel Atom</span><br><span class="line">      ( ) Generic-x86-64</span><br><span class="line">Executable file formats / Emulations  <span class="comment">---&gt;</span></span><br><span class="line">   [*] IA32 Emulation</span><br></pre></td></tr></table></figure>
 
-<h6 id="内核-启用对GPT的支持-用于支持GPT分区"><a href="#内核-启用对GPT的支持-用于支持GPT分区" class="headerlink" title="内核: 启用对GPT的支持(用于支持GPT分区)"></a>内核: 启用对GPT的支持(用于支持GPT分区)</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-*- Enable the block layer ---&gt;</span><br><span class="line">   Partition Types ---&gt;</span><br><span class="line">      [*] Advanced partition selection</span><br><span class="line">      [*] EFI GUID Partition support</span><br></pre></td></tr></table></figure>
+<h6 id="内核-启用对GPT的支持-用于支持GPT分区"><a href="#内核-启用对GPT的支持-用于支持GPT分区" class="headerlink" title="内核: 启用对GPT的支持(用于支持GPT分区)"></a>内核: 启用对GPT的支持(用于支持GPT分区)</h6><figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-*- E<span class="function"><span class="title">nable</span> the <span class="keyword">block</span> layer ---&gt;</span></span><br><span class="line">   P<span class="function"><span class="title">artition</span> Types ---&gt;</span></span><br><span class="line">      [*] Advanced partition selection</span><br><span class="line">      [*] EFI GUID Partition support</span><br></pre></td></tr></table></figure>
 
-<h6 id="内核-启用对UEFI方式引导系统的支持"><a href="#内核-启用对UEFI方式引导系统的支持" class="headerlink" title="内核: 启用对UEFI方式引导系统的支持"></a>内核: 启用对UEFI方式引导系统的支持</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">注:如果不启用,则系统不能通过UEFI方式引导</span><br><span class="line"></span><br><span class="line">Processor type and features  ---&gt;</span><br><span class="line">    [*] EFI runtime service support </span><br><span class="line">    [*]   EFI stub support</span><br><span class="line">    [*]     EFI mixed-mode support</span><br><span class="line"> </span><br><span class="line">Firmware Drivers  ---&gt;</span><br><span class="line">    EFI (Extensible Firmware Interface) Support  ---&gt;</span><br><span class="line">        &lt;*&gt; EFI Variable Support via sysfs</span><br></pre></td></tr></table></figure>
+<h6 id="内核-启用对UEFI方式引导系统的支持"><a href="#内核-启用对UEFI方式引导系统的支持" class="headerlink" title="内核: 启用对UEFI方式引导系统的支持"></a>内核: 启用对UEFI方式引导系统的支持</h6><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">注:如果不启用,则系统不能通过UEFI方式引导</span><br><span class="line"></span><br><span class="line">Processor<span class="built_in"> type </span><span class="keyword">and</span> features  ---&gt;</span><br><span class="line">    [*] EFI runtime<span class="built_in"> service </span>support </span><br><span class="line">    [*]   EFI stub support</span><br><span class="line">    [*]     EFI mixed-mode support</span><br><span class="line"> </span><br><span class="line">Firmware Drivers  ---&gt;</span><br><span class="line">    EFI (Extensible<span class="built_in"> Firmware </span>Interface) Support  ---&gt;</span><br><span class="line">        &lt;*&gt; EFI Variable Support via sysfs</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">编译并安装模块</span><br><span class="line">make &amp;&amp; make modules_install</span><br><span class="line"></span><br><span class="line">内核编译完成后，使用如下命令将内核镜像复制到/boot/目录中</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">编译并安装模块</span><br><span class="line"><span class="built_in">make</span> &amp;&amp; <span class="built_in">make</span> modules_install</span><br><span class="line"></span><br><span class="line">内核编译完成后，使用如下命令将内核镜像复制到/boot/目录中</span><br><span class="line"><span class="built_in">make</span> install</span><br></pre></td></tr></table></figure>
 
-<h4 id="配置系统"><a href="#配置系统" class="headerlink" title="配置系统"></a>配置系统</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">emerge app-editors/vim    #安装vim</span><br></pre></td></tr></table></figure>
+<h4 id="配置系统"><a href="#配置系统" class="headerlink" title="配置系统"></a>配置系统</h4><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">emerge</span> app-editors/vim    <span class="comment">#安装vim</span></span><br></pre></td></tr></table></figure>
 
-<h5 id="配置fstab"><a href="#配置fstab" class="headerlink" title="配置fstab"></a>配置fstab</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/fstab</span><br><span class="line">/dev/sda4  /    ext4  defaults 1 1             #配置挂载根分区</span><br><span class="line">/dev/sda3  none  swap  sw  0 0                 #配置挂载swap</span><br><span class="line">/dev/sda2  /boot ext2  noauto,noatime	1 2    #配置挂载boot分区</span><br><span class="line"></span><br><span class="line">注: 生产环境下,最前面的/dev/sda1、sda2、sda3要通过blkid命令替换成对应的UUID</span><br></pre></td></tr></table></figure>
+<h5 id="配置fstab"><a href="#配置fstab" class="headerlink" title="配置fstab"></a>配置fstab</h5><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">vim <span class="string">/etc/fstab</span></span><br><span class="line"><span class="string">/dev/sda4</span>  /    ext4  defaults 1 1             <span class="comment">#配置挂载根分区</span></span><br><span class="line"><span class="string">/dev/sda3</span>  none  swap  sw  0 0                 <span class="comment">#配置挂载swap</span></span><br><span class="line"><span class="string">/dev/sda2</span>  <span class="string">/boot</span> ext2  noauto,noatime	1 2    <span class="comment">#配置挂载boot分区</span></span><br><span class="line"></span><br><span class="line">注: 生产环境下,最前面的<span class="string">/dev/sda1</span>、sda2、sda3要通过blkid命令替换成对应的UUID</span><br></pre></td></tr></table></figure>
 
 <p>配置主机名</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/conf.d/hostname</span><br><span class="line"></span><br><span class="line">hostname =“gentoo”  ＃将主机名变量设置为所选主机名</span><br></pre></td></tr></table></figure>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">vim</span> /etc/<span class="keyword">conf</span>.d/<span class="built_in">hostname</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">hostname</span> =“gentoo”  ＃将主机名变量设置为所选主机名</span><br></pre></td></tr></table></figure>
 
-<h5 id="配置网络-1"><a href="#配置网络-1" class="headerlink" title="配置网络"></a>配置网络</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">这次是配置的系统网络，而非LiveCD的网络</span><br><span class="line">emerge --ask --noreplace net-misc/netifrc</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">vi /etc/conf.d/net   #配置静态IP</span><br><span class="line">config_eth0=&quot;10.0.10.100 netmask 255.255.255.0 brd 10.0.10.255&quot;</span><br><span class="line">routes_eth0=&quot;default via 10.0.10.1&quot;</span><br><span class="line"></span><br><span class="line">注：如果系统自动获取IP则进行如下配置</span><br><span class="line">config_eth0=&quot;dhcp&quot;</span><br></pre></td></tr></table></figure>
+<h5 id="配置网络-1"><a href="#配置网络-1" class="headerlink" title="配置网络"></a>配置网络</h5><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">这次是配置的系统网络，而非LiveCD的网络</span><br><span class="line">emerge --ask --noreplace net-misc/netifrc</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">vi /etc/conf.d/net   <span class="comment">#配置静态IP</span></span><br><span class="line">config_eth0=<span class="string">"10.0.10.100 netmask 255.255.255.0 brd 10.0.10.255"</span></span><br><span class="line">routes_eth0=<span class="string">"default via 10.0.10.1"</span></span><br><span class="line"></span><br><span class="line">注：如果系统自动获取IP则进行如下配置</span><br><span class="line">config_eth0=<span class="string">"dhcp"</span></span><br></pre></td></tr></table></figure>
 
-<h5 id="系统启动时激活网卡配置"><a href="#系统启动时激活网卡配置" class="headerlink" title="系统启动时激活网卡配置"></a>系统启动时激活网卡配置</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /etc/init.d</span><br><span class="line">ln -s net.lo net.eth0</span><br><span class="line">rc-update add net.eth0 default</span><br></pre></td></tr></table></figure>
+<h5 id="系统启动时激活网卡配置"><a href="#系统启动时激活网卡配置" class="headerlink" title="系统启动时激活网卡配置"></a>系统启动时激活网卡配置</h5><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /etc/init.d</span><br><span class="line">ln -s net<span class="selector-class">.lo</span> net.eth0</span><br><span class="line">rc-update add net<span class="selector-class">.eth0</span> default</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">排错</span><br><span class="line">如果在启动系统后，我们发现有关网络接口名称（目前记录为eth0）的假设是错误的，那么执行以下步骤来解决这个问题：</span><br><span class="line">使用正确的接口名称更新/etc/conf.d/net文件（enp3s0而不是eth0）。</span><br><span class="line">创建新的符号链接（如/etc/init.d/net.enp3s0）。</span><br><span class="line">删除旧的符号链接（rm /etc/init.d/net.eth0）。</span><br><span class="line">将新的添加到默认运行级别。</span><br><span class="line">使用rc-update del net.eth0默认值删除旧的。</span><br></pre></td></tr></table></figure>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">排错</span><br><span class="line">如果在启动系统后，我们发现有关网络接口名称（目前记录为eth0）的假设是错误的，那么执行以下步骤来解决这个问题：</span><br><span class="line">使用正确的接口名称更新/etc/<span class="keyword">conf</span>.<span class="keyword">d</span>/<span class="keyword">net</span>文件（enp3s0而不是eth0）。</span><br><span class="line">创建新的符号链接（如/etc/init.<span class="keyword">d</span>/<span class="keyword">net</span>.enp3s0）。</span><br><span class="line">删除旧的符号链接（<span class="keyword">rm</span> /etc/init.<span class="keyword">d</span>/<span class="keyword">net</span>.eth0）。</span><br><span class="line">将新的添加到默认运行级别。</span><br><span class="line">使用rc-<span class="keyword">update</span> del <span class="keyword">net</span>.eth0默认值删除旧的。</span><br></pre></td></tr></table></figure>
 
-<h5 id="定义hosts文件"><a href="#定义hosts文件" class="headerlink" title="定义hosts文件"></a>定义hosts文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim  /etc/hosts</span><br><span class="line">127.0.0.1 gentoo.homenetwork gentoo localhost   ＃这定义了当前系统并且必须设置</span><br></pre></td></tr></table></figure>
+<h5 id="定义hosts文件"><a href="#定义hosts文件" class="headerlink" title="定义hosts文件"></a>定义hosts文件</h5><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim  /etc/hosts</span><br><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> gentoo.homenetwork gentoo localhost   ＃这定义了当前系统并且必须设置</span><br></pre></td></tr></table></figure>
 
-<h5 id="系统信息"><a href="#系统信息" class="headerlink" title="系统信息"></a>系统信息</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使用passwd命令设置root密码。</span><br></pre></td></tr></table></figure>
+<h5 id="系统信息"><a href="#系统信息" class="headerlink" title="系统信息"></a>系统信息</h5><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使用passwd命令设<span class="built_in">置root</span>密码。</span><br></pre></td></tr></table></figure>
 
 <p>配置rc.conf文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">作用: Gentoo使用/etc/rc.conf来配置系统的服务，启动和关闭。</span><br><span class="line"></span><br><span class="line">打开/etc/rc.conf并享受文件中的所有注释。查看设置并在需要的地方进行更改。</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">作用: Gentoo使用<span class="regexp">/etc/</span>rc.conf来配置系统的服务，启动和关闭。</span><br><span class="line"></span><br><span class="line">打开<span class="regexp">/etc/</span>rc.conf并享受文件中的所有注释。查看设置并在需要的地方进行更改。</span><br></pre></td></tr></table></figure>
 
-<h5 id="中文语言支持"><a href="#中文语言支持" class="headerlink" title="中文语言支持"></a>中文语言支持</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/locale.gen</span><br><span class="line">en_US ISO-8859-1</span><br><span class="line">en_US.UTF-8 UTF-8</span><br><span class="line">#把需要的项前面的#号去掉</span><br><span class="line"></span><br><span class="line">执行</span><br><span class="line">locale-gen</span><br></pre></td></tr></table></figure>
+<h5 id="中文语言支持"><a href="#中文语言支持" class="headerlink" title="中文语言支持"></a>中文语言支持</h5><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/locale.gen</span><br><span class="line">en_US ISO<span class="number">-8859</span><span class="number">-1</span></span><br><span class="line">en_US.UTF<span class="number">-8</span> UTF<span class="number">-8</span></span><br><span class="line">#把需要的项前面的#号去掉</span><br><span class="line"></span><br><span class="line">执行</span><br><span class="line">locale-gen</span><br></pre></td></tr></table></figure>
 
-<h5 id="修改时区"><a href="#修改时区" class="headerlink" title="修改时区"></a>修改时区</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br><span class="line">echo &quot;Asia/Shanghai&quot; &gt; /etc/timezone</span><br><span class="line"></span><br><span class="line">#设置硬件时间为本地，不然会多8个小时</span><br><span class="line">hwclock -w --localtime</span><br></pre></td></tr></table></figure>
+<h5 id="修改时区"><a href="#修改时区" class="headerlink" title="修改时区"></a>修改时区</h5><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cp <span class="string">/usr/share/zoneinfo/Asia/Shanghai</span> <span class="string">/etc/localtime</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">"Asia/Shanghai"</span> &gt; <span class="string">/etc/timezone</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#设置硬件时间为本地，不然会多8个小时</span></span><br><span class="line">hwclock -w <span class="params">--localtime</span></span><br></pre></td></tr></table></figure>
 
-<h5 id="安装系统日志记录器"><a href="#安装系统日志记录器" class="headerlink" title="安装系统日志记录器"></a>安装系统日志记录器</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">作用：提供传统的系统日志守护进程</span><br><span class="line">emerge --ask app-admin/sysklogd  </span><br><span class="line">rc-update add sysklogd default</span><br></pre></td></tr></table></figure>
+<h5 id="安装系统日志记录器"><a href="#安装系统日志记录器" class="headerlink" title="安装系统日志记录器"></a>安装系统日志记录器</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">作用：提供传统的系统日志守护进程</span><br><span class="line">emerge <span class="comment">--ask app-admin/sysklogd  </span></span><br><span class="line">rc-<span class="keyword">update</span> <span class="keyword">add</span> sysklogd <span class="keyword">default</span></span><br></pre></td></tr></table></figure>
 
-<h5 id="安装crond定时任务"><a href="#安装crond定时任务" class="headerlink" title="安装crond定时任务"></a>安装crond定时任务</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">作用：cron守护进程执行预定的命令。如果需要定期执行某些命令（例如每天，每周或每月），这非常方便。</span><br><span class="line">emerge --ask sys-process/cronie</span><br><span class="line">rc-update add cronie default</span><br><span class="line"></span><br><span class="line">如果使用dcron或fcron，则需要执行额外的初始化命令：</span><br><span class="line">crontab /etc/crontab</span><br></pre></td></tr></table></figure>
+<h5 id="安装crond定时任务"><a href="#安装crond定时任务" class="headerlink" title="安装crond定时任务"></a>安装crond定时任务</h5><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">作用：cron守护进程执行预定的命令。如果需要定期执行某些命令（例如每天，每周或每月），这非常方便。</span><br><span class="line">emerge --ask sys-process/cronie</span><br><span class="line">rc-update <span class="builtin-name">add</span> cronie default</span><br><span class="line"></span><br><span class="line">如果使用dcron或fcron，则需要执行额外的初始化命令：</span><br><span class="line">crontab /etc/crontab</span><br></pre></td></tr></table></figure>
 
-<h5 id="远程访问"><a href="#远程访问" class="headerlink" title="远程访问"></a>远程访问</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rc-update add sshd default     #添加ssh开机自启动</span><br></pre></td></tr></table></figure>
+<h5 id="远程访问"><a href="#远程访问" class="headerlink" title="远程访问"></a>远程访问</h5><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rc-update <span class="builtin-name">add</span> sshd<span class="built_in"> default </span>    #添加ssh开机自启动</span><br></pre></td></tr></table></figure>
 
-<h5 id="文件索引"><a href="#文件索引" class="headerlink" title="文件索引"></a>文件索引</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">作用：为了索引文件系统以提供更快的文件位置功能</span><br><span class="line">emerge --ask sys-apps/mlocate</span><br></pre></td></tr></table></figure>
+<h5 id="文件索引"><a href="#文件索引" class="headerlink" title="文件索引"></a>文件索引</h5><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">作用：为了索引文件系统以提供更快的文件位置功能</span><br><span class="line">emerge <span class="comment">--ask sys-apps/mlocate</span></span><br></pre></td></tr></table></figure>
 
-<h5 id="文件系统工具"><a href="#文件系统工具" class="headerlink" title="文件系统工具"></a>文件系统工具</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">作用: 用于检查文件系统完整性，创建其他文件系统等,按需安装</span><br><span class="line"></span><br><span class="line">emerge 	sys-fs/e2fsprogs     用于管理Ext2, Ext3, EXT4</span><br><span class="line">emerge  sys-fs/xfsprogs      用于管理XFS</span><br><span class="line">emerge  sys-fs/reiserfsprogs 用于管理ReiserFS</span><br><span class="line">emerge  sys-fs/jfsutils      用于管理JFS</span><br><span class="line">emerge  sys-fs/dosfstools    用于管理VFAT（如：FAT32、NTFS等）</span><br><span class="line">emerge  sys-fs/btrfs-progs   用于管理Btrfs</span><br></pre></td></tr></table></figure>
+<h5 id="文件系统工具"><a href="#文件系统工具" class="headerlink" title="文件系统工具"></a>文件系统工具</h5><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">作用: 用于检查文件系统完整性，创建其他文件系统等,按需安装</span><br><span class="line"></span><br><span class="line">emerge 	sys-<span class="built_in">fs</span>/e2fsprogs     用于管理Ext2, Ext3, EXT4</span><br><span class="line">emerge  sys-<span class="built_in">fs</span>/xfsprogs      用于管理XFS</span><br><span class="line">emerge  sys-<span class="built_in">fs</span>/reiserfsprogs 用于管理ReiserFS</span><br><span class="line">emerge  sys-<span class="built_in">fs</span>/jfsutils      用于管理JFS</span><br><span class="line">emerge  sys-<span class="built_in">fs</span>/dosfstools    用于管理VFAT（如：FAT32、NTFS等）</span><br><span class="line">emerge  sys-<span class="built_in">fs</span>/btrfs-progs   用于管理Btrfs</span><br></pre></td></tr></table></figure>
 
-<h5 id="配置GRUB引导"><a href="#配置GRUB引导" class="headerlink" title="配置GRUB引导"></a>配置GRUB引导</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">(1)修改vim /etc/portage/make.conf</span><br><span class="line">添加：</span><br><span class="line"># Both UEFI and PC</span><br><span class="line">GRUB_PLATFORMS=&quot;efi-64 pc&quot;</span><br><span class="line"></span><br><span class="line">(2)MBR分区-BIOS方式引导</span><br><span class="line">emerge --ask sys-boot/grub:2</span><br><span class="line"></span><br><span class="line">(3)安装到MBR。假定第一个（系统引导的）磁盘是/dev/sda</span><br><span class="line">grub-install /dev/sda</span><br><span class="line"></span><br><span class="line">(4)自动生成grub2配置</span><br><span class="line">grub-mkconfig -o /boot/grub/grub.cfg   </span><br><span class="line"></span><br><span class="line">(5)保险起见再次执行一次这个命令</span><br><span class="line">   grub-install /dev/sda</span><br></pre></td></tr></table></figure>
+<h5 id="配置GRUB引导"><a href="#配置GRUB引导" class="headerlink" title="配置GRUB引导"></a>配置GRUB引导</h5><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="params">(1)</span>修改vim <span class="string">/etc/portage/make.conf</span></span><br><span class="line">添加：</span><br><span class="line"><span class="comment"># Both UEFI and PC</span></span><br><span class="line">GRUB_PLATFORMS=<span class="string">"efi-64 pc"</span></span><br><span class="line"></span><br><span class="line"><span class="params">(2)</span>MBR分区-BIOS方式引导</span><br><span class="line">emerge <span class="params">--ask</span> sys-boot/grub<span class="function">:2</span></span><br><span class="line"></span><br><span class="line"><span class="params">(3)</span>安装到MBR。假定第一个（系统引导的）磁盘是<span class="string">/dev/sda</span></span><br><span class="line">grub-install <span class="string">/dev/sda</span></span><br><span class="line"></span><br><span class="line"><span class="params">(4)</span>自动生成grub2配置</span><br><span class="line">grub-mkconfig -o <span class="string">/boot/grub/grub.cfg</span>   </span><br><span class="line"></span><br><span class="line"><span class="params">(5)</span>保险起见再次执行一次这个命令</span><br><span class="line">   grub-install <span class="string">/dev/sda</span></span><br></pre></td></tr></table></figure>
 
-<h5 id="现在基本系统安装完成，卸载分区，重启。"><a href="#现在基本系统安装完成，卸载分区，重启。" class="headerlink" title="现在基本系统安装完成，卸载分区，重启。"></a>现在基本系统安装完成，卸载分区，重启。</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">exit</span><br><span class="line">umount -l /mnt/gentoo/dev</span><br><span class="line">umount -l /mnt/gentoo/proc</span><br><span class="line">umount -l /mnt/gentoo/sys</span><br><span class="line">umount -l /mnt/gentoo</span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
+<h5 id="现在基本系统安装完成，卸载分区，重启。"><a href="#现在基本系统安装完成，卸载分区，重启。" class="headerlink" title="现在基本系统安装完成，卸载分区，重启。"></a>现在基本系统安装完成，卸载分区，重启。</h5><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">exit</span><br><span class="line">umount -l <span class="meta-keyword">/mnt/</span>gentoo/dev</span><br><span class="line">umount -l <span class="meta-keyword">/mnt/</span>gentoo/proc</span><br><span class="line">umount -l <span class="meta-keyword">/mnt/</span>gentoo/sys</span><br><span class="line">umount -l <span class="meta-keyword">/mnt/</span>gentoo</span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
 
-<h6 id="故障处理"><a href="#故障处理" class="headerlink" title="故障处理"></a>故障处理</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Grub引导正常，但启动系统过程中,出现 LFS kernel panic -not syncing :VFS:Unable to mount root fs on Unknown-block(0,0)</span><br></pre></td></tr></table></figure>
+<h6 id="故障处理"><a href="#故障处理" class="headerlink" title="故障处理"></a>故障处理</h6><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Grub引导正常，但启动系统过程中,出现 LFS kernel panic -<span class="keyword">not</span> syncing :VFS:Unable <span class="keyword">to</span> mount root fs <span class="keyword">on</span> Unknown-block(<span class="number">0</span>,<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">原因：</span><br><span class="line">(1)进入LiveCD，挂载根和boot分区,然后修改修改/etc/fstab文件</span><br><span class="line">注:一律使用uuid替代/dev/sdx</span><br><span class="line"></span><br><span class="line">(2)内核编译的时候没有添加相应的硬件模块,建议只增不减。</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">原因：</span><br><span class="line">(<span class="number">1</span>)进入LiveCD，挂载根和boot分区,然后修改修改<span class="regexp">/etc/</span>fstab文件</span><br><span class="line">注:一律使用uuid替代<span class="regexp">/dev/</span>sdx</span><br><span class="line"></span><br><span class="line">(<span class="number">2</span>)内核编译的时候没有添加相应的硬件模块,建议只增不减。</span><br></pre></td></tr></table></figure>
 
 
       
@@ -455,7 +459,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2019 John Doe
+    		&copy; 2019 Gary Wu
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -559,18 +563,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">apache</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">目录浏览</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">高级运维</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Apache</a>
               </li>
              
@@ -599,19 +591,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CDH</a>
+                <a href="javascript:void(0)" class="js-tag color5">高级运维</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JDBC</a>
+                <a href="javascript:void(0)" class="js-tag color2">apache</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">MySQL驱动</a>
+                <a href="javascript:void(0)" class="js-tag color5">目录浏览</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">KAFKA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CDH</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -624,6 +620,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">大数据</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">JDBC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">MySQL驱动</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -659,18 +663,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Cacti流量叠加图形</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Cacti整合图形</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Graph</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">cacti</a>
               </li>
              
@@ -688,6 +680,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">监控</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">bugzilla</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">bugs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Cacti流量叠加图形</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Cacti整合图形</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Graph</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -712,14 +724,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">SCL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">bugzilla</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">bugs</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -767,14 +771,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">DNS TLS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Public DNS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">shadowsocks</a>
               </li>
              
@@ -784,6 +780,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">加密代理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">DNS TLS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Public DNS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -863,18 +867,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ESXI PATH</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ESXI补丁升级</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">ESXI6.7</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">VMware vSphere Client</a>
               </li>
              
@@ -887,6 +879,26 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CPU</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">虚拟化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ESXI PATH</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ESXI补丁升级</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">ESXI6.7</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Openstack</a>
               </li>
              
@@ -896,22 +908,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">混杂模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CPU</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">虚拟化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">磁盘置备</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">disk</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -935,6 +931,26 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Gentoo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">编译内核</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">NFS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">磁盘置备</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">disk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">fuse</a>
               </li>
              
@@ -948,18 +964,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">HDFS挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Gentoo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">编译内核</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">NFS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1023,6 +1027,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">HTTP状态码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">301</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">302</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
@@ -1051,27 +1067,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">HTTP状态码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">301</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">302</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">hdfs空文件</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hadoop fs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1095,6 +1095,22 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Jenkins</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">持续集成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">持续交付</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
@@ -1111,26 +1127,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jenkins</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">持续集成</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">持续交付</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Jumpserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">备机部署</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">分区</a>
               </li>
              
@@ -1143,7 +1139,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">分区热迁移</a>
+                <a href="javascript:void(0)" class="js-tag color1">Jumpserver</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">备机部署</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1152,6 +1152,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">KAFKA版本升级</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">分区热迁移</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1211,18 +1215,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">文件句柄</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">lsof</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">空间释放</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">限速方案</a>
               </li>
              
@@ -1243,6 +1235,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">文件句柄</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">lsof</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">空间释放</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">logstash</a>
               </li>
              
@@ -1256,6 +1260,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Mars</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">HDFS Shell</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1275,15 +1287,27 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Mars</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">HDFS Shell</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Hadoop</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">spark</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">tez</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">单用户模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">多用户模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">远程模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1308,26 +1332,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">机架感知</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">spark</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">tez</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">单用户模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">多用户模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">远程模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1367,15 +1371,27 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">yarn</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hive</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">HQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">yarn</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mongodb</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">mongodump</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mongorestore</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1399,15 +1415,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mongodb</a>
+                <a href="javascript:void(0)" class="js-tag color3">STARTUP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">mongodump</a>
+                <a href="javascript:void(0)" class="js-tag color1">副本集成员</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mongorestore</a>
+                <a href="javascript:void(0)" class="js-tag color5">成员状态</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1427,15 +1443,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">STARTUP</a>
+                <a href="javascript:void(0)" class="js-tag color5">MongoDB集群</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">副本集成员</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">成员状态</a>
+                <a href="javascript:void(0)" class="js-tag color2">mongo集群管理维护</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1463,14 +1475,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">MongoDB集群</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mongo集群管理维护</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">MySQL主从切换</a>
               </li>
              
@@ -1479,19 +1483,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">MySQL主从复制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">全备还原</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">主从同步</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">主从复制监控</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">MySQL主从复制</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">全备还原</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1523,14 +1527,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">慢查询</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">mysqldumpslow</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">dba</a>
               </li>
              
@@ -1548,6 +1544,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">MySQL多实例远程登陆</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">慢查询</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">mysqldumpslow</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1587,14 +1591,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ntp</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">upstream</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">proxy-set-header</a>
               </li>
              
@@ -1607,15 +1603,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">favicon.ico</a>
+                <a href="javascript:void(0)" class="js-tag color4">upstream</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">access</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">log</a>
+                <a href="javascript:void(0)" class="js-tag color4">ntp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1632,6 +1624,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">垃圾UA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">favicon.ico</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">access</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">log</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1671,6 +1675,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Glance</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">openstack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">PHP</a>
               </li>
              
@@ -1683,11 +1695,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Glance</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">openstack</a>
+                <a href="javascript:void(0)" class="js-tag color4">Keystone</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1700,10 +1708,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">OpenStack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Keystone</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1739,23 +1743,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">RAID5</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">parted</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">fdisk</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">RAID5</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">阵列卡</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">缓存</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1779,6 +1775,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">阵列卡</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">缓存</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">rabbitmq</a>
               </li>
              
@@ -1799,15 +1803,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">NTP时间同步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NAT</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">双线</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">NTP时间同步</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1899,6 +1903,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">YARN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">NodeManager</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">udp</a>
               </li>
              
@@ -1916,14 +1928,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">GFW</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">YARN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">NodeManager</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1959,10 +1963,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">rrdtool</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">微信</a>
               </li>
              
@@ -1971,11 +1971,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">weathermap</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">plugin</a>
+                <a href="javascript:void(0)" class="js-tag color3">rrdtool</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1988,6 +1984,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">将Bites转换为Mbits</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">weathermap</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">plugin</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">脚本</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2015,7 +2023,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">脚本</a>
+                <a href="javascript:void(0)" class="js-tag color1">socket.gaierror</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2024,10 +2032,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">socket.gaierror</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2075,14 +2079,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">wget</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">curl请求url不使用缓存</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">unix</a>
               </li>
              
@@ -2099,7 +2095,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">wget</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">curl请求url不使用缓存</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">docker机制</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">exit退出码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2116,14 +2128,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">emerge命令</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">exit退出码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2159,18 +2163,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">磁盘挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">fstab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">开机挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">gentoo</a>
               </li>
              
@@ -2180,6 +2172,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">install</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">磁盘挂载</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">fstab</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">开机挂载</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2211,10 +2215,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hadoop用户</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">fs</a>
               </li>
              
@@ -2227,6 +2227,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">hadoop用户</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">sersync</a>
               </li>
              
@@ -2236,6 +2240,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">实时同步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell脚本</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ip自动配置</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2255,18 +2267,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell脚本</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ip自动配置</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">jumpserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">topic</a>
               </li>
              
@@ -2275,23 +2275,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">keepalived</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LVS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">多实例</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">双主</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">脑裂</a>
+                <a href="javascript:void(0)" class="js-tag color1">jumpserver</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2312,6 +2296,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">nopasswd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">keepalived</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">LVS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">多实例</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">双主</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">脑裂</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2339,10 +2343,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">dd</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">rm恢复</a>
               </li>
              
@@ -2359,23 +2359,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">dd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统备份</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统恢复</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Logstash</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Tomcat</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2388,6 +2380,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">rubydebug</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Logstash</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Tomcat</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2407,6 +2411,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">mongod</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">二进制版</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">mariadb主从</a>
               </li>
              
@@ -2420,14 +2432,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">主从复制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mongod</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">二进制版</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2447,11 +2451,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">主从复制错误</a>
+                <a href="javascript:void(0)" class="js-tag color5">主键错误</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">主键错误</a>
+                <a href="javascript:void(0)" class="js-tag color2">主从复制错误</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2460,14 +2464,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">同步个别库</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mysql slave</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">relay log</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2483,7 +2479,39 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">mysql slave</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">relay log</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">root远程登录</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">优化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">socket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ulimit</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">tcp_nopush</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">tcp_nodelay</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2547,38 +2575,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">优化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">socket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ulimit</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">tcp_nopush</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">tcp_nodelay</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">uri</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">屏蔽接口</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Ddos</a>
               </li>
              
@@ -2591,11 +2587,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">proxy cache</a>
+                <a href="javascript:void(0)" class="js-tag color4">uri</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Nginx缓存清理</a>
+                <a href="javascript:void(0)" class="js-tag color5">屏蔽接口</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2604,6 +2600,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">443</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">proxy cache</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Nginx缓存清理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2627,18 +2631,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SOCKS5</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">proxychains</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">命令代理</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">ps</a>
               </li>
              
@@ -2648,6 +2640,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">进程运行时间</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">SOCKS5</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">proxychains</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">命令代理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2663,14 +2667,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">tar</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">crontab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">自重启</a>
               </li>
              
@@ -2679,11 +2675,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">rsync限速</a>
+                <a href="javascript:void(0)" class="js-tag color4">tar</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">bwlimit</a>
+                <a href="javascript:void(0)" class="js-tag color3">crontab</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2692,6 +2688,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">模板</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">rsync限速</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">bwlimit</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2704,6 +2708,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">zabbix_agent</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">salt-master高可用</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">salt-API</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">salt-ssh</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2735,18 +2751,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">salt-master高可用</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">salt-API</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">salt-ssh</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统瓶颈</a>
               </li>
              
@@ -2767,6 +2771,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">变量传参</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell传参</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">小数判断</a>
               </li>
              
@@ -2776,14 +2788,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">浮点数判断</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">变量传参</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell传参</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2815,6 +2819,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">expect</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Ros</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">FTP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">dsa</a>
               </li>
              
@@ -2831,15 +2847,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">expect</a>
+                <a href="javascript:void(0)" class="js-tag color1">supervisor</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Ros</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">FTP</a>
+                <a href="javascript:void(0)" class="js-tag color4">supervisorctl</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2852,14 +2864,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">pid</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">supervisor</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">supervisorctl</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2899,19 +2903,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">vim</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">中文乱码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">vmware</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">虚拟机克隆</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vim</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">中文乱码</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2927,10 +2931,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">告警</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">traceroute</a>
               </li>
              
@@ -2940,6 +2940,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">MTR</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">告警</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2967,6 +2971,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">zk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">触发器</a>
               </li>
              
@@ -2980,10 +2988,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">触发器表达式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">zk</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3003,11 +3007,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">云计算</a>
+                <a href="javascript:void(0)" class="js-tag color5">Rack</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Rack</a>
+                <a href="javascript:void(0)" class="js-tag color4">云计算</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3023,6 +3027,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CDN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">IM</a>
               </li>
              
@@ -3032,18 +3040,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">开源IM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CDN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">jq</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">筛选大于某个值的数据到文件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3067,11 +3063,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">taskset</a>
+                <a href="javascript:void(0)" class="js-tag color3">jq</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">PID</a>
+                <a href="javascript:void(0)" class="js-tag color4">筛选大于某个值的数据到文件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3083,15 +3079,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">zerotier</a>
+                <a href="javascript:void(0)" class="js-tag color3">taskset</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">内网穿透</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">全球畅联</a>
+                <a href="javascript:void(0)" class="js-tag color4">PID</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3115,7 +3107,31 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">zerotier</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">内网穿透</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">全球畅联</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">RocketMQ</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">分布式消息队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nameserver</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">brokerserver</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3135,39 +3151,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">分布式消息队列</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">nameserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">brokerserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">外部命令</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">内部命令</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">只读模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">fatab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mount</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">remount</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3187,19 +3175,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OpenSSL</a>
+                <a href="javascript:void(0)" class="js-tag color5">只读模式</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">CA</a>
+                <a href="javascript:void(0)" class="js-tag color1">fatab</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SSL证书</a>
+                <a href="javascript:void(0)" class="js-tag color1">mount</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">csr</a>
+                <a href="javascript:void(0)" class="js-tag color3">remount</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3216,6 +3204,22 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">免交互</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">OpenSSL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">CA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">SSL证书</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">csr</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3243,6 +3247,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">SHELL编程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">kill</a>
               </li>
              
@@ -3255,7 +3263,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">SHELL编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">Yum源</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3264,10 +3272,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Shell脚本</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Yum源</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3287,15 +3291,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">consumer</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">内存</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">使用率</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">consumer</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3399,6 +3403,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">flock</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LVS连接数监控</a>
               </li>
              
@@ -3412,10 +3420,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">InActConn</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">flock</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3591,6 +3595,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">autostart</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">libvert</a>
               </li>
              
@@ -3600,10 +3608,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">动态迁移</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">autostart</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3759,6 +3763,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">lvs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">4层负载均衡</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">DR模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">LNMP</a>
               </li>
              
@@ -3776,18 +3792,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">mysql数据库迁移</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">lvs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">4层负载均衡</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">DR模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3847,15 +3851,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">pass_proxy</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">htpasswd</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">日志切割</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">pass_proxy</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4155,15 +4159,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">磁盘</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">awk数组</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">磁盘管理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">磁盘</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4199,19 +4203,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">redis cluster</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">ssdb</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">LevelDB</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">redis cluster</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4255,14 +4259,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">codis集群</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">memcache</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">GlusterFS</a>
               </li>
              
@@ -4272,6 +4268,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NAS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">codis集群</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">memcache</a>
               </li>
              
               <li class="article-tag-list-item">

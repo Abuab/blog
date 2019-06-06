@@ -6,16 +6,16 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://garywu520.github.io/blog">
-  <title>Tomcat部署实例集群监控 | Hexo</title>
+  <title>Tomcat部署实例集群监控 | Gary Wu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="Tomcat部署">
 <meta name="keywords" content="高级运维,Tomcat,Tomcat多实例,Tomcat集群,java war打包解压,Tomcat反向代理集群,部署Jpress博客站点,Tomcat zabbix监控,Tomcat降权启动,Tomcat普通用户启动,jstack,jps,Tomcat优化,Tomcat安全优化,Tomcat性能优化,JVM调优">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Tomcat部署实例集群监控">
 <meta property="og:url" content="https://garywu520.github.io/blog/2017/11/18/Tomcat部署实例集群监控/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Gary Wu">
 <meta property="og:description" content="Tomcat部署">
-<meta property="og:locale" content="default">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/wuyanteng/wuyanteng.github.io/master/images/tomcat.jpg">
 <meta property="og:updated_time" content="2017-11-18T10:41:21.951Z">
 <meta name="twitter:card" content="summary">
@@ -23,7 +23,7 @@
 <meta name="twitter:description" content="Tomcat部署">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/wuyanteng/wuyanteng.github.io/master/images/tomcat.jpg">
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="Gary Wu" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -49,12 +49,14 @@
 <div class="overlay" style="background: #4d4d4d"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
-		<a href="/blog/" class="profilepic">
-			<img src="https://raw.githubusercontent.com/discant520/garywu/master/images/touxiang.jpg" class="js-avatar">
+		<a href="/blog" class="profilepic">
+			<img src="http://pics0.baidu.com/feed/bd315c6034a85edf5f5b8bff8cf9cf27df54754d.png?token=c9857ef7ee73e1ffc14d3e3c4e9e3be3&amp;s=1E5207CAC64234F44988148A0300B090" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/blog/">John Doe</a></h1>
+		  <h1 class="header-author"><a href="/blog">Gary Wu</a></h1>
 		</hgroup>
+		
+		<p class="header-subtitle">运维架构师 - 从入门到放弃</p>
 		
 
 		<nav class="header-menu">
@@ -108,11 +110,13 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="https://raw.githubusercontent.com/discant520/garywu/master/images/touxiang.jpg" class="js-avatar">
+				<img src="http://pics0.baidu.com/feed/bd315c6034a85edf5f5b8bff8cf9cf27df54754d.png?token=c9857ef7ee73e1ffc14d3e3c4e9e3be3&amp;s=1E5207CAC64234F44988148A0300B090" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">John Doe</h1>
+			  <h1 class="header-author js-header-author">Gary Wu</h1>
 			</hgroup>
+			
+			<p class="header-subtitle"><i class="icon icon-quo-left"></i>运维架构师 - 从入门到放弃<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -195,39 +199,39 @@
 <blockquote>
 <p>安装JDK</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">tar xf jdk-8u60-linux-x64.tar.gz -C /application/</span><br><span class="line"></span><br><span class="line">ln -s /application/jdk1.8.0_60 /application/jdk</span><br><span class="line"></span><br><span class="line">sed -i.ori &apos;$a export JAVA_HOME=/application/jdk\nexport PATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$PATH\nexport CLASSPATH=.:$JAVA_HOME/lib:$JAVA_HOME/jre/lib:$JAVA_HOME/lib/tools.jar&apos; /etc/profile</span><br><span class="line">注：$a表示在最后一行追加内容</span><br><span class="line"></span><br><span class="line">source /etc/profile</span><br><span class="line">java -version</span><br></pre></td></tr></table></figure>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">tar</span> xf jdk-8u60-linux-x64.tar.gz -C /application/</span><br><span class="line"></span><br><span class="line">ln -s /application/jdk1.<span class="number">8</span>.0_60 /application/jdk</span><br><span class="line"></span><br><span class="line">sed -i.ori <span class="string">'<span class="variable">$a</span> export JAVA_HOME=/application/jdk\nexport PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$JAVA_HOME</span>/jre/bin:<span class="variable">$PATH</span>\nexport CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib:<span class="variable">$JAVA_HOME</span>/jre/lib:<span class="variable">$JAVA_HOME</span>/lib/tools.jar'</span> /etc/profile</span><br><span class="line">注：<span class="variable">$a</span>表示在最后一行追加内容</span><br><span class="line"></span><br><span class="line">source /etc/profile</span><br><span class="line">java -version</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>安装Tomcat</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">tar xf apache-tomcat-8.0.27.tar.gz -C /application/</span><br><span class="line">ln -s /application/apache-tomcat-8.0.27 /application/tomcat</span><br><span class="line">echo &apos;export TOMCAT_HOME=/application/tomcat&apos;&gt;&gt;/etc/profile</span><br><span class="line">source /etc/profile</span><br><span class="line">chown -R root.root /application/jdk/ /application/tomcat/</span><br><span class="line"></span><br><span class="line">#查看安装版本</span><br><span class="line"> /application/tomcat/bin/version.sh</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">tar xf apache-tomcat-<span class="number">8.0</span>.<span class="number">27</span>.tar.gz -C <span class="regexp">/application/</span></span><br><span class="line">ln -s <span class="regexp">/application/</span>apache-tomcat-<span class="number">8.0</span>.<span class="number">27</span> <span class="regexp">/application/</span>tomcat</span><br><span class="line">echo <span class="string">'export TOMCAT_HOME=/application/tomcat'</span>&gt;&gt;<span class="regexp">/etc/</span>profile</span><br><span class="line">source <span class="regexp">/etc/</span>profile</span><br><span class="line">chown -R root.root <span class="regexp">/application/</span>jdk<span class="regexp">/ /</span>application<span class="regexp">/tomcat/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#查看安装版本</span></span><br><span class="line"> <span class="regexp">/application/</span>tomcat<span class="regexp">/bin/</span>version.sh</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>启动</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#→启动程序/application/tomcat/bin/startup.sh </span><br><span class="line"></span><br><span class="line">#→关闭程序/application/tomcat/bin/shutdown.sh </span><br><span class="line"></span><br><span class="line">cd /application/tomcat/logs/</span><br><span class="line">tailf catalina.out</span><br><span class="line"></span><br><span class="line">#查看tomcat端口</span><br><span class="line">[root@zabbix-proxy ~]# netstat -lntup|grep java</span><br><span class="line">tcp6       0      0 :::8080                 :::*                    LISTEN      38339/java          </span><br><span class="line">tcp6       0      0 :::8009                 :::*                    LISTEN      38339/java</span><br></pre></td></tr></table></figure>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#→启动程序/application/tomcat/bin/startup.sh </span></span><br><span class="line"></span><br><span class="line"><span class="comment">#→关闭程序/application/tomcat/bin/shutdown.sh </span></span><br><span class="line"></span><br><span class="line">cd /application/tomcat/logs/</span><br><span class="line">tailf catalina.out</span><br><span class="line"></span><br><span class="line"><span class="comment">#查看tomcat端口</span></span><br><span class="line">[root<span class="variable">@zabbix</span>-proxy ~]<span class="comment"># netstat -lntup|grep java</span></span><br><span class="line">tcp6       <span class="number">0</span>      <span class="number">0</span> ::<span class="symbol">:</span><span class="number">8080</span>                 ::<span class="symbol">:*</span>                    LISTEN      <span class="number">38339</span>/java          </span><br><span class="line">tcp6       <span class="number">0</span>      <span class="number">0</span> ::<span class="symbol">:</span><span class="number">8009</span>                 ::<span class="symbol">:*</span>                    LISTEN      <span class="number">38339</span>/java</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>Tomcat日志文件</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd /application/tomcat/logs</span><br><span class="line">catalina.out        tomcat实时日志,启动信息/报错信息均会在此文件体现</span><br><span class="line"></span><br><span class="line">注: 如果catalina.out文件过大，直接清空内容。注意不能删除文件，因为程序正在使用，删除依然会继续占用系统空间，除非重启Tomcat，仅仅为了清理日志文件而重启Tomcat，这样做得不偿失。</span><br><span class="line"></span><br><span class="line">&gt;/application/tomcat/logs/catalina.out</span><br></pre></td></tr></table></figure>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd /application/tomcat/logs</span><br><span class="line">catalina.<span class="keyword">out</span>        tomcat实时日志,启动信息/报错信息均会在此文件体现</span><br><span class="line"></span><br><span class="line">注: 如果catalina.<span class="keyword">out</span>文件过大，直接清空内容。注意不能删除文件，因为程序正在使用，删除依然会继续占用系统空间，除非重启Tomcat，仅仅为了清理日志文件而重启Tomcat，这样做得不偿失。</span><br><span class="line"></span><br><span class="line">&gt;<span class="regexp">/application/tomcat</span><span class="regexp">/logs/catalina</span>.<span class="keyword">out</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>Tomcat服务启动时间慢并加快访问速度？</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">回翻日志文件可以看到如下行：</span><br><span class="line">14-Nov-2017 05:53:00.512 INFO [localhost-startStop-1] org.apache.catalina.util.SessionIdGeneratorBase.createSecureRandom Creation of SecureRandom instance for session ID generation using [SHA1PRNG] took [27,970] milliseconds.</span><br><span class="line"></span><br><span class="line">启动时间都花费在了session ID createSecureRandom上面，这个与系统的随机数有关。</span><br><span class="line"></span><br><span class="line">通过命令查看随机数的值</span><br><span class="line">cat /proc/sys/kernel/random/entropy_avail </span><br><span class="line">注：每次使用命令“cat /dev/random”的时候就会消耗它的值。</span><br><span class="line"></span><br><span class="line">解决方案: 安装rng-tools这个软件让其值变大</span><br><span class="line">yum -y install rng-tools </span><br><span class="line">systemctl start rngd.service</span><br><span class="line">cat /proc/sys/kernel/random/entropy_avail</span><br><span class="line">此时可以看到值为:2989, 容量槽值就变大了，此时再重启Tomcat，速度就非常快了</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">回翻日志文件可以看到如下行：</span><br><span class="line">14-Nov-2017 05:53:00.512 <span class="builtin-name">INFO</span> [localhost-startStop-1] org.apache.catalina.util.SessionIdGeneratorBase.createSecureRandom Creation of SecureRandom<span class="built_in"> instance </span><span class="keyword">for</span> session ID generation using [SHA1PRNG] took [27,970] milliseconds.</span><br><span class="line"></span><br><span class="line">启动时间都花费在了session ID createSecureRandom上面，这个与系统的随机数有关。</span><br><span class="line"></span><br><span class="line">通过命令查看随机数的值</span><br><span class="line">cat /proc/sys/kernel/random/entropy_avail </span><br><span class="line">注：每次使用命令“cat /dev/random”的时候就会消耗它的值。</span><br><span class="line"></span><br><span class="line">解决方案: 安装rng-tools这个软件让其值变大</span><br><span class="line">yum -y install rng-tools </span><br><span class="line">systemctl start rngd.service</span><br><span class="line">cat /proc/sys/kernel/random/entropy_avail</span><br><span class="line">此时可以看到值为:2989, 容量槽值就变大了，此时再重启Tomcat，速度就非常快了</span><br></pre></td></tr></table></figure>
 
-<h4 id="Tomcat-用户管理"><a href="#Tomcat-用户管理" class="headerlink" title="Tomcat 用户管理"></a>Tomcat 用户管理</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">vim /application/tomcat/conf/tomcat-users.xml</span><br><span class="line">在倒数第二行添加(添加用户)</span><br><span class="line">&lt;role rolename=&quot;manager-gui&quot;/&gt;</span><br><span class="line">&lt;role rolename=&quot;admin-gui&quot;/&gt;</span><br><span class="line">&lt;user username=&quot;tomcat&quot; password=&quot;tomcat&quot; roles=&quot;manager-gui,admin-gui&quot;/&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">重启</span><br><span class="line">/application/tomcat/bin/shutdown.sh</span><br><span class="line">/application/tomcat/bin/startup.sh</span><br><span class="line"></span><br><span class="line">web访问:(注：生产环境这个web管理平台禁用！禁用！禁用！)</span><br><span class="line">http://192.168.56.13:8080</span><br></pre></td></tr></table></figure>
+<h4 id="Tomcat-用户管理"><a href="#Tomcat-用户管理" class="headerlink" title="Tomcat 用户管理"></a>Tomcat 用户管理</h4><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">vim <span class="regexp">/application/</span>tomcat<span class="regexp">/conf/</span>tomcat-users.xml</span><br><span class="line">在倒数第二行添加(添加用户)</span><br><span class="line">&lt;role rolename=<span class="string">"manager-gui"</span>/&gt;</span><br><span class="line">&lt;role rolename=<span class="string">"admin-gui"</span>/&gt;</span><br><span class="line">&lt;user username=<span class="string">"tomcat"</span> password=<span class="string">"tomcat"</span> roles=<span class="string">"manager-gui,admin-gui"</span>/&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">重启</span><br><span class="line"><span class="regexp">/application/</span>tomcat<span class="regexp">/bin/</span>shutdown.sh</span><br><span class="line"><span class="regexp">/application/</span>tomcat<span class="regexp">/bin/</span>startup.sh</span><br><span class="line"></span><br><span class="line">web访问:(注：生产环境这个web管理平台禁用！禁用！禁用！)</span><br><span class="line"><span class="string">http:</span><span class="comment">//192.168.56.13:8080</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>安全</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@zabbix-proxy ~]# cd /application/tomcat/webapps/   #Tomcat根目录</span><br><span class="line">[root@zabbix-proxy webapps]# ls</span><br><span class="line">docs  examples  host-manager  manager  ROOT</span><br><span class="line"></span><br><span class="line">生产环境不启用webapps的话，最直接的方法是把这些目录删除即可。然后通过web站点部署中的“自定义站点目录”实现web网站目录的访问</span><br></pre></td></tr></table></figure>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@zabbix</span>-proxy ~]<span class="meta"># cd /application/tomcat/webapps/   #Tomcat根目录</span></span><br><span class="line">[root<span class="symbol">@zabbix</span>-proxy webapps]<span class="meta"># ls</span></span><br><span class="line">docs  examples  host-manager  manager  ROOT</span><br><span class="line"></span><br><span class="line">生产环境不启用webapps的话，最直接的方法是把这些目录删除即可。然后通过web站点部署中的“自定义站点目录”实现web网站目录的访问</span><br></pre></td></tr></table></figure>
 
-<h4 id="Tomcat-主配置文件"><a href="#Tomcat-主配置文件" class="headerlink" title="Tomcat 主配置文件"></a>Tomcat 主配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">文件： /application/tomcat/conf/server.xml</span><br><span class="line"></span><br><span class="line">注：Tomcat启动会启动3个端口</span><br><span class="line">8080(web访问)、8005(shutdown Tomcat)和8009</span><br><span class="line">注：8009端口是(http与Tomcat通信)环境下使用，现在很少用了，可以在server.xml中禁用来停止运行</span><br></pre></td></tr></table></figure>
+<h4 id="Tomcat-主配置文件"><a href="#Tomcat-主配置文件" class="headerlink" title="Tomcat 主配置文件"></a>Tomcat 主配置文件</h4><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">文件： /application/tomcat/conf/server.xml</span><br><span class="line"></span><br><span class="line">注：Tomcat启动会启动<span class="number">3</span>个端口</span><br><span class="line"><span class="number">8080</span>(web访问)、<span class="number">8005</span>(shutdown Tomcat)和<span class="number">8009</span></span><br><span class="line">注：<span class="number">8009</span>端口是(http与Tomcat通信)环境下使用，现在很少用了，可以在server.xml中禁用来停止运行</span><br></pre></td></tr></table></figure>
 
 <p>测试8005端口来关闭Tomcat</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">向Tomcat给8005端口发送一个“SHUTDOWN”信号即可停止Tomcat服务</span><br><span class="line">echo SHUTDOWN|nc 127.0.0.1 8005</span><br><span class="line">netstat -lntup |grep java   #可以看到Tomcat端口已经停止运行</span><br></pre></td></tr></table></figure>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">向Tomcat给<span class="number">8005</span>端口发送一个“SHUTDOWN”信号即可停止Tomcat服务</span><br><span class="line">echo SHUTDOWN|nc <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> <span class="number">8005</span></span><br><span class="line">netstat -lntup |grep java   #可以看到Tomcat端口已经停止运行</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>配置文件详解</p>
@@ -241,91 +245,91 @@
 <blockquote>
 <p>使用war包部署web站点</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@tomcat webapps]# pwd</span><br><span class="line">/application/tomcat/webapps</span><br><span class="line">[root@tomcat webapps]# rz     #→上传开发提供的memtest.war</span><br><span class="line">[root@tomcat webapps]# ls</span><br><span class="line">docs  examples  host-manager  manager  memtest  memtest.war  ROOT</span><br></pre></td></tr></table></figure>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@tomcat</span> webapps]<span class="meta"># pwd</span></span><br><span class="line">/application/tomcat/webapps</span><br><span class="line">[root<span class="symbol">@tomcat</span> webapps]<span class="meta"># rz     #→上传开发提供的memtest.war</span></span><br><span class="line">[root<span class="symbol">@tomcat</span> webapps]<span class="meta"># ls</span></span><br><span class="line">docs  examples  host-manager  manager  memtest  memtest.war  ROOT</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">web访问：http://192.168.56.13:8080/memtest/meminfo.jsp</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">web访问：http:<span class="regexp">//</span><span class="number">192.168</span>.<span class="number">56.13</span>:<span class="number">8080</span><span class="regexp">/memtest/m</span>eminfo.jsp</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>自定义默认站点目录</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#修改服务器配置文件</span><br><span class="line">vim server.xml    #在&lt;Host&gt;&lt;/Host&gt;字段内定义虚拟主机</span><br><span class="line"></span><br><span class="line">新增如下内容:</span><br><span class="line">&lt;Context path=&quot;&quot; docBase=&quot;/application/tomcat/webapps/memtest&quot; debug=&quot;0&quot; reloadable=&quot;false&quot; crossContext=&quot;true&quot;/&gt;</span><br><span class="line">&lt;Context path=&quot;37team&quot; docBase=&quot;/application/tomcat/webapps/memtest&quot; debug=&quot;0&quot; reloadable=&quot;false&quot; crossContext=&quot;true&quot;/&gt;</span><br><span class="line"></span><br><span class="line">上面两行的意思是，匹配&quot;空&quot;字段和“37team”字段，一旦匹配后，就指向实际站点目录/application/tomcat/webapps/memtest中。</span><br></pre></td></tr></table></figure>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#修改服务器配置文件</span></span><br><span class="line"><span class="attribute">vim</span> server.xml    <span class="comment">#在&lt;Host&gt;&lt;/Host&gt;字段内定义虚拟主机</span></span><br><span class="line"></span><br><span class="line">新增如下内容:</span><br><span class="line">&lt;Context path=<span class="string">""</span> docBase=<span class="string">"/application/tomcat/webapps/memtest"</span> <span class="literal">debug</span>=<span class="string">"0"</span> reloadable=<span class="string">"false"</span> crossContext=<span class="string">"true"</span>/&gt;</span><br><span class="line">&lt;Context path=<span class="string">"37team"</span> docBase=<span class="string">"/application/tomcat/webapps/memtest"</span> <span class="literal">debug</span>=<span class="string">"0"</span> reloadable=<span class="string">"false"</span> crossContext=<span class="string">"true"</span>/&gt;</span><br><span class="line"></span><br><span class="line">上面两行的意思是，匹配<span class="string">"空"</span>字段和“37team”字段，一旦匹配后，就指向实际站点目录/application/tomcat/webapps/memtest中。</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">重启Tomcat</span><br><span class="line">/application/tomcat/bin/shutdown.sh</span><br><span class="line">/application/tomcat/bin/startup.sh</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">重启Tomcat</span><br><span class="line"><span class="regexp">/application/</span>tomcat<span class="regexp">/bin/</span>shutdown.sh</span><br><span class="line"><span class="regexp">/application/</span>tomcat<span class="regexp">/bin/</span>startup.sh</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">web访问如下页面-均可以显示网页内容：</span><br><span class="line">http://192.168.56.13:8080/memtest.jsp</span><br><span class="line">http://192.168.56.13:8080/37team/meminfo.jsp</span><br></pre></td></tr></table></figure>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">web访问如下页面-均可以显示网页内容：</span><br><span class="line"><span class="symbol">http:</span><span class="comment">//192.168.56.13:8080/memtest.jsp</span></span><br><span class="line"><span class="symbol">http:</span><span class="comment">//192.168.56.13:8080/37team/meminfo.jsp</span></span><br></pre></td></tr></table></figure>
 
 <h4 id="PS：Linux下打包压缩war和解压war包"><a href="#PS：Linux下打包压缩war和解压war包" class="headerlink" title="PS：Linux下打包压缩war和解压war包"></a>PS：Linux下打包压缩war和解压war包</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">因为种种原因需要把java程序达成war包。需要用jar命令，前提是要安装dk。</span><br></pre></td></tr></table></figure>
 
 <p>示例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">把当前目录下的所有文件打包成game.war</span><br><span class="line"></span><br><span class="line">命令: jar -cvfM0 game.war ./</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">-c   创建war包</span><br><span class="line">-v   显示过程信息</span><br><span class="line">-f    </span><br><span class="line">-M</span><br><span class="line">-0   这个是阿拉伯数字，只打包不压缩的意思</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">解压game.war</span><br><span class="line">jar -xvf game.war   #解压到当前目录</span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">把当前目录下的所有文件打包成game.war</span><br><span class="line"></span><br><span class="line">命令: jar -cvfM0 game<span class="selector-class">.war</span> ./</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">-c   创建war包</span><br><span class="line">-v   显示过程信息</span><br><span class="line">-f    </span><br><span class="line">-M</span><br><span class="line">-<span class="number">0</span>   这个是阿拉伯数字，只打包不压缩的意思</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">解压game.war</span><br><span class="line">jar -xvf game<span class="selector-class">.war</span>   #解压到当前目录</span><br></pre></td></tr></table></figure>
 
-<h4 id="Tomcat多实例"><a href="#Tomcat多实例" class="headerlink" title="Tomcat多实例"></a>Tomcat多实例</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(1)Tomcat是单进程的，单个进程不建议部署多个站点，因为其性能是有限的，建议一个进程只部署一个站点。</span><br><span class="line">(2)只会使用一个CPU核心。但如果服务器配置较高，比如:8核。这样只运行一个Tomcat实例实在浪费，所以可以通过多实例，来让服务器资源不浪费。</span><br></pre></td></tr></table></figure>
+<h4 id="Tomcat多实例"><a href="#Tomcat多实例" class="headerlink" title="Tomcat多实例"></a>Tomcat多实例</h4><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">(1)</span>Tomcat是单进程的，单个进程不建议部署多个站点，因为其性能是有限的，建议一个进程只部署一个站点。</span><br><span class="line"><span class="comment">(2)</span>只会使用一个CPU核心。但如果服务器配置较高，比如:<span class="number">8</span>核。这样只运行一个Tomcat实例实在浪费，所以可以通过多实例，来让服务器资源不浪费。</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#复制Tomcat文件</span><br><span class="line">tar -zxvf apache-tomcat-8.0.27.tar.gz </span><br><span class="line">cp -a apache-tomcat-8.0.27 tomcat8_1</span><br><span class="line">cp -a apache-tomcat-8.0.27 tomcat8_2</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#复制<span class="selector-tag">Tomcat</span>文件</span><br><span class="line"><span class="selector-tag">tar</span> <span class="selector-tag">-zxvf</span> <span class="selector-tag">apache-tomcat-8</span><span class="selector-class">.0</span><span class="selector-class">.27</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span> </span><br><span class="line"><span class="selector-tag">cp</span> <span class="selector-tag">-a</span> <span class="selector-tag">apache-tomcat-8</span><span class="selector-class">.0</span><span class="selector-class">.27</span> <span class="selector-tag">tomcat8_1</span></span><br><span class="line"><span class="selector-tag">cp</span> <span class="selector-tag">-a</span> <span class="selector-tag">apache-tomcat-8</span><span class="selector-class">.0</span><span class="selector-class">.27</span> <span class="selector-tag">tomcat8_2</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#规避多实例端口冲突所以需要修改端口 </span><br><span class="line">1. 关闭 8005  --&gt;并修改  第1个实例改为：8011     第2个实例改为:8022</span><br><span class="line">2. 关闭 8080  --&gt;并修改  第1个实例改为：8081     第2个实例改为:8082</span><br><span class="line"></span><br><span class="line">sed -i &apos;s#8005#8011#;s#8080#8081#&apos; tomcat8_1/conf/server.xml </span><br><span class="line">sed -i &apos;s#8005#8012#;s#8080#8082#&apos; tomcat8_2/conf/server.xml </span><br><span class="line">diff tomcat8_&#123;1,2&#125;/conf/server.xml  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#压缩备份实例,便于日后使用并分发</span><br><span class="line">tar zcf muti_tomcat.tar.gz ./tomcat8_1 ./tomcat8_2</span><br><span class="line"></span><br><span class="line">#拷贝修改后的示例复制到/application/</span><br><span class="line">cp -a tomcat8_1 tomcat8_2 /application/</span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#规避多实例端口冲突所以需要修改端口 </span><br><span class="line"><span class="number">1</span>. 关闭 <span class="number">8005</span>  --&gt;并修改  第<span class="number">1</span>个实例改为：<span class="number">8011</span>     第<span class="number">2</span>个实例改为:<span class="number">8022</span></span><br><span class="line"><span class="number">2</span>. 关闭 <span class="number">8080</span>  --&gt;并修改  第<span class="number">1</span>个实例改为：<span class="number">8081</span>     第<span class="number">2</span>个实例改为:<span class="number">8082</span></span><br><span class="line"></span><br><span class="line">sed -<span class="selector-tag">i</span> <span class="string">'s#8005#8011#;s#8080#8081#'</span> tomcat8_1/conf/server<span class="selector-class">.xml</span> </span><br><span class="line">sed -<span class="selector-tag">i</span> <span class="string">'s#8005#8012#;s#8080#8082#'</span> tomcat8_2/conf/server<span class="selector-class">.xml</span> </span><br><span class="line">diff tomcat8_&#123;<span class="number">1</span>,<span class="number">2</span>&#125;/conf/server<span class="selector-class">.xml</span>  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#压缩备份实例,便于日后使用并分发</span><br><span class="line">tar zcf muti_tomcat<span class="selector-class">.tar</span><span class="selector-class">.gz</span> ./tomcat8_1 ./tomcat8_2</span><br><span class="line"></span><br><span class="line">#拷贝修改后的示例复制到/application/</span><br><span class="line">cp -<span class="selector-tag">a</span> tomcat8_1 tomcat8_2 /application/</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#启动多实例</span><br><span class="line">/application/tomcat8_1/bin/startup.sh </span><br><span class="line">/application/tomcat8_2/bin/startup.sh </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#查看端口和进程启动情况</span><br><span class="line">[root@zabbix-proxy ~]# netstat -lntup|grep java</span><br><span class="line">tcp6       0      0 127.0.0.1:8011       39534/java          </span><br><span class="line">tcp6       0      0 127.0.0.1:8012       39534/java</span><br><span class="line"></span><br><span class="line">[root@zabbix-proxy ~]# ps -ef |grep java</span><br><span class="line"></span><br><span class="line">Web访问：</span><br><span class="line">http://192.168.56.13:8081/</span><br><span class="line">http://192.168.56.13:8082/</span><br></pre></td></tr></table></figure>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#启动多实例</span></span><br><span class="line"><span class="meta-keyword">/application/</span>tomcat8_1<span class="meta-keyword">/bin/</span>startup.sh </span><br><span class="line"><span class="meta-keyword">/application/</span>tomcat8_2<span class="meta-keyword">/bin/</span>startup.sh </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#查看端口和进程启动情况</span></span><br><span class="line">[root@zabbix-proxy ~]<span class="meta"># netstat -lntup|grep java</span></span><br><span class="line">tcp6       <span class="number">0</span>      <span class="number">0</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8011</span>       <span class="number">39534</span>/java          </span><br><span class="line">tcp6       <span class="number">0</span>      <span class="number">0</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8012</span>       <span class="number">39534</span>/java</span><br><span class="line"></span><br><span class="line">[root@zabbix-proxy ~]<span class="meta"># ps -ef |grep java</span></span><br><span class="line"></span><br><span class="line">Web访问：</span><br><span class="line"><span class="symbol">http:</span><span class="comment">//192.168.56.13:8081/</span></span><br><span class="line"><span class="symbol">http:</span><span class="comment">//192.168.56.13:8082/</span></span><br></pre></td></tr></table></figure>
 
 <h4 id="Tomcat反向代理集群"><a href="#Tomcat反向代理集群" class="headerlink" title="Tomcat反向代理集群"></a>Tomcat反向代理集群</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">用nginx代理后端的Tomcat多实例来实现负载均衡。</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#安装nginx</span><br><span class="line">yum install -y nginx</span><br><span class="line">systemctl start nginx</span><br><span class="line"></span><br><span class="line">nginx测试：http://192.168.56.13/</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#安装nginx</span></span><br><span class="line">yum <span class="keyword">install</span> -y nginx</span><br><span class="line">systemctl <span class="keyword">start</span> nginx</span><br><span class="line"></span><br><span class="line">nginx测试：<span class="keyword">http</span>://<span class="number">192.168</span><span class="number">.56</span><span class="number">.13</span>/</span><br></pre></td></tr></table></figure>
 
 <p>配置nginx upsteam</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/nginx/nginx.conf</span><br></pre></td></tr></table></figure>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">vim</span> /etc/nginx/nginx.<span class="keyword">conf</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"> #添加upstream模块并配置location</span><br><span class="line"> </span><br><span class="line"> upstream web_pools &#123;</span><br><span class="line">        server 192.168.56.13:8081;</span><br><span class="line">        server 192.168.56.13:8082;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    server &#123;</span><br><span class="line">        listen       80;</span><br><span class="line">        server_name  localhost;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">            index  index.jsp index.html index.htm;  </span><br><span class="line">            proxy_pass http://web_pools;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">注： 因为页面是jsp，需要加index.jsp</span><br></pre></td></tr></table></figure>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">#添加upstream模块并配置location</span></span><br><span class="line"> </span><br><span class="line"> upstream web_pools &#123;</span><br><span class="line">        <span class="keyword">server</span> <span class="number">192.168</span><span class="number">.56</span><span class="number">.13</span>:<span class="number">8081</span>;</span><br><span class="line">        <span class="keyword">server</span> <span class="number">192.168</span><span class="number">.56</span><span class="number">.13</span>:<span class="number">8082</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">server</span> &#123;</span><br><span class="line">        listen       <span class="number">80</span>;</span><br><span class="line">        server_name  localhost;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">            <span class="keyword">index</span>  <span class="keyword">index</span>.jsp <span class="keyword">index</span>.html <span class="keyword">index</span>.htm;  </span><br><span class="line">            proxy_pass http:<span class="comment">//web_pools;</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">注： 因为页面是jsp，需要加<span class="keyword">index</span>.jsp</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">nginx -t</span><br><span class="line">systemctl restart nginx</span><br><span class="line"></span><br><span class="line">Web访问: http://192.168.56.13/</span><br><span class="line"></span><br><span class="line">为便于看出效果追加内容：</span><br><span class="line">echo 8081 &gt;&gt;/application/tomcat8_1/webapps/ROOT/index.jsp </span><br><span class="line">echo 8082 &gt;&gt;/application/tomcat8_2/webapps/ROOT/index.jsp </span><br><span class="line"></span><br><span class="line">再次访问-查看代理效果：</span><br><span class="line">Web访问: http://192.168.56.13/</span><br></pre></td></tr></table></figure>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">nginx -t</span><br><span class="line">systemctl restart nginx</span><br><span class="line"></span><br><span class="line">Web访问: <span class="string">http:</span><span class="comment">//192.168.56.13/</span></span><br><span class="line"></span><br><span class="line">为便于看出效果追加内容：</span><br><span class="line">echo <span class="number">8081</span> &gt;&gt;<span class="regexp">/application/</span>tomcat8_1<span class="regexp">/webapps/</span>ROOT/index.jsp </span><br><span class="line">echo <span class="number">8082</span> &gt;&gt;<span class="regexp">/application/</span>tomcat8_2<span class="regexp">/webapps/</span>ROOT/index.jsp </span><br><span class="line"></span><br><span class="line">再次访问-查看代理效果：</span><br><span class="line">Web访问: <span class="string">http:</span><span class="comment">//192.168.56.13/</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="war包部署Jpress站点"><a href="#war包部署Jpress站点" class="headerlink" title="war包部署Jpress站点"></a>war包部署Jpress站点</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">jpress 类似WordPress，是一个博客系统。</span><br><span class="line">conflunce（部署至少需要2G内存）</span><br><span class="line">Jira</span><br></pre></td></tr></table></figure>
+<h4 id="war包部署Jpress站点"><a href="#war包部署Jpress站点" class="headerlink" title="war包部署Jpress站点"></a>war包部署Jpress站点</h4><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">jpress 类似WordPress，是一个博客系统。</span><br><span class="line">conflunce（部署至少需要<span class="number">2</span>G内存）</span><br><span class="line">Jira</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>安装MariaDB</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">yum -y install mariadb-server</span><br><span class="line">systemctl start mariadb</span><br><span class="line">systemctl status mariadb</span><br><span class="line"></span><br><span class="line"># mysql_secure_installation 命令初始化。</span><br><span class="line">mysql_secure_installation</span><br><span class="line"></span><br><span class="line">cd /application/tomcat8_1/webapps</span><br><span class="line">war包上传到该目录</span><br><span class="line"></span><br><span class="line">Web安装: http://192.168.56.13:8081/jpress/install</span><br><span class="line"></span><br><span class="line">#重启服务</span><br><span class="line">/application/tomcat8_1/bin/shutdown.sh </span><br><span class="line">/application/tomcat8_1/bin/startup.sh </span><br><span class="line"></span><br><span class="line">http://192.168.56.13:8081/jpress/   #前端访问</span><br><span class="line">http://192.168.56.13:8081/jpress/admin/login  #后台管理</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">yum -y <span class="keyword">install</span> mariadb-<span class="keyword">server</span></span><br><span class="line">systemctl <span class="keyword">start</span> mariadb</span><br><span class="line">systemctl <span class="keyword">status</span> mariadb</span><br><span class="line"></span><br><span class="line"><span class="comment"># mysql_secure_installation 命令初始化。</span></span><br><span class="line">mysql_secure_installation</span><br><span class="line"></span><br><span class="line">cd /application/tomcat8_1/webapps</span><br><span class="line">war包上传到该目录</span><br><span class="line"></span><br><span class="line">Web安装: <span class="keyword">http</span>://<span class="number">192.168</span><span class="number">.56</span><span class="number">.13</span>:<span class="number">8081</span>/jpress/<span class="keyword">install</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#重启服务</span></span><br><span class="line">/application/tomcat8_1/<span class="keyword">bin</span>/shutdown.sh </span><br><span class="line">/application/tomcat8_1/<span class="keyword">bin</span>/startup.sh </span><br><span class="line"></span><br><span class="line"><span class="keyword">http</span>://<span class="number">192.168</span><span class="number">.56</span><span class="number">.13</span>:<span class="number">8081</span>/jpress/   <span class="comment">#前端访问</span></span><br><span class="line"><span class="keyword">http</span>://<span class="number">192.168</span><span class="number">.56</span><span class="number">.13</span>:<span class="number">8081</span>/jpress/<span class="keyword">admin</span>/login  <span class="comment">#后台管理</span></span><br></pre></td></tr></table></figure>
 
 <h4 id="Tomcat监控"><a href="#Tomcat监控" class="headerlink" title="Tomcat监控"></a>Tomcat监控</h4><blockquote>
 <p>jps命令</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">jps命令用来输出java的状况信息，如：进程的PID值</span><br><span class="line"></span><br><span class="line">#快速获取Java进程的pid，不用ps和grep</span><br><span class="line">jps -lvm  </span><br><span class="line"></span><br><span class="line">jps -lvm  与ps -ef|grep java结果相同</span><br></pre></td></tr></table></figure>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">jps命令用来输出java的状况信息，如：进程的PID值</span></span><br><span class="line"><span class="keyword"></span></span><br><span class="line"><span class="keyword">#快速获取Java进程的pid，不用ps和grep</span></span><br><span class="line"><span class="keyword">jps </span>-lvm  </span><br><span class="line"></span><br><span class="line"><span class="keyword">jps </span>-lvm  与ps -ef<span class="title">|grep java结果相同</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>jstack命令</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">jstack命令主要用来查看某个java进程内的线程堆栈信息。</span><br><span class="line"></span><br><span class="line">一旦发现Tomcat有严重异常，需要直接上脚本运行，查看结果</span><br><span class="line">Tomcat Java脚本下载：https://github.com/wuyanteng/wuyanteng.github.io/tree/master/script</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">jstack命令主要用来查看某个java进程内的线程堆栈信息。</span><br><span class="line"></span><br><span class="line">一旦发现Tomcat有严重异常，需要直接上脚本运行，查看结果</span><br><span class="line">Tomcat Java脚本下载：https:<span class="regexp">//gi</span>thub.com<span class="regexp">/wuyanteng/</span>wuyanteng.github.io<span class="regexp">/tree/m</span>aster<span class="regexp">/script</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">脚本输出结果可以看到哪些java进程占用多少资源？把结果与java开发分享一同解决问题。</span><br><span class="line"></span><br><span class="line">比如:Tomcat运行特别卡，就使用这个查看即可。</span><br><span class="line">[root@zabbix-proxy ~]# sh show-busy-java-threads.sh</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">脚本输出结果可以看到哪些<span class="selector-tag">java</span>进程占用多少资源？把结果与<span class="selector-tag">java</span>开发分享一同解决问题。</span><br><span class="line"></span><br><span class="line">比如<span class="selector-pseudo">:Tomcat</span>运行特别卡，就使用这个查看即可。</span><br><span class="line"><span class="selector-attr">[root@zabbix-proxy ~]</span># <span class="selector-tag">sh</span> <span class="selector-tag">show-busy-java-threads</span><span class="selector-class">.sh</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="使用zabbix监控Tomcat"><a href="#使用zabbix监控Tomcat" class="headerlink" title="使用zabbix监控Tomcat"></a>使用zabbix监控Tomcat</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">第一步：配置Tomcat远程管理</span><br><span class="line">第二步：zabbix server安装zabbix-java-gateway</span><br></pre></td></tr></table></figure>
+<h4 id="使用zabbix监控Tomcat"><a href="#使用zabbix监控Tomcat" class="headerlink" title="使用zabbix监控Tomcat"></a>使用zabbix监控Tomcat</h4><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">第一步：配置Tomcat远程管理</span><br><span class="line">第二步：zabbix <span class="keyword">server</span>安装zabbix-java-gateway</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">1. 配置Tomcat远程管理</span><br><span class="line">添加hosts解析</span><br><span class="line">vim /etc/hosts     #必须添加hosts解析，否则启动失败</span><br><span class="line">192.168.56.13  tomcat13</span><br><span class="line"></span><br><span class="line">2.开启JMX远程监控</span><br><span class="line"> vim /application/tomcat/bin/catalina.sh </span><br><span class="line"></span><br><span class="line">添加如下内容:</span><br><span class="line">CATALINA_OPTS=&quot;$CATALINA_OPTS</span><br><span class="line">-Dcom.sun.management.jmxremote </span><br><span class="line">-Dcom.sun.management.jmxremote.port=12345  </span><br><span class="line">-Dcom.sun.management.jmxremote.ssl=false          #远程ssl验证为false</span><br><span class="line">-Dcom.sun.management.jmxremote.authenticate=false #关闭权限认证</span><br><span class="line">-Djava.rmi.server.hostname=192.168.56.13          #填写Tomcat IP地址</span><br><span class="line"></span><br><span class="line">3.重启Tomcat</span><br><span class="line">netstat -tunlp|grep 12345</span><br><span class="line"></span><br><span class="line">################################</span><br><span class="line">如果端口起不来，看日志</span><br><span class="line">tail /application/tomcat/logs/catalina.out</span><br></pre></td></tr></table></figure>
+<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">1. 配置Tomcat远程管理</span><br><span class="line">添加hosts解析</span><br><span class="line">vim /etc/hosts     #必须添加hosts解析，否则启动失败</span><br><span class="line">192.168.56.13  tomcat13</span><br><span class="line"></span><br><span class="line">2.开启JMX远程监控</span><br><span class="line"> vim /application/tomcat/bin/catalina.sh </span><br><span class="line"></span><br><span class="line">添加如下内容:</span><br><span class="line">CATALINA_OPTS="$CATALINA_OPTS</span><br><span class="line">-<span class="ruby">Dcom.sun.management.jmxremote </span></span><br><span class="line"><span class="ruby">-Dcom.sun.management.jmxremote.port=<span class="number">12345</span>  </span></span><br><span class="line"><span class="ruby">-Dcom.sun.management.jmxremote.ssl=<span class="literal">false</span>          <span class="comment">#远程ssl验证为false</span></span></span><br><span class="line"><span class="ruby">-Dcom.sun.management.jmxremote.authenticate=<span class="literal">false</span> <span class="comment">#关闭权限认证</span></span></span><br><span class="line"><span class="ruby">-Djava.rmi.server.hostname=<span class="number">192.168</span>.<span class="number">56.13</span>          <span class="comment">#填写Tomcat IP地址</span></span></span><br><span class="line"><span class="ruby"></span></span><br><span class="line"><span class="ruby"><span class="number">3</span>.重启Tomcat</span></span><br><span class="line"><span class="ruby">netstat -tunlp<span class="params">|grep 12345</span></span></span><br><span class="line"><span class="ruby"></span></span><br><span class="line"><span class="ruby"><span class="comment">################################</span></span></span><br><span class="line"><span class="ruby">如果端口起不来，看日志</span></span><br><span class="line"><span class="ruby">tail /application/tomcat/logs/catalina.out</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">4. zabbix-server上安装启动zabbix-java-gateway</span><br><span class="line">yum install -y java java-devel zabbix-java-gateway</span><br><span class="line">vim /etc/zabbix/zabbix_java_gateway.conf    #java配置文件</span><br><span class="line">JavaGateway=192.168.56.13                   #gateway地址</span><br><span class="line">StartJavaPollers=5                          #预启动进程轮训个数 </span><br><span class="line"></span><br><span class="line">/etc/init.d/zabbix-java-gateway start</span><br><span class="line">netstat -tunlp|grep java</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">4. zabbix-server上安装启动zabbix-java-gateway</span><br><span class="line">yum <span class="keyword">install</span> -y <span class="keyword">java</span> <span class="keyword">java</span>-devel zabbix-<span class="keyword">java</span>-gateway</span><br><span class="line">vim /etc/zabbix/zabbix_java_gateway.conf    <span class="comment">#java配置文件</span></span><br><span class="line">JavaGateway=<span class="number">192.168</span><span class="number">.56</span><span class="number">.13</span>                   <span class="comment">#gateway地址</span></span><br><span class="line">StartJavaPollers=<span class="number">5</span>                          <span class="comment">#预启动进程轮训个数 </span></span><br><span class="line"></span><br><span class="line">/etc/init.d/zabbix-<span class="keyword">java</span>-gateway <span class="keyword">start</span></span><br><span class="line">netstat -tunlp|grep <span class="keyword">java</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">5. 配置zabbix server支持java监控</span><br><span class="line"></span><br><span class="line">#新增如下配置</span><br><span class="line">sed -i -e &apos;217a JavaGateway=127.0.0.1&apos; -e &apos;225a JavaGatewayPort=10052&apos;  -e &apos;235a StartJavaPollers=5&apos; /etc/zabbix/zabbix_server.conf</span><br><span class="line"></span><br><span class="line">#重启zabbix server</span><br></pre></td></tr></table></figure>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">5.</span> 配置zabbix server支持java监控</span><br><span class="line"></span><br><span class="line">#新增如下配置</span><br><span class="line">sed -i -e '<span class="number">217</span>a JavaGateway=<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>' -e '<span class="number">225</span>a JavaGatewayPort=<span class="number">10052</span>'  -e '<span class="number">235</span>a StartJavaPollers=<span class="number">5</span>' /etc/zabbix/zabbix_server.conf</span><br><span class="line"></span><br><span class="line">#重启zabbix server</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">6. zabbix web配置</span><br><span class="line">   配置 -- 主机 -- 添加主机 -- JMX接口: 192.168.56.13 端口:12345</span><br><span class="line">   模板：选择Template JMX Generic和Template JMX Tomcat</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">6. <span class="selector-tag">zabbix</span> <span class="selector-tag">web</span>配置</span><br><span class="line">   配置 <span class="selector-tag">--</span> 主机 <span class="selector-tag">--</span> 添加主机 <span class="selector-tag">--</span> <span class="selector-tag">JMX</span>接口: 192<span class="selector-class">.168</span><span class="selector-class">.56</span><span class="selector-class">.13</span> 端口<span class="selector-pseudo">:12345</span></span><br><span class="line">   模板：选择<span class="selector-tag">Template</span> <span class="selector-tag">JMX</span> <span class="selector-tag">Generic</span>和<span class="selector-tag">Template</span> <span class="selector-tag">JMX</span> <span class="selector-tag">Tomcat</span></span><br></pre></td></tr></table></figure>
 
 <h4 id="Tomcat安全优化"><a href="#Tomcat安全优化" class="headerlink" title="Tomcat安全优化"></a>Tomcat安全优化</h4><blockquote>
 <p>安全优化</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(1)端口保护: 即修改默认配置文件端口</span><br><span class="line">(2)注释ajp连接端口8009, server.xml中搜索注释</span><br><span class="line">(3)删除webapps目录下的默认目录，只保留ROOT空目录即可。</span><br><span class="line">(4)降权启动：使用非root启动tomcat （nginx或tomcat等都支持以普通用户登录）</span><br></pre></td></tr></table></figure>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(<span class="number">1</span>)端口保护: 即修改默认配置文件端口</span><br><span class="line">(<span class="number">2</span>)注释ajp连接端口<span class="number">8009</span>, <span class="keyword">server</span>.xml中搜索注释</span><br><span class="line">(<span class="number">3</span>)删除webapps目录下的默认目录，只保留ROOT空目录即可。</span><br><span class="line">(<span class="number">4</span>)降权启动：使用非root启动tomcat （nginx或tomcat等都支持以普通用户登录）</span><br></pre></td></tr></table></figure>
 
 <p>Tomcat降权启动</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">useradd tomcat</span><br><span class="line">cp -a /application/tomcat8_1 /home/tomcat/</span><br><span class="line">chown -R tomcat.tomcat /home/tomcat/</span><br><span class="line">su -c &apos;/home/tomcat/tomcat8_1/bin/startup.sh&apos; tomcat</span><br><span class="line">ps -ef |grep java      #可以看到启动的用户已经改成了tomcat</span><br></pre></td></tr></table></figure>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">useradd tomcat</span><br><span class="line">cp -a <span class="string">/application/tomcat8_1</span> <span class="string">/home/tomcat/</span></span><br><span class="line">chown -R tomcat.tomcat <span class="string">/home/tomcat/</span></span><br><span class="line">su -c '<span class="string">/home/tomcat/tomcat8_1/bin/startup.sh</span>' tomcat</span><br><span class="line">ps -ef |grep java      <span class="comment">#可以看到启动的用户已经改成了tomcat</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>性能优化</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Tomcat非常耗内存,并非Tomcat软件本身内存消耗大，而是运行的代码导致内存消耗大</span><br><span class="line">优化方法：</span><br><span class="line">1. 加大内存</span><br><span class="line">2. 减少内存消耗量:开发写的代码只是不停消耗内存,但是从来进行释放</span><br><span class="line">   垃圾回收机制:定期扫描内存使用情况，找到未被使用的内存,然后回收。</span><br><span class="line">       特点：周期性,回收机制也会占用一定的内存使用量,同时每次回收垃圾都会使业务停止</span><br><span class="line">注：网上的教程基本都是 JVM优化主要从垃圾回收策略开始阐述的</span><br><span class="line">3. 简单粗暴法：定期重启Tomcat（如：定时凌晨重启Tomcat）</span><br></pre></td></tr></table></figure>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Tomcat非常耗内存,并非Tomcat软件本身内存消耗大，而是运行的代码导致内存消耗大</span><br><span class="line">优化方法：</span><br><span class="line"><span class="bullet">1. </span>加大内存</span><br><span class="line"><span class="bullet">2. </span>减少内存消耗量:开发写的代码只是不停消耗内存,但是从来进行释放</span><br><span class="line">   垃圾回收机制:定期扫描内存使用情况，找到未被使用的内存,然后回收。</span><br><span class="line"><span class="code">       特点：周期性,回收机制也会占用一定的内存使用量,同时每次回收垃圾都会使业务停止</span></span><br><span class="line">注：网上的教程基本都是 JVM优化主要从垃圾回收策略开始阐述的</span><br><span class="line"><span class="bullet">3. </span>简单粗暴法：定期重启Tomcat（如：定时凌晨重启Tomcat）</span><br></pre></td></tr></table></figure>
 
 <p>Tomcat默认消耗1/4系统内存，可以通过修改配置文件将阈值调到适当值。</p>
-<h4 id="JVM调优"><a href="#JVM调优" class="headerlink" title="JVM调优"></a>JVM调优</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim /home/tomcat/tomcat8_1/bin/catalina.sh </span><br><span class="line">添加如下内容:</span><br><span class="line">JAVA_OPTS=&quot;-Djava.awt.headless=true -Dfile.encoding=UTF-8 -server -Xms2048m -Xmx3072m -XX:NewSize=512m -XX:MaxNewSize=2048m -XX:PermSize=512m -XX:MaxPermSize=512m&quot;</span><br></pre></td></tr></table></figure>
+<h4 id="JVM调优"><a href="#JVM调优" class="headerlink" title="JVM调优"></a>JVM调优</h4><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim /home/tomcat/tomcat8_1/bin/catalina.sh </span><br><span class="line">添加如下内容:</span><br><span class="line"><span class="attr">JAVA_OPTS="-Djava.awt.headless=true</span> -Dfile.<span class="attr">encoding=UTF-8</span> -server -Xms2048m -Xmx3072m -XX:<span class="attr">NewSize=512m</span> -XX:<span class="attr">MaxNewSize=2048m</span> -XX:<span class="attr">PermSize=512m</span> -XX:<span class="attr">MaxPermSize=512m"</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">server:一定要作为第一个参数，在多个CPU时性能佳</span><br><span class="line">-Xms：初始堆内存Heap大小，使用的最小内存,cpu性能高时此值应设的大一些</span><br><span class="line">-Xmx：初始堆内存heap最大值，使用的最大内存</span><br><span class="line">上面两个值是分配JVM的最小和最大内存，取决于硬件物理内存的大小，建议均设为物理内存的一半。</span><br><span class="line">-XX:PermSize:设定内存的永久保存区域</span><br><span class="line">-XX:MaxPermSize:设定最大内存的永久保存区域</span><br><span class="line">-XX:MaxNewSize:</span><br><span class="line">-Xss 15120 这使得JBoss每增加一个线程（thread)就会立即消耗15M内存，而最佳值应该是128K,默认值好像是512k.</span><br><span class="line">+XX:AggressiveHeap 会使得 Xms没有意义。这个参数让jvm忽略Xmx参数,疯狂地吃完一个G物理内存,再吃尽一个G的swap。</span><br><span class="line">-Xss：每个线程的Stack大小</span><br><span class="line">-verbose:gc 现实垃圾收集信息</span><br><span class="line">-Xloggc:gc.log 指定垃圾收集日志文件</span><br><span class="line">-Xmn：young generation的heap大小，一般设置为Xmx的3、4分之一</span><br><span class="line">-XX:+UseParNewGC ：缩短minor收集的时间</span><br><span class="line">-XX:+UseConcMarkSweepGC ：缩短major收集的时间</span><br></pre></td></tr></table></figure>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">server:一定要作为第一个参数，在多个CPU时性能佳</span><br><span class="line"><span class="deletion">-Xms：初始堆内存Heap大小，使用的最小内存,cpu性能高时此值应设的大一些</span></span><br><span class="line"><span class="deletion">-Xmx：初始堆内存heap最大值，使用的最大内存</span></span><br><span class="line">上面两个值是分配JVM的最小和最大内存，取决于硬件物理内存的大小，建议均设为物理内存的一半。</span><br><span class="line"><span class="deletion">-XX:PermSize:设定内存的永久保存区域</span></span><br><span class="line"><span class="deletion">-XX:MaxPermSize:设定最大内存的永久保存区域</span></span><br><span class="line"><span class="deletion">-XX:MaxNewSize:</span></span><br><span class="line"><span class="deletion">-Xss 15120 这使得JBoss每增加一个线程（thread)就会立即消耗15M内存，而最佳值应该是128K,默认值好像是512k.</span></span><br><span class="line"><span class="addition">+XX:AggressiveHeap 会使得 Xms没有意义。这个参数让jvm忽略Xmx参数,疯狂地吃完一个G物理内存,再吃尽一个G的swap。</span></span><br><span class="line"><span class="deletion">-Xss：每个线程的Stack大小</span></span><br><span class="line"><span class="deletion">-verbose:gc 现实垃圾收集信息</span></span><br><span class="line"><span class="deletion">-Xloggc:gc.log 指定垃圾收集日志文件</span></span><br><span class="line"><span class="deletion">-Xmn：young generation的heap大小，一般设置为Xmx的3、4分之一</span></span><br><span class="line"><span class="deletion">-XX:+UseParNewGC ：缩短minor收集的时间</span></span><br><span class="line"><span class="deletion">-XX:+UseConcMarkSweepGC ：缩短major收集的时间</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">最后重启Tomcat服务!</span><br></pre></td></tr></table></figure>
+<figure class="highlight erlang-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">最后重启Tomcat服务!</span><br></pre></td></tr></table></figure>
 
 <p>参考：<a href="http://www.zyops.com/java-tomcat" target="_blank" rel="noopener">张耀的博客</a></p>
 
@@ -538,7 +542,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2019 John Doe
+    		&copy; 2019 Gary Wu
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -642,18 +646,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">apache</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">目录浏览</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">高级运维</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Apache</a>
               </li>
              
@@ -682,19 +674,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CDH</a>
+                <a href="javascript:void(0)" class="js-tag color5">高级运维</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JDBC</a>
+                <a href="javascript:void(0)" class="js-tag color2">apache</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">MySQL驱动</a>
+                <a href="javascript:void(0)" class="js-tag color5">目录浏览</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">KAFKA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CDH</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -707,6 +703,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">大数据</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">JDBC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">MySQL驱动</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -742,18 +746,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Cacti流量叠加图形</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Cacti整合图形</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Graph</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">cacti</a>
               </li>
              
@@ -771,6 +763,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">监控</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">bugzilla</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">bugs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Cacti流量叠加图形</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Cacti整合图形</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Graph</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -795,14 +807,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">SCL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">bugzilla</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">bugs</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -850,14 +854,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">DNS TLS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Public DNS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">shadowsocks</a>
               </li>
              
@@ -867,6 +863,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">加密代理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">DNS TLS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Public DNS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -946,18 +950,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ESXI PATH</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ESXI补丁升级</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">ESXI6.7</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">VMware vSphere Client</a>
               </li>
              
@@ -970,6 +962,26 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CPU</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">虚拟化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ESXI PATH</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ESXI补丁升级</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">ESXI6.7</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Openstack</a>
               </li>
              
@@ -979,22 +991,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">混杂模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CPU</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">虚拟化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">磁盘置备</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">disk</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1018,6 +1014,26 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Gentoo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">编译内核</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">NFS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">磁盘置备</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">disk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">fuse</a>
               </li>
              
@@ -1031,18 +1047,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">HDFS挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Gentoo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">编译内核</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">NFS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1106,6 +1110,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">HTTP状态码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">301</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">302</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
@@ -1134,27 +1150,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">HTTP状态码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">301</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">302</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">hdfs空文件</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hadoop fs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1178,6 +1178,22 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Jenkins</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">持续集成</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">持续交付</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
@@ -1194,26 +1210,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jenkins</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">持续集成</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">持续交付</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Jumpserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">备机部署</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">分区</a>
               </li>
              
@@ -1226,7 +1222,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">分区热迁移</a>
+                <a href="javascript:void(0)" class="js-tag color1">Jumpserver</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">备机部署</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1235,6 +1235,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">KAFKA版本升级</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">分区热迁移</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1294,18 +1298,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">文件句柄</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">lsof</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">空间释放</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">限速方案</a>
               </li>
              
@@ -1326,6 +1318,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">文件句柄</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">lsof</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">空间释放</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">logstash</a>
               </li>
              
@@ -1339,6 +1343,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Mars</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">HDFS Shell</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1358,15 +1370,27 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Mars</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">HDFS Shell</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Hadoop</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">spark</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">tez</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">单用户模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">多用户模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">远程模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1391,26 +1415,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">机架感知</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">spark</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">tez</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">单用户模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">多用户模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">远程模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1450,15 +1454,27 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">yarn</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hive</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">HQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">yarn</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mongodb</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">mongodump</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mongorestore</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1482,15 +1498,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mongodb</a>
+                <a href="javascript:void(0)" class="js-tag color3">STARTUP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">mongodump</a>
+                <a href="javascript:void(0)" class="js-tag color1">副本集成员</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mongorestore</a>
+                <a href="javascript:void(0)" class="js-tag color5">成员状态</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1510,15 +1526,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">STARTUP</a>
+                <a href="javascript:void(0)" class="js-tag color5">MongoDB集群</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">副本集成员</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">成员状态</a>
+                <a href="javascript:void(0)" class="js-tag color2">mongo集群管理维护</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1546,14 +1558,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">MongoDB集群</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mongo集群管理维护</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">MySQL主从切换</a>
               </li>
              
@@ -1562,19 +1566,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">MySQL主从复制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">全备还原</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">主从同步</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">主从复制监控</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">MySQL主从复制</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">全备还原</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1606,14 +1610,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">慢查询</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">mysqldumpslow</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">dba</a>
               </li>
              
@@ -1631,6 +1627,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">MySQL多实例远程登陆</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">慢查询</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">mysqldumpslow</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1670,14 +1674,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ntp</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">upstream</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">proxy-set-header</a>
               </li>
              
@@ -1690,15 +1686,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">favicon.ico</a>
+                <a href="javascript:void(0)" class="js-tag color4">upstream</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">access</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">log</a>
+                <a href="javascript:void(0)" class="js-tag color4">ntp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1715,6 +1707,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">垃圾UA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">favicon.ico</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">access</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">log</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1754,6 +1758,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Glance</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">openstack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">PHP</a>
               </li>
              
@@ -1766,11 +1778,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Glance</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">openstack</a>
+                <a href="javascript:void(0)" class="js-tag color4">Keystone</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1783,10 +1791,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">OpenStack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Keystone</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1822,23 +1826,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">RAID5</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">parted</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">fdisk</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">RAID5</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">阵列卡</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">缓存</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1862,6 +1858,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">阵列卡</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">缓存</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">rabbitmq</a>
               </li>
              
@@ -1882,15 +1886,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">NTP时间同步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NAT</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">双线</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">NTP时间同步</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1982,6 +1986,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">YARN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">NodeManager</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">udp</a>
               </li>
              
@@ -1999,14 +2011,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">GFW</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">YARN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">NodeManager</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2042,10 +2046,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">rrdtool</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">微信</a>
               </li>
              
@@ -2054,11 +2054,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">weathermap</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">plugin</a>
+                <a href="javascript:void(0)" class="js-tag color3">rrdtool</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2071,6 +2067,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">将Bites转换为Mbits</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">weathermap</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">plugin</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">脚本</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2098,7 +2106,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">脚本</a>
+                <a href="javascript:void(0)" class="js-tag color1">socket.gaierror</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2107,10 +2115,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">时间同步</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">socket.gaierror</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2158,14 +2162,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">wget</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">curl请求url不使用缓存</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">unix</a>
               </li>
              
@@ -2182,7 +2178,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">wget</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">curl请求url不使用缓存</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">docker机制</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">exit退出码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2199,14 +2211,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">emerge命令</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">exit退出码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2242,18 +2246,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">磁盘挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">fstab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">开机挂载</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">gentoo</a>
               </li>
              
@@ -2263,6 +2255,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">install</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">磁盘挂载</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">fstab</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">开机挂载</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2294,10 +2298,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hadoop用户</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">fs</a>
               </li>
              
@@ -2310,6 +2310,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">hadoop用户</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">sersync</a>
               </li>
              
@@ -2319,6 +2323,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">实时同步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell脚本</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ip自动配置</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2338,18 +2350,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell脚本</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ip自动配置</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">jumpserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">topic</a>
               </li>
              
@@ -2358,23 +2358,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">keepalived</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LVS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">多实例</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">双主</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">脑裂</a>
+                <a href="javascript:void(0)" class="js-tag color1">jumpserver</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2395,6 +2379,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">nopasswd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">keepalived</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">LVS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">多实例</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">双主</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">脑裂</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2422,10 +2426,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">dd</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">rm恢复</a>
               </li>
              
@@ -2442,23 +2442,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">dd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统备份</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统恢复</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Logstash</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Tomcat</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2471,6 +2463,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">rubydebug</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Logstash</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Tomcat</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2490,6 +2494,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">mongod</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">二进制版</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">mariadb主从</a>
               </li>
              
@@ -2503,14 +2515,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">主从复制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mongod</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">二进制版</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2530,11 +2534,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">主从复制错误</a>
+                <a href="javascript:void(0)" class="js-tag color5">主键错误</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">主键错误</a>
+                <a href="javascript:void(0)" class="js-tag color2">主从复制错误</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2543,14 +2547,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">同步个别库</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">mysql slave</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">relay log</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2566,7 +2562,39 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">mysql slave</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">relay log</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">root远程登录</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">优化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">socket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ulimit</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">tcp_nopush</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">tcp_nodelay</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2630,38 +2658,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">优化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">socket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ulimit</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">tcp_nopush</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">tcp_nodelay</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">uri</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">屏蔽接口</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Ddos</a>
               </li>
              
@@ -2674,11 +2670,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">proxy cache</a>
+                <a href="javascript:void(0)" class="js-tag color4">uri</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Nginx缓存清理</a>
+                <a href="javascript:void(0)" class="js-tag color5">屏蔽接口</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2687,6 +2683,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">443</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">proxy cache</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Nginx缓存清理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2710,18 +2714,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SOCKS5</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">proxychains</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">命令代理</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">ps</a>
               </li>
              
@@ -2731,6 +2723,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">进程运行时间</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">SOCKS5</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">proxychains</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">命令代理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2746,14 +2750,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">tar</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">crontab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">自重启</a>
               </li>
              
@@ -2762,11 +2758,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">rsync限速</a>
+                <a href="javascript:void(0)" class="js-tag color4">tar</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">bwlimit</a>
+                <a href="javascript:void(0)" class="js-tag color3">crontab</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2775,6 +2771,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">模板</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">rsync限速</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">bwlimit</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2787,6 +2791,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">zabbix_agent</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">salt-master高可用</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">salt-API</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">salt-ssh</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2818,18 +2834,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">salt-master高可用</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">salt-API</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">salt-ssh</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">系统瓶颈</a>
               </li>
              
@@ -2850,6 +2854,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">变量传参</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">shell传参</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">小数判断</a>
               </li>
              
@@ -2859,14 +2871,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">浮点数判断</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">变量传参</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">shell传参</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2898,6 +2902,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">expect</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Ros</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">FTP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">dsa</a>
               </li>
              
@@ -2914,15 +2930,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">expect</a>
+                <a href="javascript:void(0)" class="js-tag color1">supervisor</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Ros</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">FTP</a>
+                <a href="javascript:void(0)" class="js-tag color4">supervisorctl</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2935,14 +2947,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">pid</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">supervisor</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">supervisorctl</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2982,19 +2986,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">vim</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">中文乱码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">vmware</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">虚拟机克隆</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vim</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">中文乱码</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3010,10 +3014,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">告警</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">traceroute</a>
               </li>
              
@@ -3023,6 +3023,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">MTR</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">告警</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3050,6 +3054,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">zk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">触发器</a>
               </li>
              
@@ -3063,10 +3071,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">触发器表达式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">zk</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3086,11 +3090,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">云计算</a>
+                <a href="javascript:void(0)" class="js-tag color5">Rack</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Rack</a>
+                <a href="javascript:void(0)" class="js-tag color4">云计算</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3106,6 +3110,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CDN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">IM</a>
               </li>
              
@@ -3115,18 +3123,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">开源IM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CDN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">jq</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">筛选大于某个值的数据到文件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3150,11 +3146,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">taskset</a>
+                <a href="javascript:void(0)" class="js-tag color3">jq</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">PID</a>
+                <a href="javascript:void(0)" class="js-tag color4">筛选大于某个值的数据到文件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3166,15 +3162,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">zerotier</a>
+                <a href="javascript:void(0)" class="js-tag color3">taskset</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">内网穿透</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">全球畅联</a>
+                <a href="javascript:void(0)" class="js-tag color4">PID</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3198,7 +3190,31 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">zerotier</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">内网穿透</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">全球畅联</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">RocketMQ</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">分布式消息队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nameserver</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">brokerserver</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3218,39 +3234,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">分布式消息队列</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">nameserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">brokerserver</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">外部命令</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">内部命令</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">只读模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">fatab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mount</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">remount</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3270,19 +3258,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OpenSSL</a>
+                <a href="javascript:void(0)" class="js-tag color5">只读模式</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">CA</a>
+                <a href="javascript:void(0)" class="js-tag color1">fatab</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SSL证书</a>
+                <a href="javascript:void(0)" class="js-tag color1">mount</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">csr</a>
+                <a href="javascript:void(0)" class="js-tag color3">remount</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3299,6 +3287,22 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">免交互</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">OpenSSL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">CA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">SSL证书</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">csr</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3326,6 +3330,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">SHELL编程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">kill</a>
               </li>
              
@@ -3338,7 +3346,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">SHELL编程</a>
+                <a href="javascript:void(0)" class="js-tag color5">Yum源</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3347,10 +3355,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Shell脚本</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Yum源</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3370,15 +3374,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">consumer</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">内存</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">使用率</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">consumer</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3482,6 +3486,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">flock</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LVS连接数监控</a>
               </li>
              
@@ -3495,10 +3503,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">InActConn</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">flock</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3674,6 +3678,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">autostart</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">libvert</a>
               </li>
              
@@ -3683,10 +3691,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">动态迁移</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">autostart</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3842,6 +3846,18 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">lvs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">4层负载均衡</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">DR模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">LNMP</a>
               </li>
              
@@ -3859,18 +3875,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">mysql数据库迁移</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">lvs</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">4层负载均衡</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">DR模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -3930,15 +3934,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">pass_proxy</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">htpasswd</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">日志切割</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">pass_proxy</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4238,15 +4242,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">磁盘</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">awk数组</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">磁盘管理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">磁盘</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4282,19 +4286,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">redis cluster</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">ssdb</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">LevelDB</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">redis cluster</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -4338,14 +4342,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">codis集群</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">memcache</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">GlusterFS</a>
               </li>
              
@@ -4355,6 +4351,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NAS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">codis集群</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">memcache</a>
               </li>
              
               <li class="article-tag-list-item">
