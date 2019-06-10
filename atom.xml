@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://garywu520.github.io/blog/"/>
-  <updated>2019-06-05T04:29:55.538Z</updated>
+  <updated>2019-06-10T08:23:51.364Z</updated>
   <id>https://garywu520.github.io/blog/</id>
   
   <author>
@@ -15,6 +15,39 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Json数据调用变量问题-Shell</title>
+    <link href="https://garywu520.github.io/blog/2019/06/10/Json%E6%95%B0%E6%8D%AE%E8%B0%83%E7%94%A8%E5%8F%98%E9%87%8F%E9%97%AE%E9%A2%98-Shell/"/>
+    <id>https://garywu520.github.io/blog/2019/06/10/Json数据调用变量问题-Shell/</id>
+    <published>2019-06-10T08:19:01.000Z</published>
+    <updated>2019-06-10T08:23:51.364Z</updated>
+    
+    <content type="html"><![CDATA[<p>curl提交数据部分如下：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">curl -XPOST -H "Content-Type: application/json" http://admin.xxx.cn/xxx/AddServer \</span><br><span class="line">-d '&#123;\</span><br><span class="line">"platform_name":"$&#123;PLATFORM&#125;", \</span><br><span class="line">"region_id":"$&#123;SID&#125;", \</span><br><span class="line">"game_db_ip":"$&#123;GAME_DOMAIN&#125;", \</span><br><span class="line">"game_ip":"$&#123;GAME_DOMAIN&#125;", \</span><br><span class="line">"log_db_ip":"admin.xxx.cn", \</span><br><span class="line">"server_type":"3", \</span><br><span class="line">"server_state":"1", \</span><br><span class="line">"main_server":"0"\</span><br><span class="line">&#125;'</span><br></pre></td></tr></table></figure><p>其中，上面引用的Shell变量没有被解析，主要是引号问题。</p><a id="more"></a><p>解决方法：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">curl -XPOST -H "Content-Type: application/json" http://admin.xxx.cn/zmsgApi/xxx/AddServer \</span><br><span class="line">-d '&#123;\</span><br><span class="line">"platform_name":"'"$&#123;PLATFORM&#125;"'", \</span><br><span class="line">"region_id":"'"$&#123;SID&#125;"'", \</span><br><span class="line">"game_db_ip":"'"$&#123;GAME_DOMAIN&#125;"'", \</span><br><span class="line">"game_ip":"'"$&#123;GAME_DOMAIN&#125;"'", \</span><br><span class="line">"log_db_ip":"admin.xxx.cn", \</span><br><span class="line">"server_type":"3", \</span><br><span class="line">"server_state":"1", \</span><br><span class="line">"main_server":"0"\</span><br><span class="line">&#125;'</span><br></pre></td></tr></table></figure><p>参考自：<a href="https://jaminzhang.github.io/shell/the-problem-of-curl-commit-json-data-include-shell-variables/" target="_blank" rel="noopener">Jamin Zhang</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;curl提交数据部分如下：&lt;/p&gt;
+&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;curl -XPOST -H &quot;Content-Type: application/json&quot; http://admin.xxx.cn/xxx/AddServer \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;-d &#39;&amp;#123;\&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&quot;platform_name&quot;:&quot;$&amp;#123;PLATFORM&amp;#125;&quot;, \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&quot;region_id&quot;:&quot;$&amp;#123;SID&amp;#125;&quot;, \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&quot;game_db_ip&quot;:&quot;$&amp;#123;GAME_DOMAIN&amp;#125;&quot;, \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&quot;game_ip&quot;:&quot;$&amp;#123;GAME_DOMAIN&amp;#125;&quot;, \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&quot;log_db_ip&quot;:&quot;admin.xxx.cn&quot;, \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&quot;server_type&quot;:&quot;3&quot;, \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&quot;server_state&quot;:&quot;1&quot;, \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&quot;main_server&quot;:&quot;0&quot;\&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&#39;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;其中，上面引用的Shell变量没有被解析，主要是引号问题。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="curl" scheme="https://garywu520.github.io/blog/tags/curl/"/>
+    
+      <category term="shell" scheme="https://garywu520.github.io/blog/tags/shell/"/>
+    
+      <category term="curl -XPOST" scheme="https://garywu520.github.io/blog/tags/curl-XPOST/"/>
+    
+      <category term="shell变量" scheme="https://garywu520.github.io/blog/tags/shell%E5%8F%98%E9%87%8F/"/>
+    
+      <category term="json引用" scheme="https://garywu520.github.io/blog/tags/json%E5%BC%95%E7%94%A8/"/>
+    
+  </entry>
   
   <entry>
     <title>UDP抓包工具tcpdump</title>
@@ -131,6 +164,8 @@
     </summary>
     
     
+      <category term="shell" scheme="https://garywu520.github.io/blog/tags/shell/"/>
+    
       <category term="openssl" scheme="https://garywu520.github.io/blog/tags/openssl/"/>
     
       <category term="ssl" scheme="https://garywu520.github.io/blog/tags/ssl/"/>
@@ -140,8 +175,6 @@
       <category term="ca" scheme="https://garywu520.github.io/blog/tags/ca/"/>
     
       <category term="自签证书" scheme="https://garywu520.github.io/blog/tags/%E8%87%AA%E7%AD%BE%E8%AF%81%E4%B9%A6/"/>
-    
-      <category term="shell" scheme="https://garywu520.github.io/blog/tags/shell/"/>
     
   </entry>
   
@@ -406,9 +439,9 @@
     
       <category term="CDH" scheme="https://garywu520.github.io/blog/tags/CDH/"/>
     
-      <category term="大数据" scheme="https://garywu520.github.io/blog/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-    
       <category term="hadoop" scheme="https://garywu520.github.io/blog/tags/hadoop/"/>
+    
+      <category term="大数据" scheme="https://garywu520.github.io/blog/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
       <category term="HDFS" scheme="https://garywu520.github.io/blog/tags/HDFS/"/>
     
@@ -491,9 +524,9 @@
     
       <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
     
-      <category term="大数据" scheme="https://garywu520.github.io/blog/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-    
       <category term="hadoop" scheme="https://garywu520.github.io/blog/tags/hadoop/"/>
+    
+      <category term="大数据" scheme="https://garywu520.github.io/blog/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
       <category term="hdfs" scheme="https://garywu520.github.io/blog/tags/hdfs/"/>
     
@@ -667,38 +700,6 @@
       <category term="Sqoop" scheme="https://garywu520.github.io/blog/tags/Sqoop/"/>
     
       <category term="hadoop Job" scheme="https://garywu520.github.io/blog/tags/hadoop-Job/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Mars-hadoop sqoop导出实战</title>
-    <link href="https://garywu520.github.io/blog/2019/03/13/Mars-hadoop-sqoop%E5%AF%BC%E5%87%BA%E5%AE%9E%E6%88%98/"/>
-    <id>https://garywu520.github.io/blog/2019/03/13/Mars-hadoop-sqoop导出实战/</id>
-    <published>2019-03-13T07:38:36.000Z</published>
-    <updated>2019-03-13T08:20:11.960Z</updated>
-    
-    <content type="html"><![CDATA[<h5 id="一、可能的数据处理架构"><a href="#一、可能的数据处理架构" class="headerlink" title="一、可能的数据处理架构"></a>一、可能的数据处理架构</h5><figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">S<span class="function"><span class="title">qoop</span> <span class="keyword">import</span> -&gt;</span>H<span class="function"><span class="title">ive</span>/HDFS -&gt;</span>MR J<span class="function"><span class="title">ob</span>/Spark Job/Streaming Job/ML Job/SQL -&gt;</span> Result Data</span><br></pre></td></tr></table></figure><h5 id="二、Sqoop导出通用参数"><a href="#二、Sqoop导出通用参数" class="headerlink" title="二、Sqoop导出通用参数"></a>二、Sqoop导出通用参数</h5><ul><li>–connect 连接关系型数据库</li><li>–username 关系型数据库用户</li><li>–password/-P  关系型数据库密码</li></ul><a id="more"></a><h5 id="三、Sqoop导出控制参数"><a href="#三、Sqoop导出控制参数" class="headerlink" title="三、Sqoop导出控制参数"></a>三、Sqoop导出控制参数</h5><p>–columns 字段1,字段2,字段3</p><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">注意: 没有被包含在<span class="comment">--columns后面(例如class_month,last_mod_ts)的这些列名或字段要么具备默认值，要么就允许插入空值，数据库会拒绝接受sqoop导出的数据，导致Sqoop作业失败</span></span><br></pre></td></tr></table></figure><p>–export-dir</p><figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">指定导出目录，在执行导出的时候，必须指定这个参数，同时具备</span><span class="literal">-</span><span class="literal">-</span><span class="comment">table或</span><span class="literal">-</span><span class="literal">-</span><span class="comment">call参数的两者之一。</span></span><br><span class="line"><span class="comment"></span><span class="literal">-</span><span class="literal">-</span><span class="comment">table指的是导出数据库当中对应的表</span></span><br><span class="line"><span class="comment"></span><span class="literal">-</span><span class="literal">-</span><span class="comment">call</span> <span class="comment">指的是某个存储过程</span></span><br></pre></td></tr></table></figure><p>–input-null-string、–input-null-non-string</p><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">这两个参数可选，如果没有指定第一个参数[--input-<span class="literal">null</span>-<span class="built_in">string</span>]，对于字符串类型的列来说，“<span class="literal">NULL</span>”这个字符串就会被翻译为空值。</span><br><span class="line">如果没有第二个参数[--input-<span class="literal">null</span>-non-<span class="built_in">string</span>]，无论是“<span class="literal">NULL</span>”字符串还是空字符串也好，对于非字符串类型的字段来说，这两个类型的字符串都会被翻译成空值</span><br></pre></td></tr></table></figure><h5 id="四、全表从HDFS导出-示例"><a href="#四、全表从HDFS导出-示例" class="headerlink" title="四、全表从HDFS导出-示例"></a>四、全表从HDFS导出-示例</h5><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqoop export <span class="params">--connect</span> jdbc<span class="function">:mysql</span>:<span class="string">//serverip</span><span class="function">:3306</span>/bigdata <span class="params">--username</span> root -P <span class="params">--table</span> bigdata <span class="params">--export-dir</span> <span class="string">/user/root/bigdata</span></span><br></pre></td></tr></table></figure><h5 id="五、全表从HDFS更新-增量导出"><a href="#五、全表从HDFS更新-增量导出" class="headerlink" title="五、全表从HDFS更新/增量导出"></a>五、全表从HDFS更新/增量导出</h5><ul><li><p>–update-key </p><p>更新标识，即根据某个字段进行更新，例如class_id，可以同时指定多个更新标识，用逗号分隔</p></li><li><p>–updatemod </p><p>有两种模式: </p><p>一种是updateonly(默认模式)，仅仅更新已存在的数据记录，不会插入新纪录</p><p>另一种模式时allowinsert,允许插入新纪录</p></li><li><p>Sqoop的Export工具，对应两种语句</p></li></ul><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">一种是<span class="keyword">Insert</span>语句，如果表当中存在PK[主键]约束，且表中已包含数据，此时，导出报错。 需要用到—<span class="keyword">update</span>-<span class="keyword">key</span>和updatemod</span><br></pre></td></tr></table></figure><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">如果指定了<span class="keyword">update</span>-<span class="keyword">key</span>，那么Sqoop就会修改在数据表中已存在的数据，此时的每一个更新数据记录都会变成一个<span class="keyword">Update</span>语句，用这个语句去更新目标表中已存在的数据，这是根据–<span class="keyword">update</span>-<span class="keyword">key</span>所指定的这个列进行更新的。</span><br><span class="line"></span><br><span class="line">(<span class="number">1</span>）若<span class="keyword">update</span>-<span class="keyword">key</span>所指定的字段不是PK[主键]字段，若同时updatemod使用updateonly模式时，就仅进行更新；若updatemod使用allowinsert模式，那么实质上就是一个<span class="keyword">insert</span>操作 </span><br><span class="line"></span><br><span class="line">(<span class="number">2</span>）若<span class="keyword">update</span>-<span class="keyword">key</span>所指定的字段是PK[主键]字段，同时updatemod是allowinsert时，实质上是一个<span class="keyword">insert</span> &amp; <span class="keyword">update</span>的操作；若updatemod是updateonly时，实质仅为<span class="keyword">update</span>操作</span><br></pre></td></tr></table></figure><h5 id="更新-增量导出-示例"><a href="#更新-增量导出-示例" class="headerlink" title="更新/增量导出-示例"></a>更新/增量导出-示例</h5><p>updateonly模式</p><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqoop export <span class="params">--connect</span> jdbc<span class="function">:mysql</span>:<span class="string">//serverip</span><span class="function">:3306</span>/bigdata <span class="params">--username</span> root -P <span class="params">--table</span> bigdata <span class="params">--export-dir</span> <span class="string">/user/root/bigdata/</span> <span class="params">--update-key</span> class_id <span class="params">--update-mode</span> updateonly</span><br></pre></td></tr></table></figure><p>allowinsert模式</p><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqoop export <span class="params">--connect</span> jdbc<span class="function">:mysql</span>:<span class="string">//serverip</span><span class="function">:3306</span>/bigdata <span class="params">--username</span> root -P <span class="params">--table</span> bigdata2  <span class="params">--export-dir</span> <span class="string">/user/root/bigdata/</span> <span class="params">--update-key</span> class_id <span class="params">--update-mode</span> updateinsert</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h5 id=&quot;一、可能的数据处理架构&quot;&gt;&lt;a href=&quot;#一、可能的数据处理架构&quot; class=&quot;headerlink&quot; title=&quot;一、可能的数据处理架构&quot;&gt;&lt;/a&gt;一、可能的数据处理架构&lt;/h5&gt;&lt;figure class=&quot;highlight xl&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;S&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;title&quot;&gt;qoop&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; -&amp;gt;&lt;/span&gt;H&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;title&quot;&gt;ive&lt;/span&gt;/HDFS -&amp;gt;&lt;/span&gt;MR J&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;title&quot;&gt;ob&lt;/span&gt;/Spark Job/Streaming Job/ML Job/SQL -&amp;gt;&lt;/span&gt; Result Data&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;h5 id=&quot;二、Sqoop导出通用参数&quot;&gt;&lt;a href=&quot;#二、Sqoop导出通用参数&quot; class=&quot;headerlink&quot; title=&quot;二、Sqoop导出通用参数&quot;&gt;&lt;/a&gt;二、Sqoop导出通用参数&lt;/h5&gt;&lt;ul&gt;
-&lt;li&gt;–connect 连接关系型数据库&lt;/li&gt;
-&lt;li&gt;–username 关系型数据库用户&lt;/li&gt;
-&lt;li&gt;–password/-P  关系型数据库密码&lt;/li&gt;
-&lt;/ul&gt;
-    
-    </summary>
-    
-    
-      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
-    
-      <category term="hadoop" scheme="https://garywu520.github.io/blog/tags/hadoop/"/>
-    
-      <category term="hdfs" scheme="https://garywu520.github.io/blog/tags/hdfs/"/>
-    
-      <category term="sqoop" scheme="https://garywu520.github.io/blog/tags/sqoop/"/>
     
   </entry>
   
