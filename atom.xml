@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://garywu520.github.io/blog/"/>
-  <updated>2019-06-10T08:23:51.364Z</updated>
+  <updated>2019-06-12T10:03:42.108Z</updated>
   <id>https://garywu520.github.io/blog/</id>
   
   <author>
@@ -15,6 +15,69 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ES关闭分片自动迁移功能</title>
+    <link href="https://garywu520.github.io/blog/2019/06/12/ES%E5%85%B3%E9%97%AD%E5%88%86%E7%89%87%E8%BF%81%E7%A7%BB%E5%8A%9F%E8%83%BD/"/>
+    <id>https://garywu520.github.io/blog/2019/06/12/ES关闭分片迁移功能/</id>
+    <published>2019-06-12T09:51:22.000Z</published>
+    <updated>2019-06-12T10:03:42.108Z</updated>
+    
+    <content type="html"><![CDATA[<p>现有的ES集群，不可避免的需要新增或重启节点，正确步骤应该是首先关闭ES集群的reshard功能, 防止分片自动迁移。</p><h5 id="Master节点关闭reshard"><a href="#Master节点关闭reshard" class="headerlink" title="Master节点关闭reshard"></a>Master节点关闭reshard</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">curl -XPUT http://server_ip:9200/_cluster/settings -d '&#123;</span><br><span class="line">  "transient" : &#123;</span><br><span class="line">  "cluster.routing.allocation.enable": "none"</span><br><span class="line">  &#125;</span><br><span class="line">&#125;'</span><br></pre></td></tr></table></figure><p>此时就可以进行节点重启操作了</p><a id="more"></a><h5 id="维护完，Master节点开启reshard功能"><a href="#维护完，Master节点开启reshard功能" class="headerlink" title="维护完，Master节点开启reshard功能"></a>维护完，Master节点开启reshard功能</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">curl -XPUT http://server_ip:9200/_cluster/settings -d '&#123;</span><br><span class="line">  "transient" : &#123;</span><br><span class="line">  "cluster.routing.allocation.enable": "all"</span><br><span class="line">  &#125;</span><br><span class="line">&#125;'</span><br></pre></td></tr></table></figure><h5 id="如果安装了Kopf插件，可以很方便的管理ES集群的reshard"><a href="#如果安装了Kopf插件，可以很方便的管理ES集群的reshard" class="headerlink" title="如果安装了Kopf插件，可以很方便的管理ES集群的reshard"></a>如果安装了Kopf插件，可以很方便的管理ES集群的reshard</h5><p>打开kopf界面，左上角的锁头，点击锁住即为关闭reshard；</p><p>锁头打开即为开启reshard</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;现有的ES集群，不可避免的需要新增或重启节点，正确步骤应该是首先关闭ES集群的reshard功能, 防止分片自动迁移。&lt;/p&gt;
+&lt;h5 id=&quot;Master节点关闭reshard&quot;&gt;&lt;a href=&quot;#Master节点关闭reshard&quot; class=&quot;headerlink&quot; title=&quot;Master节点关闭reshard&quot;&gt;&lt;/a&gt;Master节点关闭reshard&lt;/h5&gt;&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;curl -XPUT http://server_ip:9200/_cluster/settings -d &#39;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &quot;transient&quot; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &quot;cluster.routing.allocation.enable&quot;: &quot;none&quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&#39;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;此时就可以进行节点重启操作了&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="ES" scheme="https://garywu520.github.io/blog/tags/ES/"/>
+    
+      <category term="shard" scheme="https://garywu520.github.io/blog/tags/shard/"/>
+    
+      <category term="reshard" scheme="https://garywu520.github.io/blog/tags/reshard/"/>
+    
+      <category term="ELK" scheme="https://garywu520.github.io/blog/tags/ELK/"/>
+    
+      <category term="elasticsearch" scheme="https://garywu520.github.io/blog/tags/elasticsearch/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ES索引删除</title>
+    <link href="https://garywu520.github.io/blog/2019/06/12/ES%E7%B4%A2%E5%BC%95%E5%88%A0%E9%99%A4/"/>
+    <id>https://garywu520.github.io/blog/2019/06/12/ES索引删除/</id>
+    <published>2019-06-12T09:40:18.000Z</published>
+    <updated>2019-06-12T09:47:56.523Z</updated>
+    
+    <content type="html"><![CDATA[<p>生产环境中的ES使用久了，会产生较大的历史数据，而有些数据是根本使用不到的，除了占用大量磁盘空间外，当有节点异常重启后，会导致大量的磁盘io读写，进而导致ES集群瘫痪。因此，就需要定期进行清理。</p><h5 id="配置禁止使用通配符删除"><a href="#配置禁止使用通配符删除" class="headerlink" title="配置禁止使用通配符删除"></a>配置禁止使用通配符删除</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">设置禁用_all和*通配符来删除，预防数据丢失</span></span><br><span class="line">action.destructive_requires_name = true</span><br></pre></td></tr></table></figure><h5 id="使用命令-删除索引"><a href="#使用命令-删除索引" class="headerlink" title="使用命令-删除索引"></a>使用命令-删除索引</h5><p>格式：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">删除多个索引，中间用“,”分割</span></span><br><span class="line">curl -XDELETE http://ip:9200/index_name1,index_name2</span><br></pre></td></tr></table></figure><p>删除单个索引</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -XDELETE http://ip:9200/logstash-exc-2018.01.01</span><br></pre></td></tr></table></figure><h5 id="kopf插件-删除索引"><a href="#kopf插件-删除索引" class="headerlink" title="kopf插件-删除索引"></a>kopf插件-删除索引</h5><p>打开kopf插件，选择要删除的索引，点击 “delete index”</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;生产环境中的ES使用久了，会产生较大的历史数据，而有些数据是根本使用不到的，除了占用大量磁盘空间外，当有节点异常重启后，会导致大量的磁盘io读写，进而导致ES集群瘫痪。因此，就需要定期进行清理。&lt;/p&gt;
+&lt;h5 id=&quot;配置禁止使用通配符删除&quot;&gt;&lt;a href=&quot;#配置禁止
+      
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="elasticsearch" scheme="https://garywu520.github.io/blog/tags/elasticsearch/"/>
+    
+      <category term="es" scheme="https://garywu520.github.io/blog/tags/es/"/>
+    
+      <category term="elk" scheme="https://garywu520.github.io/blog/tags/elk/"/>
+    
+  </entry>
   
   <entry>
     <title>Json数据调用变量问题-Shell</title>
@@ -226,11 +289,11 @@
     
       <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
     
+      <category term="elasticsearch" scheme="https://garywu520.github.io/blog/tags/elasticsearch/"/>
+    
       <category term="es" scheme="https://garywu520.github.io/blog/tags/es/"/>
     
       <category term="elk" scheme="https://garywu520.github.io/blog/tags/elk/"/>
-    
-      <category term="elasticsearch" scheme="https://garywu520.github.io/blog/tags/elasticsearch/"/>
     
       <category term="es集群" scheme="https://garywu520.github.io/blog/tags/es%E9%9B%86%E7%BE%A4/"/>
     
@@ -260,9 +323,9 @@
     
       <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
     
-      <category term="elasticsearch" scheme="https://garywu520.github.io/blog/tags/elasticsearch/"/>
-    
       <category term="ES" scheme="https://garywu520.github.io/blog/tags/ES/"/>
+    
+      <category term="elasticsearch" scheme="https://garywu520.github.io/blog/tags/elasticsearch/"/>
     
       <category term="ES分片" scheme="https://garywu520.github.io/blog/tags/ES%E5%88%86%E7%89%87/"/>
     
@@ -641,65 +704,6 @@
       <category term="磁盘置备" scheme="https://garywu520.github.io/blog/tags/%E7%A3%81%E7%9B%98%E7%BD%AE%E5%A4%87/"/>
     
       <category term="disk" scheme="https://garywu520.github.io/blog/tags/disk/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ESXI制作Linux系统模板</title>
-    <link href="https://garywu520.github.io/blog/2019/03/20/ESXI%E5%88%B6%E4%BD%9CLinux%E7%B3%BB%E7%BB%9F%E6%A8%A1%E6%9D%BF/"/>
-    <id>https://garywu520.github.io/blog/2019/03/20/ESXI制作Linux系统模板/</id>
-    <published>2019-03-20T02:36:28.000Z</published>
-    <updated>2019-03-20T03:36:32.075Z</updated>
-    
-    <content type="html"><![CDATA[<h4 id="有两种方式实现"><a href="#有两种方式实现" class="headerlink" title="有两种方式实现"></a>有两种方式实现</h4><h5 id="方式一：OVF导出导入"><a href="#方式一：OVF导出导入" class="headerlink" title="方式一：OVF导出导入"></a>方式一：OVF导出导入</h5><p>这种方式是，在VMware Workstation Pro中创建好虚拟机，并将所需环境配置和优化完毕，然后关闭虚拟机并将其导出为OVF格式镜像，这种镜像是直接可以在ESXI中使用的。</p><p>ESXI使用：登陆ESXI客户端 – 文件 – 部署OVF模板 – 上传OVF格式镜像即可。</p><a id="more"></a><h5 id="方式二：通过vmdk文件"><a href="#方式二：通过vmdk文件" class="headerlink" title="方式二：通过vmdk文件"></a>方式二：通过vmdk文件</h5><p>在ESXI中，创建完成的虚拟机默认格式即为vmdk,  所以可以直接从现有的vmdk中创建vm</p><p>(1) 首先在ESXI中创建一个虚拟机，并配置和优化所需环境，把这个虚拟机当做模板</p><p>(2) 找到此虚拟机安装文件所在的位置，并关闭此虚拟机</p><p>(3) 创建新虚拟机</p><p><img src="https://raw.githubusercontent.com/wuyanteng/wuyanteng.github.io/master/images/%E8%87%AA%E5%AE%9A%E4%B9%89create_vm.png" alt="create_vm"></p><p>​         接下来根据提示配置vm硬件参数</p><p><img src="https://raw.githubusercontent.com/wuyanteng/wuyanteng.github.io/master/images/vm_select_disk2.png" alt="vm_select_disk2"></p><p><img src="https://raw.githubusercontent.com/wuyanteng/wuyanteng.github.io/master/images/vm_select_disk3.png" alt="vm_select_disk3"></p><p>紧接着点击完成，启动使用模板创建的vm吧</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h4 id=&quot;有两种方式实现&quot;&gt;&lt;a href=&quot;#有两种方式实现&quot; class=&quot;headerlink&quot; title=&quot;有两种方式实现&quot;&gt;&lt;/a&gt;有两种方式实现&lt;/h4&gt;&lt;h5 id=&quot;方式一：OVF导出导入&quot;&gt;&lt;a href=&quot;#方式一：OVF导出导入&quot; class=&quot;headerlink&quot; title=&quot;方式一：OVF导出导入&quot;&gt;&lt;/a&gt;方式一：OVF导出导入&lt;/h5&gt;&lt;p&gt;这种方式是，在VMware Workstation Pro中创建好虚拟机，并将所需环境配置和优化完毕，然后关闭虚拟机并将其导出为OVF格式镜像，这种镜像是直接可以在ESXI中使用的。&lt;/p&gt;
-&lt;p&gt;ESXI使用：登陆ESXI客户端 – 文件 – 部署OVF模板 – 上传OVF格式镜像即可。&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="ESXI" scheme="https://garywu520.github.io/blog/tags/ESXI/"/>
-    
-      <category term="vm" scheme="https://garywu520.github.io/blog/tags/vm/"/>
-    
-      <category term="VMware vSphere Client" scheme="https://garywu520.github.io/blog/tags/VMware-vSphere-Client/"/>
-    
-      <category term="VMware Workstation Pro" scheme="https://garywu520.github.io/blog/tags/VMware-Workstation-Pro/"/>
-    
-      <category term="vmdk" scheme="https://garywu520.github.io/blog/tags/vmdk/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Mars-Hadoop Sqoop Job</title>
-    <link href="https://garywu520.github.io/blog/2019/03/13/Mars-Hadoop-Sqoop-Job/"/>
-    <id>https://garywu520.github.io/blog/2019/03/13/Mars-Hadoop-Sqoop-Job/</id>
-    <published>2019-03-13T08:26:53.000Z</published>
-    <updated>2019-03-13T09:23:09.350Z</updated>
-    
-    <content type="html"><![CDATA[<h5 id="Sqoop-Job介绍"><a href="#Sqoop-Job介绍" class="headerlink" title="Sqoop Job介绍"></a>Sqoop Job介绍</h5><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">作用：记录Sqoop命令的配置信息，包括关系型数据库连接地址、用户名、密码、数据库和表等等信息。</span><br><span class="line"></span><br><span class="line">Job：存储在User私有目录<span class="comment">(即linux用户的家目录)</span>$HOME/.sqoop/下，可将此配置为共享的metastore中<span class="comment">(供集群中多用户使用)</span></span><br><span class="line"></span><br><span class="line">应用场景：多次执行同一个导入导出命令<span class="comment">(尤其是增量导入时)</span></span><br></pre></td></tr></table></figure><h5 id="Sqoop-Job帮助"><a href="#Sqoop-Job帮助" class="headerlink" title="Sqoop Job帮助"></a>Sqoop Job帮助</h5><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sqoop job </span><br><span class="line">         -<span class="ruby">-create &lt;job-id&gt;   <span class="comment">#创建作业(ID或名称)</span></span></span><br><span class="line"><span class="ruby">         --delete &lt;job-id&gt;   <span class="comment">#删除作业(ID或名称)</span></span></span><br><span class="line"><span class="ruby">         --exec &lt;job-id&gt;     <span class="comment">#执行作业</span></span></span><br><span class="line"><span class="ruby">         --list              <span class="comment">#列出当前已创建的作业</span></span></span><br><span class="line"><span class="ruby">         --meta-connect &lt;jdbc-uri&gt;   <span class="comment">#指定共享metastore</span></span></span><br><span class="line"><span class="ruby">         --help</span></span><br></pre></td></tr></table></figure><a id="more"></a><p>示例</p><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">增量导入</span><br><span class="line">sqoop import <span class="params">--connect</span> jdbc<span class="function">:mysql</span>:<span class="string">//10.0.10.100</span><span class="function">:3306</span>/bigdata <span class="params">--username</span> root -P <span class="params">--table</span> bigdata  <span class="params">--target-dir</span> <span class="string">/sqoopim</span> <span class="params">--check-column</span> class_id <span class="params">--incremental</span> append <span class="params">--last-value</span> 18 -m 1</span><br></pre></td></tr></table></figure><figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">19</span>/<span class="number">03</span>/<span class="number">12</span> <span class="number">16</span>:<span class="number">33</span>:<span class="number">50</span> INFO tool.ImportTool:  --inc<span class="comment">remental append</span></span><br><span class="line"><span class="number">19</span>/<span class="number">03</span>/<span class="number">12</span> <span class="number">16</span>:<span class="number">33</span>:<span class="number">50</span> INFO tool.ImportTool:   --check-column class_id</span><br><span class="line"><span class="number">19</span>/<span class="number">03</span>/<span class="number">12</span> <span class="number">16</span>:<span class="number">33</span>:<span class="number">50</span> INFO tool.ImportTool:   --last-value <span class="number">22</span></span><br><span class="line"><span class="number">19</span>/<span class="number">03</span>/<span class="number">12</span> <span class="number">16</span>:<span class="number">33</span>:<span class="number">50</span> INFO tool.ImportTool: (Consider saving this with <span class="comment">'sqoop job --create')</span></span><br></pre></td></tr></table></figure><h5 id="创建job"><a href="#创建job" class="headerlink" title="创建job"></a>创建job</h5><figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">格式：</span></span><br><span class="line"><span class="comment">sqoop</span> <span class="comment">job</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">create</span> <span class="comment">job1</span> <span class="literal">-</span><span class="literal">-</span> <span class="title">[</span><span class="comment">sqoop</span> <span class="comment">common</span><span class="title">]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">sqoop</span> <span class="comment">job</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">create</span> <span class="comment">job1</span> <span class="literal">-</span><span class="literal">-</span> <span class="comment">import</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">connect</span> <span class="comment">jdbc:mysql://10</span><span class="string">.</span><span class="comment">0</span><span class="string">.</span><span class="comment">10</span><span class="string">.</span><span class="comment">100:3306/bigdata</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">username</span> <span class="comment">root</span> <span class="literal">-</span><span class="comment">P</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">table</span> <span class="comment">bigdata</span>  <span class="literal">-</span><span class="literal">-</span><span class="comment">target</span><span class="literal">-</span><span class="comment">dir</span> <span class="comment">/sqoopim</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">check</span><span class="literal">-</span><span class="comment">column</span> <span class="comment">class_id</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">incremental</span> <span class="comment">append</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">last</span><span class="literal">-</span><span class="comment">value</span> <span class="comment">22</span> <span class="literal">-</span><span class="comment">m</span> <span class="comment">1</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">注意：创建job时，如果有</span><span class="literal">-</span><span class="literal">-</span><span class="comment">last</span><span class="literal">-</span><span class="comment">value参数，需要将此参数的值更新;而执行job的过程中，job会自动更新此信息</span></span><br></pre></td></tr></table></figure><h5 id="查看job"><a href="#查看job" class="headerlink" title="查看job"></a>查看job</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">查看已有列表</span><br><span class="line"><span class="comment"># sqoop job --list</span></span><br><span class="line">   Available <span class="built_in">jobs</span>:</span><br><span class="line">      job1</span><br></pre></td></tr></table></figure><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">查看具体<span class="keyword">job内容</span></span><br><span class="line"><span class="keyword">sqoop </span><span class="keyword">job </span>--<span class="keyword">show </span><span class="keyword">job1</span></span><br></pre></td></tr></table></figure><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Job: job1</span><br><span class="line">Tool: import</span><br><span class="line">Options:</span><br><span class="line">----------------------------</span><br><span class="line">verbose = false</span><br><span class="line">hcatalog<span class="selector-class">.drop</span><span class="selector-class">.and</span><span class="selector-class">.create</span><span class="selector-class">.table</span> = false</span><br><span class="line">incremental<span class="selector-class">.last</span><span class="selector-class">.value</span> = <span class="number">22</span></span><br><span class="line">db<span class="selector-class">.connect</span><span class="selector-class">.string</span> = jdbc:mysql:<span class="comment">//10.0.10.100:3306/bigdata</span></span><br><span class="line">......</span><br><span class="line">......</span><br><span class="line">hdfs<span class="selector-class">.target</span><span class="selector-class">.dir</span> = /sqoopim</span><br><span class="line">hive<span class="selector-class">.fail</span><span class="selector-class">.table</span><span class="selector-class">.exists</span> = false</span><br><span class="line">db<span class="selector-class">.batch</span> = false</span><br></pre></td></tr></table></figure><h5 id="执行job任务"><a href="#执行job任务" class="headerlink" title="执行job任务"></a>执行job任务</h5><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqoop job <span class="comment">--exec job1</span></span><br></pre></td></tr></table></figure><h5 id="错误解决"><a href="#错误解决" class="headerlink" title="错误解决"></a>错误解决</h5><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">报错：</span><br><span class="line">Exception <span class="keyword">in</span> thread <span class="string">"main"</span> java<span class="selector-class">.lang</span><span class="selector-class">.NoClassDefFoundError</span>: org/json/JSONObject</span><br><span class="line">at org<span class="selector-class">.apache</span><span class="selector-class">.sqoop</span><span class="selector-class">.util</span><span class="selector-class">.SqoopJsonUtil</span><span class="selector-class">.getJsonStringforMap</span>(SqoopJsonUtil<span class="selector-class">.java</span>:<span class="number">43</span>)</span><br><span class="line">at org<span class="selector-class">.apache</span><span class="selector-class">.sqoop</span><span class="selector-class">.SqoopOptions</span><span class="selector-class">.writeProperties</span>(SqoopOptions<span class="selector-class">.java</span>:<span class="number">785</span>)</span><br><span class="line">at org<span class="selector-class">.apache</span><span class="selector-class">.sqoop</span><span class="selector-class">.metastore</span><span class="selector-class">.hsqldb</span><span class="selector-class">.Hsqldbe</span><span class="selector-class">.createInternal</span>(HsqldbJobStorage<span class="selector-class">.java</span>:<span class="number">399</span>)</span><br></pre></td></tr></table></figure><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">原因是<span class="selector-tag">sqoop</span>缺少<span class="selector-tag">java-json</span><span class="selector-class">.jar</span>包</span><br></pre></td></tr></table></figure><p>下载：<a href="http://www.java2s.com/Code/Jar/j/Downloadjavajsonjar.htm" target="_blank" rel="noopener">java-json.jar</a></p><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">解决方法：</span><br><span class="line">把java-json.jar添加到../sqoop/<span class="class"><span class="keyword">lib</span>目录：<span class="title">cp</span> <span class="title">java</span>-<span class="title">json</span>.<span class="title">jar</span>  ../<span class="title">sqoop</span>/<span class="title">lib</span></span></span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h5 id=&quot;Sqoop-Job介绍&quot;&gt;&lt;a href=&quot;#Sqoop-Job介绍&quot; class=&quot;headerlink&quot; title=&quot;Sqoop Job介绍&quot;&gt;&lt;/a&gt;Sqoop Job介绍&lt;/h5&gt;&lt;figure class=&quot;highlight gcode&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;作用：记录Sqoop命令的配置信息，包括关系型数据库连接地址、用户名、密码、数据库和表等等信息。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Job：存储在User私有目录&lt;span class=&quot;comment&quot;&gt;(即linux用户的家目录)&lt;/span&gt;$HOME/.sqoop/下，可将此配置为共享的metastore中&lt;span class=&quot;comment&quot;&gt;(供集群中多用户使用)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;应用场景：多次执行同一个导入导出命令&lt;span class=&quot;comment&quot;&gt;(尤其是增量导入时)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;h5 id=&quot;Sqoop-Job帮助&quot;&gt;&lt;a href=&quot;#Sqoop-Job帮助&quot; class=&quot;headerlink&quot; title=&quot;Sqoop Job帮助&quot;&gt;&lt;/a&gt;Sqoop Job帮助&lt;/h5&gt;&lt;figure class=&quot;highlight haml&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;sqoop job &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;         -&lt;span class=&quot;ruby&quot;&gt;-create &amp;lt;job-id&amp;gt;   &lt;span class=&quot;comment&quot;&gt;#创建作业(ID或名称)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;ruby&quot;&gt;         --delete &amp;lt;job-id&amp;gt;   &lt;span class=&quot;comment&quot;&gt;#删除作业(ID或名称)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;ruby&quot;&gt;         --exec &amp;lt;job-id&amp;gt;     &lt;span class=&quot;comment&quot;&gt;#执行作业&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;ruby&quot;&gt;         --list              &lt;span class=&quot;comment&quot;&gt;#列出当前已创建的作业&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;ruby&quot;&gt;         --meta-connect &amp;lt;jdbc-uri&amp;gt;   &lt;span class=&quot;comment&quot;&gt;#指定共享metastore&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;ruby&quot;&gt;         --help&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-    
-      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
-    
-      <category term="大数据" scheme="https://garywu520.github.io/blog/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-    
-      <category term="hdfs" scheme="https://garywu520.github.io/blog/tags/hdfs/"/>
-    
-      <category term="Sqoop" scheme="https://garywu520.github.io/blog/tags/Sqoop/"/>
-    
-      <category term="hadoop Job" scheme="https://garywu520.github.io/blog/tags/hadoop-Job/"/>
     
   </entry>
   
