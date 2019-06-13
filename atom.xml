@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://garywu520.github.io/blog/"/>
-  <updated>2019-06-12T10:03:42.108Z</updated>
+  <updated>2019-06-13T04:16:27.539Z</updated>
   <id>https://garywu520.github.io/blog/</id>
   
   <author>
@@ -15,6 +15,38 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ESXI vm灾难恢复</title>
+    <link href="https://garywu520.github.io/blog/2019/06/13/ESXI-vm%E7%81%BE%E9%9A%BE%E6%81%A2%E5%A4%8D/"/>
+    <id>https://garywu520.github.io/blog/2019/06/13/ESXI-vm灾难恢复/</id>
+    <published>2019-06-13T04:13:14.000Z</published>
+    <updated>2019-06-13T04:16:27.539Z</updated>
+    
+    <content type="html"><![CDATA[<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">本案例适用于 ESXI中正在运行的VM文件误删除，当重启<span class="keyword">vm</span>后提示文件丢失，其他情况仅供参考</span><br></pre></td></tr></table></figure><h5 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h5><p>(1) 在原vm上添加一块和原硬盘大小一致的虚拟硬盘AA [也就是说新AA的vmdk文件需要在原目录]</p><p>(2)开启SSH服务，并ssh登陆到ESXI</p><p>(3)找到并cd到原vm目录</p><a id="more"></a><p>(4)用vi命令打开这个AA.vmdk文件</p><ul><li>将文件中的虚拟快照[参数:RW 104857600 VMFS “AA-flat.vmdk”] 修改为目录中仅存的xx-flat.vmdk</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[root@bogon:/vmfs/volumes/5720f606-0b9b3145-22ef-0024e85ee7c5/test-01] cat test-01_2.vmdk </span><br><span class="line"><span class="meta">#</span><span class="bash"> Disk DescriptorFile</span></span><br><span class="line">version=1</span><br><span class="line">encoding="UTF-8"</span><br><span class="line">CID=fffffffe</span><br><span class="line">parentCID=ffffffff</span><br><span class="line">isNativeSnapshot="no"</span><br><span class="line">createType="vmfs"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Extent description</span></span><br><span class="line">RW 104857600 VMFS "test-01-flat.vmdk"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> The Disk Data Base </span></span><br><span class="line"><span class="meta">#</span><span class="bash">DDB</span></span><br><span class="line"></span><br><span class="line">ddb.adapterType = "lsilogic"</span><br><span class="line">ddb.geometry.cylinders = "6527"</span><br><span class="line">ddb.geometry.heads = "255"</span><br><span class="line">ddb.geometry.sectors = "63"</span><br><span class="line">ddb.longContentID = "9b6db9e43aec61e0ad783c0cfffffffe"</span><br><span class="line">ddb.uuid = "60 00 C2 9c c0 66 6b 4b-77 46 09 2c b9 89 67 bd"</span><br><span class="line">ddb.virtualHWVersion = "11"</span><br></pre></td></tr></table></figure><ul><li>同时将此文件名AA.vmdk修改为xx.vmdk</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv test-01_2.vmdk test-01.vmdk</span><br></pre></td></tr></table></figure><p>(5) VM中移除新增的磁盘AA</p><p>这时候就可以正常重启VM了</p><p>注：如果ESXI界面出现启动vm出现错误，就需要重新登录ESXI界面后再操作。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;figure class=&quot;highlight vim&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;本案例适用于 ESXI中正在运行的VM文件误删除，当重启&lt;span class=&quot;keyword&quot;&gt;vm&lt;/span&gt;后提示文件丢失，其他情况仅供参考&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;h5 id=&quot;操作步骤&quot;&gt;&lt;a href=&quot;#操作步骤&quot; class=&quot;headerlink&quot; title=&quot;操作步骤&quot;&gt;&lt;/a&gt;操作步骤&lt;/h5&gt;&lt;p&gt;(1) 在原vm上添加一块和原硬盘大小一致的虚拟硬盘AA [也就是说新AA的vmdk文件需要在原目录]&lt;/p&gt;
+&lt;p&gt;(2)开启SSH服务，并ssh登陆到ESXI&lt;/p&gt;
+&lt;p&gt;(3)找到并cd到原vm目录&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="ESXI" scheme="https://garywu520.github.io/blog/tags/ESXI/"/>
+    
+      <category term="VM" scheme="https://garywu520.github.io/blog/tags/VM/"/>
+    
+      <category term="虚拟机" scheme="https://garywu520.github.io/blog/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
+    
+      <category term="虚拟化" scheme="https://garywu520.github.io/blog/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/"/>
+    
+  </entry>
   
   <entry>
     <title>ES关闭分片自动迁移功能</title>
@@ -502,9 +534,9 @@
     
       <category term="CDH" scheme="https://garywu520.github.io/blog/tags/CDH/"/>
     
-      <category term="hadoop" scheme="https://garywu520.github.io/blog/tags/hadoop/"/>
-    
       <category term="大数据" scheme="https://garywu520.github.io/blog/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+      <category term="hadoop" scheme="https://garywu520.github.io/blog/tags/hadoop/"/>
     
       <category term="HDFS" scheme="https://garywu520.github.io/blog/tags/HDFS/"/>
     
@@ -587,9 +619,9 @@
     
       <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
     
-      <category term="hadoop" scheme="https://garywu520.github.io/blog/tags/hadoop/"/>
-    
       <category term="大数据" scheme="https://garywu520.github.io/blog/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+      <category term="hadoop" scheme="https://garywu520.github.io/blog/tags/hadoop/"/>
     
       <category term="hdfs" scheme="https://garywu520.github.io/blog/tags/hdfs/"/>
     
@@ -665,45 +697,6 @@
       <category term="精简置备" scheme="https://garywu520.github.io/blog/tags/%E7%B2%BE%E7%AE%80%E7%BD%AE%E5%A4%87/"/>
     
       <category term="厚置备" scheme="https://garywu520.github.io/blog/tags/%E5%8E%9A%E7%BD%AE%E5%A4%87/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ESXI虚拟机磁盘置备</title>
-    <link href="https://garywu520.github.io/blog/2019/03/20/ESXI%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%A3%81%E7%9B%98%E7%BD%AE%E5%A4%87/"/>
-    <id>https://garywu520.github.io/blog/2019/03/20/ESXI虚拟机磁盘置备/</id>
-    <published>2019-03-20T06:35:17.000Z</published>
-    <updated>2019-03-20T06:59:54.707Z</updated>
-    
-    <content type="html"><![CDATA[<h5 id="虚拟磁盘置备策略分类"><a href="#虚拟磁盘置备策略分类" class="headerlink" title="虚拟磁盘置备策略分类"></a>虚拟磁盘置备策略分类</h5><ul><li>精简置备</li><li>厚置备置零</li><li>厚置备延迟置零</li></ul><h5 id="怎么理解？举个例子"><a href="#怎么理解？举个例子" class="headerlink" title="怎么理解？举个例子"></a>怎么理解？举个例子</h5><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">比如：在酒店办酒席~ ~ ~</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 精简置备</span></span><br><span class="line">   来了多少客人就开多少桌酒席，每次来了新客人就需要重新划分空间，摆桌子摆椅子什么的。</span><br><span class="line"><span class="comment">-- 厚置备置零</span></span><br><span class="line">   腾出一层楼面，桌子椅子全部摆好，客人来了可以直接就座。</span><br><span class="line"><span class="comment">-- 厚置备延迟置零</span></span><br><span class="line">   先腾出一层楼面来摆酒席，等客人来的时候再摆桌子摆椅子。</span><br></pre></td></tr></table></figure><p>这个例子参考自：<a href="https://www.zhihu.com/people/xi-gua-61-35/activities" target="_blank" rel="noopener">知乎-西瓜</a></p><a id="more"></a><p><img src="https://raw.githubusercontent.com/wuyanteng/wuyanteng.github.io/master/images/esxi_disk_zhibei.png" alt="esxi_disk_zhibei"></p><h5 id="官方解释"><a href="#官方解释" class="headerlink" title="官方解释"></a>官方解释</h5><ul><li><p>精简置备</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使用此格式可节省存储空间。对于精简磁盘，可以根据输入的虚拟磁盘大小值置备磁盘所需的数据存储空间。但是，精简磁盘开始时很小，只使用与初始操作所需的大小完全相同的存储空间。如果精简磁盘以后需要更多空间，它可以增长到其最大容量，并占据为其置备的整个数据存储空间。</span><br></pre></td></tr></table></figure></li><li><p>厚置备置零</p><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">一种厚虚拟磁盘类型，创建虚拟磁盘时，会立即将物理设备上保留的数据置零<span class="comment">(即清空)</span>。创建这种格式的虚拟磁盘所需的时间可能会比创建其他类型的磁盘所用时间长。</span><br></pre></td></tr></table></figure></li><li><p>厚置备延迟置零</p><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">以默认的厚格式创建虚拟磁盘。在创建虚拟磁盘时分配该磁盘所需的空间。创建过程中不会立即清除物理设备上保留的数据，但以后首次从虚拟机写入时则会按需置零<span class="comment">(即按需清空)</span>。</span><br></pre></td></tr></table></figure></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h5 id=&quot;虚拟磁盘置备策略分类&quot;&gt;&lt;a href=&quot;#虚拟磁盘置备策略分类&quot; class=&quot;headerlink&quot; title=&quot;虚拟磁盘置备策略分类&quot;&gt;&lt;/a&gt;虚拟磁盘置备策略分类&lt;/h5&gt;&lt;ul&gt;
-&lt;li&gt;精简置备&lt;/li&gt;
-&lt;li&gt;厚置备置零&lt;/li&gt;
-&lt;li&gt;厚置备延迟置零&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h5 id=&quot;怎么理解？举个例子&quot;&gt;&lt;a href=&quot;#怎么理解？举个例子&quot; class=&quot;headerlink&quot; title=&quot;怎么理解？举个例子&quot;&gt;&lt;/a&gt;怎么理解？举个例子&lt;/h5&gt;&lt;figure class=&quot;highlight ada&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;比如：在酒店办酒席~ ~ ~&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;-- 精简置备&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   来了多少客人就开多少桌酒席，每次来了新客人就需要重新划分空间，摆桌子摆椅子什么的。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;-- 厚置备置零&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   腾出一层楼面，桌子椅子全部摆好，客人来了可以直接就座。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;-- 厚置备延迟置零&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   先腾出一层楼面来摆酒席，等客人来的时候再摆桌子摆椅子。&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;p&gt;这个例子参考自：&lt;a href=&quot;https://www.zhihu.com/people/xi-gua-61-35/activities&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;知乎-西瓜&lt;/a&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
-    
-      <category term="ESXI" scheme="https://garywu520.github.io/blog/tags/ESXI/"/>
-    
-      <category term="vm" scheme="https://garywu520.github.io/blog/tags/vm/"/>
-    
-      <category term="精简置备" scheme="https://garywu520.github.io/blog/tags/%E7%B2%BE%E7%AE%80%E7%BD%AE%E5%A4%87/"/>
-    
-      <category term="厚置备" scheme="https://garywu520.github.io/blog/tags/%E5%8E%9A%E7%BD%AE%E5%A4%87/"/>
-    
-      <category term="磁盘置备" scheme="https://garywu520.github.io/blog/tags/%E7%A3%81%E7%9B%98%E7%BD%AE%E5%A4%87/"/>
-    
-      <category term="disk" scheme="https://garywu520.github.io/blog/tags/disk/"/>
     
   </entry>
   
