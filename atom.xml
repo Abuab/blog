@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://garywu520.github.io/blog/"/>
-  <updated>2019-06-26T10:26:54.829Z</updated>
+  <updated>2019-06-28T07:10:23.648Z</updated>
   <id>https://garywu520.github.io/blog/</id>
   
   <author>
@@ -15,6 +15,39 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>logstash错误解决-a plugin had an unrecoverable error</title>
+    <link href="https://garywu520.github.io/blog/2019/06/28/logstash%E9%94%99%E8%AF%AF%E8%A7%A3%E5%86%B3-a-plugin-had-an-unrecoverable-error/"/>
+    <id>https://garywu520.github.io/blog/2019/06/28/logstash错误解决-a-plugin-had-an-unrecoverable-error/</id>
+    <published>2019-06-28T06:34:01.000Z</published>
+    <updated>2019-06-28T07:10:23.648Z</updated>
+    
+    <content type="html"><![CDATA[<p>这几天线上的logstash进程运行过程中，自动异常退出，log无任何输出。前台启动logstash，经过跟踪，错误提示如下：</p><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">A plugin had an unrecoverable error. Will restart this plugin.</span><br><span class="line">    Plugin &lt;LogStash::Inputs::File path=&gt;[<span class="string">"/xx/xx/xx/xx/*"</span>, <span class="string">"/xx/xx/xx/xx/*"</span>], snicedb_path=&gt;<span class="string">"/xx/xx/xx/xx/xx.db"</span> ,codec=&gt;&lt;LogStash::Codecs::Plain charset=&gt;<span class="string">"UTF-8"</span>&gt;, stat_interval=&gt;<span class="number">1</span>, discover_interval=&gt;<span class="number">15</span>, sincedb_write_interval=&gt;<span class="number">15</span>, start_position=&gt;<span class="string">"end"</span>, delimiter=&gt;<span class="string">"\n"</span>&gt;</span><br><span class="line">    <span class="symbol">Error:</span> Unknown error - 没有那个文件或目录 &#123;<span class="symbol">:level=&gt;</span><span class="symbol">:error</span>&#125;</span><br></pre></td></tr></table></figure><a id="more"></a><p><strong>排查思路：</strong></p><p><strong>(1) logstash配置文件Input源数据</strong></p><p>​      验证input数据源的路径是否正确 <strong>[未解决问题]</strong></p><p><strong>(2) 验证logstash conf配置文件的语法</strong></p><p>​      由于logstash配置文件语法使用的是YAML格式，故需要一部分一部分的逐一验证来排除格式错误 <strong>[未解决问题]</strong></p><p>​      <a href="https://qii404.me/tools/yaml-parse" target="_blank" rel="noopener">YAML在线解析</a></p><p><strong>(3) 升级插件</strong></p><p>​      以上错误信息中，可以看出Logstash所使用的Plugin是 logstash-input-file ，故可以考虑升级插件。</p><ul><li><p><strong>更换官方Ruby Gem源</strong></p><p>head logstash/Gemfile</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">source "https://gems.ruby-china.com/"   #修改为https://gems.ruby-china.com/</span><br><span class="line">gem "logstash-core", "2.1.0"</span><br><span class="line">gem "file-dependencies", "0.1.6"</span><br><span class="line">gem "ci_reporter_rspec", "1.0.0", :group =&gt; :development</span><br><span class="line">gem "simplecov", :group =&gt; :development</span><br><span class="line">gem "coveralls", :group =&gt; :development</span><br><span class="line">gem "tins", "1.6", :group =&gt; :development</span><br></pre></td></tr></table></figure></li><li><p><strong>查看已安装的插件</strong></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">查看已安装的插件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> bin/plugin list</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">升级插件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> bin/plugin update logstash-input-file</span></span><br></pre></td></tr></table></figure></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这几天线上的logstash进程运行过程中，自动异常退出，log无任何输出。前台启动logstash，经过跟踪，错误提示如下：&lt;/p&gt;
+&lt;figure class=&quot;highlight ruby&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;A plugin had an unrecoverable error. Will restart this plugin.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    Plugin &amp;lt;LogStash::Inputs::File path=&amp;gt;[&lt;span class=&quot;string&quot;&gt;&quot;/xx/xx/xx/xx/*&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;/xx/xx/xx/xx/*&quot;&lt;/span&gt;], snicedb_path=&amp;gt;&lt;span class=&quot;string&quot;&gt;&quot;/xx/xx/xx/xx/xx.db&quot;&lt;/span&gt; ,codec=&amp;gt;&amp;lt;LogStash::Codecs::Plain charset=&amp;gt;&lt;span class=&quot;string&quot;&gt;&quot;UTF-8&quot;&lt;/span&gt;&amp;gt;, stat_interval=&amp;gt;&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;, discover_interval=&amp;gt;&lt;span class=&quot;number&quot;&gt;15&lt;/span&gt;, sincedb_write_interval=&amp;gt;&lt;span class=&quot;number&quot;&gt;15&lt;/span&gt;, start_position=&amp;gt;&lt;span class=&quot;string&quot;&gt;&quot;end&quot;&lt;/span&gt;, delimiter=&amp;gt;&lt;span class=&quot;string&quot;&gt;&quot;\n&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;symbol&quot;&gt;Error:&lt;/span&gt; Unknown error - 没有那个文件或目录 &amp;#123;&lt;span class=&quot;symbol&quot;&gt;:level=&amp;gt;&lt;/span&gt;&lt;span class=&quot;symbol&quot;&gt;:error&lt;/span&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="ELK" scheme="https://garywu520.github.io/blog/tags/ELK/"/>
+    
+      <category term="logstash" scheme="https://garywu520.github.io/blog/tags/logstash/"/>
+    
+      <category term="Plugin" scheme="https://garywu520.github.io/blog/tags/Plugin/"/>
+    
+      <category term="YAML" scheme="https://garywu520.github.io/blog/tags/YAML/"/>
+    
+      <category term="Ruby" scheme="https://garywu520.github.io/blog/tags/Ruby/"/>
+    
+      <category term="Gem镜像" scheme="https://garywu520.github.io/blog/tags/Gem%E9%95%9C%E5%83%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>rootkit入侵渗透防御</title>
@@ -621,46 +654,6 @@
       <category term="binlog2sql" scheme="https://garywu520.github.io/blog/tags/binlog2sql/"/>
     
       <category term="python" scheme="https://garywu520.github.io/blog/tags/python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>HDFS的Block数据balancer重新分布</title>
-    <link href="https://garywu520.github.io/blog/2019/04/01/HDFS%E7%9A%84Block%E6%95%B0%E6%8D%AEbalancer%E9%87%8D%E6%96%B0%E5%88%86%E5%B8%83/"/>
-    <id>https://garywu520.github.io/blog/2019/04/01/HDFS的Block数据balancer重新分布/</id>
-    <published>2019-04-01T02:58:45.000Z</published>
-    <updated>2019-04-01T03:13:50.104Z</updated>
-    
-    <content type="html"><![CDATA[<p>HDFS balancer重新平衡，即实现HDFS Block数据物理存储重新分布，可以有效解决物理磁盘空间占用高的问题。</p><p>在CDH HDFS集群中，务必至少有1个节点为balancer节点，否则CM平台将无“重新平衡”选项。如果集群中无balancer节点，则需要新增balancer角色。另外，balancer节点应运行在非namenode节点上</p><p>CM平台的“重新平衡” 实际上调用的是hadoop重平衡命令，即：hadoop balancer -threshold 5</p><p>参数注释：其中-threshold参数是用来判断数据平衡的依据，值范围为0-100。默认值为10，表示HDFS达到平衡状态的磁盘使用率偏差值为10%，如果机器与机器之间磁盘使用率偏差小于10%，那么我们就认为HDFS集群已经达到了平衡的状态。</p><p>注：Balancer阈值越高，需要平衡的量越少，DN占用率不够均衡；阈值越低，需要平衡的量越大， DN占有率越均衡；</p><a id="more"></a><h5 id="CM平台中重新平衡阈值设定"><a href="#CM平台中重新平衡阈值设定" class="headerlink" title="CM平台中重新平衡阈值设定"></a>CM平台中重新平衡阈值设定</h5><p><img src="https://raw.githubusercontent.com/wuyanteng/wuyanteng.github.io/master/images/cm%20hdfs%E9%87%8D%E6%96%B0%E5%B9%B3%E8%A1%A1.png" alt="cm重平衡"></p><p>判断集群是否平衡的目标参数，每一个 Datanode 存储使用率和集群总存储使用率的差值都应该小于这个阀值，理论上，该参数设置的越小，整个集群就越平衡，但是在线上环境中，Hadoop集群在进行balance时，还在并发的进行数据的写入和删除，所以有可能无法到达设定的平衡参数值。</p><h5 id="balancer命令帮助"><a href="#balancer命令帮助" class="headerlink" title="balancer命令帮助"></a>balancer命令帮助</h5><p>查看帮助：hadoop balancer -help</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop ~]# hadoop balancer -help</span><br><span class="line">DEPRECATED: Use of this script to execute hdfs command is deprecated.</span><br><span class="line">Instead use the hdfs command for it.</span><br><span class="line"></span><br><span class="line">Usage: java Balancer</span><br><span class="line">[-policy &lt;policy&gt;] the balancing policy: datanode or blockpool</span><br><span class="line">[-threshold &lt;threshold&gt;] Percentage of disk capacity</span><br><span class="line">[-exclude [-f &lt;hosts-file&gt; | comma-sperated list of hosts]] Excludes the specified datanodes.</span><br><span class="line">[-include [-f &lt;hosts-file&gt; | comma-sperated list of hosts]] Includes only the specified datanodes.</span><br><span class="line"></span><br><span class="line">Generic options supported are</span><br><span class="line">-conf &lt;configuration file&gt; specify an application configuration file</span><br><span class="line">-D &lt;property=value&gt; use value for given property</span><br><span class="line">-fs &lt;local|namenode:port&gt; specify a namenode</span><br><span class="line">-jt &lt;local|resourcemanager:port&gt; specify a ResourceManager</span><br><span class="line">-files &lt;comma separated list of files&gt; specify comma separated files to be copied to the map reduce cluster</span><br><span class="line">-libjars &lt;comma separated list of jars&gt; specify comma separated jar files to include in the classpath.</span><br><span class="line">-archives &lt;comma separated list of archives&gt; specify comma separated archives to be unarchived on the compute machines.</span><br><span class="line"></span><br><span class="line">The general command line syntax is</span><br><span class="line">bin/hadoop command [genericOptions] [commandOptions]</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;HDFS balancer重新平衡，即实现HDFS Block数据物理存储重新分布，可以有效解决物理磁盘空间占用高的问题。&lt;/p&gt;
-&lt;p&gt;在CDH HDFS集群中，务必至少有1个节点为balancer节点，否则CM平台将无“重新平衡”选项。如果集群中无balancer节点，则需要新增balancer角色。另外，balancer节点应运行在非namenode节点上&lt;/p&gt;
-&lt;p&gt;CM平台的“重新平衡” 实际上调用的是hadoop重平衡命令，即：hadoop balancer -threshold 5&lt;/p&gt;
-&lt;p&gt;参数注释：其中-threshold参数是用来判断数据平衡的依据，值范围为0-100。默认值为10，表示HDFS达到平衡状态的磁盘使用率偏差值为10%，如果机器与机器之间磁盘使用率偏差小于10%，那么我们就认为HDFS集群已经达到了平衡的状态。&lt;/p&gt;
-&lt;p&gt;注：Balancer阈值越高，需要平衡的量越少，DN占用率不够均衡；阈值越低，需要平衡的量越大， DN占有率越均衡；&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
-    
-      <category term="CDH" scheme="https://garywu520.github.io/blog/tags/CDH/"/>
-    
-      <category term="大数据" scheme="https://garywu520.github.io/blog/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-    
-      <category term="hadoop" scheme="https://garywu520.github.io/blog/tags/hadoop/"/>
-    
-      <category term="HDFS" scheme="https://garywu520.github.io/blog/tags/HDFS/"/>
-    
-      <category term="CM" scheme="https://garywu520.github.io/blog/tags/CM/"/>
-    
-      <category term="balancer" scheme="https://garywu520.github.io/blog/tags/balancer/"/>
-    
-      <category term="重新平衡" scheme="https://garywu520.github.io/blog/tags/%E9%87%8D%E6%96%B0%E5%B9%B3%E8%A1%A1/"/>
-    
-      <category term="重新分布" scheme="https://garywu520.github.io/blog/tags/%E9%87%8D%E6%96%B0%E5%88%86%E5%B8%83/"/>
     
   </entry>
   
