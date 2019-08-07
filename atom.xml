@@ -1,0 +1,644 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Gary Wu</title>
+  
+  <subtitle>运维架构师 - 从入门到放弃</subtitle>
+  <link href="/blog/atom.xml" rel="self"/>
+  
+  <link href="https://garywu520.github.io/blog/"/>
+  <updated>2019-08-07T06:31:46.921Z</updated>
+  <id>https://garywu520.github.io/blog/</id>
+  
+  <author>
+    <name>Gary Wu</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Tomcat多实例部署</title>
+    <link href="https://garywu520.github.io/blog/2019/08/07/Tomcat%E5%A4%9A%E5%AE%9E%E4%BE%8B%E9%83%A8%E7%BD%B2/"/>
+    <id>https://garywu520.github.io/blog/2019/08/07/Tomcat多实例部署/</id>
+    <published>2019-08-07T06:09:32.000Z</published>
+    <updated>2019-08-07T06:31:46.921Z</updated>
+    
+    <content type="html"><![CDATA[<h5 id="首先了解下Tomcat服务启动所需端口号"><a href="#首先了解下Tomcat服务启动所需端口号" class="headerlink" title="首先了解下Tomcat服务启动所需端口号"></a>首先了解下Tomcat服务启动所需端口号</h5><ul><li><strong>Server Port：</strong>该端口用于监听关闭tomcat的shutdown命令，默认端口:8005</li><li><strong>Connector Port:</strong>  该端口用于监听HTTP的请求，默认端口：8080</li><li><strong>AJP Port:</strong> 该端口用于监听AJP(Apache JServ Protocal)协议上的请求，通常用于整合HTTP服务器，默认端口: 8009</li><li><strong>Redirect Port:</strong> 重定向端口，出现在Connector配置中。默认端口：8443</li></ul><p>​       作用：当用户用http请求某个资源，而该资源本身又被设置了必须要https方式访问，此时Tomcat会自动重定向到这个redirectPort设置的https端口。</p><a id="more"></a><h5 id="1-Tomcat安装"><a href="#1-Tomcat安装" class="headerlink" title="1. Tomcat安装"></a>1. Tomcat安装</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf apache-tomcat-8.0.27.tar.gz </span><br><span class="line">cp -a apache-tomcat-8.0.27 tomcat8_1</span><br><span class="line">cp -a apache-tomcat-8.0.27 tomcat8_2</span><br></pre></td></tr></table></figure><h5 id="2-分别修改两个Tomcat实例的端口配置"><a href="#2-分别修改两个Tomcat实例的端口配置" class="headerlink" title="2. 分别修改两个Tomcat实例的端口配置"></a>2. 分别修改两个Tomcat实例的端口配置</h5><p>目的是：避免端口冲突。</p><ul><li>第1个实例端口-配置 – tomcat8_1/conf/server.xml<ul><li>Server Port: 8001 </li><li>Connector Port: 8081</li><li>AJP Port: 8011</li><li>Redirect Port: 8443</li></ul></li><li>第2个实例端口-配置 – tomcat8_2/conf/server.xml<ul><li>Server Port: 8002</li><li>Connector Port: 8082</li><li>AJP Port: 8012</li><li>Redirect Port: 9443</li></ul></li></ul><h5 id="3-分别优化Tomcat"><a href="#3-分别优化Tomcat" class="headerlink" title="3.  分别优化Tomcat"></a>3.  分别优化Tomcat</h5><p>​    略</p><h5 id="4-备份实例，便于日后分发"><a href="#4-备份实例，便于日后分发" class="headerlink" title="4. 备份实例，便于日后分发"></a>4. 备份实例，便于日后分发</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar zcf muti_tomcat.tar.gz ./tomcat8_1 ./tomcat8_2</span><br></pre></td></tr></table></figure><h5 id="5-启动多实例"><a href="#5-启动多实例" class="headerlink" title="5. 启动多实例"></a>5. 启动多实例</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/application/tomcat8_1/bin/startup.sh </span><br><span class="line">/application/tomcat8_2/bin/startup.sh</span><br></pre></td></tr></table></figure><h5 id="6-验证"><a href="#6-验证" class="headerlink" title="6. 验证"></a>6. 验证</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看端口和进程</span></span><br><span class="line">[root@zabbix-proxy ~]# netstat -lntup|grep java</span><br><span class="line">tcp6       0      0 127.0.0.1:8081       39534/java          </span><br><span class="line">tcp6       0      0 127.0.0.1:8082       39534/java</span><br><span class="line"></span><br><span class="line">[root@zabbix-proxy ~]# jps -m</span><br></pre></td></tr></table></figure><p>web访问</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http://ip:8081</span><br><span class="line">http://ip:8082</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h5 id=&quot;首先了解下Tomcat服务启动所需端口号&quot;&gt;&lt;a href=&quot;#首先了解下Tomcat服务启动所需端口号&quot; class=&quot;headerlink&quot; title=&quot;首先了解下Tomcat服务启动所需端口号&quot;&gt;&lt;/a&gt;首先了解下Tomcat服务启动所需端口号&lt;/h5&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Server Port：&lt;/strong&gt;该端口用于监听关闭tomcat的shutdown命令，默认端口:8005&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Connector Port:&lt;/strong&gt;  该端口用于监听HTTP的请求，默认端口：8080&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AJP Port:&lt;/strong&gt; 该端口用于监听AJP(Apache JServ Protocal)协议上的请求，通常用于整合HTTP服务器，默认端口: 8009&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Redirect Port:&lt;/strong&gt; 重定向端口，出现在Connector配置中。默认端口：8443&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;​       作用：当用户用http请求某个资源，而该资源本身又被设置了必须要https方式访问，此时Tomcat会自动重定向到这个redirectPort设置的https端口。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="tomcat" scheme="https://garywu520.github.io/blog/tags/tomcat/"/>
+    
+      <category term="tomcat8" scheme="https://garywu520.github.io/blog/tags/tomcat8/"/>
+    
+      <category term="tomcat多实例" scheme="https://garywu520.github.io/blog/tags/tomcat%E5%A4%9A%E5%AE%9E%E4%BE%8B/"/>
+    
+      <category term="jdk" scheme="https://garywu520.github.io/blog/tags/jdk/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Tomcat-将项目打包成war包</title>
+    <link href="https://garywu520.github.io/blog/2019/08/07/Tomcat-%E5%B0%86%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85%E6%88%90war%E5%8C%85/"/>
+    <id>https://garywu520.github.io/blog/2019/08/07/Tomcat-将项目打包成war包/</id>
+    <published>2019-08-07T05:50:49.000Z</published>
+    <updated>2019-08-07T06:05:47.249Z</updated>
+    
+    <content type="html"><![CDATA[<p>要求：提前安装jdk</p><h5 id="1-打包"><a href="#1-打包" class="headerlink" title="1. 打包"></a>1. 打包</h5><p>将当前目录下的所有文件打包成project.war</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jar -cvfM0 project.war ./</span><br></pre></td></tr></table></figure><p>参数说明：</p><ul><li>-c 创建war包</li><li>-v 显示打包过程</li><li>-f  指定JAR文件名</li><li>-M  不产生所有项的清单（MANIFEST〕文件，此参数会忽略 -m 参数</li><li>-0    这个是阿拉伯数字，只打包不压缩的意思</li></ul><h5 id="2-解压"><a href="#2-解压" class="headerlink" title="2. 解压"></a>2. 解压</h5><p>解压到当前目录</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jar -xvf project.war</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;要求：提前安装jdk&lt;/p&gt;
+&lt;h5 id=&quot;1-打包&quot;&gt;&lt;a href=&quot;#1-打包&quot; class=&quot;headerlink&quot; title=&quot;1. 打包&quot;&gt;&lt;/a&gt;1. 打包&lt;/h5&gt;&lt;p&gt;将当前目录下的所有文件打包成project.war&lt;/p&gt;
+&lt;figure clas
+      
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="tomcat" scheme="https://garywu520.github.io/blog/tags/tomcat/"/>
+    
+      <category term="jar" scheme="https://garywu520.github.io/blog/tags/jar/"/>
+    
+      <category term="war" scheme="https://garywu520.github.io/blog/tags/war/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Tomcat访问日志格式化输出</title>
+    <link href="https://garywu520.github.io/blog/2019/08/07/Tomcat%E8%AE%BF%E9%97%AE%E6%97%A5%E5%BF%97%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%87%BA/"/>
+    <id>https://garywu520.github.io/blog/2019/08/07/Tomcat访问日志格式化输出/</id>
+    <published>2019-08-07T03:17:41.000Z</published>
+    <updated>2019-08-07T03:26:36.255Z</updated>
+    
+    <content type="html"><![CDATA[<p>Tomcat catalina.log时间格式看着很不爽，不便于日志收集与分析，现对其进行调整下</p><h5 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h5><p>目前的时间格式如下</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">06-Jul-2019 21:12:27.444 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in 857 ms</span><br></pre></td></tr></table></figure><p>需要修改为</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2019-07-06 21:12:27.444 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in 857 ms</span><br></pre></td></tr></table></figure><a id="more"></a><h5 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h5><p>修改  ${tomcatHome}/conf/logging.properties</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">找到：</span></span><br><span class="line">1catalina.org.apache.juli.AsyncFileHandler.prefix = catalina.</span><br></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">在后边加上下面一行</span></span><br><span class="line">1catalina.org.apache.juli.AsyncFileHandler.formatter = java.util.logging.SimpleFormatter</span><br><span class="line">java.util.logging.SimpleFormatter.format = %1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS.%1$tL [%4$s] [%3$s] %2$s %5$s %6$s%n</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Tomcat catalina.log时间格式看着很不爽，不便于日志收集与分析，现对其进行调整下&lt;/p&gt;
+&lt;h5 id=&quot;需求&quot;&gt;&lt;a href=&quot;#需求&quot; class=&quot;headerlink&quot; title=&quot;需求&quot;&gt;&lt;/a&gt;需求&lt;/h5&gt;&lt;p&gt;目前的时间格式如下&lt;/p&gt;
+&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;06-Jul-2019 21:12:27.444 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in 857 ms&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;需要修改为&lt;/p&gt;
+&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;2019-07-06 21:12:27.444 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in 857 ms&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="tomcat" scheme="https://garywu520.github.io/blog/tags/tomcat/"/>
+    
+      <category term="tomcat8" scheme="https://garywu520.github.io/blog/tags/tomcat8/"/>
+    
+      <category term="catalina" scheme="https://garywu520.github.io/blog/tags/catalina/"/>
+    
+      <category term="日志log" scheme="https://garywu520.github.io/blog/tags/%E6%97%A5%E5%BF%97log/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Tomcat8直接访问与二级目录访问</title>
+    <link href="https://garywu520.github.io/blog/2019/08/07/Tomcat8%E7%9B%B4%E6%8E%A5%E8%AE%BF%E9%97%AE%E4%B8%8E%E4%BA%8C%E7%BA%A7%E7%9B%AE%E5%BD%95%E8%AE%BF%E9%97%AE/"/>
+    <id>https://garywu520.github.io/blog/2019/08/07/Tomcat8直接访问与二级目录访问/</id>
+    <published>2019-08-07T03:06:45.000Z</published>
+    <updated>2019-08-07T03:09:51.855Z</updated>
+    
+    <content type="html"><![CDATA[<h5 id="1-直接访问-工程部署"><a href="#1-直接访问-工程部署" class="headerlink" title="1. 直接访问-工程部署"></a>1. 直接访问-工程部署</h5><p>注：将应用程序部署到Tomcat根目录，【直接】访问方式为：http://[ip]:[port]</p><ul><li>这种方式最简单，直接删除Tomcat//webapps/ROOT下面的所有文件，将研发给的工程放到该目录下。</li><li>Tomcat启动时，默认会读取和加载ROOT目录下面的所有项目。</li></ul><a id="more"></a><p>关于Tomcat 8 tomcat/conf/server.xml，配置如下：</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Host</span> <span class="attr">name</span>=<span class="string">"localhost"</span>  <span class="attr">appBase</span>=<span class="string">"webapps"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">unpackWARs</span>=<span class="string">"true"</span> <span class="attr">autoDeploy</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">Valve</span> <span class="attr">className</span>=<span class="string">"org.apache.catalina.valves.AccessLogValve"</span> <span class="attr">directory</span>=<span class="string">"logs"</span></span></span><br><span class="line"><span class="tag">               <span class="attr">prefix</span>=<span class="string">"localhost_access_log"</span> <span class="attr">suffix</span>=<span class="string">".txt"</span></span></span><br><span class="line"><span class="tag">               <span class="attr">pattern</span>=<span class="string">"%h %l %u %t &amp;quot;%r&amp;quot; %s %b"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">Host</span>&gt;</span></span><br></pre></td></tr></table></figure><p>参数说明：</p><ul><li>name：表示访问本地的localhost地址</li><li>appBase：表示项目指定的父位置</li></ul><h5 id="2-二级目录访问-工程部署"><a href="#2-二级目录访问-工程部署" class="headerlink" title="2. 二级目录访问-工程部署"></a>2. 二级目录访问-工程部署</h5><p>注：二级目录访问，访问方式为：http://[ip]:[port]/[myapp]</p><ul><li>删除Tomcat//webapps/ROOT目录下的所有文件，并在ROOT目录下新建项目名目录[如：myapp]</li></ul><p>这种方式需要修改tomcat/conf/server.xml，重新指定根目录, 改为如下：</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Host</span> <span class="attr">name</span>=<span class="string">"localhost"</span>  <span class="attr">appBase</span>=<span class="string">"webapps"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">unpackWARs</span>=<span class="string">"true"</span> <span class="attr">autoDeploy</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">Valve</span> <span class="attr">className</span>=<span class="string">"org.apache.catalina.valves.AccessLogValve"</span> <span class="attr">directory</span>=<span class="string">"logs"</span></span></span><br><span class="line"><span class="tag">               <span class="attr">prefix</span>=<span class="string">"localhost_access_log"</span> <span class="attr">suffix</span>=<span class="string">".txt"</span></span></span><br><span class="line"><span class="tag">               <span class="attr">pattern</span>=<span class="string">"%h %l %u %t &amp;quot;%r&amp;quot; %s %b"</span> /&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">Context</span> <span class="attr">path</span>=<span class="string">"/myapp"</span> <span class="attr">docBase</span>=<span class="string">"ROOT/myapp"</span> <span class="attr">reloadable</span>=<span class="string">"true"</span> <span class="attr">debug</span>=<span class="string">"0"</span> <span class="attr">crossContext</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Host</span>&gt;</span></span><br></pre></td></tr></table></figure><p>参数说明：</p><ul><li>path: 指定虚拟目录的名称，如：path=”/myapp” 。，如果想只输入ip地址和端口就显示主页，则该键值留为空；</li><li>docBase: 指定web应用的文件路径,可以是绝对路径，也可以是相对于appBase的相对路径。此目录也可以是外部目录。</li></ul><p>​       注：如果Web应用采用开放目录结构，则指定Web应用的根目录；如果Web应用是个war文件，则指定war文件的路径。</p><ul><li>reloadable: 如果这个属性设为true，tomcat服务器在运行状态下会监视在WEB-INF/classes和WEB-INF/lib目录下class文件的改动，如果监测到有class文件被更新的，服务器会自动重新加载Web应用</li><li>crossContext: 配置的不同context共享一个session</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h5 id=&quot;1-直接访问-工程部署&quot;&gt;&lt;a href=&quot;#1-直接访问-工程部署&quot; class=&quot;headerlink&quot; title=&quot;1. 直接访问-工程部署&quot;&gt;&lt;/a&gt;1. 直接访问-工程部署&lt;/h5&gt;&lt;p&gt;注：将应用程序部署到Tomcat根目录，【直接】访问方式为：http://[ip]:[port]&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;这种方式最简单，直接删除Tomcat//webapps/ROOT下面的所有文件，将研发给的工程放到该目录下。&lt;/li&gt;
+&lt;li&gt;Tomcat启动时，默认会读取和加载ROOT目录下面的所有项目。&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="tomcat" scheme="https://garywu520.github.io/blog/tags/tomcat/"/>
+    
+      <category term="java" scheme="https://garywu520.github.io/blog/tags/java/"/>
+    
+      <category term="tomcat8" scheme="https://garywu520.github.io/blog/tags/tomcat8/"/>
+    
+      <category term="war" scheme="https://garywu520.github.io/blog/tags/war/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Tomcat8环境部署</title>
+    <link href="https://garywu520.github.io/blog/2019/08/07/Tomcat8%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/"/>
+    <id>https://garywu520.github.io/blog/2019/08/07/Tomcat8环境部署/</id>
+    <published>2019-08-07T03:05:45.000Z</published>
+    <updated>2019-08-07T05:16:25.870Z</updated>
+    
+    <content type="html"><![CDATA[<h5 id="1-安装jdk"><a href="#1-安装jdk" class="headerlink" title="1. 安装jdk"></a>1. 安装jdk</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">解压到 /usr/local/目录</span><br><span class="line">tar -zxf jdk*.tar.gz -C /usr/local/</span><br><span class="line">ln -sv /usr/local/jdk*  /usr/local/jdk</span><br></pre></td></tr></table></figure><p>配置环境变量-/etc/profile</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/usr/local/jdk</span><br><span class="line">export JRE_HOME=/usr/local/jdk/jre</span><br><span class="line">export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib  </span><br><span class="line">export PATH=$PATH:$JAVA_HOME/bin</span><br></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br><span class="line">java -version</span><br></pre></td></tr></table></figure><a id="more"></a><h5 id="2-安装Tomcat"><a href="#2-安装Tomcat" class="headerlink" title="2. 安装Tomcat"></a>2. 安装Tomcat</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">解压到/usr/local目录</span><br><span class="line">tar -zxf apache-tomcat*.tar.gz -C /usr/local/</span><br><span class="line">ln -sv /usr/local/apache-tomcat* /usr/local/tomcat</span><br></pre></td></tr></table></figure><p>相关命令软连</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ln -sv /usr/local/jdk/bin/jps /usr/sbin/jps</span><br><span class="line">ln -sv /usr/local/jdk/bin/jmap /usr/sbin/jmap</span><br></pre></td></tr></table></figure><h5 id="3-优化Tomcat"><a href="#3-优化Tomcat" class="headerlink" title="3. 优化Tomcat"></a>3. 优化Tomcat</h5><h6 id="1-修改Tomcat端口为80"><a href="#1-修改Tomcat端口为80" class="headerlink" title="(1)修改Tomcat端口为80"></a>(1)修改Tomcat端口为80</h6><p>cat   tomcat/conf/server.xml</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;Connector port="80" protocol="HTTP/1.1" </span><br><span class="line">             connectionTimeout="20000" </span><br><span class="line">             redirectPort="8443"</span><br><span class="line">             compression="on" </span><br><span class="line">             compressionMinSize1="2048" </span><br><span class="line">             noCompressionUserAgents="gozilla, traviata" </span><br><span class="line">             compressableMimeType="text/html,text/xml,text/javascript,text/css,text/plain"/&gt;</span><br></pre></td></tr></table></figure><p>参数说明：</p><ul><li>port：代表Tomcat监听端口，默认8080</li><li>compression 打开压缩功能 </li><li>compressionMinSize 启用压缩的输出内容大小，这里面默认为2KB </li><li>compressableMimeType 压缩类型 </li><li>connectionTimeout 定义建立客户连接超时的时间. 如果为 -1, 表示不限制建立客户连接的时间</li></ul><h6 id="2-内存优化"><a href="#2-内存优化" class="headerlink" title="(2)内存优化"></a>(2)内存优化</h6><p>Tomcat内存优化主要是对tomcat启动参数优化，可以在tomcat的启动脚本catalina.sh中设置 JAVA_OPTS 参数。</p><p>cat   tomcat/bin/catalina.sh  — 大概在250行左右</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">JAVA_OPTS="$JAVA_OPTS $JSSE_OPTS"</span><br><span class="line">改为</span><br><span class="line">JAVA_OPTS="-server -XX:PermSize=512M -XX:MaxPermSize=1024m -Xms2048m -Xmx2048m" </span><br><span class="line"></span><br><span class="line">参数：</span><br><span class="line">-server：表示以服务模式启动，启动速度会稍微慢一点，但性能会高很多。</span><br><span class="line">         不加这个参数，默认是以客户端模式启动。</span><br></pre></td></tr></table></figure><h5 id="4-Tomcat日志文件"><a href="#4-Tomcat日志文件" class="headerlink" title="4. Tomcat日志文件"></a>4. Tomcat日志文件</h5><p>cd /application/tomcat/logs</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ls -lh catalina.out</span><br><span class="line"><span class="meta">#</span><span class="bash">tomcat实时日志,启动信息/报错信息均会在此文件体现</span></span><br></pre></td></tr></table></figure><h5 id="5-加快Tomcat的启动速度"><a href="#5-加快Tomcat的启动速度" class="headerlink" title="5. 加快Tomcat的启动速度"></a>5. 加快Tomcat的启动速度</h5><p>打开$JAVA_PATH/jre/lib/security/java.security这个文件，找到下面的内容：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">securerandom.source=file:/dev/random </span><br><span class="line">替换成</span><br><span class="line">securerandom.source=file:/dev/./random</span><br></pre></td></tr></table></figure><h5 id="6-启动tomcat"><a href="#6-启动tomcat" class="headerlink" title="6. 启动tomcat"></a>6. 启动tomcat</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/tomcat/bin/shutdown.sh</span><br><span class="line">/usr/local/tomcat/bin/startup.sh</span><br></pre></td></tr></table></figure><h5 id="其他：关于启动错误"><a href="#其他：关于启动错误" class="headerlink" title="其他：关于启动错误"></a>其他：关于启动错误</h5><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">touch:</span> cannot touch ‘<span class="meta-keyword">/usr/</span>local<span class="meta-keyword">/tomcat/</span>logs/catalina.out’: Permission denied</span><br></pre></td></tr></table></figure><p>解决方法：</p><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> <span class="string">/usr/local/tomcat</span> &amp;&amp; chmod -R 766  <span class="string">./logs</span></span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h5 id=&quot;1-安装jdk&quot;&gt;&lt;a href=&quot;#1-安装jdk&quot; class=&quot;headerlink&quot; title=&quot;1. 安装jdk&quot;&gt;&lt;/a&gt;1. 安装jdk&lt;/h5&gt;&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;解压到 /usr/local/目录&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;tar -zxf jdk*.tar.gz -C /usr/local/&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;ln -sv /usr/local/jdk*  /usr/local/jdk&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;配置环境变量-/etc/profile&lt;/p&gt;
+&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;export JAVA_HOME=/usr/local/jdk&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;export JRE_HOME=/usr/local/jdk/jre&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib  &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;export PATH=$PATH:$JAVA_HOME/bin&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;source /etc/profile&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;java -version&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="tomcat" scheme="https://garywu520.github.io/blog/tags/tomcat/"/>
+    
+      <category term="java" scheme="https://garywu520.github.io/blog/tags/java/"/>
+    
+      <category term="tomcat8" scheme="https://garywu520.github.io/blog/tags/tomcat8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Docker管理容器数据</title>
+    <link href="https://garywu520.github.io/blog/2019/08/06/Docker%E7%AE%A1%E7%90%86%E5%AE%B9%E5%99%A8%E6%95%B0%E6%8D%AE/"/>
+    <id>https://garywu520.github.io/blog/2019/08/06/Docker管理容器数据/</id>
+    <published>2019-08-06T10:45:09.000Z</published>
+    <updated>2019-08-06T10:50:35.511Z</updated>
+    
+    <content type="html"><![CDATA[<h5 id="1-Docker管理数据的两种主要方法"><a href="#1-Docker管理数据的两种主要方法" class="headerlink" title="1. Docker管理数据的两种主要方法"></a>1. Docker管理数据的两种主要方法</h5><ul><li>数据卷</li><li>数据卷容器</li></ul><h5 id="2-数据卷"><a href="#2-数据卷" class="headerlink" title="2. 数据卷"></a>2. 数据卷</h5><ul><li>数据卷可在容器之间共享或重用</li><li>数据卷中的更改可以直接生效</li><li>数据卷中的更改不会包含在镜像的更新中</li><li>数据卷的生命周期一直持续到没有容器使用它为止。</li></ul><a id="more"></a><h5 id="3-添加数据卷"><a href="#3-添加数据卷" class="headerlink" title="3. 添加数据卷"></a>3. 添加数据卷</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker run --name &lt;容器名称&gt; -i -t  -v /webapp -d root/centos:v2</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">-v参数用来向容器中添加数据卷，容器内部将创建一个卷为/webapp；</span></span><br><span class="line"><span class="meta">#</span><span class="bash">可以在docker run 命令中多次使用-v参数挂载多个数据卷</span></span><br></pre></td></tr></table></figure><h5 id="4-挂载宿主机的目录作为容器的卷"><a href="#4-挂载宿主机的目录作为容器的卷" class="headerlink" title="4. 挂载宿主机的目录作为容器的卷"></a>4. 挂载宿主机的目录作为容器的卷</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker run --name &lt;容器名称&gt; -i -t  -v /opt/webapp:/mnt/webapp -d root/centos:v2</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">注: 宿主机的/opt/webapp目录将作为卷挂载到容器的/mnt/webapp中</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 宿主机的目录必须是绝对路径，如果目录不存在docker会自动创建它；</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 默认情况下，docker对此数据卷有读写权限，但是可以将目录设置为只读，方法如下:</span></span><br><span class="line">docker run --name &lt;容器名称&gt; -i -t  -v /opt/webapp:/mnt/webapp:ro -d root/centos:v2</span><br></pre></td></tr></table></figure><h5 id="5-查看已经运行的容器目录挂载信息"><a href="#5-查看已经运行的容器目录挂载信息" class="headerlink" title="5. 查看已经运行的容器目录挂载信息"></a>5. 查看已经运行的容器目录挂载信息</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker inspect 2a21ae2b0720|grep Mounts -A 20</span><br></pre></td></tr></table></figure><h5 id="6-容器之间数据卷共享"><a href="#6-容器之间数据卷共享" class="headerlink" title="6. 容器之间数据卷共享"></a>6. 容器之间数据卷共享</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">首先创建一个指定名称的数据卷容器</span></span><br><span class="line">docker run --name Test1 -i -t  -v /web -d root/centos:v2</span><br></pre></td></tr></table></figure><p>容器通过–volumes-from参数来桥接其他容器内的数据卷</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name Test2 -i -t  --volumes-from Test1 -d root/centos:v2</span><br></pre></td></tr></table></figure><p>注：当一个数据卷在多个容器中被挂载或桥接，当删除其中一个容器后，数据卷并不会消失。只有当最后挂载的容器被删除后，挂载卷才会被删除。</p><h5 id="7-备份、恢复或者迁移数据卷"><a href="#7-备份、恢复或者迁移数据卷" class="headerlink" title="7. 备份、恢复或者迁移数据卷"></a>7. 备份、恢复或者迁移数据卷</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">首先创建一个指定名称的数据卷容器</span></span><br><span class="line">docker run --name Test1 -i -t  -v /web -d root/centos:v2</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">然后使用--volumes-from参数来创建一个挂载数据卷的容器</span></span><br><span class="line">docker run --volumes-from Test1 -v $(pwd):/backup root/centos:v2 tar cvf /backup/web_backup.tar /web</span><br></pre></td></tr></table></figure><ul><li>数据卷备份</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker run --name Test10 --volumes-from Test1 -v $(pwd):/backup root/centos:v2 tar cvf /backup/web_backup.tar /web</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">说明：</span></span><br><span class="line">使用root/centos:v2, 从Test1桥接容器卷，同时将宿主机的当前目录挂载到容器的/backup目录,最后执行tar压缩命令，将桥接卷/web下的所有文件打包到宿主机的当前目录中。</span><br></pre></td></tr></table></figure><ul><li>数据卷恢复</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">模拟恢复数据卷数据--先删除原数据卷内容。并运行一个原数据卷容器</span></span><br><span class="line">docker run --name Test2 -i -t --volumes-from Test1 -d root/centos:v2</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">在新的容器中的数据卷里解压此备份文件</span></span><br><span class="line">docker run --name Test2_RES --volumes-from Test2 -v $(pwd):/backup root/centos:v2 tar xvf /backup/web_backup.tar</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h5 id=&quot;1-Docker管理数据的两种主要方法&quot;&gt;&lt;a href=&quot;#1-Docker管理数据的两种主要方法&quot; class=&quot;headerlink&quot; title=&quot;1. Docker管理数据的两种主要方法&quot;&gt;&lt;/a&gt;1. Docker管理数据的两种主要方法&lt;/h5&gt;&lt;ul&gt;
+&lt;li&gt;数据卷&lt;/li&gt;
+&lt;li&gt;数据卷容器&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h5 id=&quot;2-数据卷&quot;&gt;&lt;a href=&quot;#2-数据卷&quot; class=&quot;headerlink&quot; title=&quot;2. 数据卷&quot;&gt;&lt;/a&gt;2. 数据卷&lt;/h5&gt;&lt;ul&gt;
+&lt;li&gt;数据卷可在容器之间共享或重用&lt;/li&gt;
+&lt;li&gt;数据卷中的更改可以直接生效&lt;/li&gt;
+&lt;li&gt;数据卷中的更改不会包含在镜像的更新中&lt;/li&gt;
+&lt;li&gt;数据卷的生命周期一直持续到没有容器使用它为止。&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="docker" scheme="https://garywu520.github.io/blog/tags/docker/"/>
+    
+      <category term="docker-compose" scheme="https://garywu520.github.io/blog/tags/docker-compose/"/>
+    
+      <category term="docker-ce" scheme="https://garywu520.github.io/blog/tags/docker-ce/"/>
+    
+      <category term="容器" scheme="https://garywu520.github.io/blog/tags/%E5%AE%B9%E5%99%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用Docker Hub查找及创建自定义镜像</title>
+    <link href="https://garywu520.github.io/blog/2019/08/06/%E4%BD%BF%E7%94%A8Docker-Hub%E6%9F%A5%E6%89%BE%E5%8F%8A%E5%88%9B%E5%BB%BA%E8%87%AA%E5%AE%9A%E4%B9%89%E9%95%9C%E5%83%8F/"/>
+    <id>https://garywu520.github.io/blog/2019/08/06/使用Docker-Hub查找及创建自定义镜像/</id>
+    <published>2019-08-06T10:44:50.000Z</published>
+    <updated>2019-08-06T10:49:30.179Z</updated>
+    
+    <content type="html"><![CDATA[<p>Docker Hub 存放着 docker 及其组件一起工作的所有资源。Docker Hub 会帮助你和你的同事协作，并获取功能最全的 docker。要做到这一点，它提供的服务有：</p><ul><li>Docker镜像主机</li><li>用户认证</li><li>自动镜像构建和工作流程工具，如构建触发器和 web hooks</li><li>整合了 GitHub 和 BitBucket</li></ul><a id="more"></a><h5 id="1-注册地址"><a href="#1-注册地址" class="headerlink" title="1. 注册地址"></a>1. 注册地址</h5><p><a href="https://hub.docker.com/signup" target="_blank" rel="noopener">https://hub.docker.com/signup</a></p><h5 id="2-Web登录"><a href="#2-Web登录" class="headerlink" title="2. Web登录"></a>2. Web登录</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">登录：https://hub.docker.com/</span><br><span class="line">账号：garywu520</span><br><span class="line">密码：P**4!@#</span><br></pre></td></tr></table></figure><h5 id="3-命令行登录"><a href="#3-命令行登录" class="headerlink" title="3. 命令行登录"></a>3. 命令行登录</h5><p>通过在命令行中输入 docker login </p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@CentOS7 ~]# docker login</span><br><span class="line">Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.</span><br><span class="line">Username: garywu520</span><br><span class="line">Password: </span><br><span class="line">Login Succeeded</span><br></pre></td></tr></table></figure><h5 id="4-官方查找镜像"><a href="#4-官方查找镜像" class="headerlink" title="4. 官方查找镜像"></a>4. 官方查找镜像</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@CentOS7 ~]# docker search unbound</span><br><span class="line">INDEX       NAME                        DESCRIPTION    STARS     OFFICIAL   AUTOMATED</span><br><span class="line">docker.io   docker.io/secns/unbound    unbound DNS Resolver with DNSSEC enabled    21      [OK]</span><br><span class="line">docker.io   docker.io/mvance/unbound   Unbound is a validating, recursive, and ca...   16  [OK]</span><br></pre></td></tr></table></figure><ul><li>下载/使用官方镜像</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker pull &lt;NAME&gt;</span><br><span class="line">docker run -t -i docker.io/secns/unbound /bin/bash</span><br></pre></td></tr></table></figure><h5 id="5-使用Dockerfile创建自己的镜像"><a href="#5-使用Dockerfile创建自己的镜像" class="headerlink" title="5. 使用Dockerfile创建自己的镜像"></a>5. 使用Dockerfile创建自己的镜像</h5><p>首先创建一个目录，并且创建一个Dockerfile文件</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkdir qishituan</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> qishituan</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> touch Dockerfile</span></span><br></pre></td></tr></table></figure><ul><li>DockerFile文件内容如下:</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> This is a comment</span></span><br><span class="line">FROM docker.io/centos       #指定镜像源</span><br><span class="line">MAINTAINER Gary Wu &lt;garywu@mail.com&gt; #指定维护者</span><br><span class="line">RUN yum install -y htop      #接着指定三个RUN命令</span><br><span class="line">RUN yum install -y tmux</span><br></pre></td></tr></table></figure><p>高级DockerFile参考</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">FROM docker.io/centos</span><br><span class="line"></span><br><span class="line">RUN buildDeps='gcc libc6-dev make wget lrzsz vim' \</span><br><span class="line">    &amp;&amp; yum install -y $buildDeps \</span><br><span class="line">    &amp;&amp; wget -O redis.tar.gz "http://download.redis.io/releases/redis-5.0.3.tar.gz" \</span><br><span class="line">    &amp;&amp; mkdir -p /usr/src/redis \</span><br><span class="line">    &amp;&amp; tar -xzf redis.tar.gz -C /usr/src/redis --strip-components=1 \</span><br><span class="line">    &amp;&amp; make -C /usr/src/redis \</span><br><span class="line">    &amp;&amp; make -C /usr/src/redis install \</span><br><span class="line">    &amp;&amp; rm -rf /var/lib/apt/lists/* \</span><br><span class="line">    &amp;&amp; rm redis.tar.gz \</span><br><span class="line">    &amp;&amp; rm -r /usr/src/redis</span><br></pre></td></tr></table></figure><p>创建镜像</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker build -t="root/centos:v2" .</span><br><span class="line"><span class="meta">#</span><span class="bash">最后一个“.” 表示当前目录</span></span><br><span class="line"><span class="meta">#</span><span class="bash">使用docker build命令和-t来创建我们的新镜像，用户是ouruser、仓库源名称sinatra、标签是v2</span></span><br></pre></td></tr></table></figure><p>运行新的容器</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name CentOS_V2 -i -t -d root/centos:v2</span><br></pre></td></tr></table></figure><h5 id="6-删除镜像"><a href="#6-删除镜像" class="headerlink" title="6. 删除镜像"></a>6. 删除镜像</h5><ul><li>删除本地镜像</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dock ps -a</span><br><span class="line">docker image rm &lt;IMAGE_ID&gt;</span><br></pre></td></tr></table></figure><ul><li>彻底删除本地镜像</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop docker.service</span><br><span class="line">rm -rf /var/lib/docker</span><br><span class="line">systemctl start docker.service</span><br></pre></td></tr></table></figure><h5 id="7-向Docker-Hub推送镜像"><a href="#7-向Docker-Hub推送镜像" class="headerlink" title="7. 向Docker Hub推送镜像"></a>7. 向Docker Hub推送镜像</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker push root/centos</span><br></pre></td></tr></table></figure><ul><li>移除镜像</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rmi root/centos</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Docker Hub 存放着 docker 及其组件一起工作的所有资源。Docker Hub 会帮助你和你的同事协作，并获取功能最全的 docker。要做到这一点，它提供的服务有：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Docker镜像主机&lt;/li&gt;
+&lt;li&gt;用户认证&lt;/li&gt;
+&lt;li&gt;自动镜像构建和工作流程工具，如构建触发器和 web hooks&lt;/li&gt;
+&lt;li&gt;整合了 GitHub 和 BitBucket&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="docker" scheme="https://garywu520.github.io/blog/tags/docker/"/>
+    
+      <category term="docker-compose" scheme="https://garywu520.github.io/blog/tags/docker-compose/"/>
+    
+      <category term="docker-ce" scheme="https://garywu520.github.io/blog/tags/docker-ce/"/>
+    
+      <category term="容器" scheme="https://garywu520.github.io/blog/tags/%E5%AE%B9%E5%99%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Docker部署及管理命令</title>
+    <link href="https://garywu520.github.io/blog/2019/08/06/Docker%E9%83%A8%E7%BD%B2%E5%8F%8A%E7%AE%A1%E7%90%86%E5%91%BD%E4%BB%A4/"/>
+    <id>https://garywu520.github.io/blog/2019/08/06/Docker部署及管理命令/</id>
+    <published>2019-08-06T10:44:20.000Z</published>
+    <updated>2019-08-06T10:47:53.835Z</updated>
+    
+    <content type="html"><![CDATA[<h5 id="1-Docker部署-for-CentOS7"><a href="#1-Docker部署-for-CentOS7" class="headerlink" title="1. Docker部署 for CentOS7"></a>1. Docker部署 for CentOS7</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">yum remove docker docker-common docker-selinux docker-engine</span><br><span class="line">yum install -y yum-utils device-mapper-persistent-data lvm2</span><br><span class="line">wget -O /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo</span><br><span class="line">sudo sed -i 's+download.docker.com+mirrors.tuna.tsinghua.edu.cn/docker-ce+' /etc/yum.repos.d/docker-ce.repo</span><br><span class="line"> yum makecache fast</span><br><span class="line"> yum install docker-ce</span><br><span class="line"></span><br><span class="line">systemctl enable docker</span><br><span class="line">systemctl start docker</span><br><span class="line">systemctl status docker</span><br></pre></td></tr></table></figure><a id="more"></a><h5 id="2-开始一个docker-daemon"><a href="#2-开始一个docker-daemon" class="headerlink" title="2. 开始一个docker daemon"></a>2. 开始一个docker daemon</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">验证Docker是否正常工作</span></span><br><span class="line">docker pull centos</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">查看镜像</span></span><br><span class="line">docker images centos</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">测试运行镜像</span></span><br><span class="line">docker run --name centos -it -d centos /bin/bash</span><br><span class="line">注：运行后将返回容器ID</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">参数：</span></span><br><span class="line">查看帮助：docker run --help</span><br><span class="line">-i  标准输入</span><br><span class="line">-t  开启tty</span><br><span class="line">-d  后台运行容器</span><br><span class="line">--name 容器重命名</span><br><span class="line"><span class="meta">#</span><span class="bash">注：如果正常你将获得一个简单的bash提示，输入<span class="built_in">exit</span>退出</span></span><br></pre></td></tr></table></figure><h5 id="3-Docker进入、退出、删除容器"><a href="#3-Docker进入、退出、删除容器" class="headerlink" title="3. Docker进入、退出、删除容器"></a>3. Docker进入、退出、删除容器</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">docker ps   #查看所有运行的容器</span><br><span class="line">docker ps -a  #查看所有容器(包括未启动的容器)</span><br><span class="line">docker restart &lt;容器id&gt;  #重启容器</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">进入容器</span></span><br><span class="line">docker attach &lt;容器id&gt;</span><br><span class="line">docker exec -i -t &lt;容器id&gt; /bin/bash</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">容器启动后进入交互式：</span></span><br><span class="line">docker start -i &lt;容器id&gt;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">退出容器</span></span><br><span class="line">exit  #真退出</span><br><span class="line">Ctrl+P+Q  #伪退出</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">删除容器</span></span><br><span class="line">docker rm &lt;容器id&gt;    #如果要删除一个运行中的容器需要加-f参数</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">停止运行的容器</span></span><br><span class="line">docker stop &lt;容器id&gt;</span><br></pre></td></tr></table></figure><h5 id="4-Docker运行APP-以Nginx为例"><a href="#4-Docker运行APP-以Nginx为例" class="headerlink" title="4. Docker运行APP [以Nginx为例]"></a>4. Docker运行APP [以Nginx为例]</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br><span class="line">docker pull nginx  #下载nginx镜像</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">将docker的80端口映射到宿主机的8080端口-运行容器</span></span><br><span class="line">docker run --name &lt;业务名&gt; -it -p 8080:80 -d docker.io/nginx</span><br><span class="line">netstat -lntup|grep 8080</span><br><span class="line">docker ps</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">注：-p参数用来指定端口映射，查看运行的容器端口映射</span></span><br><span class="line">docker port &lt;容器id&gt;</span><br></pre></td></tr></table></figure><ul><li>再次运行一个nginx容器</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker run --name &lt;业务名&gt; -it -p 8081:80 -d docker.io/nginx /bin/bash</span><br><span class="line">docker ps</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">查看WEB应用程序日志</span></span><br><span class="line">docker logs &lt;容器id&gt;</span><br><span class="line">docker logs -f &lt;容器id&gt;  </span><br><span class="line"><span class="meta">#</span><span class="bash">-f参数，将使docker <span class="built_in">log</span>命令使用tail -f来查看容器标准输出</span></span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h5 id=&quot;1-Docker部署-for-CentOS7&quot;&gt;&lt;a href=&quot;#1-Docker部署-for-CentOS7&quot; class=&quot;headerlink&quot; title=&quot;1. Docker部署 for CentOS7&quot;&gt;&lt;/a&gt;1. Docker部署 for CentOS7&lt;/h5&gt;&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;yum remove docker docker-common docker-selinux docker-engine&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;yum install -y yum-utils device-mapper-persistent-data lvm2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;wget -O /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sudo sed -i &#39;s+download.docker.com+mirrors.tuna.tsinghua.edu.cn/docker-ce+&#39; /etc/yum.repos.d/docker-ce.repo&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; yum makecache fast&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; yum install docker-ce&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;systemctl enable docker&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;systemctl start docker&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;systemctl status docker&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="docker" scheme="https://garywu520.github.io/blog/tags/docker/"/>
+    
+      <category term="容器" scheme="https://garywu520.github.io/blog/tags/%E5%AE%B9%E5%99%A8/"/>
+    
+      <category term="docker-compass" scheme="https://garywu520.github.io/blog/tags/docker-compass/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Docker镜像加速</title>
+    <link href="https://garywu520.github.io/blog/2019/08/06/Docker%E9%95%9C%E5%83%8F%E5%8A%A0%E9%80%9F/"/>
+    <id>https://garywu520.github.io/blog/2019/08/06/Docker镜像加速/</id>
+    <published>2019-08-06T10:43:31.000Z</published>
+    <updated>2019-08-06T10:46:45.479Z</updated>
+    
+    <content type="html"><![CDATA[<p>配置镜像加速器</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /etc/docker</span><br></pre></td></tr></table></figure><p>cat /etc/docker/daemon.json</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">"registry-mirrors": ["https://registry.docker-cn.com"] </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl restart docker</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;配置镜像加速器&lt;/p&gt;
+&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;
+      
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="docker" scheme="https://garywu520.github.io/blog/tags/docker/"/>
+    
+      <category term="容器" scheme="https://garywu520.github.io/blog/tags/%E5%AE%B9%E5%99%A8/"/>
+    
+      <category term="docker-compass" scheme="https://garywu520.github.io/blog/tags/docker-compass/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>shell以其他用户执行命令</title>
+    <link href="https://garywu520.github.io/blog/2019/07/15/shell%E4%BB%A5%E5%85%B6%E4%BB%96%E7%94%A8%E6%88%B7%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4/"/>
+    <id>https://garywu520.github.io/blog/2019/07/15/shell以其他用户执行命令/</id>
+    <published>2019-07-15T08:51:50.000Z</published>
+    <updated>2019-07-15T08:54:13.126Z</updated>
+    
+    <content type="html"><![CDATA[<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">使用sudo -u参数</span></span><br><span class="line"></span><br><span class="line">sudo -u [USER] [COMMON]</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class
+      
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="shell" scheme="https://garywu520.github.io/blog/tags/shell/"/>
+    
+      <category term="su" scheme="https://garywu520.github.io/blog/tags/su/"/>
+    
+      <category term="sudo" scheme="https://garywu520.github.io/blog/tags/sudo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>shell删除HDFS几天前的数据</title>
+    <link href="https://garywu520.github.io/blog/2019/07/15/shell%E5%88%A0%E9%99%A4HDFS%E5%87%A0%E5%A4%A9%E5%89%8D%E7%9A%84%E6%95%B0%E6%8D%AE/"/>
+    <id>https://garywu520.github.io/blog/2019/07/15/shell删除HDFS几天前的数据/</id>
+    <published>2019-07-15T08:44:41.000Z</published>
+    <updated>2019-07-15T08:49:44.759Z</updated>
+    
+    <content type="html"><![CDATA[<h5 id="Shell脚本使用"><a href="#Shell脚本使用" class="headerlink" title="Shell脚本使用"></a>Shell脚本使用</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh clean_hdfs_logs.sh [hdfs_user]</span><br></pre></td></tr></table></figure><h5 id="Shell脚本"><a href="#Shell脚本" class="headerlink" title="Shell脚本"></a>Shell脚本</h5><p>cat clean_hdfs_logs.sh</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">判断传参个数[即输入hdfs用户]</span></span><br><span class="line">if [ $# != 1 ];then</span><br><span class="line">   echo "USAGE: sh $0 [hdfs_user]"</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">Hadoop_LogDir=/tmp/logs/$1/logs</span><br><span class="line">File=/home/$1/logs.log</span><br><span class="line">DATE=`date +%F`</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">清理老数据</span></span><br><span class="line">rm -f $File</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">获取最新数据</span></span><br><span class="line">sudo -u $1 hadoop fs -ls $Hadoop_LogDir &gt;&gt;$File</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">筛选1天前的可删除子目录</span></span><br><span class="line">INFO=`egrep -v "$DATE" $File|awk '&#123;print $NF&#125;'`</span><br><span class="line"></span><br><span class="line">for i in $INFO</span><br><span class="line">do</span><br><span class="line">  sudo -u $1 hadoop fs -rm -r $i</span><br><span class="line"><span class="meta">  #</span><span class="bash">sudo -u <span class="variable">$1</span> hadoop fs -rm -r -skipTrash <span class="variable">$i</span></span></span><br><span class="line">done</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h5 id=&quot;Shell脚本使用&quot;&gt;&lt;a href=&quot;#Shell脚本使用&quot; class=&quot;headerlink&quot; title=&quot;Shell脚本使用&quot;&gt;&lt;/a&gt;Shell脚本使用&lt;/h5&gt;&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;t
+      
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="hadoop" scheme="https://garywu520.github.io/blog/tags/hadoop/"/>
+    
+      <category term="hdfs" scheme="https://garywu520.github.io/blog/tags/hdfs/"/>
+    
+      <category term="shell" scheme="https://garywu520.github.io/blog/tags/shell/"/>
+    
+      <category term="su" scheme="https://garywu520.github.io/blog/tags/su/"/>
+    
+      <category term="sudo" scheme="https://garywu520.github.io/blog/tags/sudo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>logstash错误解决-a plugin had an unrecoverable error</title>
+    <link href="https://garywu520.github.io/blog/2019/06/28/logstash%E9%94%99%E8%AF%AF%E8%A7%A3%E5%86%B3-a-plugin-had-an-unrecoverable-error/"/>
+    <id>https://garywu520.github.io/blog/2019/06/28/logstash错误解决-a-plugin-had-an-unrecoverable-error/</id>
+    <published>2019-06-28T06:34:01.000Z</published>
+    <updated>2019-06-28T07:10:23.648Z</updated>
+    
+    <content type="html"><![CDATA[<p>这几天线上的logstash进程运行过程中，自动异常退出，log无任何输出。前台启动logstash，经过跟踪，错误提示如下：</p><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">A plugin had an unrecoverable error. Will restart this plugin.</span><br><span class="line">    Plugin &lt;LogStash::Inputs::File path=&gt;[<span class="string">"/xx/xx/xx/xx/*"</span>, <span class="string">"/xx/xx/xx/xx/*"</span>], snicedb_path=&gt;<span class="string">"/xx/xx/xx/xx/xx.db"</span> ,codec=&gt;&lt;LogStash::Codecs::Plain charset=&gt;<span class="string">"UTF-8"</span>&gt;, stat_interval=&gt;<span class="number">1</span>, discover_interval=&gt;<span class="number">15</span>, sincedb_write_interval=&gt;<span class="number">15</span>, start_position=&gt;<span class="string">"end"</span>, delimiter=&gt;<span class="string">"\n"</span>&gt;</span><br><span class="line">    <span class="symbol">Error:</span> Unknown error - 没有那个文件或目录 &#123;<span class="symbol">:level=&gt;</span><span class="symbol">:error</span>&#125;</span><br></pre></td></tr></table></figure><a id="more"></a><p><strong>排查思路：</strong></p><p><strong>(1) logstash配置文件Input源数据</strong></p><p>​      验证input数据源的路径是否正确 <strong>[未解决问题]</strong></p><p><strong>(2) 验证logstash conf配置文件的语法</strong></p><p>​      由于logstash配置文件语法使用的是YAML格式，故需要一部分一部分的逐一验证来排除格式错误 <strong>[未解决问题]</strong></p><p>​      <a href="https://qii404.me/tools/yaml-parse" target="_blank" rel="noopener">YAML在线解析</a></p><p><strong>(3) 升级插件</strong></p><p>​      以上错误信息中，可以看出Logstash所使用的Plugin是 logstash-input-file ，故可以考虑升级插件。</p><ul><li><p><strong>更换官方Ruby Gem源</strong></p><p>head logstash/Gemfile</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">source "https://gems.ruby-china.com/"   #修改为https://gems.ruby-china.com/</span><br><span class="line">gem "logstash-core", "2.1.0"</span><br><span class="line">gem "file-dependencies", "0.1.6"</span><br><span class="line">gem "ci_reporter_rspec", "1.0.0", :group =&gt; :development</span><br><span class="line">gem "simplecov", :group =&gt; :development</span><br><span class="line">gem "coveralls", :group =&gt; :development</span><br><span class="line">gem "tins", "1.6", :group =&gt; :development</span><br></pre></td></tr></table></figure></li><li><p><strong>查看已安装的插件</strong></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">查看已安装的插件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> bin/plugin list</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">升级插件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> bin/plugin update logstash-input-file</span></span><br></pre></td></tr></table></figure></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这几天线上的logstash进程运行过程中，自动异常退出，log无任何输出。前台启动logstash，经过跟踪，错误提示如下：&lt;/p&gt;
+&lt;figure class=&quot;highlight ruby&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;A plugin had an unrecoverable error. Will restart this plugin.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    Plugin &amp;lt;LogStash::Inputs::File path=&amp;gt;[&lt;span class=&quot;string&quot;&gt;&quot;/xx/xx/xx/xx/*&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;/xx/xx/xx/xx/*&quot;&lt;/span&gt;], snicedb_path=&amp;gt;&lt;span class=&quot;string&quot;&gt;&quot;/xx/xx/xx/xx/xx.db&quot;&lt;/span&gt; ,codec=&amp;gt;&amp;lt;LogStash::Codecs::Plain charset=&amp;gt;&lt;span class=&quot;string&quot;&gt;&quot;UTF-8&quot;&lt;/span&gt;&amp;gt;, stat_interval=&amp;gt;&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;, discover_interval=&amp;gt;&lt;span class=&quot;number&quot;&gt;15&lt;/span&gt;, sincedb_write_interval=&amp;gt;&lt;span class=&quot;number&quot;&gt;15&lt;/span&gt;, start_position=&amp;gt;&lt;span class=&quot;string&quot;&gt;&quot;end&quot;&lt;/span&gt;, delimiter=&amp;gt;&lt;span class=&quot;string&quot;&gt;&quot;\n&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;symbol&quot;&gt;Error:&lt;/span&gt; Unknown error - 没有那个文件或目录 &amp;#123;&lt;span class=&quot;symbol&quot;&gt;:level=&amp;gt;&lt;/span&gt;&lt;span class=&quot;symbol&quot;&gt;:error&lt;/span&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="ELK" scheme="https://garywu520.github.io/blog/tags/ELK/"/>
+    
+      <category term="logstash" scheme="https://garywu520.github.io/blog/tags/logstash/"/>
+    
+      <category term="Plugin" scheme="https://garywu520.github.io/blog/tags/Plugin/"/>
+    
+      <category term="YAML" scheme="https://garywu520.github.io/blog/tags/YAML/"/>
+    
+      <category term="Ruby" scheme="https://garywu520.github.io/blog/tags/Ruby/"/>
+    
+      <category term="Gem镜像" scheme="https://garywu520.github.io/blog/tags/Gem%E9%95%9C%E5%83%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>rootkit入侵渗透防御</title>
+    <link href="https://garywu520.github.io/blog/2019/06/25/rootkit%E5%85%A5%E4%BE%B5%E6%B8%97%E9%80%8F%E9%98%B2%E5%BE%A1/"/>
+    <id>https://garywu520.github.io/blog/2019/06/25/rootkit入侵渗透防御/</id>
+    <published>2019-06-25T08:34:08.000Z</published>
+    <updated>2019-06-26T10:26:54.829Z</updated>
+    
+    <content type="html"><![CDATA[<p>在常规的 “入侵/渗透” 检测工作中，Rootkit通常非常的隐秘、令用户不易察觉，所以，我们要用 chkrootkit 来定时监测系统，预防linux被rootkit程序入侵。</p><p><strong>Rootkit Hunter (Rootkit 猎人)-项目地址：</strong><a href="http://rkhunter.sourceforge.net/" target="_blank" rel="noopener">http://rkhunter.sourceforge.net/</a></p><a id="more"></a><h5 id="Rootkit-Hunter安装"><a href="#Rootkit-Hunter安装" class="headerlink" title="Rootkit Hunter安装"></a>Rootkit Hunter安装</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget http://sourceforge.net/projects/rkhunter/files/rkhunter/1.3.8/rkhunter-1.3.8.tar.gz/download</span><br><span class="line">tar zxvf rkhunter-1.3.8.tar.gz</span><br><span class="line">cd rkhunter-1.3.8</span><br><span class="line">./installer.sh --install</span><br></pre></td></tr></table></figure><h5 id="帮助信息"><a href="#帮助信息" class="headerlink" title="帮助信息"></a>帮助信息</h5><p>Options:</p><p>   -h 显示帮助信息</p><p>   -V 显示版本信息</p><p>   -l 显示测试内容</p><p>   -d debug模式，显示检测过程的相关指令程序</p><p>   -q 安静模式，只显示有问题部分，</p><p>   -x 高级模式，显示所有检测结果</p><p>   -r dir 设定指定的目录为根目录</p><p>   -p dir1:dir2:dirN 检测指定目录</p><p>   -n 跳过NFS连接的目录</p><h5 id="建立校对样本"><a href="#建立校对样本" class="headerlink" title="建立校对样本"></a>建立校对样本</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rkhunter --propupd</span><br><span class="line"></span><br><span class="line">ls /var/lib/rkhunter/db/rkhunter.dat 　　#样本文件位置</span><br></pre></td></tr></table></figure><h5 id="手动扫描"><a href="#手动扫描" class="headerlink" title="手动扫描"></a>手动扫描</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">手动扫描</span></span><br><span class="line">rkhunter --check</span><br></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 如果您不想要每个部分都以 Enter 来继续，想要让程序自动持续执行，可以使用：</span></span><br><span class="line">rkhunter --check --sk</span><br></pre></td></tr></table></figure><h5 id="检测过程："><a href="#检测过程：" class="headerlink" title="检测过程："></a>检测过程：</h5><ul><li><p>第一部分：检测系统二进制命令，主要检测系统的二进制文件，这些文件最容易被rootkit攻击；</p><p>​                    [ OK ]表示正常；[ Warning ]表示有异常；[ None found ]未找到</p></li><li><p>第二部分：对rootkit常见攻击的文件/目录进行检测，包括网络服务使用的端口等等，检测是否存在常见的rootkit程序；</p><p>​                    [ Not found ]表示未感染</p></li><li><p>第三部分：文件/目录附加检测、恶意软件检查以及Linux内核模块检查</p></li><li><p>第四部分：检测网络接口/后门端口/系统启动文件/系统用户和组/ssh配置/文件系统和隐藏文件/目录等</p></li><li><p>第五部分：总结服务器目前的安全状态。</p><p>​                    检测结果记录在/var/log/rkhunter.log中，根据提示修复即可。    </p></li></ul><h5 id="在线版本升级"><a href="#在线版本升级" class="headerlink" title="在线版本升级"></a>在线版本升级</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">版本检查</span></span><br><span class="line">rkhunter --versioncheck</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">版本升级</span></span><br><span class="line">rkhunter --update</span><br></pre></td></tr></table></figure><h5 id="定时扫描"><a href="#定时扫描" class="headerlink" title="定时扫描"></a>定时扫描</h5><p>cat /etc/cron.daily/rkhunter.sh</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">(</span><br><span class="line">/usr/local/bin/rkhunter --versioncheck</span><br><span class="line">/usr/local/bin/rkhunter --update</span><br><span class="line">/usr/local/bin/rkhunter --cronjob --report-warnings-only</span><br><span class="line">) | /bin/mail -s 'rkhunter Daily Run' name@email.com</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">注：扫描结果仅显示警告项，并且警告项基本均有改进提示</span></span><br></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 755 /etc/cron.daily/rkhunter.sh</span><br></pre></td></tr></table></figure><h5 id="木马再确认"><a href="#木马再确认" class="headerlink" title="木马再确认"></a>木马再确认</h5><p>把/var/log/rkhunter.log中所涉及的文件下载下来，使用在线杀毒检测。如果发现部分文件或程序确为木马，应及时采取相应预防措施。</p><p><strong>在线杀毒网站:</strong></p><ul><li>virustotal官网：<a href="https://www.virustotal.com/" target="_blank" rel="noopener">https://www.virustotal.com</a></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在常规的 “入侵/渗透” 检测工作中，Rootkit通常非常的隐秘、令用户不易察觉，所以，我们要用 chkrootkit 来定时监测系统，预防linux被rootkit程序入侵。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Rootkit Hunter (Rootkit 猎人)-项目地址：&lt;/strong&gt;&lt;a href=&quot;http://rkhunter.sourceforge.net/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;http://rkhunter.sourceforge.net/&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="rootkit" scheme="https://garywu520.github.io/blog/tags/rootkit/"/>
+    
+      <category term="chkrootkit" scheme="https://garywu520.github.io/blog/tags/chkrootkit/"/>
+    
+      <category term="rkhunter" scheme="https://garywu520.github.io/blog/tags/rkhunter/"/>
+    
+      <category term="rootkit hunter" scheme="https://garywu520.github.io/blog/tags/rootkit-hunter/"/>
+    
+      <category term="入侵" scheme="https://garywu520.github.io/blog/tags/%E5%85%A5%E4%BE%B5/"/>
+    
+      <category term="防御" scheme="https://garywu520.github.io/blog/tags/%E9%98%B2%E5%BE%A1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>linux系统被黑的分析过程</title>
+    <link href="https://garywu520.github.io/blog/2019/06/20/linux%E7%B3%BB%E7%BB%9F%E8%A2%AB%E9%BB%91%E7%9A%84%E5%88%86%E6%9E%90%E8%BF%87%E7%A8%8B/"/>
+    <id>https://garywu520.github.io/blog/2019/06/20/linux系统被黑的分析过程/</id>
+    <published>2019-06-20T03:41:52.000Z</published>
+    <updated>2019-06-20T04:12:12.567Z</updated>
+    
+    <content type="html"><![CDATA[<h5 id="1-受攻击现象"><a href="#1-受攻击现象" class="headerlink" title="1. 受攻击现象"></a>1. 受攻击现象</h5><p>这是一台客户的门户网站服务器，托管在电信机房，客户接到电信的通知：由于此服务器持续对外发送数据包，导致100M带宽耗尽，于是电信就切断了此服务器的网络。此服务器是Centos5.5版本，对外开放了80、22端口。</p><p>从客户那里了解到，网站的访问量并不大，所以带宽占用也不会太高，而耗尽100M的带宽是绝对不可能的，那么极有可能是服务器遭受了流量攻击，于是登录服务器做详细的检测。</p><a id="more"></a><h5 id="2-初步分析"><a href="#2-初步分析" class="headerlink" title="2. 初步分析"></a>2. 初步分析</h5><p> 在电信人员的配合下通过交换机对该服务器的网络流量进行了检测，发现该主机确实存在对外80端口的扫描流量，于是登录系统通过“netstat –an”命令对系统开启的端口进行检查，可奇怪的是，没有发现任何与80端口相关的网络连接。接着使用“ps –ef”、“top”等命令也没有发现任何可疑的进程。于是怀疑系统是否被植入了rootkit。</p><p>为了证明系统是否被植入了rootkit，我们将网站服务器下的ps、top等命令与之前备份的同版本可信操作系统命令做了md5sum校验，结果发现网站服务器下的这两个命令确实被修改过，由此断定，此服务器已经被入侵并且安装了rootkit级别的后门程序。</p><h5 id="3-断网分析系统"><a href="#3-断网分析系统" class="headerlink" title="3. 断网分析系统"></a>3. 断网分析系统</h5><p>由于服务器不停向外发包，因此，</p><ul><li>首先要做的就是将此服务器断开网络</li><li>然后分析系统日志，寻找攻击源。</li></ul><p>但是系统命令已经被替换掉了，如果继续在该系统上执行操作将变得不可信，这里可以通过两种方法来避免这种情况。</p><ul><li><p>方案1：从同版本(且可信的)操作系统下拷贝所有命令到这个入侵服务器下某个路径，然后在执行命令的时候指定此命令的完整路径即可【推荐】</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">命令路径：</span></span><br><span class="line">/sbin/    </span><br><span class="line">/usr/sbin</span><br></pre></td></tr></table></figure></li><li><p>方案2：使用linux livecd启动系统进行分析</p></li><li><p>方案3:  将此服务器的硬盘取下来挂载到另外一台安全的主机上进行分析</p></li></ul><p>接下来首先查看系统的登陆日志，查看是否有可疑登陆信息</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">more /var/log/secure |grep Accepted</span><br></pre></td></tr></table></figure><p>通过对命令输出的查看，有一条日志引起了我们的怀疑：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Oct 3 03:10:25 webserver sshd[20701]: Accepted password for mail from 62.17.163.186 port 53349 ssh2</span><br></pre></td></tr></table></figure><p>这条日志显示在10月3号的凌晨3点10分，有个mail帐号从62.17.163.186这个IP成功登录了系统，mail是系统的内置帐号，默认情况下是无法执行登录操作的，而62.17.163.186这个IP，经过查证，是来自爱尔兰的一个地址。从mail帐号登录的时间来看，早于此网站服务器遭受攻击的时间。</p><p>接着查看一下系统密码文件/etc/shadow，又发现可疑信息：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mail:$1$kCEd3yD6$W1evaY5BMPQIqfTwTVJiX1:15400:0:99999:7:::</span><br></pre></td></tr></table></figure><p>很明显，mail帐号已经被设置了密码，并且被修改为可远程登录，之所以使用mail帐号，猜想可能是因为入侵者想留下一个隐蔽的帐号，以方便日后再次登录系统。</p><p>然后继续查看其他系统日志，如/var/log/messages、/var/log/wtmp均为空文件，可见，入侵者已经清理了系统日志文件，至于为何没有清空/var/log/secure文件，就不得而知了。</p><h5 id="4-寻找攻击源"><a href="#4-寻找攻击源" class="headerlink" title="4. 寻找攻击源"></a>4. 寻找攻击源</h5><p>到目前为止，我们所知道的情况是，有个mail帐号曾经登录过系统，但是为何会导致此网站服务器持续对外发送数据包呢？必须要找到对应的攻击源，通过替换到此服务器上的ps命令查看系统目前运行的进程，又发现了新的可疑：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nobody   22765     1  6 Sep29 ?        4-00:11:58 .t</span><br></pre></td></tr></table></figure><p>这个.t程序是什么呢，继续执行top命令，结果如下：</p><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PID<span class="built_in"> USER </span>   PR  NI  VIRT  RES  SHR  S  %CPU %MEM    TIME+  COMMAND</span><br><span class="line">22765 nobody  15  0   1740m 1362m 1228  S  98.3    91.5      2892:19   .t</span><br></pre></td></tr></table></figure><p>从输出可知，这个t程序已经运行了4天左右，运行这个程序的是nobody用户，并且这个t程序消耗了大量的内存和cpu，这也是之前客户反映的网站服务器异常缓慢的原因，从这个输出，我们得到了t程序的进程PID为22765，接下来根据PID查找下执行程序的路径在哪里</p><p>进入内存目录，查看对应PID目录下exe文件的信息：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@webserver ~]# /mnt/bin/ls -al /proc/22765/exe </span><br><span class="line">lrwxrwxrwx 1 root root 0 Sep 29 22:09 /proc/22765/exe -&gt; /var/tmp/…/apa/t</span><br></pre></td></tr></table></figure><p>这样就找到了进程对应的完整程序执行路径，这个路径很隐蔽，由于/var/tmp目录默认情况下任何用户可读性，而入侵者就是利用这个漏洞在/var/tmp目录下创建了一个“…”的目录，而在这个目录下隐藏着攻击的程序源，进入/var/tmp/…/目录，发现了一些列入侵者放置的rootkit文件，列表如下：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@webserver ...]#/mnt/bin/ls -al</span><br><span class="line">drwxr-xr-x 2 nobody nobody 4096 Sep 29 22:09 apa</span><br><span class="line">-rw-r--r-- 1 nobody nobody     0 Sep 29 22:09 apa.tgz</span><br><span class="line">drwxr-xr-x 2 nobody nobody 4096 Sep 29 22:09 caca</span><br><span class="line">drwxr-xr-x 2 nobody nobody 4096  Sep 29 22:09 haha</span><br><span class="line">-rw-r--r-- 1 nobody nobody      0Sep 29 22:10 kk.tar.gz</span><br><span class="line">-rwxr-xr-x 1 nobody nobody      0 Sep 29 22:10 login</span><br><span class="line">-rw-r--r-- 1 nobody nobody      0 Sep 29 22:10 login.tgz</span><br><span class="line">-rwxr-xr-x 1 nobody nobody      0 Sep 29 22:10 z</span><br></pre></td></tr></table></figure><p>通过对这些文件的分析，基本判断这就是我们要找的程序攻击源，其中：</p><p>1）、z程序是用来清除系统日志等相关信息的，例如执行：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./z 62.17.163.186</span><br></pre></td></tr></table></figure><p>这条命令执行后，系统中所有与62.17.163.186有关的日志将全部被清除掉。</p><p>2）、在apa目录下有个后门程序t，这个就是之前在系统中看到的，运行此程序后，此程序会自动去读apa目录下的ip这个文件，而ip这个文件记录了各种ip地址信息，猜想这个t程序应该是去扫描ip文件中记录的所有ip信息，进而获取远程主机的权限，可见这个网站服务器已经是入侵者的一个肉鸡了。</p><p>3）、haha目录里面放置的就是用来替换系统相关命令的程序，也就是这个目录下的程序使我们无法看到操作系统的异常情况。</p><p>4）、login程序就是用来替换系统登录程序的木马程序，此程序还可以记录登录帐号和密码。</p><h5 id="查找攻击原因"><a href="#查找攻击原因" class="headerlink" title="查找攻击原因"></a>查找攻击原因</h5><p>到这里为止，服务器上遭受的攻击已经基本清晰了，但是入侵者是如何侵入这台服务器的呢？这个问题很重要，一定要找到入侵的根源，才能从根本上封堵漏洞。</p><p>为了弄清楚入侵者是如何进入服务器的，需要了解下此服务器的软件环境，这台服务器是一个基于java的web服务器，安装的软件有apache2.0.63、tomcat5.5，apache和tomcat之间通过mod_jk模块进行集成，apache对外开放80端口，由于tomcat没有对外开放端口，所以将问题集中到apache上面。</p><p>通过查看apache的配置发现，apache仅仅处理些静态资源请求，而网页也以静态页面居多，所以通过网页方式入侵系统可能性不大，既然漏洞可能来自于apache，那么尝试查看apache日志，也许能发现一些可疑的访问痕迹，通过查看access.log文件，发现了如下信息：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">62.17.163.186 - - [29/Sep/2013:22:17:06 +0800] "GET http://www.xxx.com/cgi-bin/awstats.pl?configdir=|echo;echo;ps+-aux%00 HTTP/1.0" 200 12333 "-" "Mozilla/5.0 (Windows; U; Windows NT 5.1; pt-BR; rv:1.8.1) Gecko/20121010 Firefox/2.0"</span><br><span class="line">62.17.163.186 - - [29/Sep/213:22:17:35 +0800] "GET http://www.xxx.com/cgi-bin/awstats.pl?configdir=|echo;echo;cd+/var/tmp/.../haha;ls+-a%00 HTTP/1.0" 200 1626 "-" "Mozilla/5.0 (Windows; U; Windows NT 5.1; pt-BR; rv:1.8.1) Gecko/20121010 Firefox/2.0"</span><br></pre></td></tr></table></figure><p>至此，发现了漏洞的根源，原来是awstats.pl脚本中configdir的一个漏洞，通过了解此服务器的应用，客户确实是通过一个Awstats的开源插件来做网页访问统计，通过这个漏洞，攻击者可以直接在浏览器上操作服务器，例如查看进程、创建目录等。通过上面第二条日志可以看出，攻击者正常浏览器执行切换到/var/tmp/…/haha目录的操作。</p><p>这个脚本漏洞挺可怕的，不过在Awstats官网也早已给出了修补的方法，对于这个漏洞，修复方法很简单，打开awstats.pl文件，找到如下信息：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">if ($QueryString =~ /configdir=([^&amp;]+)/i)</span><br><span class="line">&#123;</span><br><span class="line"><span class="meta">$</span><span class="bash">DirConfig=&amp;DecodeEncodedString(<span class="string">"<span class="variable">$1</span>"</span>);</span></span><br><span class="line">&#125;</span><br><span class="line">修改为如下即可：</span><br><span class="line">if ($QueryString =~ /configdir=([^&amp;]+)/i)</span><br><span class="line">&#123;</span><br><span class="line"><span class="meta">$</span><span class="bash">DirConfig=&amp;DecodeEncodedString(<span class="string">"<span class="variable">$1</span>"</span>);</span></span><br><span class="line"><span class="meta">$</span><span class="bash">DirConfig=~tr/a-z0-9_\-\/\./a-z0-9_\-\/\./<span class="built_in">cd</span>;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h5 id="6-揭开谜团"><a href="#6-揭开谜团" class="headerlink" title="6. 揭开谜团"></a>6. 揭开谜团</h5><p>通过上面逐步分析和介绍，此服务遭受入侵的原因和过程已经非常清楚了，大致过程如下：</p><p>（1）攻击者通过Awstats脚本awstats.pl文件的漏洞进入了系统，在/var/tmp目录下创建了隐藏目录，然后将rootkit后门文件传到这个路径下。</p><p>（2）攻击者通过植入后门程序，获取了系统超级用户权限，进而控制了这台服务器，通过这台服务器向外发包。</p><p>（3）攻击者的IP地址62.17.163.186可能是通过代理过来的，也可能是攻击者控制的其他肉鸡服务器。</p><p>（4）攻击者为了永久控制这台机器，修改了系统默认帐号mail的信息，将mail帐号变为可登录，并且设置了mail帐号的密码。</p><p>（5）攻击者在完成攻击后，通过后门程序自动清理了系统访问日志，毁灭了证据。</p><p>通过对这个入侵过程的分析，发现入侵者的手段还是非常简单和普遍的，虽然入侵者删除了系统的一些日志，但是还是留下了很多可查的踪迹，其实还可以查看用户下的.bash_history文件，这个文件是用户操作命令的历史记录。</p><h5 id="7-如何恢复网站"><a href="#7-如何恢复网站" class="headerlink" title="7. 如何恢复网站"></a>7. 如何恢复网站</h5><p>由于系统已经文件被更改和替换，此系统已经变得完全不可信，因此建议备份网站数据，重新安装系统，基本步骤如下：</p><p>（1）安装稳定版本的操作系统，删除系统默认的并且不需要的用户。</p><p>（2）系统登录方式改为公钥认证方式，避开密码认证的缺陷。</p><p>（3）安装更高版本的apache和最新稳定版本的Awstats程序。</p><p>（4）使用Linux下的Tcp_Wrappers防火墙，限制ssh登录的源地址。</p><p>参考：<a href="https://blog.51cto.com/ixdba/1431305" target="_blank" rel="noopener">南非蚂蚁</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h5 id=&quot;1-受攻击现象&quot;&gt;&lt;a href=&quot;#1-受攻击现象&quot; class=&quot;headerlink&quot; title=&quot;1. 受攻击现象&quot;&gt;&lt;/a&gt;1. 受攻击现象&lt;/h5&gt;&lt;p&gt;这是一台客户的门户网站服务器，托管在电信机房，客户接到电信的通知：由于此服务器持续对外发送数据包，导致100M带宽耗尽，于是电信就切断了此服务器的网络。此服务器是Centos5.5版本，对外开放了80、22端口。&lt;/p&gt;
+&lt;p&gt;从客户那里了解到，网站的访问量并不大，所以带宽占用也不会太高，而耗尽100M的带宽是绝对不可能的，那么极有可能是服务器遭受了流量攻击，于是登录服务器做详细的检测。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="linux" scheme="https://garywu520.github.io/blog/tags/linux/"/>
+    
+      <category term="肉鸡" scheme="https://garywu520.github.io/blog/tags/%E8%82%89%E9%B8%A1/"/>
+    
+      <category term="攻击" scheme="https://garywu520.github.io/blog/tags/%E6%94%BB%E5%87%BB/"/>
+    
+      <category term="rootkit攻击" scheme="https://garywu520.github.io/blog/tags/rootkit%E6%94%BB%E5%87%BB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>合理利用history功能-Linux</title>
+    <link href="https://garywu520.github.io/blog/2019/06/20/%E5%90%88%E7%90%86%E5%88%A9%E7%94%A8history%E5%8A%9F%E8%83%BD-Linux/"/>
+    <id>https://garywu520.github.io/blog/2019/06/20/合理利用history功能-Linux/</id>
+    <published>2019-06-20T03:29:04.000Z</published>
+    <updated>2019-06-20T03:31:03.779Z</updated>
+    
+    <content type="html"><![CDATA[<p>Linux下通过history命令查看用户的所有历史操作记录，而这些记录存储在用户目录下的“.bash_history”文件中</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -lh  .bash_history</span><br></pre></td></tr></table></figure><p>默认的history命令只能看到用户历史操作记录，并不能区分用户操作命令的时间，所以就需要进行如下改动：</p><a id="more"></a><p>cat  /etc/bashrc  #新增如下条目</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HISTFILESIZE=4000</span><br><span class="line">HISTSIZE=4000</span><br><span class="line">HISTTIMEFORMAT='%F %T'</span><br><span class="line">export HISTTIMEFORMAT</span><br></pre></td></tr></table></figure><ul><li>HISTFILESIZE定义了在.bash_history文件中保存命令的记录总数，默认值是1000，这里设置为4000；</li><li>HISTSIZE定义了history命令输出的记录总数；</li><li>HISTTIMEFORMAT定义时间显示格式，这里的格式与date命令后的“+”%F %T””是一致的；</li><li>HISTTIMEFORMAT作为history的时间变量将值传递给history命令。</li></ul><p>为了确保安全，保留shell命令执行历史是非常重要的，虽然有history查看历史命令，但功能并非针对审计目的而设计，因此很容易被篡改或丢失。故需要通过下面的shell将 登录过系统的用户、IP地址、shell命令以及详细操作时间等信息保存在一个安全的地方，便于审计与排查。</p><p>cat  /etc/profile  #新增如下代码即可</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="built_in">history</span></span></span><br><span class="line">USER_IP=`who -u am i 2&gt;/dev/null| awk '&#123;print $NF&#125;'|sed -e 's/[()]//g'`</span><br><span class="line">HISTDIR=/usr/share/.history</span><br><span class="line">if [ -z $USER_IP ];then</span><br><span class="line">   USER_IP=`hostname`</span><br><span class="line">fi</span><br><span class="line">if [ ! -d $HISTDIR ];then</span><br><span class="line">   mkdir -p $HISTDIR</span><br><span class="line">   chmod 777 $HISTDIR</span><br><span class="line">fi</span><br><span class="line">if [ ! -d $HISTDIR/$&#123;LOGNAME&#125; ];then</span><br><span class="line">   mkdir -p $HISTDIR/$&#123;LOGNAME&#125;</span><br><span class="line">   chmod 300 $HISTDIR/$&#123;LOGNAME&#125;</span><br><span class="line">fi</span><br><span class="line">export HISTSIZE=4000</span><br><span class="line">DT=`date +%Y%m%d_%H%M%S`</span><br><span class="line">export HISTFILE="$HISTDIR/$&#123;LOGNAME&#125;/$&#123;USER_IP&#125;.history.$DT"</span><br><span class="line">export HISTTIMEFORMAT="[%Y.%m.%d %H:%M:%S]"</span><br><span class="line">chmod 600 $HISTDIR/$&#123;LOGNAME&#125;/*.history* 2&gt;/dev/null</span><br></pre></td></tr></table></figure><p>这段代码将每个用户的shell命令执行历史以文件的形式保存在/usr/share/.history目录中，每个用户一个文件夹，并且文件夹下的每个文件以IP地址加shell命令操作时间的格式命名。效果如下：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@CentOS7 root]# pwd</span><br><span class="line">/usr/share/.history/root</span><br><span class="line"></span><br><span class="line">[root@CentOS7 root]# ls -lh </span><br><span class="line">total 4.0K</span><br><span class="line">-rw------- 1 root root 333 Jun 20 11:01 10.0.60.251.history.20190620_110057</span><br></pre></td></tr></table></figure><p>保存历史命令的文件夹目录要尽量隐蔽，避免被黑客发现后删除。</p><p><strong>参考：<a href="https://blog.51cto.com/ixdba/1552907" target="_blank" rel="noopener">南非蚂蚁</a></strong></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Linux下通过history命令查看用户的所有历史操作记录，而这些记录存储在用户目录下的“.bash_history”文件中&lt;/p&gt;
+&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;ls -lh  .bash_history&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;默认的history命令只能看到用户历史操作记录，并不能区分用户操作命令的时间，所以就需要进行如下改动：&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Linux" scheme="https://garywu520.github.io/blog/tags/Linux/"/>
+    
+      <category term="history" scheme="https://garywu520.github.io/blog/tags/history/"/>
+    
+      <category term="系统安全" scheme="https://garywu520.github.io/blog/tags/%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>邓宁-克鲁格心理效应</title>
+    <link href="https://garywu520.github.io/blog/2019/06/14/%E9%82%93%E5%AE%81-%E5%85%8B%E9%B2%81%E6%A0%BC%E5%BF%83%E7%90%86%E6%95%88%E5%BA%94/"/>
+    <id>https://garywu520.github.io/blog/2019/06/14/邓宁-克鲁格心理效应/</id>
+    <published>2019-06-14T03:00:12.000Z</published>
+    <updated>2019-06-14T04:23:40.922Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>邓宁-克鲁格效应(The Dunning-Kruger Effect)</strong>，也称 <strong>达克效应</strong></p><h5 id="什么是邓宁-克鲁格效应"><a href="#什么是邓宁-克鲁格效应" class="headerlink" title="什么是邓宁-克鲁格效应"></a>什么是邓宁-克鲁格效应</h5><p>邓宁-克鲁格效应是指的是能力欠缺的人在自己欠考虑的决定的基础上得出错误结论，但是无法正确认识到自身的不足，辨别错误行为，是一种<a href="https://wiki.mbalib.com/wiki/认知偏差" target="_blank" rel="noopener">认知偏差</a>现象。这些<a href="https://wiki.mbalib.com/wiki/能力" target="_blank" rel="noopener">能力</a>欠缺者们沉浸在自我营造的虚幻的优势之中，常常高估自己的能力水平，却无法客观评价他人的能力。</p><a id="more"></a><p><img src="https://wiki.mbalib.com/w/images/thumb/3/3f/%E9%82%93%E5%AE%81-%E5%85%8B%E9%B2%81%E6%A0%BC%E6%95%88%E5%BA%94.jpg/648px-%E9%82%93%E5%AE%81-%E5%85%8B%E9%B2%81%E6%A0%BC%E6%95%88%E5%BA%94.jpg" alt="MBA"></p><h5 id="邓宁-克鲁格效应的成因"><a href="#邓宁-克鲁格效应的成因" class="headerlink" title="邓宁-克鲁格效应的成因"></a>邓宁-克鲁格效应的成因</h5><p><strong>1.低能力者的双重困境</strong></p><p>Kruger和Dunning (1999)指出，个体在某一特定领域具备能力有两层含义。其一是指<a href="https://wiki.mbalib.com/wiki/个体" target="_blank" rel="noopener">个体</a>在此领域中的表现出众，其二是指个体能<a href="https://wiki.mbalib.com/wiki/认识" target="_blank" rel="noopener">认识</a>到自己在这一领域的能力水平，这种认知包括对自己以及他人。在某一领域能力低的个体缺乏一种<a href="https://wiki.mbalib.com/wiki/认知心理学" target="_blank" rel="noopener">认知心理学</a>家所说的元认知能力。这种能力使个体既能知道自己表现得怎样，也能对自己的能力做出准确的评价。俗语中有“知其然，知其所以然，’，就是指这种元认知能力。低能力者在对自己的能力做出评价时，面临了双重困境，即他们既不能呈现高水平的绩效表现，也无法正确认知到自己的能力低卜，反而还会产生对自己能力的无端自负。</p><p><strong>2.元认知能力缺陷理论</strong></p><p>该实验说明，元认知能力是个体在某一特定领域客观的能力水平与<a href="https://wiki.mbalib.com/wiki/自我评价" target="_blank" rel="noopener">自我评价</a>之间的一个中介变量。尽管个体能在能力测验中取得好的成绩，但他们仍然无法正确评价自己的能力水平，而那些本身就无法取得<a href="https://wiki.mbalib.com/wiki/能力测验" target="_blank" rel="noopener">能力测验</a>好成绩的人更加无法正确评价自己的能力，这些都是因为他们的元认知能力存在缺陷。</p><p><strong>3.虚假一致性效应</strong></p><p>虚假一致性是指人们常常会高估或夸大自己的<a href="https://wiki.mbalib.com/wiki/信念" target="_blank" rel="noopener">信念</a>、判断及<a href="https://wiki.mbalib.com/wiki/行为" target="_blank" rel="noopener">行为</a>的普遍性。能力高的人在能力测试上表现得不错，就错误的估计其他人也是这样的，而对自己能力突出的这一特征并不敏感。在实验中能力排名处在最高端的个体认识到他们后来看到的5份答卷比自己表现得差后，就会调整自己的判断，因而变得更准确。</p><p>参考：<a href="[https://wiki.mbalib.com/wiki/%E9%82%93%E5%AE%81-%E5%85%8B%E9%B2%81%E6%A0%BC%E6%95%88%E5%BA%94](https://wiki.mbalib.com/wiki/邓宁-克鲁格效应)">MBAlib</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;strong&gt;邓宁-克鲁格效应(The Dunning-Kruger Effect)&lt;/strong&gt;，也称 &lt;strong&gt;达克效应&lt;/strong&gt;&lt;/p&gt;
+&lt;h5 id=&quot;什么是邓宁-克鲁格效应&quot;&gt;&lt;a href=&quot;#什么是邓宁-克鲁格效应&quot; class=&quot;headerlink&quot; title=&quot;什么是邓宁-克鲁格效应&quot;&gt;&lt;/a&gt;什么是邓宁-克鲁格效应&lt;/h5&gt;&lt;p&gt;邓宁-克鲁格效应是指的是能力欠缺的人在自己欠考虑的决定的基础上得出错误结论，但是无法正确认识到自身的不足，辨别错误行为，是一种&lt;a href=&quot;https://wiki.mbalib.com/wiki/认知偏差&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;认知偏差&lt;/a&gt;现象。这些&lt;a href=&quot;https://wiki.mbalib.com/wiki/能力&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;能力&lt;/a&gt;欠缺者们沉浸在自我营造的虚幻的优势之中，常常高估自己的能力水平，却无法客观评价他人的能力。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="随笔" scheme="https://garywu520.github.io/blog/tags/%E9%9A%8F%E7%AC%94/"/>
+    
+      <category term="邓宁" scheme="https://garywu520.github.io/blog/tags/%E9%82%93%E5%AE%81/"/>
+    
+      <category term="克鲁格效应" scheme="https://garywu520.github.io/blog/tags/%E5%85%8B%E9%B2%81%E6%A0%BC%E6%95%88%E5%BA%94/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ESXI vm灾难恢复</title>
+    <link href="https://garywu520.github.io/blog/2019/06/13/ESXI-vm%E7%81%BE%E9%9A%BE%E6%81%A2%E5%A4%8D/"/>
+    <id>https://garywu520.github.io/blog/2019/06/13/ESXI-vm灾难恢复/</id>
+    <published>2019-06-13T04:13:14.000Z</published>
+    <updated>2019-06-13T04:16:27.539Z</updated>
+    
+    <content type="html"><![CDATA[<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">本案例适用于 ESXI中正在运行的VM文件误删除，当重启<span class="keyword">vm</span>后提示文件丢失，其他情况仅供参考</span><br></pre></td></tr></table></figure><h5 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h5><p>(1) 在原vm上添加一块和原硬盘大小一致的虚拟硬盘AA [也就是说新AA的vmdk文件需要在原目录]</p><p>(2)开启SSH服务，并ssh登陆到ESXI</p><p>(3)找到并cd到原vm目录</p><a id="more"></a><p>(4)用vi命令打开这个AA.vmdk文件</p><ul><li>将文件中的虚拟快照[参数:RW 104857600 VMFS “AA-flat.vmdk”] 修改为目录中仅存的xx-flat.vmdk</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[root@bogon:/vmfs/volumes/5720f606-0b9b3145-22ef-0024e85ee7c5/test-01] cat test-01_2.vmdk </span><br><span class="line"><span class="meta">#</span><span class="bash"> Disk DescriptorFile</span></span><br><span class="line">version=1</span><br><span class="line">encoding="UTF-8"</span><br><span class="line">CID=fffffffe</span><br><span class="line">parentCID=ffffffff</span><br><span class="line">isNativeSnapshot="no"</span><br><span class="line">createType="vmfs"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Extent description</span></span><br><span class="line">RW 104857600 VMFS "test-01-flat.vmdk"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> The Disk Data Base </span></span><br><span class="line"><span class="meta">#</span><span class="bash">DDB</span></span><br><span class="line"></span><br><span class="line">ddb.adapterType = "lsilogic"</span><br><span class="line">ddb.geometry.cylinders = "6527"</span><br><span class="line">ddb.geometry.heads = "255"</span><br><span class="line">ddb.geometry.sectors = "63"</span><br><span class="line">ddb.longContentID = "9b6db9e43aec61e0ad783c0cfffffffe"</span><br><span class="line">ddb.uuid = "60 00 C2 9c c0 66 6b 4b-77 46 09 2c b9 89 67 bd"</span><br><span class="line">ddb.virtualHWVersion = "11"</span><br></pre></td></tr></table></figure><ul><li>同时将此文件名AA.vmdk修改为xx.vmdk</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv test-01_2.vmdk test-01.vmdk</span><br></pre></td></tr></table></figure><p>(5) VM中移除新增的磁盘AA</p><p>这时候就可以正常重启VM了</p><p>注：如果ESXI界面出现启动vm出现错误，就需要重新登录ESXI界面后再操作。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;figure class=&quot;highlight vim&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;本案例适用于 ESXI中正在运行的VM文件误删除，当重启&lt;span class=&quot;keyword&quot;&gt;vm&lt;/span&gt;后提示文件丢失，其他情况仅供参考&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;h5 id=&quot;操作步骤&quot;&gt;&lt;a href=&quot;#操作步骤&quot; class=&quot;headerlink&quot; title=&quot;操作步骤&quot;&gt;&lt;/a&gt;操作步骤&lt;/h5&gt;&lt;p&gt;(1) 在原vm上添加一块和原硬盘大小一致的虚拟硬盘AA [也就是说新AA的vmdk文件需要在原目录]&lt;/p&gt;
+&lt;p&gt;(2)开启SSH服务，并ssh登陆到ESXI&lt;/p&gt;
+&lt;p&gt;(3)找到并cd到原vm目录&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="ESXI" scheme="https://garywu520.github.io/blog/tags/ESXI/"/>
+    
+      <category term="VM" scheme="https://garywu520.github.io/blog/tags/VM/"/>
+    
+      <category term="虚拟机" scheme="https://garywu520.github.io/blog/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
+    
+      <category term="虚拟化" scheme="https://garywu520.github.io/blog/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ES关闭分片自动迁移功能</title>
+    <link href="https://garywu520.github.io/blog/2019/06/12/ES%E5%85%B3%E9%97%AD%E5%88%86%E7%89%87%E8%BF%81%E7%A7%BB%E5%8A%9F%E8%83%BD/"/>
+    <id>https://garywu520.github.io/blog/2019/06/12/ES关闭分片迁移功能/</id>
+    <published>2019-06-12T09:51:22.000Z</published>
+    <updated>2019-06-12T10:03:42.108Z</updated>
+    
+    <content type="html"><![CDATA[<p>现有的ES集群，不可避免的需要新增或重启节点，正确步骤应该是首先关闭ES集群的reshard功能, 防止分片自动迁移。</p><h5 id="Master节点关闭reshard"><a href="#Master节点关闭reshard" class="headerlink" title="Master节点关闭reshard"></a>Master节点关闭reshard</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">curl -XPUT http://server_ip:9200/_cluster/settings -d '&#123;</span><br><span class="line">  "transient" : &#123;</span><br><span class="line">  "cluster.routing.allocation.enable": "none"</span><br><span class="line">  &#125;</span><br><span class="line">&#125;'</span><br></pre></td></tr></table></figure><p>此时就可以进行节点重启操作了</p><a id="more"></a><h5 id="维护完，Master节点开启reshard功能"><a href="#维护完，Master节点开启reshard功能" class="headerlink" title="维护完，Master节点开启reshard功能"></a>维护完，Master节点开启reshard功能</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">curl -XPUT http://server_ip:9200/_cluster/settings -d '&#123;</span><br><span class="line">  "transient" : &#123;</span><br><span class="line">  "cluster.routing.allocation.enable": "all"</span><br><span class="line">  &#125;</span><br><span class="line">&#125;'</span><br></pre></td></tr></table></figure><h5 id="如果安装了Kopf插件，可以很方便的管理ES集群的reshard"><a href="#如果安装了Kopf插件，可以很方便的管理ES集群的reshard" class="headerlink" title="如果安装了Kopf插件，可以很方便的管理ES集群的reshard"></a>如果安装了Kopf插件，可以很方便的管理ES集群的reshard</h5><p>打开kopf界面，左上角的锁头，点击锁住即为关闭reshard；</p><p>锁头打开即为开启reshard</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;现有的ES集群，不可避免的需要新增或重启节点，正确步骤应该是首先关闭ES集群的reshard功能, 防止分片自动迁移。&lt;/p&gt;
+&lt;h5 id=&quot;Master节点关闭reshard&quot;&gt;&lt;a href=&quot;#Master节点关闭reshard&quot; class=&quot;headerlink&quot; title=&quot;Master节点关闭reshard&quot;&gt;&lt;/a&gt;Master节点关闭reshard&lt;/h5&gt;&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;curl -XPUT http://server_ip:9200/_cluster/settings -d &#39;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &quot;transient&quot; : &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &quot;cluster.routing.allocation.enable&quot;: &quot;none&quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&#39;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;此时就可以进行节点重启操作了&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="ES" scheme="https://garywu520.github.io/blog/tags/ES/"/>
+    
+      <category term="shard" scheme="https://garywu520.github.io/blog/tags/shard/"/>
+    
+      <category term="reshard" scheme="https://garywu520.github.io/blog/tags/reshard/"/>
+    
+      <category term="ELK" scheme="https://garywu520.github.io/blog/tags/ELK/"/>
+    
+      <category term="elasticsearch" scheme="https://garywu520.github.io/blog/tags/elasticsearch/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ES索引删除</title>
+    <link href="https://garywu520.github.io/blog/2019/06/12/ES%E7%B4%A2%E5%BC%95%E5%88%A0%E9%99%A4/"/>
+    <id>https://garywu520.github.io/blog/2019/06/12/ES索引删除/</id>
+    <published>2019-06-12T09:40:18.000Z</published>
+    <updated>2019-06-12T09:47:56.523Z</updated>
+    
+    <content type="html"><![CDATA[<p>生产环境中的ES使用久了，会产生较大的历史数据，而有些数据是根本使用不到的，除了占用大量磁盘空间外，当有节点异常重启后，会导致大量的磁盘io读写，进而导致ES集群瘫痪。因此，就需要定期进行清理。</p><h5 id="配置禁止使用通配符删除"><a href="#配置禁止使用通配符删除" class="headerlink" title="配置禁止使用通配符删除"></a>配置禁止使用通配符删除</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">设置禁用_all和*通配符来删除，预防数据丢失</span></span><br><span class="line">action.destructive_requires_name = true</span><br></pre></td></tr></table></figure><h5 id="使用命令-删除索引"><a href="#使用命令-删除索引" class="headerlink" title="使用命令-删除索引"></a>使用命令-删除索引</h5><p>格式：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">删除多个索引，中间用“,”分割</span></span><br><span class="line">curl -XDELETE http://ip:9200/index_name1,index_name2</span><br></pre></td></tr></table></figure><p>删除单个索引</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -XDELETE http://ip:9200/logstash-exc-2018.01.01</span><br></pre></td></tr></table></figure><h5 id="kopf插件-删除索引"><a href="#kopf插件-删除索引" class="headerlink" title="kopf插件-删除索引"></a>kopf插件-删除索引</h5><p>打开kopf插件，选择要删除的索引，点击 “delete index”</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;生产环境中的ES使用久了，会产生较大的历史数据，而有些数据是根本使用不到的，除了占用大量磁盘空间外，当有节点异常重启后，会导致大量的磁盘io读写，进而导致ES集群瘫痪。因此，就需要定期进行清理。&lt;/p&gt;
+&lt;h5 id=&quot;配置禁止使用通配符删除&quot;&gt;&lt;a href=&quot;#配置禁止
+      
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="elasticsearch" scheme="https://garywu520.github.io/blog/tags/elasticsearch/"/>
+    
+      <category term="es" scheme="https://garywu520.github.io/blog/tags/es/"/>
+    
+      <category term="elk" scheme="https://garywu520.github.io/blog/tags/elk/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Json数据调用变量问题-Shell</title>
+    <link href="https://garywu520.github.io/blog/2019/06/10/Json%E6%95%B0%E6%8D%AE%E8%B0%83%E7%94%A8%E5%8F%98%E9%87%8F%E9%97%AE%E9%A2%98-Shell/"/>
+    <id>https://garywu520.github.io/blog/2019/06/10/Json数据调用变量问题-Shell/</id>
+    <published>2019-06-10T08:19:01.000Z</published>
+    <updated>2019-06-10T08:23:51.364Z</updated>
+    
+    <content type="html"><![CDATA[<p>curl提交数据部分如下：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">curl -XPOST -H "Content-Type: application/json" http://admin.xxx.cn/xxx/AddServer \</span><br><span class="line">-d '&#123;\</span><br><span class="line">"platform_name":"$&#123;PLATFORM&#125;", \</span><br><span class="line">"region_id":"$&#123;SID&#125;", \</span><br><span class="line">"game_db_ip":"$&#123;GAME_DOMAIN&#125;", \</span><br><span class="line">"game_ip":"$&#123;GAME_DOMAIN&#125;", \</span><br><span class="line">"log_db_ip":"admin.xxx.cn", \</span><br><span class="line">"server_type":"3", \</span><br><span class="line">"server_state":"1", \</span><br><span class="line">"main_server":"0"\</span><br><span class="line">&#125;'</span><br></pre></td></tr></table></figure><p>其中，上面引用的Shell变量没有被解析，主要是引号问题。</p><a id="more"></a><p>解决方法：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">curl -XPOST -H "Content-Type: application/json" http://admin.xxx.cn/zmsgApi/xxx/AddServer \</span><br><span class="line">-d '&#123;\</span><br><span class="line">"platform_name":"'"$&#123;PLATFORM&#125;"'", \</span><br><span class="line">"region_id":"'"$&#123;SID&#125;"'", \</span><br><span class="line">"game_db_ip":"'"$&#123;GAME_DOMAIN&#125;"'", \</span><br><span class="line">"game_ip":"'"$&#123;GAME_DOMAIN&#125;"'", \</span><br><span class="line">"log_db_ip":"admin.xxx.cn", \</span><br><span class="line">"server_type":"3", \</span><br><span class="line">"server_state":"1", \</span><br><span class="line">"main_server":"0"\</span><br><span class="line">&#125;'</span><br></pre></td></tr></table></figure><p>参考自：<a href="https://jaminzhang.github.io/shell/the-problem-of-curl-commit-json-data-include-shell-variables/" target="_blank" rel="noopener">Jamin Zhang</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;curl提交数据部分如下：&lt;/p&gt;
+&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;curl -XPOST -H &quot;Content-Type: application/json&quot; http://admin.xxx.cn/xxx/AddServer \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;-d &#39;&amp;#123;\&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&quot;platform_name&quot;:&quot;$&amp;#123;PLATFORM&amp;#125;&quot;, \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&quot;region_id&quot;:&quot;$&amp;#123;SID&amp;#125;&quot;, \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&quot;game_db_ip&quot;:&quot;$&amp;#123;GAME_DOMAIN&amp;#125;&quot;, \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&quot;game_ip&quot;:&quot;$&amp;#123;GAME_DOMAIN&amp;#125;&quot;, \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&quot;log_db_ip&quot;:&quot;admin.xxx.cn&quot;, \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&quot;server_type&quot;:&quot;3&quot;, \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&quot;server_state&quot;:&quot;1&quot;, \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&quot;main_server&quot;:&quot;0&quot;\&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&#39;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;其中，上面引用的Shell变量没有被解析，主要是引号问题。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="curl" scheme="https://garywu520.github.io/blog/tags/curl/"/>
+    
+      <category term="shell" scheme="https://garywu520.github.io/blog/tags/shell/"/>
+    
+      <category term="curl -XPOST" scheme="https://garywu520.github.io/blog/tags/curl-XPOST/"/>
+    
+      <category term="shell变量" scheme="https://garywu520.github.io/blog/tags/shell%E5%8F%98%E9%87%8F/"/>
+    
+      <category term="json引用" scheme="https://garywu520.github.io/blog/tags/json%E5%BC%95%E7%94%A8/"/>
+    
+  </entry>
+  
+</feed>
