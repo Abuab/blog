@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://garywu520.github.io/blog/"/>
-  <updated>2019-08-07T09:01:59.169Z</updated>
+  <updated>2019-08-07T10:19:20.071Z</updated>
   <id>https://garywu520.github.io/blog/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用supervisor管理Tomcat进程</title>
+    <link href="https://garywu520.github.io/blog/2019/08/07/%E4%BD%BF%E7%94%A8supervisor%E7%AE%A1%E7%90%86Tomcat%E8%BF%9B%E7%A8%8B/"/>
+    <id>https://garywu520.github.io/blog/2019/08/07/使用supervisor管理Tomcat进程/</id>
+    <published>2019-08-07T10:10:23.000Z</published>
+    <updated>2019-08-07T10:19:20.071Z</updated>
+    
+    <content type="html"><![CDATA[<p>使用 supervisord 监控管理的进程必须以 nodaemon 启动，而 tomcat 的 startup.sh 脚本是daemon方式的，现在不能用startup.sh形式，所以要用catalina.sh，且在后面加 run。</p><a id="more"></a><h5 id="supervisor-tomcat启动配置文件"><a href="#supervisor-tomcat启动配置文件" class="headerlink" title="supervisor tomcat启动配置文件"></a>supervisor tomcat启动配置文件</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[program:tomcat_8081]</span><br><span class="line">command=/usr/local/tomcat_8081/bin/catalina.sh run</span><br><span class="line">stdout_logfile=/usr/local/tomcat_8081/logs/catalina.out</span><br><span class="line">autostart=true</span><br><span class="line">autorestart=true</span><br><span class="line">startsecs=5</span><br><span class="line">priority=1</span><br><span class="line">stopasgroup=true</span><br><span class="line">killasgroup=true</span><br></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">supervisorctl reread</span><br><span class="line">supervisorctl add tomcat_8081</span><br><span class="line">supervisorctl restart tomcat_8081</span><br><span class="line">supervisorctl status</span><br><span class="line"></span><br><span class="line">移除配置</span><br><span class="line">(1)删除配置文件</span><br><span class="line">(2)supervisorctl reread   重新读取配置文件</span><br><span class="line">(3)supervisorctl update   更新配置</span><br></pre></td></tr></table></figure><h5 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h5><p>supervisor启动Tomcat等JAVA程序，log报错：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Neither the JAVA_HOME nor the JRE_HOME environment variable is defined</span><br><span class="line">At least one of these environment variable is needed to run this program</span><br></pre></td></tr></table></figure><p>解决方法：</p><p>在/etc/supervisord.conf文件末尾，添加如下行：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">environment=JAVA_HOME="/usr/local/jdk",JRE_HOME="/usr/local/jdk/jre"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">注：多个环境变量使用英文逗号隔开</span></span><br></pre></td></tr></table></figure><p>重启supervisor服务后，再使用supervisor重启tomcat即可</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;使用 supervisord 监控管理的进程必须以 nodaemon 启动，而 tomcat 的 startup.sh 脚本是daemon方式的，现在不能用startup.sh形式，所以要用catalina.sh，且在后面加 run。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="tomcat" scheme="https://garywu520.github.io/blog/tags/tomcat/"/>
+    
+      <category term="supervisor" scheme="https://garywu520.github.io/blog/tags/supervisor/"/>
+    
+  </entry>
   
   <entry>
     <title>Docker容器使用systemctl报错</title>
@@ -600,36 +624,6 @@
       <category term="ELK" scheme="https://garywu520.github.io/blog/tags/ELK/"/>
     
       <category term="elasticsearch" scheme="https://garywu520.github.io/blog/tags/elasticsearch/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ES索引删除</title>
-    <link href="https://garywu520.github.io/blog/2019/06/12/ES%E7%B4%A2%E5%BC%95%E5%88%A0%E9%99%A4/"/>
-    <id>https://garywu520.github.io/blog/2019/06/12/ES索引删除/</id>
-    <published>2019-06-12T09:40:18.000Z</published>
-    <updated>2019-06-12T09:47:56.523Z</updated>
-    
-    <content type="html"><![CDATA[<p>生产环境中的ES使用久了，会产生较大的历史数据，而有些数据是根本使用不到的，除了占用大量磁盘空间外，当有节点异常重启后，会导致大量的磁盘io读写，进而导致ES集群瘫痪。因此，就需要定期进行清理。</p><h5 id="配置禁止使用通配符删除"><a href="#配置禁止使用通配符删除" class="headerlink" title="配置禁止使用通配符删除"></a>配置禁止使用通配符删除</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">设置禁用_all和*通配符来删除，预防数据丢失</span></span><br><span class="line">action.destructive_requires_name = true</span><br></pre></td></tr></table></figure><h5 id="使用命令-删除索引"><a href="#使用命令-删除索引" class="headerlink" title="使用命令-删除索引"></a>使用命令-删除索引</h5><p>格式：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">删除多个索引，中间用“,”分割</span></span><br><span class="line">curl -XDELETE http://ip:9200/index_name1,index_name2</span><br></pre></td></tr></table></figure><p>删除单个索引</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -XDELETE http://ip:9200/logstash-exc-2018.01.01</span><br></pre></td></tr></table></figure><h5 id="kopf插件-删除索引"><a href="#kopf插件-删除索引" class="headerlink" title="kopf插件-删除索引"></a>kopf插件-删除索引</h5><p>打开kopf插件，选择要删除的索引，点击 “delete index”</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;生产环境中的ES使用久了，会产生较大的历史数据，而有些数据是根本使用不到的，除了占用大量磁盘空间外，当有节点异常重启后，会导致大量的磁盘io读写，进而导致ES集群瘫痪。因此，就需要定期进行清理。&lt;/p&gt;
-&lt;h5 id=&quot;配置禁止使用通配符删除&quot;&gt;&lt;a href=&quot;#配置禁止
-      
-    
-    </summary>
-    
-    
-      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
-    
-      <category term="elasticsearch" scheme="https://garywu520.github.io/blog/tags/elasticsearch/"/>
-    
-      <category term="es" scheme="https://garywu520.github.io/blog/tags/es/"/>
-    
-      <category term="elk" scheme="https://garywu520.github.io/blog/tags/elk/"/>
     
   </entry>
   
