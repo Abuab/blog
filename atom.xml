@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://garywu520.github.io/blog/"/>
-  <updated>2019-08-07T12:42:15.343Z</updated>
+  <updated>2019-08-08T03:31:27.087Z</updated>
   <id>https://garywu520.github.io/blog/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>docker导出导入镜像</title>
+    <link href="https://garywu520.github.io/blog/2019/08/08/docker%E5%AF%BC%E5%87%BA%E5%AF%BC%E5%85%A5%E9%95%9C%E5%83%8F/"/>
+    <id>https://garywu520.github.io/blog/2019/08/08/docker导出导入镜像/</id>
+    <published>2019-08-08T03:25:02.000Z</published>
+    <updated>2019-08-08T03:31:27.087Z</updated>
+    
+    <content type="html"><![CDATA[<p>当基于基础镜像，配置并优化了相关环境后，重新打包制作的Docker镜像需要导出保存时，就需要导出导入操作了。</p><h5 id="导出镜像"><a href="#导出镜像" class="headerlink" title="导出镜像"></a>导出镜像</h5><p>如果要导出镜像到本地文件，可以使用docker save命令. 假设要导出的新镜像名为centos_v1</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br><span class="line">docker save -o centos_v1.tar centos_v1</span><br></pre></td></tr></table></figure><h5 id="载入镜像"><a href="#载入镜像" class="headerlink" title="载入镜像"></a>载入镜像</h5><p>可以使用docker load从导出的本地文件中再导入到本地镜像库</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker load --input centos_v1.tar</span><br><span class="line">或</span><br><span class="line">docker load &lt; centos_v1.tar</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;当基于基础镜像，配置并优化了相关环境后，重新打包制作的Docker镜像需要导出保存时，就需要导出导入操作了。&lt;/p&gt;
+&lt;h5 id=&quot;导出镜像&quot;&gt;&lt;a href=&quot;#导出镜像&quot; class=&quot;headerlink&quot; title=&quot;导出镜像&quot;&gt;&lt;/a&gt;导出镜像&lt;/h5&gt;&lt;p&gt;
+      
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="docker" scheme="https://garywu520.github.io/blog/tags/docker/"/>
+    
+      <category term="images" scheme="https://garywu520.github.io/blog/tags/images/"/>
+    
+      <category term="导入导出" scheme="https://garywu520.github.io/blog/tags/%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BA/"/>
+    
+  </entry>
   
   <entry>
     <title>docker exec命令</title>
@@ -589,38 +619,6 @@
       <category term="邓宁" scheme="https://garywu520.github.io/blog/tags/%E9%82%93%E5%AE%81/"/>
     
       <category term="克鲁格效应" scheme="https://garywu520.github.io/blog/tags/%E5%85%8B%E9%B2%81%E6%A0%BC%E6%95%88%E5%BA%94/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ESXI vm灾难恢复</title>
-    <link href="https://garywu520.github.io/blog/2019/06/13/ESXI-vm%E7%81%BE%E9%9A%BE%E6%81%A2%E5%A4%8D/"/>
-    <id>https://garywu520.github.io/blog/2019/06/13/ESXI-vm灾难恢复/</id>
-    <published>2019-06-13T04:13:14.000Z</published>
-    <updated>2019-06-13T04:16:27.539Z</updated>
-    
-    <content type="html"><![CDATA[<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">本案例适用于 ESXI中正在运行的VM文件误删除，当重启<span class="keyword">vm</span>后提示文件丢失，其他情况仅供参考</span><br></pre></td></tr></table></figure><h5 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h5><p>(1) 在原vm上添加一块和原硬盘大小一致的虚拟硬盘AA [也就是说新AA的vmdk文件需要在原目录]</p><p>(2)开启SSH服务，并ssh登陆到ESXI</p><p>(3)找到并cd到原vm目录</p><a id="more"></a><p>(4)用vi命令打开这个AA.vmdk文件</p><ul><li>将文件中的虚拟快照[参数:RW 104857600 VMFS “AA-flat.vmdk”] 修改为目录中仅存的xx-flat.vmdk</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[root@bogon:/vmfs/volumes/5720f606-0b9b3145-22ef-0024e85ee7c5/test-01] cat test-01_2.vmdk </span><br><span class="line"><span class="meta">#</span><span class="bash"> Disk DescriptorFile</span></span><br><span class="line">version=1</span><br><span class="line">encoding="UTF-8"</span><br><span class="line">CID=fffffffe</span><br><span class="line">parentCID=ffffffff</span><br><span class="line">isNativeSnapshot="no"</span><br><span class="line">createType="vmfs"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Extent description</span></span><br><span class="line">RW 104857600 VMFS "test-01-flat.vmdk"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> The Disk Data Base </span></span><br><span class="line"><span class="meta">#</span><span class="bash">DDB</span></span><br><span class="line"></span><br><span class="line">ddb.adapterType = "lsilogic"</span><br><span class="line">ddb.geometry.cylinders = "6527"</span><br><span class="line">ddb.geometry.heads = "255"</span><br><span class="line">ddb.geometry.sectors = "63"</span><br><span class="line">ddb.longContentID = "9b6db9e43aec61e0ad783c0cfffffffe"</span><br><span class="line">ddb.uuid = "60 00 C2 9c c0 66 6b 4b-77 46 09 2c b9 89 67 bd"</span><br><span class="line">ddb.virtualHWVersion = "11"</span><br></pre></td></tr></table></figure><ul><li>同时将此文件名AA.vmdk修改为xx.vmdk</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv test-01_2.vmdk test-01.vmdk</span><br></pre></td></tr></table></figure><p>(5) VM中移除新增的磁盘AA</p><p>这时候就可以正常重启VM了</p><p>注：如果ESXI界面出现启动vm出现错误，就需要重新登录ESXI界面后再操作。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;figure class=&quot;highlight vim&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;本案例适用于 ESXI中正在运行的VM文件误删除，当重启&lt;span class=&quot;keyword&quot;&gt;vm&lt;/span&gt;后提示文件丢失，其他情况仅供参考&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;h5 id=&quot;操作步骤&quot;&gt;&lt;a href=&quot;#操作步骤&quot; class=&quot;headerlink&quot; title=&quot;操作步骤&quot;&gt;&lt;/a&gt;操作步骤&lt;/h5&gt;&lt;p&gt;(1) 在原vm上添加一块和原硬盘大小一致的虚拟硬盘AA [也就是说新AA的vmdk文件需要在原目录]&lt;/p&gt;
-&lt;p&gt;(2)开启SSH服务，并ssh登陆到ESXI&lt;/p&gt;
-&lt;p&gt;(3)找到并cd到原vm目录&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
-    
-      <category term="ESXI" scheme="https://garywu520.github.io/blog/tags/ESXI/"/>
-    
-      <category term="VM" scheme="https://garywu520.github.io/blog/tags/VM/"/>
-    
-      <category term="虚拟机" scheme="https://garywu520.github.io/blog/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
-    
-      <category term="虚拟化" scheme="https://garywu520.github.io/blog/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/"/>
     
   </entry>
   
