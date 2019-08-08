@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://garywu520.github.io/blog/"/>
-  <updated>2019-08-08T07:00:56.087Z</updated>
+  <updated>2019-08-08T08:53:01.254Z</updated>
   <id>https://garywu520.github.io/blog/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>把运行的容器打包成Docker镜像</title>
+    <link href="https://garywu520.github.io/blog/2019/08/08/%E6%8A%8A%E8%BF%90%E8%A1%8C%E7%9A%84%E5%AE%B9%E5%99%A8%E6%89%93%E5%8C%85%E6%88%90Docker%E9%95%9C%E5%83%8F/"/>
+    <id>https://garywu520.github.io/blog/2019/08/08/把运行的容器打包成Docker镜像/</id>
+    <published>2019-08-08T08:42:19.000Z</published>
+    <updated>2019-08-08T08:53:01.254Z</updated>
+    
+    <content type="html"><![CDATA[<p>根据基础镜像，运行的容器。有时候需要对内部环境做些调整，调整后想把当前环境打包成新的Image镜像</p><p>方法如下</p><a id="more"></a><h5 id="使用docker-commit命令"><a href="#使用docker-commit命令" class="headerlink" title="使用docker commit命令"></a>使用docker commit命令</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> docker commit --<span class="built_in">help</span></span></span><br><span class="line">  -a, --author string    指定一个作者,如：GaryWu</span><br><span class="line">  -c, --change list      将Dockerfile指令应用于创建的映像</span><br><span class="line">  -m, --message string   字符串消息</span><br><span class="line">  -p, --pause            在提交期间暂停容器（默认为true）</span><br></pre></td></tr></table></figure><h5 id="用法-示例"><a href="#用法-示例" class="headerlink" title="用法-示例"></a>用法-示例</h5><ul><li>获取容器ID</li></ul><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">首先通过docker ps -<span class="keyword">a</span>获取想要打包的容器ID</span><br></pre></td></tr></table></figure><ul><li>打包镜像</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 格式：</span></span><br><span class="line">docker commit -a "&lt;作者&gt;" -m "&lt;字符串消息&gt;"  &lt;容器ID&gt;  &lt;新镜像名&gt;:&lt;版本号&gt;</span><br></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> docker commit -a <span class="string">"GaryWu"</span> -m <span class="string">"v1"</span> bef669f03c61 centos:v1</span></span><br><span class="line">sha256:8ae09cd2fbde04dcfa313566c05052f75ebbd40f375b3d747169e00a5ea7ca73</span><br></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看镜像</span></span><br><span class="line">[root@iZ2zeb1y67msd8vbu7ln6tZ ~]# docker images</span><br><span class="line">REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">centos              v1                  8ae09cd2fbde        21 seconds ago      3.59GB</span><br><span class="line">centos              latest              9f38484d220f        4 months ago        202MB</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;根据基础镜像，运行的容器。有时候需要对内部环境做些调整，调整后想把当前环境打包成新的Image镜像&lt;/p&gt;
+&lt;p&gt;方法如下&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="docker" scheme="https://garywu520.github.io/blog/tags/docker/"/>
+    
+      <category term="images" scheme="https://garywu520.github.io/blog/tags/images/"/>
+    
+      <category term="镜像打包" scheme="https://garywu520.github.io/blog/tags/%E9%95%9C%E5%83%8F%E6%89%93%E5%8C%85/"/>
+    
+  </entry>
   
   <entry>
     <title>supervisor管理二进制程序</title>
@@ -213,9 +240,9 @@
     
       <category term="tomcat" scheme="https://garywu520.github.io/blog/tags/tomcat/"/>
     
-      <category term="jar" scheme="https://garywu520.github.io/blog/tags/jar/"/>
-    
       <category term="war" scheme="https://garywu520.github.io/blog/tags/war/"/>
+    
+      <category term="jar" scheme="https://garywu520.github.io/blog/tags/jar/"/>
     
   </entry>
   
@@ -344,11 +371,11 @@
     
       <category term="docker" scheme="https://garywu520.github.io/blog/tags/docker/"/>
     
-      <category term="容器" scheme="https://garywu520.github.io/blog/tags/%E5%AE%B9%E5%99%A8/"/>
-    
       <category term="docker-compose" scheme="https://garywu520.github.io/blog/tags/docker-compose/"/>
     
       <category term="docker-ce" scheme="https://garywu520.github.io/blog/tags/docker-ce/"/>
+    
+      <category term="容器" scheme="https://garywu520.github.io/blog/tags/%E5%AE%B9%E5%99%A8/"/>
     
   </entry>
   
@@ -378,11 +405,11 @@
     
       <category term="docker" scheme="https://garywu520.github.io/blog/tags/docker/"/>
     
-      <category term="容器" scheme="https://garywu520.github.io/blog/tags/%E5%AE%B9%E5%99%A8/"/>
-    
       <category term="docker-compose" scheme="https://garywu520.github.io/blog/tags/docker-compose/"/>
     
       <category term="docker-ce" scheme="https://garywu520.github.io/blog/tags/docker-ce/"/>
+    
+      <category term="容器" scheme="https://garywu520.github.io/blog/tags/%E5%AE%B9%E5%99%A8/"/>
     
   </entry>
   
@@ -591,38 +618,11 @@
     
       <category term="linux" scheme="https://garywu520.github.io/blog/tags/linux/"/>
     
-      <category term="攻击" scheme="https://garywu520.github.io/blog/tags/%E6%94%BB%E5%87%BB/"/>
-    
       <category term="肉鸡" scheme="https://garywu520.github.io/blog/tags/%E8%82%89%E9%B8%A1/"/>
     
+      <category term="攻击" scheme="https://garywu520.github.io/blog/tags/%E6%94%BB%E5%87%BB/"/>
+    
       <category term="rootkit攻击" scheme="https://garywu520.github.io/blog/tags/rootkit%E6%94%BB%E5%87%BB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>合理利用history功能-Linux</title>
-    <link href="https://garywu520.github.io/blog/2019/06/20/%E5%90%88%E7%90%86%E5%88%A9%E7%94%A8history%E5%8A%9F%E8%83%BD-Linux/"/>
-    <id>https://garywu520.github.io/blog/2019/06/20/合理利用history功能-Linux/</id>
-    <published>2019-06-20T03:29:04.000Z</published>
-    <updated>2019-06-20T03:31:03.779Z</updated>
-    
-    <content type="html"><![CDATA[<p>Linux下通过history命令查看用户的所有历史操作记录，而这些记录存储在用户目录下的“.bash_history”文件中</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -lh  .bash_history</span><br></pre></td></tr></table></figure><p>默认的history命令只能看到用户历史操作记录，并不能区分用户操作命令的时间，所以就需要进行如下改动：</p><a id="more"></a><p>cat  /etc/bashrc  #新增如下条目</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HISTFILESIZE=4000</span><br><span class="line">HISTSIZE=4000</span><br><span class="line">HISTTIMEFORMAT='%F %T'</span><br><span class="line">export HISTTIMEFORMAT</span><br></pre></td></tr></table></figure><ul><li>HISTFILESIZE定义了在.bash_history文件中保存命令的记录总数，默认值是1000，这里设置为4000；</li><li>HISTSIZE定义了history命令输出的记录总数；</li><li>HISTTIMEFORMAT定义时间显示格式，这里的格式与date命令后的“+”%F %T””是一致的；</li><li>HISTTIMEFORMAT作为history的时间变量将值传递给history命令。</li></ul><p>为了确保安全，保留shell命令执行历史是非常重要的，虽然有history查看历史命令，但功能并非针对审计目的而设计，因此很容易被篡改或丢失。故需要通过下面的shell将 登录过系统的用户、IP地址、shell命令以及详细操作时间等信息保存在一个安全的地方，便于审计与排查。</p><p>cat  /etc/profile  #新增如下代码即可</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="built_in">history</span></span></span><br><span class="line">USER_IP=`who -u am i 2&gt;/dev/null| awk '&#123;print $NF&#125;'|sed -e 's/[()]//g'`</span><br><span class="line">HISTDIR=/usr/share/.history</span><br><span class="line">if [ -z $USER_IP ];then</span><br><span class="line">   USER_IP=`hostname`</span><br><span class="line">fi</span><br><span class="line">if [ ! -d $HISTDIR ];then</span><br><span class="line">   mkdir -p $HISTDIR</span><br><span class="line">   chmod 777 $HISTDIR</span><br><span class="line">fi</span><br><span class="line">if [ ! -d $HISTDIR/$&#123;LOGNAME&#125; ];then</span><br><span class="line">   mkdir -p $HISTDIR/$&#123;LOGNAME&#125;</span><br><span class="line">   chmod 300 $HISTDIR/$&#123;LOGNAME&#125;</span><br><span class="line">fi</span><br><span class="line">export HISTSIZE=4000</span><br><span class="line">DT=`date +%Y%m%d_%H%M%S`</span><br><span class="line">export HISTFILE="$HISTDIR/$&#123;LOGNAME&#125;/$&#123;USER_IP&#125;.history.$DT"</span><br><span class="line">export HISTTIMEFORMAT="[%Y.%m.%d %H:%M:%S]"</span><br><span class="line">chmod 600 $HISTDIR/$&#123;LOGNAME&#125;/*.history* 2&gt;/dev/null</span><br></pre></td></tr></table></figure><p>这段代码将每个用户的shell命令执行历史以文件的形式保存在/usr/share/.history目录中，每个用户一个文件夹，并且文件夹下的每个文件以IP地址加shell命令操作时间的格式命名。效果如下：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@CentOS7 root]# pwd</span><br><span class="line">/usr/share/.history/root</span><br><span class="line"></span><br><span class="line">[root@CentOS7 root]# ls -lh </span><br><span class="line">total 4.0K</span><br><span class="line">-rw------- 1 root root 333 Jun 20 11:01 10.0.60.251.history.20190620_110057</span><br></pre></td></tr></table></figure><p>保存历史命令的文件夹目录要尽量隐蔽，避免被黑客发现后删除。</p><p><strong>参考：<a href="https://blog.51cto.com/ixdba/1552907" target="_blank" rel="noopener">南非蚂蚁</a></strong></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Linux下通过history命令查看用户的所有历史操作记录，而这些记录存储在用户目录下的“.bash_history”文件中&lt;/p&gt;
-&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;ls -lh  .bash_history&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;p&gt;默认的history命令只能看到用户历史操作记录，并不能区分用户操作命令的时间，所以就需要进行如下改动：&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="Linux" scheme="https://garywu520.github.io/blog/tags/Linux/"/>
-    
-      <category term="history" scheme="https://garywu520.github.io/blog/tags/history/"/>
-    
-      <category term="系统安全" scheme="https://garywu520.github.io/blog/tags/%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8/"/>
     
   </entry>
   
