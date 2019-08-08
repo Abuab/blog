@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://garywu520.github.io/blog/"/>
-  <updated>2019-08-08T03:31:27.087Z</updated>
+  <updated>2019-08-08T07:00:56.087Z</updated>
   <id>https://garywu520.github.io/blog/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>supervisor管理二进制程序</title>
+    <link href="https://garywu520.github.io/blog/2019/08/08/supervisor%E7%AE%A1%E7%90%86%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%A8%8B%E5%BA%8F/"/>
+    <id>https://garywu520.github.io/blog/2019/08/08/supervisor管理二进制程序/</id>
+    <published>2019-08-08T06:57:10.000Z</published>
+    <updated>2019-08-08T07:00:56.087Z</updated>
+    
+    <content type="html"><![CDATA[<p>有时候需要使用supervisor管理二进制程序，区别是需要进入到相关目录才能运行，这时候就需要directory来指定工作目录了。</p><p>cat  /etc/supervisor.conf</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[program:app1]</span><br><span class="line">directory=/usr/local/auto/app1</span><br><span class="line">command=/usr/local/auto/app1/Server</span><br><span class="line">stdout_logfile=/usr/local/auto/app1/app1.log</span><br><span class="line">autostart=true</span><br><span class="line">autorestart=true</span><br><span class="line">startsecs=5</span><br><span class="line">priority=1</span><br><span class="line">stopasgroup=true</span><br><span class="line">killasgroup=true</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;有时候需要使用supervisor管理二进制程序，区别是需要进入到相关目录才能运行，这时候就需要directory来指定工作目录了。&lt;/p&gt;
+&lt;p&gt;cat  /etc/supervisor.conf&lt;/p&gt;
+&lt;figure class=&quot;highlight shell&quot;&gt;&lt;
+      
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="supervisor" scheme="https://garywu520.github.io/blog/tags/supervisor/"/>
+    
+      <category term="二进制" scheme="https://garywu520.github.io/blog/tags/%E4%BA%8C%E8%BF%9B%E5%88%B6/"/>
+    
+  </entry>
   
   <entry>
     <title>docker导出导入镜像</title>
@@ -562,9 +591,9 @@
     
       <category term="linux" scheme="https://garywu520.github.io/blog/tags/linux/"/>
     
-      <category term="肉鸡" scheme="https://garywu520.github.io/blog/tags/%E8%82%89%E9%B8%A1/"/>
-    
       <category term="攻击" scheme="https://garywu520.github.io/blog/tags/%E6%94%BB%E5%87%BB/"/>
+    
+      <category term="肉鸡" scheme="https://garywu520.github.io/blog/tags/%E8%82%89%E9%B8%A1/"/>
     
       <category term="rootkit攻击" scheme="https://garywu520.github.io/blog/tags/rootkit%E6%94%BB%E5%87%BB/"/>
     
@@ -594,31 +623,6 @@
       <category term="history" scheme="https://garywu520.github.io/blog/tags/history/"/>
     
       <category term="系统安全" scheme="https://garywu520.github.io/blog/tags/%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>邓宁-克鲁格心理效应</title>
-    <link href="https://garywu520.github.io/blog/2019/06/14/%E9%82%93%E5%AE%81-%E5%85%8B%E9%B2%81%E6%A0%BC%E5%BF%83%E7%90%86%E6%95%88%E5%BA%94/"/>
-    <id>https://garywu520.github.io/blog/2019/06/14/邓宁-克鲁格心理效应/</id>
-    <published>2019-06-14T03:00:12.000Z</published>
-    <updated>2019-06-14T04:23:40.922Z</updated>
-    
-    <content type="html"><![CDATA[<p><strong>邓宁-克鲁格效应(The Dunning-Kruger Effect)</strong>，也称 <strong>达克效应</strong></p><h5 id="什么是邓宁-克鲁格效应"><a href="#什么是邓宁-克鲁格效应" class="headerlink" title="什么是邓宁-克鲁格效应"></a>什么是邓宁-克鲁格效应</h5><p>邓宁-克鲁格效应是指的是能力欠缺的人在自己欠考虑的决定的基础上得出错误结论，但是无法正确认识到自身的不足，辨别错误行为，是一种<a href="https://wiki.mbalib.com/wiki/认知偏差" target="_blank" rel="noopener">认知偏差</a>现象。这些<a href="https://wiki.mbalib.com/wiki/能力" target="_blank" rel="noopener">能力</a>欠缺者们沉浸在自我营造的虚幻的优势之中，常常高估自己的能力水平，却无法客观评价他人的能力。</p><a id="more"></a><p><img src="https://wiki.mbalib.com/w/images/thumb/3/3f/%E9%82%93%E5%AE%81-%E5%85%8B%E9%B2%81%E6%A0%BC%E6%95%88%E5%BA%94.jpg/648px-%E9%82%93%E5%AE%81-%E5%85%8B%E9%B2%81%E6%A0%BC%E6%95%88%E5%BA%94.jpg" alt="MBA"></p><h5 id="邓宁-克鲁格效应的成因"><a href="#邓宁-克鲁格效应的成因" class="headerlink" title="邓宁-克鲁格效应的成因"></a>邓宁-克鲁格效应的成因</h5><p><strong>1.低能力者的双重困境</strong></p><p>Kruger和Dunning (1999)指出，个体在某一特定领域具备能力有两层含义。其一是指<a href="https://wiki.mbalib.com/wiki/个体" target="_blank" rel="noopener">个体</a>在此领域中的表现出众，其二是指个体能<a href="https://wiki.mbalib.com/wiki/认识" target="_blank" rel="noopener">认识</a>到自己在这一领域的能力水平，这种认知包括对自己以及他人。在某一领域能力低的个体缺乏一种<a href="https://wiki.mbalib.com/wiki/认知心理学" target="_blank" rel="noopener">认知心理学</a>家所说的元认知能力。这种能力使个体既能知道自己表现得怎样，也能对自己的能力做出准确的评价。俗语中有“知其然，知其所以然，’，就是指这种元认知能力。低能力者在对自己的能力做出评价时，面临了双重困境，即他们既不能呈现高水平的绩效表现，也无法正确认知到自己的能力低卜，反而还会产生对自己能力的无端自负。</p><p><strong>2.元认知能力缺陷理论</strong></p><p>该实验说明，元认知能力是个体在某一特定领域客观的能力水平与<a href="https://wiki.mbalib.com/wiki/自我评价" target="_blank" rel="noopener">自我评价</a>之间的一个中介变量。尽管个体能在能力测验中取得好的成绩，但他们仍然无法正确评价自己的能力水平，而那些本身就无法取得<a href="https://wiki.mbalib.com/wiki/能力测验" target="_blank" rel="noopener">能力测验</a>好成绩的人更加无法正确评价自己的能力，这些都是因为他们的元认知能力存在缺陷。</p><p><strong>3.虚假一致性效应</strong></p><p>虚假一致性是指人们常常会高估或夸大自己的<a href="https://wiki.mbalib.com/wiki/信念" target="_blank" rel="noopener">信念</a>、判断及<a href="https://wiki.mbalib.com/wiki/行为" target="_blank" rel="noopener">行为</a>的普遍性。能力高的人在能力测试上表现得不错，就错误的估计其他人也是这样的，而对自己能力突出的这一特征并不敏感。在实验中能力排名处在最高端的个体认识到他们后来看到的5份答卷比自己表现得差后，就会调整自己的判断，因而变得更准确。</p><p>参考：<a href="[https://wiki.mbalib.com/wiki/%E9%82%93%E5%AE%81-%E5%85%8B%E9%B2%81%E6%A0%BC%E6%95%88%E5%BA%94](https://wiki.mbalib.com/wiki/邓宁-克鲁格效应)">MBAlib</a></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;strong&gt;邓宁-克鲁格效应(The Dunning-Kruger Effect)&lt;/strong&gt;，也称 &lt;strong&gt;达克效应&lt;/strong&gt;&lt;/p&gt;
-&lt;h5 id=&quot;什么是邓宁-克鲁格效应&quot;&gt;&lt;a href=&quot;#什么是邓宁-克鲁格效应&quot; class=&quot;headerlink&quot; title=&quot;什么是邓宁-克鲁格效应&quot;&gt;&lt;/a&gt;什么是邓宁-克鲁格效应&lt;/h5&gt;&lt;p&gt;邓宁-克鲁格效应是指的是能力欠缺的人在自己欠考虑的决定的基础上得出错误结论，但是无法正确认识到自身的不足，辨别错误行为，是一种&lt;a href=&quot;https://wiki.mbalib.com/wiki/认知偏差&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;认知偏差&lt;/a&gt;现象。这些&lt;a href=&quot;https://wiki.mbalib.com/wiki/能力&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;能力&lt;/a&gt;欠缺者们沉浸在自我营造的虚幻的优势之中，常常高估自己的能力水平，却无法客观评价他人的能力。&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="随笔" scheme="https://garywu520.github.io/blog/tags/%E9%9A%8F%E7%AC%94/"/>
-    
-      <category term="邓宁" scheme="https://garywu520.github.io/blog/tags/%E9%82%93%E5%AE%81/"/>
-    
-      <category term="克鲁格效应" scheme="https://garywu520.github.io/blog/tags/%E5%85%8B%E9%B2%81%E6%A0%BC%E6%95%88%E5%BA%94/"/>
     
   </entry>
   
