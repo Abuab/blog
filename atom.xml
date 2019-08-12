@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://garywu520.github.io/blog/"/>
-  <updated>2019-08-12T06:26:50.707Z</updated>
+  <updated>2019-08-12T07:18:00.461Z</updated>
   <id>https://garywu520.github.io/blog/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="https://garywu520.github.io/blog/2019/08/12/supervisor%E9%83%A8%E7%BD%B2/"/>
     <id>https://garywu520.github.io/blog/2019/08/12/supervisor部署/</id>
     <published>2019-08-12T06:17:53.000Z</published>
-    <updated>2019-08-12T06:26:50.707Z</updated>
+    <updated>2019-08-12T07:18:00.461Z</updated>
     
-    <content type="html"><![CDATA[<h5 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h5><ul><li>CentOS7</li></ul><h5 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum install -y epel-release</span><br><span class="line">yum install -y supervisor</span><br><span class="line">systemctl enable supervisord</span><br></pre></td></tr></table></figure><p>cat /etc/supervisord.conf  </p><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="regexp">/etc/</span>supervisord.conf     <span class="comment">#清空默认模板文件，将下面的内容贴到本文件</span></span><br></pre></td></tr></table></figure><a id="more"></a><p>cat  /etc/supervisord.conf</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">[unix_http_server]</span><br><span class="line">file=/var/run/supervisor.sock   ; (the path to the socket file)</span><br><span class="line"></span><br><span class="line">[supervisord]</span><br><span class="line">logfile=/var/log/supervisord.log ; (main log file;default $CWD/supervisord.log)</span><br><span class="line">logfile_maxbytes=50MB        ; (max main logfile bytes b4 rotation;default 50MB)</span><br><span class="line">logfile_backups=10           ; (num of main logfile rotation backups;default 10)</span><br><span class="line">loglevel=info                ; (log level;default info; others: debug,warn,trace)</span><br><span class="line">pidfile=/var/run/supervisord.pid ; (supervisord pidfile;default supervisord.pid)</span><br><span class="line">nodaemon=false               ; (start in foreground if true;default false)</span><br><span class="line">minfds=1024                  ; (min. avail startup file descriptors;default 1024)</span><br><span class="line">minprocs=200                 ; (min. avail process descriptors;default 200)</span><br><span class="line"></span><br><span class="line">[rpcinterface:supervisor]</span><br><span class="line">supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface</span><br><span class="line"></span><br><span class="line">[supervisorctl]</span><br><span class="line">serverurl=unix:///var/run/supervisor.sock ; use a unix:// URL  for a unix socket</span><br><span class="line"></span><br><span class="line">[include]</span><br><span class="line">files = /etc/supervisord.d/*.conf</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> environment=JAVA_HOME=<span class="string">"/usr/local/jdk"</span>,JRE_HOME=<span class="string">"/usr/local/jdk/jre"</span></span></span><br></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start supervisord</span><br><span class="line">systemctl startus supervisord</span><br></pre></td></tr></table></figure>]]></content>
+    <content type="html"><![CDATA[<h5 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h5><ul><li>CentOS7</li></ul><h5 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum install -y epel-release</span><br><span class="line">yum install -y supervisor</span><br><span class="line">systemctl enable supervisord</span><br></pre></td></tr></table></figure><p>cat /etc/supervisord.conf  </p><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="regexp">/etc/</span>supervisord.conf     <span class="comment">#清空默认模板文件，将下面的内容贴到本文件</span></span><br></pre></td></tr></table></figure><a id="more"></a><p>cat  /etc/supervisord.conf</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">[unix_http_server]</span><br><span class="line">file=/var/run/supervisor.sock   ; (the path to the socket file)</span><br><span class="line"></span><br><span class="line">[supervisord]</span><br><span class="line">logfile=/var/log/supervisord.log ; (main log file;default $CWD/supervisord.log)</span><br><span class="line">logfile_maxbytes=50MB        ; (max main logfile bytes b4 rotation;default 50MB)</span><br><span class="line">logfile_backups=10           ; (num of main logfile rotation backups;default 10)</span><br><span class="line">loglevel=info                ; (log level;default info; others: debug,warn,trace)</span><br><span class="line">pidfile=/var/run/supervisord.pid ; (supervisord pidfile;default supervisord.pid)</span><br><span class="line">nodaemon=false               ; (start in foreground if true;default false)</span><br><span class="line">minfds=1024                  ; (min. avail startup file descriptors;default 1024)</span><br><span class="line">minprocs=200                 ; (min. avail process descriptors;default 200)</span><br><span class="line"></span><br><span class="line">[rpcinterface:supervisor]</span><br><span class="line">supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface</span><br><span class="line"></span><br><span class="line">[supervisorctl]</span><br><span class="line">serverurl=unix:///var/run/supervisor.sock ; use a unix:// URL  for a unix socket</span><br><span class="line"></span><br><span class="line">[include]</span><br><span class="line">files = /etc/supervisord.d/*.conf</span><br><span class="line"></span><br><span class="line">; environment=JAVA_HOME="/usr/local/jdk",JRE_HOME="/usr/local/jdk/jre"</span><br></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start supervisord</span><br><span class="line">systemctl startus supervisord</span><br></pre></td></tr></table></figure>]]></content>
     
     <summary type="html">
     
@@ -403,11 +403,11 @@
     
       <category term="docker" scheme="https://garywu520.github.io/blog/tags/docker/"/>
     
-      <category term="容器" scheme="https://garywu520.github.io/blog/tags/%E5%AE%B9%E5%99%A8/"/>
-    
       <category term="docker-compose" scheme="https://garywu520.github.io/blog/tags/docker-compose/"/>
     
       <category term="docker-ce" scheme="https://garywu520.github.io/blog/tags/docker-ce/"/>
+    
+      <category term="容器" scheme="https://garywu520.github.io/blog/tags/%E5%AE%B9%E5%99%A8/"/>
     
   </entry>
   
@@ -437,11 +437,11 @@
     
       <category term="docker" scheme="https://garywu520.github.io/blog/tags/docker/"/>
     
-      <category term="容器" scheme="https://garywu520.github.io/blog/tags/%E5%AE%B9%E5%99%A8/"/>
-    
       <category term="docker-compose" scheme="https://garywu520.github.io/blog/tags/docker-compose/"/>
     
       <category term="docker-ce" scheme="https://garywu520.github.io/blog/tags/docker-ce/"/>
+    
+      <category term="容器" scheme="https://garywu520.github.io/blog/tags/%E5%AE%B9%E5%99%A8/"/>
     
   </entry>
   
