@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://garywu520.github.io/blog/"/>
-  <updated>2019-08-08T08:53:01.254Z</updated>
+  <updated>2019-08-12T06:26:50.707Z</updated>
   <id>https://garywu520.github.io/blog/</id>
   
   <author>
@@ -15,6 +15,38 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>supervisor部署</title>
+    <link href="https://garywu520.github.io/blog/2019/08/12/supervisor%E9%83%A8%E7%BD%B2/"/>
+    <id>https://garywu520.github.io/blog/2019/08/12/supervisor部署/</id>
+    <published>2019-08-12T06:17:53.000Z</published>
+    <updated>2019-08-12T06:26:50.707Z</updated>
+    
+    <content type="html"><![CDATA[<h5 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h5><ul><li>CentOS7</li></ul><h5 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum install -y epel-release</span><br><span class="line">yum install -y supervisor</span><br><span class="line">systemctl enable supervisord</span><br></pre></td></tr></table></figure><p>cat /etc/supervisord.conf  </p><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="regexp">/etc/</span>supervisord.conf     <span class="comment">#清空默认模板文件，将下面的内容贴到本文件</span></span><br></pre></td></tr></table></figure><a id="more"></a><p>cat  /etc/supervisord.conf</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">[unix_http_server]</span><br><span class="line">file=/var/run/supervisor.sock   ; (the path to the socket file)</span><br><span class="line"></span><br><span class="line">[supervisord]</span><br><span class="line">logfile=/var/log/supervisord.log ; (main log file;default $CWD/supervisord.log)</span><br><span class="line">logfile_maxbytes=50MB        ; (max main logfile bytes b4 rotation;default 50MB)</span><br><span class="line">logfile_backups=10           ; (num of main logfile rotation backups;default 10)</span><br><span class="line">loglevel=info                ; (log level;default info; others: debug,warn,trace)</span><br><span class="line">pidfile=/var/run/supervisord.pid ; (supervisord pidfile;default supervisord.pid)</span><br><span class="line">nodaemon=false               ; (start in foreground if true;default false)</span><br><span class="line">minfds=1024                  ; (min. avail startup file descriptors;default 1024)</span><br><span class="line">minprocs=200                 ; (min. avail process descriptors;default 200)</span><br><span class="line"></span><br><span class="line">[rpcinterface:supervisor]</span><br><span class="line">supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface</span><br><span class="line"></span><br><span class="line">[supervisorctl]</span><br><span class="line">serverurl=unix:///var/run/supervisor.sock ; use a unix:// URL  for a unix socket</span><br><span class="line"></span><br><span class="line">[include]</span><br><span class="line">files = /etc/supervisord.d/*.conf</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> environment=JAVA_HOME=<span class="string">"/usr/local/jdk"</span>,JRE_HOME=<span class="string">"/usr/local/jdk/jre"</span></span></span><br></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start supervisord</span><br><span class="line">systemctl startus supervisord</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h5 id=&quot;环境&quot;&gt;&lt;a href=&quot;#环境&quot; class=&quot;headerlink&quot; title=&quot;环境&quot;&gt;&lt;/a&gt;环境&lt;/h5&gt;&lt;ul&gt;
+&lt;li&gt;CentOS7&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h5 id=&quot;安装&quot;&gt;&lt;a href=&quot;#安装&quot; class=&quot;headerlink&quot; title=&quot;安装&quot;&gt;&lt;/a&gt;安装&lt;/h5&gt;&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;yum install -y epel-release&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;yum install -y supervisor&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;systemctl enable supervisord&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;cat /etc/supervisord.conf  &lt;/p&gt;
+&lt;figure class=&quot;highlight awk&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt; &lt;span class=&quot;regexp&quot;&gt;/etc/&lt;/span&gt;supervisord.conf     &lt;span class=&quot;comment&quot;&gt;#清空默认模板文件，将下面的内容贴到本文件&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="supervisor" scheme="https://garywu520.github.io/blog/tags/supervisor/"/>
+    
+      <category term="supervisorctl" scheme="https://garywu520.github.io/blog/tags/supervisorctl/"/>
+    
+      <category term="supervisord" scheme="https://garywu520.github.io/blog/tags/supervisord/"/>
+    
+  </entry>
   
   <entry>
     <title>把运行的容器打包成Docker镜像</title>
@@ -240,9 +272,9 @@
     
       <category term="tomcat" scheme="https://garywu520.github.io/blog/tags/tomcat/"/>
     
-      <category term="war" scheme="https://garywu520.github.io/blog/tags/war/"/>
-    
       <category term="jar" scheme="https://garywu520.github.io/blog/tags/jar/"/>
+    
+      <category term="war" scheme="https://garywu520.github.io/blog/tags/war/"/>
     
   </entry>
   
@@ -371,11 +403,11 @@
     
       <category term="docker" scheme="https://garywu520.github.io/blog/tags/docker/"/>
     
+      <category term="容器" scheme="https://garywu520.github.io/blog/tags/%E5%AE%B9%E5%99%A8/"/>
+    
       <category term="docker-compose" scheme="https://garywu520.github.io/blog/tags/docker-compose/"/>
     
       <category term="docker-ce" scheme="https://garywu520.github.io/blog/tags/docker-ce/"/>
-    
-      <category term="容器" scheme="https://garywu520.github.io/blog/tags/%E5%AE%B9%E5%99%A8/"/>
     
   </entry>
   
@@ -405,11 +437,11 @@
     
       <category term="docker" scheme="https://garywu520.github.io/blog/tags/docker/"/>
     
+      <category term="容器" scheme="https://garywu520.github.io/blog/tags/%E5%AE%B9%E5%99%A8/"/>
+    
       <category term="docker-compose" scheme="https://garywu520.github.io/blog/tags/docker-compose/"/>
     
       <category term="docker-ce" scheme="https://garywu520.github.io/blog/tags/docker-ce/"/>
-    
-      <category term="容器" scheme="https://garywu520.github.io/blog/tags/%E5%AE%B9%E5%99%A8/"/>
     
   </entry>
   
@@ -594,35 +626,6 @@
       <category term="入侵" scheme="https://garywu520.github.io/blog/tags/%E5%85%A5%E4%BE%B5/"/>
     
       <category term="防御" scheme="https://garywu520.github.io/blog/tags/%E9%98%B2%E5%BE%A1/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>linux系统被黑的分析过程</title>
-    <link href="https://garywu520.github.io/blog/2019/06/20/linux%E7%B3%BB%E7%BB%9F%E8%A2%AB%E9%BB%91%E7%9A%84%E5%88%86%E6%9E%90%E8%BF%87%E7%A8%8B/"/>
-    <id>https://garywu520.github.io/blog/2019/06/20/linux系统被黑的分析过程/</id>
-    <published>2019-06-20T03:41:52.000Z</published>
-    <updated>2019-06-20T04:12:12.567Z</updated>
-    
-    <content type="html"><![CDATA[<h5 id="1-受攻击现象"><a href="#1-受攻击现象" class="headerlink" title="1. 受攻击现象"></a>1. 受攻击现象</h5><p>这是一台客户的门户网站服务器，托管在电信机房，客户接到电信的通知：由于此服务器持续对外发送数据包，导致100M带宽耗尽，于是电信就切断了此服务器的网络。此服务器是Centos5.5版本，对外开放了80、22端口。</p><p>从客户那里了解到，网站的访问量并不大，所以带宽占用也不会太高，而耗尽100M的带宽是绝对不可能的，那么极有可能是服务器遭受了流量攻击，于是登录服务器做详细的检测。</p><a id="more"></a><h5 id="2-初步分析"><a href="#2-初步分析" class="headerlink" title="2. 初步分析"></a>2. 初步分析</h5><p> 在电信人员的配合下通过交换机对该服务器的网络流量进行了检测，发现该主机确实存在对外80端口的扫描流量，于是登录系统通过“netstat –an”命令对系统开启的端口进行检查，可奇怪的是，没有发现任何与80端口相关的网络连接。接着使用“ps –ef”、“top”等命令也没有发现任何可疑的进程。于是怀疑系统是否被植入了rootkit。</p><p>为了证明系统是否被植入了rootkit，我们将网站服务器下的ps、top等命令与之前备份的同版本可信操作系统命令做了md5sum校验，结果发现网站服务器下的这两个命令确实被修改过，由此断定，此服务器已经被入侵并且安装了rootkit级别的后门程序。</p><h5 id="3-断网分析系统"><a href="#3-断网分析系统" class="headerlink" title="3. 断网分析系统"></a>3. 断网分析系统</h5><p>由于服务器不停向外发包，因此，</p><ul><li>首先要做的就是将此服务器断开网络</li><li>然后分析系统日志，寻找攻击源。</li></ul><p>但是系统命令已经被替换掉了，如果继续在该系统上执行操作将变得不可信，这里可以通过两种方法来避免这种情况。</p><ul><li><p>方案1：从同版本(且可信的)操作系统下拷贝所有命令到这个入侵服务器下某个路径，然后在执行命令的时候指定此命令的完整路径即可【推荐】</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">命令路径：</span></span><br><span class="line">/sbin/    </span><br><span class="line">/usr/sbin</span><br></pre></td></tr></table></figure></li><li><p>方案2：使用linux livecd启动系统进行分析</p></li><li><p>方案3:  将此服务器的硬盘取下来挂载到另外一台安全的主机上进行分析</p></li></ul><p>接下来首先查看系统的登陆日志，查看是否有可疑登陆信息</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">more /var/log/secure |grep Accepted</span><br></pre></td></tr></table></figure><p>通过对命令输出的查看，有一条日志引起了我们的怀疑：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Oct 3 03:10:25 webserver sshd[20701]: Accepted password for mail from 62.17.163.186 port 53349 ssh2</span><br></pre></td></tr></table></figure><p>这条日志显示在10月3号的凌晨3点10分，有个mail帐号从62.17.163.186这个IP成功登录了系统，mail是系统的内置帐号，默认情况下是无法执行登录操作的，而62.17.163.186这个IP，经过查证，是来自爱尔兰的一个地址。从mail帐号登录的时间来看，早于此网站服务器遭受攻击的时间。</p><p>接着查看一下系统密码文件/etc/shadow，又发现可疑信息：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mail:$1$kCEd3yD6$W1evaY5BMPQIqfTwTVJiX1:15400:0:99999:7:::</span><br></pre></td></tr></table></figure><p>很明显，mail帐号已经被设置了密码，并且被修改为可远程登录，之所以使用mail帐号，猜想可能是因为入侵者想留下一个隐蔽的帐号，以方便日后再次登录系统。</p><p>然后继续查看其他系统日志，如/var/log/messages、/var/log/wtmp均为空文件，可见，入侵者已经清理了系统日志文件，至于为何没有清空/var/log/secure文件，就不得而知了。</p><h5 id="4-寻找攻击源"><a href="#4-寻找攻击源" class="headerlink" title="4. 寻找攻击源"></a>4. 寻找攻击源</h5><p>到目前为止，我们所知道的情况是，有个mail帐号曾经登录过系统，但是为何会导致此网站服务器持续对外发送数据包呢？必须要找到对应的攻击源，通过替换到此服务器上的ps命令查看系统目前运行的进程，又发现了新的可疑：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nobody   22765     1  6 Sep29 ?        4-00:11:58 .t</span><br></pre></td></tr></table></figure><p>这个.t程序是什么呢，继续执行top命令，结果如下：</p><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PID<span class="built_in"> USER </span>   PR  NI  VIRT  RES  SHR  S  %CPU %MEM    TIME+  COMMAND</span><br><span class="line">22765 nobody  15  0   1740m 1362m 1228  S  98.3    91.5      2892:19   .t</span><br></pre></td></tr></table></figure><p>从输出可知，这个t程序已经运行了4天左右，运行这个程序的是nobody用户，并且这个t程序消耗了大量的内存和cpu，这也是之前客户反映的网站服务器异常缓慢的原因，从这个输出，我们得到了t程序的进程PID为22765，接下来根据PID查找下执行程序的路径在哪里</p><p>进入内存目录，查看对应PID目录下exe文件的信息：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@webserver ~]# /mnt/bin/ls -al /proc/22765/exe </span><br><span class="line">lrwxrwxrwx 1 root root 0 Sep 29 22:09 /proc/22765/exe -&gt; /var/tmp/…/apa/t</span><br></pre></td></tr></table></figure><p>这样就找到了进程对应的完整程序执行路径，这个路径很隐蔽，由于/var/tmp目录默认情况下任何用户可读性，而入侵者就是利用这个漏洞在/var/tmp目录下创建了一个“…”的目录，而在这个目录下隐藏着攻击的程序源，进入/var/tmp/…/目录，发现了一些列入侵者放置的rootkit文件，列表如下：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@webserver ...]#/mnt/bin/ls -al</span><br><span class="line">drwxr-xr-x 2 nobody nobody 4096 Sep 29 22:09 apa</span><br><span class="line">-rw-r--r-- 1 nobody nobody     0 Sep 29 22:09 apa.tgz</span><br><span class="line">drwxr-xr-x 2 nobody nobody 4096 Sep 29 22:09 caca</span><br><span class="line">drwxr-xr-x 2 nobody nobody 4096  Sep 29 22:09 haha</span><br><span class="line">-rw-r--r-- 1 nobody nobody      0Sep 29 22:10 kk.tar.gz</span><br><span class="line">-rwxr-xr-x 1 nobody nobody      0 Sep 29 22:10 login</span><br><span class="line">-rw-r--r-- 1 nobody nobody      0 Sep 29 22:10 login.tgz</span><br><span class="line">-rwxr-xr-x 1 nobody nobody      0 Sep 29 22:10 z</span><br></pre></td></tr></table></figure><p>通过对这些文件的分析，基本判断这就是我们要找的程序攻击源，其中：</p><p>1）、z程序是用来清除系统日志等相关信息的，例如执行：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./z 62.17.163.186</span><br></pre></td></tr></table></figure><p>这条命令执行后，系统中所有与62.17.163.186有关的日志将全部被清除掉。</p><p>2）、在apa目录下有个后门程序t，这个就是之前在系统中看到的，运行此程序后，此程序会自动去读apa目录下的ip这个文件，而ip这个文件记录了各种ip地址信息，猜想这个t程序应该是去扫描ip文件中记录的所有ip信息，进而获取远程主机的权限，可见这个网站服务器已经是入侵者的一个肉鸡了。</p><p>3）、haha目录里面放置的就是用来替换系统相关命令的程序，也就是这个目录下的程序使我们无法看到操作系统的异常情况。</p><p>4）、login程序就是用来替换系统登录程序的木马程序，此程序还可以记录登录帐号和密码。</p><h5 id="查找攻击原因"><a href="#查找攻击原因" class="headerlink" title="查找攻击原因"></a>查找攻击原因</h5><p>到这里为止，服务器上遭受的攻击已经基本清晰了，但是入侵者是如何侵入这台服务器的呢？这个问题很重要，一定要找到入侵的根源，才能从根本上封堵漏洞。</p><p>为了弄清楚入侵者是如何进入服务器的，需要了解下此服务器的软件环境，这台服务器是一个基于java的web服务器，安装的软件有apache2.0.63、tomcat5.5，apache和tomcat之间通过mod_jk模块进行集成，apache对外开放80端口，由于tomcat没有对外开放端口，所以将问题集中到apache上面。</p><p>通过查看apache的配置发现，apache仅仅处理些静态资源请求，而网页也以静态页面居多，所以通过网页方式入侵系统可能性不大，既然漏洞可能来自于apache，那么尝试查看apache日志，也许能发现一些可疑的访问痕迹，通过查看access.log文件，发现了如下信息：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">62.17.163.186 - - [29/Sep/2013:22:17:06 +0800] "GET http://www.xxx.com/cgi-bin/awstats.pl?configdir=|echo;echo;ps+-aux%00 HTTP/1.0" 200 12333 "-" "Mozilla/5.0 (Windows; U; Windows NT 5.1; pt-BR; rv:1.8.1) Gecko/20121010 Firefox/2.0"</span><br><span class="line">62.17.163.186 - - [29/Sep/213:22:17:35 +0800] "GET http://www.xxx.com/cgi-bin/awstats.pl?configdir=|echo;echo;cd+/var/tmp/.../haha;ls+-a%00 HTTP/1.0" 200 1626 "-" "Mozilla/5.0 (Windows; U; Windows NT 5.1; pt-BR; rv:1.8.1) Gecko/20121010 Firefox/2.0"</span><br></pre></td></tr></table></figure><p>至此，发现了漏洞的根源，原来是awstats.pl脚本中configdir的一个漏洞，通过了解此服务器的应用，客户确实是通过一个Awstats的开源插件来做网页访问统计，通过这个漏洞，攻击者可以直接在浏览器上操作服务器，例如查看进程、创建目录等。通过上面第二条日志可以看出，攻击者正常浏览器执行切换到/var/tmp/…/haha目录的操作。</p><p>这个脚本漏洞挺可怕的，不过在Awstats官网也早已给出了修补的方法，对于这个漏洞，修复方法很简单，打开awstats.pl文件，找到如下信息：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">if ($QueryString =~ /configdir=([^&amp;]+)/i)</span><br><span class="line">&#123;</span><br><span class="line"><span class="meta">$</span><span class="bash">DirConfig=&amp;DecodeEncodedString(<span class="string">"<span class="variable">$1</span>"</span>);</span></span><br><span class="line">&#125;</span><br><span class="line">修改为如下即可：</span><br><span class="line">if ($QueryString =~ /configdir=([^&amp;]+)/i)</span><br><span class="line">&#123;</span><br><span class="line"><span class="meta">$</span><span class="bash">DirConfig=&amp;DecodeEncodedString(<span class="string">"<span class="variable">$1</span>"</span>);</span></span><br><span class="line"><span class="meta">$</span><span class="bash">DirConfig=~tr/a-z0-9_\-\/\./a-z0-9_\-\/\./<span class="built_in">cd</span>;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h5 id="6-揭开谜团"><a href="#6-揭开谜团" class="headerlink" title="6. 揭开谜团"></a>6. 揭开谜团</h5><p>通过上面逐步分析和介绍，此服务遭受入侵的原因和过程已经非常清楚了，大致过程如下：</p><p>（1）攻击者通过Awstats脚本awstats.pl文件的漏洞进入了系统，在/var/tmp目录下创建了隐藏目录，然后将rootkit后门文件传到这个路径下。</p><p>（2）攻击者通过植入后门程序，获取了系统超级用户权限，进而控制了这台服务器，通过这台服务器向外发包。</p><p>（3）攻击者的IP地址62.17.163.186可能是通过代理过来的，也可能是攻击者控制的其他肉鸡服务器。</p><p>（4）攻击者为了永久控制这台机器，修改了系统默认帐号mail的信息，将mail帐号变为可登录，并且设置了mail帐号的密码。</p><p>（5）攻击者在完成攻击后，通过后门程序自动清理了系统访问日志，毁灭了证据。</p><p>通过对这个入侵过程的分析，发现入侵者的手段还是非常简单和普遍的，虽然入侵者删除了系统的一些日志，但是还是留下了很多可查的踪迹，其实还可以查看用户下的.bash_history文件，这个文件是用户操作命令的历史记录。</p><h5 id="7-如何恢复网站"><a href="#7-如何恢复网站" class="headerlink" title="7. 如何恢复网站"></a>7. 如何恢复网站</h5><p>由于系统已经文件被更改和替换，此系统已经变得完全不可信，因此建议备份网站数据，重新安装系统，基本步骤如下：</p><p>（1）安装稳定版本的操作系统，删除系统默认的并且不需要的用户。</p><p>（2）系统登录方式改为公钥认证方式，避开密码认证的缺陷。</p><p>（3）安装更高版本的apache和最新稳定版本的Awstats程序。</p><p>（4）使用Linux下的Tcp_Wrappers防火墙，限制ssh登录的源地址。</p><p>参考：<a href="https://blog.51cto.com/ixdba/1431305" target="_blank" rel="noopener">南非蚂蚁</a></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h5 id=&quot;1-受攻击现象&quot;&gt;&lt;a href=&quot;#1-受攻击现象&quot; class=&quot;headerlink&quot; title=&quot;1. 受攻击现象&quot;&gt;&lt;/a&gt;1. 受攻击现象&lt;/h5&gt;&lt;p&gt;这是一台客户的门户网站服务器，托管在电信机房，客户接到电信的通知：由于此服务器持续对外发送数据包，导致100M带宽耗尽，于是电信就切断了此服务器的网络。此服务器是Centos5.5版本，对外开放了80、22端口。&lt;/p&gt;
-&lt;p&gt;从客户那里了解到，网站的访问量并不大，所以带宽占用也不会太高，而耗尽100M的带宽是绝对不可能的，那么极有可能是服务器遭受了流量攻击，于是登录服务器做详细的检测。&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
-    
-      <category term="linux" scheme="https://garywu520.github.io/blog/tags/linux/"/>
-    
-      <category term="肉鸡" scheme="https://garywu520.github.io/blog/tags/%E8%82%89%E9%B8%A1/"/>
-    
-      <category term="攻击" scheme="https://garywu520.github.io/blog/tags/%E6%94%BB%E5%87%BB/"/>
-    
-      <category term="rootkit攻击" scheme="https://garywu520.github.io/blog/tags/rootkit%E6%94%BB%E5%87%BB/"/>
     
   </entry>
   
