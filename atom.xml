@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://garywu520.github.io/blog/"/>
-  <updated>2019-08-15T02:44:46.898Z</updated>
+  <updated>2019-08-15T06:53:21.463Z</updated>
   <id>https://garywu520.github.io/blog/</id>
   
   <author>
@@ -15,6 +15,38 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>shell脚本监控TraceRoute</title>
+    <link href="https://garywu520.github.io/blog/2019/08/15/shell%E8%84%9A%E6%9C%AC%E7%9B%91%E6%8E%A7TraceRoute/"/>
+    <id>https://garywu520.github.io/blog/2019/08/15/shell脚本监控TraceRoute/</id>
+    <published>2019-08-15T06:28:32.000Z</published>
+    <updated>2019-08-15T06:53:21.463Z</updated>
+    
+    <content type="html"><![CDATA[<h5 id="shell脚本逻辑："><a href="#shell脚本逻辑：" class="headerlink" title="shell脚本逻辑："></a>shell脚本逻辑：</h5><ul><li>不能以 trace命令返回值作为成功或失败的依据，不可达的地址返回值也是0</li><li>取文本的最后一跳信息，当最后一跳包含$IP，则视为Trace正常。若$IP的检索结果等于0，则视为Trace失败。</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">!/bin/env bash</span><br><span class="line">IP=xx.xx.xx.xx</span><br><span class="line">FILE=/tmp/besttrace.txt</span><br><span class="line">EMAIL=xxx@xx.com</span><br><span class="line"></span><br><span class="line">/sbin/besttrace -q 1 $IP &gt;$FILE</span><br><span class="line">NUM=`grep "$IP" $FILE|awk NR==2|wc -l`</span><br><span class="line">if [ $NUM -lt 1 ];then</span><br><span class="line">   INFO=`cat $FILE`</span><br><span class="line"><span class="meta">   #</span><span class="bash">发送告警邮件 </span></span><br><span class="line">   echo -e "邮件发自$HOSTNAME\n详情如下:\n\n$INFO"|mail -s "TraceRoute告警" $EMAIL</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h5 id=&quot;shell脚本逻辑：&quot;&gt;&lt;a href=&quot;#shell脚本逻辑：&quot; class=&quot;headerlink&quot; title=&quot;shell脚本逻辑：&quot;&gt;&lt;/a&gt;shell脚本逻辑：&lt;/h5&gt;&lt;ul&gt;
+&lt;li&gt;不能以 trace命令返回值作为成功或失败的依据，不可达的地址返
+      
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="shell" scheme="https://garywu520.github.io/blog/tags/shell/"/>
+    
+      <category term="MTR" scheme="https://garywu520.github.io/blog/tags/MTR/"/>
+    
+      <category term="traceroute" scheme="https://garywu520.github.io/blog/tags/traceroute/"/>
+    
+      <category term="besttrace" scheme="https://garywu520.github.io/blog/tags/besttrace/"/>
+    
+  </entry>
   
   <entry>
     <title>zabbix报警邮件内容带附件-解决方法</title>
@@ -362,9 +394,9 @@
     
       <category term="war" scheme="https://garywu520.github.io/blog/tags/war/"/>
     
-      <category term="tomcat8" scheme="https://garywu520.github.io/blog/tags/tomcat8/"/>
-    
       <category term="java" scheme="https://garywu520.github.io/blog/tags/java/"/>
+    
+      <category term="tomcat8" scheme="https://garywu520.github.io/blog/tags/tomcat8/"/>
     
   </entry>
   
@@ -393,9 +425,9 @@
     
       <category term="tomcat" scheme="https://garywu520.github.io/blog/tags/tomcat/"/>
     
-      <category term="tomcat8" scheme="https://garywu520.github.io/blog/tags/tomcat8/"/>
-    
       <category term="java" scheme="https://garywu520.github.io/blog/tags/java/"/>
+    
+      <category term="tomcat8" scheme="https://garywu520.github.io/blog/tags/tomcat8/"/>
     
   </entry>
   
@@ -585,39 +617,6 @@
       <category term="su" scheme="https://garywu520.github.io/blog/tags/su/"/>
     
       <category term="sudo" scheme="https://garywu520.github.io/blog/tags/sudo/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>logstash错误解决-a plugin had an unrecoverable error</title>
-    <link href="https://garywu520.github.io/blog/2019/06/28/logstash%E9%94%99%E8%AF%AF%E8%A7%A3%E5%86%B3-a-plugin-had-an-unrecoverable-error/"/>
-    <id>https://garywu520.github.io/blog/2019/06/28/logstash错误解决-a-plugin-had-an-unrecoverable-error/</id>
-    <published>2019-06-28T06:34:01.000Z</published>
-    <updated>2019-06-28T07:10:23.648Z</updated>
-    
-    <content type="html"><![CDATA[<p>这几天线上的logstash进程运行过程中，自动异常退出，log无任何输出。前台启动logstash，经过跟踪，错误提示如下：</p><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">A plugin had an unrecoverable error. Will restart this plugin.</span><br><span class="line">    Plugin &lt;LogStash::Inputs::File path=&gt;[<span class="string">"/xx/xx/xx/xx/*"</span>, <span class="string">"/xx/xx/xx/xx/*"</span>], snicedb_path=&gt;<span class="string">"/xx/xx/xx/xx/xx.db"</span> ,codec=&gt;&lt;LogStash::Codecs::Plain charset=&gt;<span class="string">"UTF-8"</span>&gt;, stat_interval=&gt;<span class="number">1</span>, discover_interval=&gt;<span class="number">15</span>, sincedb_write_interval=&gt;<span class="number">15</span>, start_position=&gt;<span class="string">"end"</span>, delimiter=&gt;<span class="string">"\n"</span>&gt;</span><br><span class="line">    <span class="symbol">Error:</span> Unknown error - 没有那个文件或目录 &#123;<span class="symbol">:level=&gt;</span><span class="symbol">:error</span>&#125;</span><br></pre></td></tr></table></figure><a id="more"></a><p><strong>排查思路：</strong></p><p><strong>(1) logstash配置文件Input源数据</strong></p><p>​      验证input数据源的路径是否正确 <strong>[未解决问题]</strong></p><p><strong>(2) 验证logstash conf配置文件的语法</strong></p><p>​      由于logstash配置文件语法使用的是YAML格式，故需要一部分一部分的逐一验证来排除格式错误 <strong>[未解决问题]</strong></p><p>​      <a href="https://qii404.me/tools/yaml-parse" target="_blank" rel="noopener">YAML在线解析</a></p><p><strong>(3) 升级插件</strong></p><p>​      以上错误信息中，可以看出Logstash所使用的Plugin是 logstash-input-file ，故可以考虑升级插件。</p><ul><li><p><strong>更换官方Ruby Gem源</strong></p><p>head logstash/Gemfile</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">source "https://gems.ruby-china.com/"   #修改为https://gems.ruby-china.com/</span><br><span class="line">gem "logstash-core", "2.1.0"</span><br><span class="line">gem "file-dependencies", "0.1.6"</span><br><span class="line">gem "ci_reporter_rspec", "1.0.0", :group =&gt; :development</span><br><span class="line">gem "simplecov", :group =&gt; :development</span><br><span class="line">gem "coveralls", :group =&gt; :development</span><br><span class="line">gem "tins", "1.6", :group =&gt; :development</span><br></pre></td></tr></table></figure></li><li><p><strong>查看已安装的插件</strong></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">查看已安装的插件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> bin/plugin list</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">升级插件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> bin/plugin update logstash-input-file</span></span><br></pre></td></tr></table></figure></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;这几天线上的logstash进程运行过程中，自动异常退出，log无任何输出。前台启动logstash，经过跟踪，错误提示如下：&lt;/p&gt;
-&lt;figure class=&quot;highlight ruby&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;A plugin had an unrecoverable error. Will restart this plugin.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    Plugin &amp;lt;LogStash::Inputs::File path=&amp;gt;[&lt;span class=&quot;string&quot;&gt;&quot;/xx/xx/xx/xx/*&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;/xx/xx/xx/xx/*&quot;&lt;/span&gt;], snicedb_path=&amp;gt;&lt;span class=&quot;string&quot;&gt;&quot;/xx/xx/xx/xx/xx.db&quot;&lt;/span&gt; ,codec=&amp;gt;&amp;lt;LogStash::Codecs::Plain charset=&amp;gt;&lt;span class=&quot;string&quot;&gt;&quot;UTF-8&quot;&lt;/span&gt;&amp;gt;, stat_interval=&amp;gt;&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;, discover_interval=&amp;gt;&lt;span class=&quot;number&quot;&gt;15&lt;/span&gt;, sincedb_write_interval=&amp;gt;&lt;span class=&quot;number&quot;&gt;15&lt;/span&gt;, start_position=&amp;gt;&lt;span class=&quot;string&quot;&gt;&quot;end&quot;&lt;/span&gt;, delimiter=&amp;gt;&lt;span class=&quot;string&quot;&gt;&quot;\n&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;symbol&quot;&gt;Error:&lt;/span&gt; Unknown error - 没有那个文件或目录 &amp;#123;&lt;span class=&quot;symbol&quot;&gt;:level=&amp;gt;&lt;/span&gt;&lt;span class=&quot;symbol&quot;&gt;:error&lt;/span&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-    
-      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
-    
-      <category term="ELK" scheme="https://garywu520.github.io/blog/tags/ELK/"/>
-    
-      <category term="logstash" scheme="https://garywu520.github.io/blog/tags/logstash/"/>
-    
-      <category term="Plugin" scheme="https://garywu520.github.io/blog/tags/Plugin/"/>
-    
-      <category term="YAML" scheme="https://garywu520.github.io/blog/tags/YAML/"/>
-    
-      <category term="Ruby" scheme="https://garywu520.github.io/blog/tags/Ruby/"/>
-    
-      <category term="Gem镜像" scheme="https://garywu520.github.io/blog/tags/Gem%E9%95%9C%E5%83%8F/"/>
     
   </entry>
   
