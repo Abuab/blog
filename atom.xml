@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://garywu520.github.io/blog/"/>
-  <updated>2019-08-15T06:53:21.463Z</updated>
+  <updated>2019-08-21T10:47:10.184Z</updated>
   <id>https://garywu520.github.io/blog/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>nginx快速部署文件下载服务</title>
+    <link href="https://garywu520.github.io/blog/2019/08/21/nginx%E5%BF%AB%E9%80%9F%E9%83%A8%E7%BD%B2%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD%E6%9C%8D%E5%8A%A1/"/>
+    <id>https://garywu520.github.io/blog/2019/08/21/nginx快速部署文件下载服务/</id>
+    <published>2019-08-21T10:14:08.000Z</published>
+    <updated>2019-08-21T10:47:10.184Z</updated>
+    
+    <content type="html"><![CDATA[<h5 id="让nginx直接下载文件的方法"><a href="#让nginx直接下载文件的方法" class="headerlink" title="让nginx直接下载文件的方法"></a>让nginx直接下载文件的方法</h5><p>在nginx.conf下增加配置</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">        listen 80;</span><br><span class="line">        access_log logs/access.download.com.log main;</span><br><span class="line">        error_log logs/error.download.com.log;</span><br><span class="line">        server_name download.com;</span><br><span class="line"></span><br><span class="line">        root /data/android;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">新增配置区域</span></span><br><span class="line">        location /app &#123;</span><br><span class="line">                default_type application/octet-stream;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>将下载的文件放在/data/android/app目录下,  reload Nginx，之后就可以通过download.com访问了</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h5 id=&quot;让nginx直接下载文件的方法&quot;&gt;&lt;a href=&quot;#让nginx直接下载文件的方法&quot; class=&quot;headerlink&quot; title=&quot;让nginx直接下载文件的方法&quot;&gt;&lt;/a&gt;让nginx直接下载文件的方法&lt;/h5&gt;&lt;p&gt;在nginx.conf下增加配置&lt;/
+      
+    
+    </summary>
+    
+    
+      <category term="nginx" scheme="https://garywu520.github.io/blog/tags/nginx/"/>
+    
+      <category term="nginx下载" scheme="https://garywu520.github.io/blog/tags/nginx%E4%B8%8B%E8%BD%BD/"/>
+    
+  </entry>
   
   <entry>
     <title>shell脚本监控TraceRoute</title>
@@ -392,11 +417,11 @@
     
       <category term="tomcat" scheme="https://garywu520.github.io/blog/tags/tomcat/"/>
     
-      <category term="war" scheme="https://garywu520.github.io/blog/tags/war/"/>
-    
       <category term="java" scheme="https://garywu520.github.io/blog/tags/java/"/>
     
       <category term="tomcat8" scheme="https://garywu520.github.io/blog/tags/tomcat8/"/>
+    
+      <category term="war" scheme="https://garywu520.github.io/blog/tags/war/"/>
     
   </entry>
   
@@ -578,39 +603,6 @@
     
     
       <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
-    
-      <category term="shell" scheme="https://garywu520.github.io/blog/tags/shell/"/>
-    
-      <category term="su" scheme="https://garywu520.github.io/blog/tags/su/"/>
-    
-      <category term="sudo" scheme="https://garywu520.github.io/blog/tags/sudo/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>shell删除HDFS几天前的数据</title>
-    <link href="https://garywu520.github.io/blog/2019/07/15/shell%E5%88%A0%E9%99%A4HDFS%E5%87%A0%E5%A4%A9%E5%89%8D%E7%9A%84%E6%95%B0%E6%8D%AE/"/>
-    <id>https://garywu520.github.io/blog/2019/07/15/shell删除HDFS几天前的数据/</id>
-    <published>2019-07-15T08:44:41.000Z</published>
-    <updated>2019-07-15T08:49:44.759Z</updated>
-    
-    <content type="html"><![CDATA[<h5 id="Shell脚本使用"><a href="#Shell脚本使用" class="headerlink" title="Shell脚本使用"></a>Shell脚本使用</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh clean_hdfs_logs.sh [hdfs_user]</span><br></pre></td></tr></table></figure><h5 id="Shell脚本"><a href="#Shell脚本" class="headerlink" title="Shell脚本"></a>Shell脚本</h5><p>cat clean_hdfs_logs.sh</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">判断传参个数[即输入hdfs用户]</span></span><br><span class="line">if [ $# != 1 ];then</span><br><span class="line">   echo "USAGE: sh $0 [hdfs_user]"</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">Hadoop_LogDir=/tmp/logs/$1/logs</span><br><span class="line">File=/home/$1/logs.log</span><br><span class="line">DATE=`date +%F`</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">清理老数据</span></span><br><span class="line">rm -f $File</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">获取最新数据</span></span><br><span class="line">sudo -u $1 hadoop fs -ls $Hadoop_LogDir &gt;&gt;$File</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">筛选1天前的可删除子目录</span></span><br><span class="line">INFO=`egrep -v "$DATE" $File|awk '&#123;print $NF&#125;'`</span><br><span class="line"></span><br><span class="line">for i in $INFO</span><br><span class="line">do</span><br><span class="line">  sudo -u $1 hadoop fs -rm -r $i</span><br><span class="line"><span class="meta">  #</span><span class="bash">sudo -u <span class="variable">$1</span> hadoop fs -rm -r -skipTrash <span class="variable">$i</span></span></span><br><span class="line">done</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h5 id=&quot;Shell脚本使用&quot;&gt;&lt;a href=&quot;#Shell脚本使用&quot; class=&quot;headerlink&quot; title=&quot;Shell脚本使用&quot;&gt;&lt;/a&gt;Shell脚本使用&lt;/h5&gt;&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;t
-      
-    
-    </summary>
-    
-    
-      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
-    
-      <category term="hadoop" scheme="https://garywu520.github.io/blog/tags/hadoop/"/>
-    
-      <category term="hdfs" scheme="https://garywu520.github.io/blog/tags/hdfs/"/>
     
       <category term="shell" scheme="https://garywu520.github.io/blog/tags/shell/"/>
     
