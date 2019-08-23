@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://garywu520.github.io/blog/"/>
-  <updated>2019-08-22T05:38:51.159Z</updated>
+  <updated>2019-08-23T08:25:24.932Z</updated>
   <id>https://garywu520.github.io/blog/</id>
   
   <author>
@@ -15,6 +15,47 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Nginx 301重定向到HTTPS的问题</title>
+    <link href="https://garywu520.github.io/blog/2019/08/23/Nginx-301%E9%87%8D%E5%AE%9A%E5%90%91%E5%88%B0HTTPS%E7%9A%84%E9%97%AE%E9%A2%98/"/>
+    <id>https://garywu520.github.io/blog/2019/08/23/Nginx-301重定向到HTTPS的问题/</id>
+    <published>2019-08-23T08:14:30.000Z</published>
+    <updated>2019-08-23T08:25:24.932Z</updated>
+    
+    <content type="html"><![CDATA[<p>Nginx强制配置301永久跳转后，APP发起POST请求会出现405错误，这是因为301跳转的操作让浏览器把POST请求变成了GET请求。</p><h5 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h5><ul><li>301跳转示例：</li></ul><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">return</span> <span class="number">301</span> https://www.xxx.com<span class="variable">$request_uri</span>;</span><br></pre></td></tr></table></figure><ul><li>解决办法：</li></ul><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">return</span> <span class="number">307</span> https://www.xxx.com<span class="variable">$request_uri</span>;</span><br></pre></td></tr></table></figure><a id="more"></a><h5 id="关于301和307"><a href="#关于301和307" class="headerlink" title="关于301和307"></a>关于301和307</h5><ul><li><p>301 Moved Permanently</p><p>被请求的资源已永久移动到新位置，并且将来任何对此资源的引用都应该使用本响应返回的若干个 URI 之一</p></li><li><p>307  Temporary Redirect</p><p>请求的资源现在临时从不同的URI 响应请求。由于这样的重定向是临时的，客户端应当继续向原有地址发送以后的请求</p></li></ul><p>参考：<a href="https://blog.imdst.com/nginxqiang-zhi-tiao-zhuan-https-jie-kou-de-postqing-qiu-bian-cheng-get/" target="_blank" rel="noopener">Linux运维笔记</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Nginx强制配置301永久跳转后，APP发起POST请求会出现405错误，这是因为301跳转的操作让浏览器把POST请求变成了GET请求。&lt;/p&gt;
+&lt;h5 id=&quot;示例&quot;&gt;&lt;a href=&quot;#示例&quot; class=&quot;headerlink&quot; title=&quot;示例&quot;&gt;&lt;/a&gt;示例&lt;/h5&gt;&lt;ul&gt;
+&lt;li&gt;301跳转示例：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight nginx&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;301&lt;/span&gt; https://www.xxx.com&lt;span class=&quot;variable&quot;&gt;$request_uri&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;ul&gt;
+&lt;li&gt;解决办法：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight nginx&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;307&lt;/span&gt; https://www.xxx.com&lt;span class=&quot;variable&quot;&gt;$request_uri&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="301" scheme="https://garywu520.github.io/blog/tags/301/"/>
+    
+      <category term="Nginx" scheme="https://garywu520.github.io/blog/tags/Nginx/"/>
+    
+      <category term="GET" scheme="https://garywu520.github.io/blog/tags/GET/"/>
+    
+      <category term="POST" scheme="https://garywu520.github.io/blog/tags/POST/"/>
+    
+      <category term="307" scheme="https://garywu520.github.io/blog/tags/307/"/>
+    
+      <category term="HTTPS" scheme="https://garywu520.github.io/blog/tags/HTTPS/"/>
+    
+  </entry>
   
   <entry>
     <title>Tomcat 内存优化配置</title>
@@ -387,9 +428,9 @@
     
       <category term="tomcat" scheme="https://garywu520.github.io/blog/tags/tomcat/"/>
     
-      <category term="war" scheme="https://garywu520.github.io/blog/tags/war/"/>
-    
       <category term="jar" scheme="https://garywu520.github.io/blog/tags/jar/"/>
+    
+      <category term="war" scheme="https://garywu520.github.io/blog/tags/war/"/>
     
   </entry>
   
@@ -450,11 +491,11 @@
     
       <category term="tomcat" scheme="https://garywu520.github.io/blog/tags/tomcat/"/>
     
+      <category term="tomcat8" scheme="https://garywu520.github.io/blog/tags/tomcat8/"/>
+    
       <category term="war" scheme="https://garywu520.github.io/blog/tags/war/"/>
     
       <category term="java" scheme="https://garywu520.github.io/blog/tags/java/"/>
-    
-      <category term="tomcat8" scheme="https://garywu520.github.io/blog/tags/tomcat8/"/>
     
   </entry>
   
@@ -483,9 +524,9 @@
     
       <category term="tomcat" scheme="https://garywu520.github.io/blog/tags/tomcat/"/>
     
-      <category term="java" scheme="https://garywu520.github.io/blog/tags/java/"/>
-    
       <category term="tomcat8" scheme="https://garywu520.github.io/blog/tags/tomcat8/"/>
+    
+      <category term="java" scheme="https://garywu520.github.io/blog/tags/java/"/>
     
   </entry>
   
@@ -572,36 +613,6 @@
     <summary type="html">
     
       &lt;h5 id=&quot;1-Docker部署-for-CentOS7&quot;&gt;&lt;a href=&quot;#1-Docker部署-for-CentOS7&quot; class=&quot;headerlink&quot; title=&quot;1. Docker部署 for CentOS7&quot;&gt;&lt;/a&gt;1. Docker部署 for CentOS7&lt;/h5&gt;&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;yum remove docker docker-common docker-selinux docker-engine&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;yum install -y yum-utils device-mapper-persistent-data lvm2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;wget -O /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sudo sed -i &#39;s+download.docker.com+mirrors.tuna.tsinghua.edu.cn/docker-ce+&#39; /etc/yum.repos.d/docker-ce.repo&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; yum makecache fast&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; yum install docker-ce&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;systemctl enable docker&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;systemctl start docker&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;systemctl status docker&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-    
-      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
-    
-      <category term="docker" scheme="https://garywu520.github.io/blog/tags/docker/"/>
-    
-      <category term="容器" scheme="https://garywu520.github.io/blog/tags/%E5%AE%B9%E5%99%A8/"/>
-    
-      <category term="docker-compass" scheme="https://garywu520.github.io/blog/tags/docker-compass/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Docker镜像加速</title>
-    <link href="https://garywu520.github.io/blog/2019/08/06/Docker%E9%95%9C%E5%83%8F%E5%8A%A0%E9%80%9F/"/>
-    <id>https://garywu520.github.io/blog/2019/08/06/Docker镜像加速/</id>
-    <published>2019-08-06T10:43:31.000Z</published>
-    <updated>2019-08-06T10:46:45.479Z</updated>
-    
-    <content type="html"><![CDATA[<p>配置镜像加速器</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /etc/docker</span><br></pre></td></tr></table></figure><p>cat /etc/docker/daemon.json</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">"registry-mirrors": ["https://registry.docker-cn.com"] </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl restart docker</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;配置镜像加速器&lt;/p&gt;
-&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;
-      
     
     </summary>
     
