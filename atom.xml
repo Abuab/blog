@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://garywu520.github.io/blog/"/>
-  <updated>2019-08-27T02:18:07.991Z</updated>
+  <updated>2019-08-29T12:43:09.176Z</updated>
   <id>https://garywu520.github.io/blog/</id>
   
   <author>
@@ -17,29 +17,30 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>zabbix4.0 Web监控之API</title>
-    <link href="https://garywu520.github.io/blog/2019/08/27/zabbix4-0-Web%E7%9B%91%E6%8E%A7%E4%B9%8BAPI/"/>
-    <id>https://garywu520.github.io/blog/2019/08/27/zabbix4-0-Web监控之API/</id>
-    <published>2019-08-27T02:06:18.000Z</published>
-    <updated>2019-08-27T02:18:07.991Z</updated>
+    <title>xshell ssh连接错误10053</title>
+    <link href="https://garywu520.github.io/blog/2019/08/29/xshell-ssh%E8%BF%9E%E6%8E%A5%E9%94%99%E8%AF%AF10053/"/>
+    <id>https://garywu520.github.io/blog/2019/08/29/xshell-ssh连接错误10053/</id>
+    <published>2019-08-29T12:40:46.000Z</published>
+    <updated>2019-08-29T12:43:09.176Z</updated>
     
-    <content type="html"><![CDATA[<h5 id="1-API接口示例"><a href="#1-API接口示例" class="headerlink" title="1.API接口示例"></a>1.API接口示例</h5><p>zabbix 4.0监控带参数的API接口，API接口示例如下：</p><p><a href="https://xxx.xxx.com/services/auth/doclist?id=0&amp;search=0&amp;lange=2" target="_blank" rel="noopener">https://xxx.xxx.com/services/auth/doclist?id=0&amp;search=0&amp;lange=2</a></p><a id="more"></a><h5 id="2-zabbix4-0-Web监控核心配置"><a href="#2-zabbix4-0-Web监控核心配置" class="headerlink" title="2. zabbix4.0 Web监控核心配置"></a>2. zabbix4.0 Web监控核心配置</h5><ul><li><p>名称：xxx-API</p></li><li><p>URL: <a href="https://xxx.xxx.com/services/auth/doclist" target="_blank" rel="noopener">https://xxx.xxx.com/services/auth/doclist</a></p></li><li><p>查询字段：空</p></li><li><p>变量：</p><table><thead><tr><th align="center">名称</th><th align="center">值</th></tr></thead><tbody><tr><td align="center">{id}</td><td align="center">0</td></tr><tr><td align="center">{search}</td><td align="center">0</td></tr><tr><td align="center">{lange}</td><td align="center">2</td></tr></tbody></table><p>即，把参数的name通过{}配置为变量方式</p></li><li><p>跟随跳转：勾选</p></li><li><p>仅获取头信息：勾选</p></li><li><p>超时：15s</p></li><li><p>要求的状态码：200</p></li></ul>]]></content>
+    <content type="html"><![CDATA[<h5 id="Error"><a href="#Error" class="headerlink" title="Error"></a>Error</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Socket error Event: 32 Error: 10053.</span><br><span class="line">Connection closing...Socket close</span><br></pre></td></tr></table></figure><h5 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 很有可能有人恶意将系统根目录或部分核心目录修改了777权限,导致服务器登录异常</span></span><br><span class="line">history |grep 777</span><br></pre></td></tr></table></figure><a id="more"></a><h5 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h5><p>恢复SSH登录相关文件权限</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">chmod 400 /etc/ssh/*</span><br><span class="line">chmod 640  /etc/ssh/*.pub</span><br><span class="line">chown 600  /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart sshd</span><br></pre></td></tr></table></figure>]]></content>
     
     <summary type="html">
     
-      &lt;h5 id=&quot;1-API接口示例&quot;&gt;&lt;a href=&quot;#1-API接口示例&quot; class=&quot;headerlink&quot; title=&quot;1.API接口示例&quot;&gt;&lt;/a&gt;1.API接口示例&lt;/h5&gt;&lt;p&gt;zabbix 4.0监控带参数的API接口，API接口示例如下：&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://xxx.xxx.com/services/auth/doclist?id=0&amp;amp;search=0&amp;amp;lange=2&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://xxx.xxx.com/services/auth/doclist?id=0&amp;amp;search=0&amp;amp;lange=2&lt;/a&gt;&lt;/p&gt;
+      &lt;h5 id=&quot;Error&quot;&gt;&lt;a href=&quot;#Error&quot; class=&quot;headerlink&quot; title=&quot;Error&quot;&gt;&lt;/a&gt;Error&lt;/h5&gt;&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;Socket error Event: 32 Error: 10053.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Connection closing...Socket close&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;h5 id=&quot;原因&quot;&gt;&lt;a href=&quot;#原因&quot; class=&quot;headerlink&quot; title=&quot;原因&quot;&gt;&lt;/a&gt;原因&lt;/h5&gt;&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;bash&quot;&gt; 很有可能有人恶意将系统根目录或部分核心目录修改了777权限,导致服务器登录异常&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;history |grep 777&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
     
     </summary>
     
     
       <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
     
-      <category term="zabbix" scheme="https://garywu520.github.io/blog/tags/zabbix/"/>
+      <category term="ssh" scheme="https://garywu520.github.io/blog/tags/ssh/"/>
     
-      <category term="Web监控" scheme="https://garywu520.github.io/blog/tags/Web%E7%9B%91%E6%8E%A7/"/>
+      <category term="xshell" scheme="https://garywu520.github.io/blog/tags/xshell/"/>
     
-      <category term="API接口" scheme="https://garywu520.github.io/blog/tags/API%E6%8E%A5%E5%8F%A3/"/>
+      <category term="10053" scheme="https://garywu520.github.io/blog/tags/10053/"/>
     
   </entry>
   
@@ -520,9 +521,9 @@
     
       <category term="war" scheme="https://garywu520.github.io/blog/tags/war/"/>
     
-      <category term="tomcat8" scheme="https://garywu520.github.io/blog/tags/tomcat8/"/>
-    
       <category term="java" scheme="https://garywu520.github.io/blog/tags/java/"/>
+    
+      <category term="tomcat8" scheme="https://garywu520.github.io/blog/tags/tomcat8/"/>
     
   </entry>
   
@@ -551,9 +552,9 @@
     
       <category term="tomcat" scheme="https://garywu520.github.io/blog/tags/tomcat/"/>
     
-      <category term="tomcat8" scheme="https://garywu520.github.io/blog/tags/tomcat8/"/>
-    
       <category term="java" scheme="https://garywu520.github.io/blog/tags/java/"/>
+    
+      <category term="tomcat8" scheme="https://garywu520.github.io/blog/tags/tomcat8/"/>
     
   </entry>
   
