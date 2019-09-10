@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://garywu520.github.io/blog/"/>
-  <updated>2019-08-29T12:43:09.176Z</updated>
+  <updated>2019-09-10T08:34:55.169Z</updated>
   <id>https://garywu520.github.io/blog/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>SFTP上传下载命令</title>
+    <link href="https://garywu520.github.io/blog/2019/09/10/SFTP%E4%B8%8A%E4%BC%A0%E4%B8%8B%E8%BD%BD%E5%91%BD%E4%BB%A4/"/>
+    <id>https://garywu520.github.io/blog/2019/09/10/SFTP上传下载命令/</id>
+    <published>2019-09-10T08:20:36.000Z</published>
+    <updated>2019-09-10T08:34:55.169Z</updated>
+    
+    <content type="html"><![CDATA[<p>SFTP顾名思义，即它是基于SSH的上传与下载功能。它是lrzsz之外的另一选择。不需要服务器部署FTP服务</p><p>Mac端由于无法使用lrzsz，故SFTP是个不错的选择</p><a id="more"></a><h5 id="1-ssh配置文件"><a href="#1-ssh配置文件" class="headerlink" title="1. ssh配置文件"></a>1. ssh配置文件</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Port 22</span><br><span class="line">Protocol 2</span><br><span class="line">RSAAuthentication yes</span><br><span class="line">PubkeyAuthentication yes</span><br><span class="line">AuthorizedKeysFile  .ssh/authorized_keys</span><br><span class="line">PasswordAuthentication no</span><br><span class="line">PermitEmptyPasswords no</span><br><span class="line">UsePAM  yes</span><br><span class="line">PrintMotd no</span><br><span class="line">PrintLastLog no</span><br><span class="line">UseDNS no</span><br><span class="line">Subsystem   sftp  /usr/libexec/openssh/sftp-server </span><br><span class="line"></span><br><span class="line">ListenAddress 0.0.0.0:22</span><br><span class="line">ListenAddress xx.xx.xx.xx:22</span><br></pre></td></tr></table></figure><p>注：需要确保 sftp配置的/usr/libexec/openssh/sftp-server 文件是存在的，重启sshd服务</p><h5 id="2-Xshell连接SFTP"><a href="#2-Xshell连接SFTP" class="headerlink" title="2.  Xshell连接SFTP"></a>2.  Xshell连接SFTP</h5><p>​    连接需要指定密钥</p><h5 id="3-上传与下载"><a href="#3-上传与下载" class="headerlink" title="3. 上传与下载"></a>3. 上传与下载</h5><ul><li><p>单个文件下载</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> get remote-file [<span class="built_in">local</span>-file]</span></span><br></pre></td></tr></table></figure></li><li><p>单个文件上传</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> put </span></span><br><span class="line">打开本地目录选择文件后上传</span><br></pre></td></tr></table></figure></li><li><p>中断连接</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> <span class="built_in">bye</span></span></span><br></pre></td></tr></table></figure></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;SFTP顾名思义，即它是基于SSH的上传与下载功能。它是lrzsz之外的另一选择。不需要服务器部署FTP服务&lt;/p&gt;
+&lt;p&gt;Mac端由于无法使用lrzsz，故SFTP是个不错的选择&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="sftp" scheme="https://garywu520.github.io/blog/tags/sftp/"/>
+    
+      <category term="lrzsz" scheme="https://garywu520.github.io/blog/tags/lrzsz/"/>
+    
+      <category term="mac" scheme="https://garywu520.github.io/blog/tags/mac/"/>
+    
+      <category term="上传下载" scheme="https://garywu520.github.io/blog/tags/%E4%B8%8A%E4%BC%A0%E4%B8%8B%E8%BD%BD/"/>
+    
+  </entry>
   
   <entry>
     <title>xshell ssh连接错误10053</title>
@@ -578,40 +607,6 @@
 &lt;li&gt;数据卷中的更改可以直接生效&lt;/li&gt;
 &lt;li&gt;数据卷中的更改不会包含在镜像的更新中&lt;/li&gt;
 &lt;li&gt;数据卷的生命周期一直持续到没有容器使用它为止。&lt;/li&gt;
-&lt;/ul&gt;
-    
-    </summary>
-    
-    
-      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
-    
-      <category term="docker" scheme="https://garywu520.github.io/blog/tags/docker/"/>
-    
-      <category term="容器" scheme="https://garywu520.github.io/blog/tags/%E5%AE%B9%E5%99%A8/"/>
-    
-      <category term="docker-compose" scheme="https://garywu520.github.io/blog/tags/docker-compose/"/>
-    
-      <category term="docker-ce" scheme="https://garywu520.github.io/blog/tags/docker-ce/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>使用Docker Hub查找及创建自定义镜像</title>
-    <link href="https://garywu520.github.io/blog/2019/08/06/%E4%BD%BF%E7%94%A8Docker-Hub%E6%9F%A5%E6%89%BE%E5%8F%8A%E5%88%9B%E5%BB%BA%E8%87%AA%E5%AE%9A%E4%B9%89%E9%95%9C%E5%83%8F/"/>
-    <id>https://garywu520.github.io/blog/2019/08/06/使用Docker-Hub查找及创建自定义镜像/</id>
-    <published>2019-08-06T10:44:50.000Z</published>
-    <updated>2019-08-06T10:49:30.179Z</updated>
-    
-    <content type="html"><![CDATA[<p>Docker Hub 存放着 docker 及其组件一起工作的所有资源。Docker Hub 会帮助你和你的同事协作，并获取功能最全的 docker。要做到这一点，它提供的服务有：</p><ul><li>Docker镜像主机</li><li>用户认证</li><li>自动镜像构建和工作流程工具，如构建触发器和 web hooks</li><li>整合了 GitHub 和 BitBucket</li></ul><a id="more"></a><h5 id="1-注册地址"><a href="#1-注册地址" class="headerlink" title="1. 注册地址"></a>1. 注册地址</h5><p><a href="https://hub.docker.com/signup" target="_blank" rel="noopener">https://hub.docker.com/signup</a></p><h5 id="2-Web登录"><a href="#2-Web登录" class="headerlink" title="2. Web登录"></a>2. Web登录</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">登录：https://hub.docker.com/</span><br><span class="line">账号：garywu520</span><br><span class="line">密码：P**4!@#</span><br></pre></td></tr></table></figure><h5 id="3-命令行登录"><a href="#3-命令行登录" class="headerlink" title="3. 命令行登录"></a>3. 命令行登录</h5><p>通过在命令行中输入 docker login </p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@CentOS7 ~]# docker login</span><br><span class="line">Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.</span><br><span class="line">Username: garywu520</span><br><span class="line">Password: </span><br><span class="line">Login Succeeded</span><br></pre></td></tr></table></figure><h5 id="4-官方查找镜像"><a href="#4-官方查找镜像" class="headerlink" title="4. 官方查找镜像"></a>4. 官方查找镜像</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@CentOS7 ~]# docker search unbound</span><br><span class="line">INDEX       NAME                        DESCRIPTION    STARS     OFFICIAL   AUTOMATED</span><br><span class="line">docker.io   docker.io/secns/unbound    unbound DNS Resolver with DNSSEC enabled    21      [OK]</span><br><span class="line">docker.io   docker.io/mvance/unbound   Unbound is a validating, recursive, and ca...   16  [OK]</span><br></pre></td></tr></table></figure><ul><li>下载/使用官方镜像</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker pull &lt;NAME&gt;</span><br><span class="line">docker run -t -i docker.io/secns/unbound /bin/bash</span><br></pre></td></tr></table></figure><h5 id="5-使用Dockerfile创建自己的镜像"><a href="#5-使用Dockerfile创建自己的镜像" class="headerlink" title="5. 使用Dockerfile创建自己的镜像"></a>5. 使用Dockerfile创建自己的镜像</h5><p>首先创建一个目录，并且创建一个Dockerfile文件</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkdir qishituan</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> qishituan</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> touch Dockerfile</span></span><br></pre></td></tr></table></figure><ul><li>DockerFile文件内容如下:</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> This is a comment</span></span><br><span class="line">FROM docker.io/centos       #指定镜像源</span><br><span class="line">MAINTAINER Gary Wu &lt;garywu@mail.com&gt; #指定维护者</span><br><span class="line">RUN yum install -y htop      #接着指定三个RUN命令</span><br><span class="line">RUN yum install -y tmux</span><br></pre></td></tr></table></figure><p>高级DockerFile参考</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">FROM docker.io/centos</span><br><span class="line"></span><br><span class="line">RUN buildDeps='gcc libc6-dev make wget lrzsz vim' \</span><br><span class="line">    &amp;&amp; yum install -y $buildDeps \</span><br><span class="line">    &amp;&amp; wget -O redis.tar.gz "http://download.redis.io/releases/redis-5.0.3.tar.gz" \</span><br><span class="line">    &amp;&amp; mkdir -p /usr/src/redis \</span><br><span class="line">    &amp;&amp; tar -xzf redis.tar.gz -C /usr/src/redis --strip-components=1 \</span><br><span class="line">    &amp;&amp; make -C /usr/src/redis \</span><br><span class="line">    &amp;&amp; make -C /usr/src/redis install \</span><br><span class="line">    &amp;&amp; rm -rf /var/lib/apt/lists/* \</span><br><span class="line">    &amp;&amp; rm redis.tar.gz \</span><br><span class="line">    &amp;&amp; rm -r /usr/src/redis</span><br></pre></td></tr></table></figure><p>创建镜像</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker build -t="root/centos:v2" .</span><br><span class="line"><span class="meta">#</span><span class="bash">最后一个“.” 表示当前目录</span></span><br><span class="line"><span class="meta">#</span><span class="bash">使用docker build命令和-t来创建我们的新镜像，用户是ouruser、仓库源名称sinatra、标签是v2</span></span><br></pre></td></tr></table></figure><p>运行新的容器</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name CentOS_V2 -i -t -d root/centos:v2</span><br></pre></td></tr></table></figure><h5 id="6-删除镜像"><a href="#6-删除镜像" class="headerlink" title="6. 删除镜像"></a>6. 删除镜像</h5><ul><li>删除本地镜像</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dock ps -a</span><br><span class="line">docker image rm &lt;IMAGE_ID&gt;</span><br></pre></td></tr></table></figure><ul><li>彻底删除本地镜像</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop docker.service</span><br><span class="line">rm -rf /var/lib/docker</span><br><span class="line">systemctl start docker.service</span><br></pre></td></tr></table></figure><h5 id="7-向Docker-Hub推送镜像"><a href="#7-向Docker-Hub推送镜像" class="headerlink" title="7. 向Docker Hub推送镜像"></a>7. 向Docker Hub推送镜像</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker push root/centos</span><br></pre></td></tr></table></figure><ul><li>移除镜像</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rmi root/centos</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Docker Hub 存放着 docker 及其组件一起工作的所有资源。Docker Hub 会帮助你和你的同事协作，并获取功能最全的 docker。要做到这一点，它提供的服务有：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Docker镜像主机&lt;/li&gt;
-&lt;li&gt;用户认证&lt;/li&gt;
-&lt;li&gt;自动镜像构建和工作流程工具，如构建触发器和 web hooks&lt;/li&gt;
-&lt;li&gt;整合了 GitHub 和 BitBucket&lt;/li&gt;
 &lt;/ul&gt;
     
     </summary>
