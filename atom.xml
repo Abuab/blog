@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://garywu520.github.io/blog/"/>
-  <updated>2019-09-19T09:44:00.383Z</updated>
+  <updated>2019-09-20T10:25:58.246Z</updated>
   <id>https://garywu520.github.io/blog/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>nmap端口扫描</title>
+    <link href="https://garywu520.github.io/blog/2019/09/20/nmap%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F/"/>
+    <id>https://garywu520.github.io/blog/2019/09/20/nmap端口扫描/</id>
+    <published>2019-09-20T10:25:01.000Z</published>
+    <updated>2019-09-20T10:25:58.246Z</updated>
+    
+    <content type="html"><![CDATA[<h5 id="1-应用场景"><a href="#1-应用场景" class="headerlink" title="1.应用场景"></a>1.应用场景</h5><p>如果有台服务器，开放了一些端口，尤其是SSH端口，忘记设置了多少端口号的时候，又不想重启服务器，则需要对其进行端口扫描</p><h5 id="2-工具-nmap"><a href="#2-工具-nmap" class="headerlink" title="2. 工具: nmap"></a>2. 工具: nmap</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y nmap</span><br></pre></td></tr></table></figure><a id="more"></a><h5 id="3-用法"><a href="#3-用法" class="headerlink" title="3. 用法"></a>3. 用法</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sS -p 1-65535 -v 服务器公网IP</span><br></pre></td></tr></table></figure><p>参数：</p><ul><li>-sS     TCP SYN扫描</li><li>-P     指定端口范围  </li><li>-V     详细信息  </li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h5 id=&quot;1-应用场景&quot;&gt;&lt;a href=&quot;#1-应用场景&quot; class=&quot;headerlink&quot; title=&quot;1.应用场景&quot;&gt;&lt;/a&gt;1.应用场景&lt;/h5&gt;&lt;p&gt;如果有台服务器，开放了一些端口，尤其是SSH端口，忘记设置了多少端口号的时候，又不想重启服务器，则需要对其进行端口扫描&lt;/p&gt;
+&lt;h5 id=&quot;2-工具-nmap&quot;&gt;&lt;a href=&quot;#2-工具-nmap&quot; class=&quot;headerlink&quot; title=&quot;2. 工具: nmap&quot;&gt;&lt;/a&gt;2. 工具: nmap&lt;/h5&gt;&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;yum install -y nmap&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+    
+      <category term="nmap" scheme="https://garywu520.github.io/blog/tags/nmap/"/>
+    
+  </entry>
   
   <entry>
     <title>Redis主从+sentinel哨兵-理论</title>
@@ -633,37 +654,6 @@
       <category term="tomcat多实例" scheme="https://garywu520.github.io/blog/tags/tomcat%E5%A4%9A%E5%AE%9E%E4%BE%8B/"/>
     
       <category term="jdk" scheme="https://garywu520.github.io/blog/tags/jdk/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Tomcat-将项目打包成war包</title>
-    <link href="https://garywu520.github.io/blog/2019/08/07/Tomcat-%E5%B0%86%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85%E6%88%90war%E5%8C%85/"/>
-    <id>https://garywu520.github.io/blog/2019/08/07/Tomcat-将项目打包成war包/</id>
-    <published>2019-08-07T05:50:49.000Z</published>
-    <updated>2019-08-07T06:05:47.249Z</updated>
-    
-    <content type="html"><![CDATA[<p>要求：提前安装jdk</p><h5 id="1-打包"><a href="#1-打包" class="headerlink" title="1. 打包"></a>1. 打包</h5><p>将当前目录下的所有文件打包成project.war</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jar -cvfM0 project.war ./</span><br></pre></td></tr></table></figure><p>参数说明：</p><ul><li>-c 创建war包</li><li>-v 显示打包过程</li><li>-f  指定JAR文件名</li><li>-M  不产生所有项的清单（MANIFEST〕文件，此参数会忽略 -m 参数</li><li>-0    这个是阿拉伯数字，只打包不压缩的意思</li></ul><h5 id="2-解压"><a href="#2-解压" class="headerlink" title="2. 解压"></a>2. 解压</h5><p>解压到当前目录</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jar -xvf project.war</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;要求：提前安装jdk&lt;/p&gt;
-&lt;h5 id=&quot;1-打包&quot;&gt;&lt;a href=&quot;#1-打包&quot; class=&quot;headerlink&quot; title=&quot;1. 打包&quot;&gt;&lt;/a&gt;1. 打包&lt;/h5&gt;&lt;p&gt;将当前目录下的所有文件打包成project.war&lt;/p&gt;
-&lt;figure clas
-      
-    
-    </summary>
-    
-    
-      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
-    
-      <category term="tomcat" scheme="https://garywu520.github.io/blog/tags/tomcat/"/>
-    
-      <category term="jar" scheme="https://garywu520.github.io/blog/tags/jar/"/>
-    
-      <category term="war" scheme="https://garywu520.github.io/blog/tags/war/"/>
     
   </entry>
   
