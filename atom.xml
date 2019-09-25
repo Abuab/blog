@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://garywu520.github.io/blog/"/>
-  <updated>2019-09-25T07:13:59.627Z</updated>
+  <updated>2019-09-25T09:44:16.704Z</updated>
   <id>https://garywu520.github.io/blog/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>shell脚本执行redis命令</title>
+    <link href="https://garywu520.github.io/blog/2019/09/25/shell%E8%84%9A%E6%9C%AC%E6%89%A7%E8%A1%8Credis%E5%91%BD%E4%BB%A4/"/>
+    <id>https://garywu520.github.io/blog/2019/09/25/shell脚本执行redis命令/</id>
+    <published>2019-09-25T09:34:03.000Z</published>
+    <updated>2019-09-25T09:44:16.704Z</updated>
+    
+    <content type="html"><![CDATA[<p>shell脚本中执行redis命令</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli -h 192.168.1.186 -p 6380 -a test123 info</span><br></pre></td></tr></table></figure><p>或</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo "get old1" | redis-cli -h 192.168.1.186 -p 6380 -a test123</span><br></pre></td></tr></table></figure><p>参数释义：</p><ul><li>-a 指定redis密码</li><li>最后的”info” 则是想要执行的redis命令</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;shell脚本中执行redis命令&lt;/p&gt;
+&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td cl
+      
+    
+    </summary>
+    
+    
+      <category term="redis" scheme="https://garywu520.github.io/blog/tags/redis/"/>
+    
+      <category term="shell" scheme="https://garywu520.github.io/blog/tags/shell/"/>
+    
+  </entry>
   
   <entry>
     <title>CentOS7安装php redis扩展</title>
@@ -624,31 +650,6 @@
       <category term="tomcat" scheme="https://garywu520.github.io/blog/tags/tomcat/"/>
     
       <category term="supervisor" scheme="https://garywu520.github.io/blog/tags/supervisor/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Docker容器使用systemctl报错</title>
-    <link href="https://garywu520.github.io/blog/2019/08/07/Docker%E5%AE%B9%E5%99%A8%E4%BD%BF%E7%94%A8systemctl%E6%8A%A5%E9%94%99/"/>
-    <id>https://garywu520.github.io/blog/2019/08/07/Docker容器使用systemctl报错/</id>
-    <published>2019-08-07T08:56:42.000Z</published>
-    <updated>2019-08-07T09:01:59.169Z</updated>
-    
-    <content type="html"><![CDATA[<h5 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h5><p>docker运行CentOS7容器，使用systemctl命令启动服务报错，错误如下：</p><p>Failed to get D-Bus connection: Operation not permitted</p><a id="more"></a><h5 id="原理解释"><a href="#原理解释" class="headerlink" title="原理解释"></a>原理解释</h5><p>Docker的设计理念是在容器里面不运行后台服务，容器本身就是宿主机上的一个独立的主进程，也可以间接的理解为就是容器里运行服务的应用进程。一个容器的生命周期是围绕这个主进程存在的，所以正确的使用容器方法是将里面的服务运行在前台。</p><p>再说到systemd，这个套件已经成为主流Linux发行版（比如CentOS7、Ubuntu14+）默认的服务管理，取代了传统的SystemV风格服务管理。systemd维护系统服务程序，它需要特权去会访问Linux内核。而容器并不是一个完整的操作系统，只有一个文件系统，而且默认启动只是普通用户这样的权限访问Linux内核，也就是没有特权，所以自然就用不了！</p><p>因此，请遵守容器设计原则，一个容器里运行一个前台服务！</p><h5 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h5><p>我就想这样运行，难道解决不了吗？</p><p>答：可以，以特权模式运行容器。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">创建容器</span></span><br><span class="line">docker run  --privileged=true -v /tmp/soft:/tmp/soft --name mydev -d centos /usr/sbin/init</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">进入容器</span></span><br><span class="line">docker exec -it mydev /bin/bash</span><br></pre></td></tr></table></figure><p>这样可以使用systemctl启动服务了</p><p>参考：<a href="https://blog.51cto.com/lizhenliang/1975466" target="_blank" rel="noopener">51CTO</a></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h5 id=&quot;问题描述&quot;&gt;&lt;a href=&quot;#问题描述&quot; class=&quot;headerlink&quot; title=&quot;问题描述&quot;&gt;&lt;/a&gt;问题描述&lt;/h5&gt;&lt;p&gt;docker运行CentOS7容器，使用systemctl命令启动服务报错，错误如下：&lt;/p&gt;
-&lt;p&gt;Failed to get D-Bus connection: Operation not permitted&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
-    
-      <category term="Docker" scheme="https://garywu520.github.io/blog/tags/Docker/"/>
-    
-      <category term="systemctl" scheme="https://garywu520.github.io/blog/tags/systemctl/"/>
     
   </entry>
   
