@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://garywu520.github.io/blog/"/>
-  <updated>2019-09-20T10:25:58.246Z</updated>
+  <updated>2019-09-25T07:13:59.627Z</updated>
   <id>https://garywu520.github.io/blog/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>CentOS7安装php redis扩展</title>
+    <link href="https://garywu520.github.io/blog/2019/09/25/CentOS7%E5%AE%89%E8%A3%85php-redis%E6%89%A9%E5%B1%95/"/>
+    <id>https://garywu520.github.io/blog/2019/09/25/CentOS7安装php-redis扩展/</id>
+    <published>2019-09-25T07:00:56.000Z</published>
+    <updated>2019-09-25T07:13:59.627Z</updated>
+    
+    <content type="html"><![CDATA[<h5 id="一、编译扩展"><a href="#一、编译扩展" class="headerlink" title="一、编译扩展"></a>一、编译扩展</h5><p>安装phpize</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y php-devel</span><br></pre></td></tr></table></figure><p>下载php redis包</p><p>Github项目地址：<a href="https://github.com/phpredis/phpredis/releases" target="_blank" rel="noopener">https://github.com/phpredis/phpredis/releases</a></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/phpredis/phpredis/archive/3.1.3.tar.gz</span><br><span class="line">tar -zxvf /root/3.1.3.tar.gz</span><br><span class="line">cd phpredis-3.1.3</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">使用如下命令，在源码目录中编译php扩展</span></span><br><span class="line">/usr/bin/phpize</span><br><span class="line">./configure</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure><a id="more"></a><p>由于我的操作系统是x64位，故编译完成后提示如下：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Build complete.</span><br><span class="line">Don't forget to run 'make test'.</span><br><span class="line"></span><br><span class="line">Installing shared extensions:     /usr/lib64/php/modules/</span><br></pre></td></tr></table></figure><p>PHP Redis扩展位置</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -lh  /usr/lib64/php/modules/redis.so</span><br></pre></td></tr></table></figure><h5 id="二、修改php配置"><a href="#二、修改php配置" class="headerlink" title="二、修改php配置"></a>二、修改php配置</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/php.ini    #添加如下行</span><br><span class="line">extension=/usr/lib64/php/modules/redis.so</span><br></pre></td></tr></table></figure><h5 id="三、重启Apache服务-并测试"><a href="#三、重启Apache服务-并测试" class="headerlink" title="三、重启Apache服务, 并测试"></a>三、重启Apache服务, 并测试</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart httpd</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h5 id=&quot;一、编译扩展&quot;&gt;&lt;a href=&quot;#一、编译扩展&quot; class=&quot;headerlink&quot; title=&quot;一、编译扩展&quot;&gt;&lt;/a&gt;一、编译扩展&lt;/h5&gt;&lt;p&gt;安装phpize&lt;/p&gt;
+&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;yum install -y php-devel&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;下载php redis包&lt;/p&gt;
+&lt;p&gt;Github项目地址：&lt;a href=&quot;https://github.com/phpredis/phpredis/releases&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://github.com/phpredis/phpredis/releases&lt;/a&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;wget https://github.com/phpredis/phpredis/archive/3.1.3.tar.gz&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;tar -zxvf /root/3.1.3.tar.gz&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;cd phpredis-3.1.3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;bash&quot;&gt;使用如下命令，在源码目录中编译php扩展&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;/usr/bin/phpize&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;./configure&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;make &amp;amp;&amp;amp; make install&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="redis" scheme="https://garywu520.github.io/blog/tags/redis/"/>
+    
+      <category term="php" scheme="https://garywu520.github.io/blog/tags/php/"/>
+    
+  </entry>
   
   <entry>
     <title>nmap端口扫描</title>
@@ -620,40 +649,6 @@
       <category term="Docker" scheme="https://garywu520.github.io/blog/tags/Docker/"/>
     
       <category term="systemctl" scheme="https://garywu520.github.io/blog/tags/systemctl/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Tomcat多实例部署</title>
-    <link href="https://garywu520.github.io/blog/2019/08/07/Tomcat%E5%A4%9A%E5%AE%9E%E4%BE%8B%E9%83%A8%E7%BD%B2/"/>
-    <id>https://garywu520.github.io/blog/2019/08/07/Tomcat多实例部署/</id>
-    <published>2019-08-07T06:09:32.000Z</published>
-    <updated>2019-08-07T07:01:53.745Z</updated>
-    
-    <content type="html"><![CDATA[<h5 id="首先了解下Tomcat服务启动所需端口号"><a href="#首先了解下Tomcat服务启动所需端口号" class="headerlink" title="首先了解下Tomcat服务启动所需端口号"></a>首先了解下Tomcat服务启动所需端口号</h5><ul><li><strong>Server Port：</strong>该端口用于监听关闭tomcat的shutdown命令，默认端口:8005</li><li><strong>Connector Port:</strong>  该端口用于监听HTTP的请求，默认端口：8080</li><li><strong>AJP Port:</strong> 该端口用于监听AJP(Apache JServ Protocal)协议上的请求，通常用于整合HTTP服务器，默认端口: 8009【用不到可注释】</li><li><strong>Redirect Port:</strong> 重定向端口，出现在Connector配置中。默认端口：8443</li></ul><p>​       作用：当用户用http请求某个资源，而该资源本身又被设置了必须要https方式访问，此时Tomcat会自动重定向到这个redirectPort设置的https端口。</p><a id="more"></a><h5 id="1-Tomcat安装"><a href="#1-Tomcat安装" class="headerlink" title="1. Tomcat安装"></a>1. Tomcat安装</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf apache-tomcat-8.0.27.tar.gz </span><br><span class="line">cp -a apache-tomcat-8.0.27 tomcat8_1</span><br><span class="line">cp -a apache-tomcat-8.0.27 tomcat8_2</span><br></pre></td></tr></table></figure><h5 id="2-分别修改两个Tomcat实例的端口配置"><a href="#2-分别修改两个Tomcat实例的端口配置" class="headerlink" title="2. 分别修改两个Tomcat实例的端口配置"></a>2. 分别修改两个Tomcat实例的端口配置</h5><p>目的是：避免端口冲突。</p><ul><li>第1个实例端口-配置 – tomcat8_1/conf/server.xml<ul><li>Server Port: 8001 </li><li>Connector Port: 8081</li><li>AJP Port: 8011</li><li>Redirect Port: 8443</li></ul></li><li>第2个实例端口-配置 – tomcat8_2/conf/server.xml<ul><li>Server Port: 8002</li><li>Connector Port: 8082</li><li>AJP Port: 8012</li><li>Redirect Port: 9443</li></ul></li></ul><h5 id="3-分别优化Tomcat"><a href="#3-分别优化Tomcat" class="headerlink" title="3.  分别优化Tomcat"></a>3.  分别优化Tomcat</h5><p>​    略</p><h5 id="4-备份实例，便于日后分发"><a href="#4-备份实例，便于日后分发" class="headerlink" title="4. 备份实例，便于日后分发"></a>4. 备份实例，便于日后分发</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar zcf muti_tomcat.tar.gz ./tomcat8_1 ./tomcat8_2</span><br></pre></td></tr></table></figure><h5 id="5-启动多实例"><a href="#5-启动多实例" class="headerlink" title="5. 启动多实例"></a>5. 启动多实例</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/application/tomcat8_1/bin/startup.sh </span><br><span class="line">/application/tomcat8_2/bin/startup.sh</span><br></pre></td></tr></table></figure><h5 id="6-验证"><a href="#6-验证" class="headerlink" title="6. 验证"></a>6. 验证</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看端口和进程</span></span><br><span class="line">[root@zabbix-proxy ~]# netstat -lntup|grep java</span><br><span class="line">tcp6       0      0 127.0.0.1:8081       39534/java          </span><br><span class="line">tcp6       0      0 127.0.0.1:8082       39534/java</span><br><span class="line"></span><br><span class="line">[root@zabbix-proxy ~]# jps -m</span><br></pre></td></tr></table></figure><p>web访问</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http://ip:8081</span><br><span class="line">http://ip:8082</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h5 id=&quot;首先了解下Tomcat服务启动所需端口号&quot;&gt;&lt;a href=&quot;#首先了解下Tomcat服务启动所需端口号&quot; class=&quot;headerlink&quot; title=&quot;首先了解下Tomcat服务启动所需端口号&quot;&gt;&lt;/a&gt;首先了解下Tomcat服务启动所需端口号&lt;/h5&gt;&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Server Port：&lt;/strong&gt;该端口用于监听关闭tomcat的shutdown命令，默认端口:8005&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Connector Port:&lt;/strong&gt;  该端口用于监听HTTP的请求，默认端口：8080&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;AJP Port:&lt;/strong&gt; 该端口用于监听AJP(Apache JServ Protocal)协议上的请求，通常用于整合HTTP服务器，默认端口: 8009【用不到可注释】&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Redirect Port:&lt;/strong&gt; 重定向端口，出现在Connector配置中。默认端口：8443&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;​       作用：当用户用http请求某个资源，而该资源本身又被设置了必须要https方式访问，此时Tomcat会自动重定向到这个redirectPort设置的https端口。&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
-    
-      <category term="tomcat" scheme="https://garywu520.github.io/blog/tags/tomcat/"/>
-    
-      <category term="tomcat8" scheme="https://garywu520.github.io/blog/tags/tomcat8/"/>
-    
-      <category term="tomcat多实例" scheme="https://garywu520.github.io/blog/tags/tomcat%E5%A4%9A%E5%AE%9E%E4%BE%8B/"/>
-    
-      <category term="jdk" scheme="https://garywu520.github.io/blog/tags/jdk/"/>
     
   </entry>
   
