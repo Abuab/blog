@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://garywu520.github.io/blog/"/>
-  <updated>2019-09-29T05:43:25.343Z</updated>
+  <updated>2019-10-11T08:21:34.726Z</updated>
   <id>https://garywu520.github.io/blog/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MySQL慢查询记录与分析</title>
+    <link href="https://garywu520.github.io/blog/2019/10/11/MySQL%E6%85%A2%E6%9F%A5%E8%AF%A2%E8%AE%B0%E5%BD%95%E4%B8%8E%E5%88%86%E6%9E%90/"/>
+    <id>https://garywu520.github.io/blog/2019/10/11/MySQL慢查询记录与分析/</id>
+    <published>2019-10-11T08:13:48.000Z</published>
+    <updated>2019-10-11T08:21:34.726Z</updated>
+    
+    <content type="html"><![CDATA[<h5 id="一、查看慢查询-配置"><a href="#一、查看慢查询-配置" class="headerlink" title="一、查看慢查询-配置"></a>一、查看慢查询-配置</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show variables like &apos;slow_query%&apos;;</span><br><span class="line">mysql&gt; show variables like &apos;long_query_time&apos;;</span><br></pre></td></tr></table></figure><a id="more"></a><h5 id="二、配置慢查询"><a href="#二、配置慢查询" class="headerlink" title="二、配置慢查询"></a>二、配置慢查询</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#将 slow_query_log 全局变量设置为“ON”状态</span><br><span class="line">mysql&gt; set global slow_query_log=&apos;ON&apos;; </span><br><span class="line"></span><br><span class="line">#设置慢查询日志存放的位置</span><br><span class="line">mysql&gt; set global slow_query_log_file=&apos;/usr/local/mysql/data/slow.log&apos;;</span><br><span class="line"></span><br><span class="line">#查询超过1秒就记录</span><br><span class="line">mysql&gt; set global long_query_time=1;</span><br></pre></td></tr></table></figure><p>配置文件配置 cat /etc/my.cnf</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">slow_query_log = ON</span><br><span class="line">slow_query_log_file = /usr/local/mysql/data/slow.log</span><br><span class="line">long_query_time = 1</span><br></pre></td></tr></table></figure><h5 id="三、慢查询分析工具-报告"><a href="#三、慢查询分析工具-报告" class="headerlink" title="三、慢查询分析工具/报告"></a>三、慢查询分析工具/报告</h5><p>本Python脚本功能：HTML和Json格式双输出，直观，便捷！</p><p><img src="https://camo.githubusercontent.com/a7083afb045660afb4e04efd047f6f36f78008af/68747470733a2f2f6b696f6e662e636f6d2f61727469636c655f696d616765732f736c6f776c6f672d7265706f72742d30312e6a7067" alt="MySQL_Slow"></p><p>感谢源作者付出，项目Fork版地址：<a href="https://github.com/garywu520/Mysql-SlowLog-analysis" target="_blank" rel="noopener">https://github.com/garywu520/Mysql-SlowLog-analysis</a></p><h5 id="四、pt-query-digest使用"><a href="#四、pt-query-digest使用" class="headerlink" title="四、pt-query-digest使用"></a>四、pt-query-digest使用</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://raw.githubusercontent.com/kalivim/Mysql-SlowLog-analysis/master/analysis-slow-log.py</span><br><span class="line">chmod +x analysis-slow-log.py</span><br><span class="line">./analysis-slow-log.py Mysql_SlowLog_file general_json_filename report_name</span><br></pre></td></tr></table></figure><p>参数说明：</p><ul><li>Mysql_SlowLog_file      mysql慢查询日志的文件名</li><li>general_json_filename   脚本生成的json报告文件名</li><li>report_name            生成的Html报告文件名</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h5 id=&quot;一、查看慢查询-配置&quot;&gt;&lt;a href=&quot;#一、查看慢查询-配置&quot; class=&quot;headerlink&quot; title=&quot;一、查看慢查询-配置&quot;&gt;&lt;/a&gt;一、查看慢查询-配置&lt;/h5&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;mysql&amp;gt; show variables like &amp;apos;slow_query%&amp;apos;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;mysql&amp;gt; show variables like &amp;apos;long_query_time&amp;apos;;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+    
+      <category term="MySQL" scheme="https://garywu520.github.io/blog/tags/MySQL/"/>
+    
+      <category term="pt-query-digest" scheme="https://garywu520.github.io/blog/tags/pt-query-digest/"/>
+    
+      <category term="慢查询" scheme="https://garywu520.github.io/blog/tags/%E6%85%A2%E6%9F%A5%E8%AF%A2/"/>
+    
+      <category term="分析" scheme="https://garywu520.github.io/blog/tags/%E5%88%86%E6%9E%90/"/>
+    
+  </entry>
   
   <entry>
     <title>CentOS7 PHP安装mcrypt扩展</title>
@@ -583,36 +609,6 @@
       <category term="supervisor" scheme="https://garywu520.github.io/blog/tags/supervisor/"/>
     
       <category term="二进制" scheme="https://garywu520.github.io/blog/tags/%E4%BA%8C%E8%BF%9B%E5%88%B6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>docker导出导入镜像</title>
-    <link href="https://garywu520.github.io/blog/2019/08/08/docker%E5%AF%BC%E5%87%BA%E5%AF%BC%E5%85%A5%E9%95%9C%E5%83%8F/"/>
-    <id>https://garywu520.github.io/blog/2019/08/08/docker导出导入镜像/</id>
-    <published>2019-08-08T03:25:02.000Z</published>
-    <updated>2019-08-08T03:31:27.087Z</updated>
-    
-    <content type="html"><![CDATA[<p>当基于基础镜像，配置并优化了相关环境后，重新打包制作的Docker镜像需要导出保存时，就需要导出导入操作了。</p><h5 id="导出镜像"><a href="#导出镜像" class="headerlink" title="导出镜像"></a>导出镜像</h5><p>如果要导出镜像到本地文件，可以使用docker save命令. 假设要导出的新镜像名为centos_v1</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br><span class="line">docker save -o centos_v1.tar centos_v1</span><br></pre></td></tr></table></figure><h5 id="载入镜像"><a href="#载入镜像" class="headerlink" title="载入镜像"></a>载入镜像</h5><p>可以使用docker load从导出的本地文件中再导入到本地镜像库</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker load --input centos_v1.tar</span><br><span class="line">或</span><br><span class="line">docker load &lt; centos_v1.tar</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;当基于基础镜像，配置并优化了相关环境后，重新打包制作的Docker镜像需要导出保存时，就需要导出导入操作了。&lt;/p&gt;
-&lt;h5 id=&quot;导出镜像&quot;&gt;&lt;a href=&quot;#导出镜像&quot; class=&quot;headerlink&quot; title=&quot;导出镜像&quot;&gt;&lt;/a&gt;导出镜像&lt;/h5&gt;&lt;p&gt;
-      
-    
-    </summary>
-    
-    
-      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
-    
-      <category term="docker" scheme="https://garywu520.github.io/blog/tags/docker/"/>
-    
-      <category term="images" scheme="https://garywu520.github.io/blog/tags/images/"/>
-    
-      <category term="导入导出" scheme="https://garywu520.github.io/blog/tags/%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BA/"/>
     
   </entry>
   
