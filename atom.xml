@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://garywu520.github.io/blog/"/>
-  <updated>2019-10-14T07:35:32.877Z</updated>
+  <updated>2019-10-15T03:28:55.321Z</updated>
   <id>https://garywu520.github.io/blog/</id>
   
   <author>
@@ -17,19 +17,46 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>SSH保持长连接</title>
+    <link href="https://garywu520.github.io/blog/2019/10/15/SSH%E4%BF%9D%E6%8C%81%E9%95%BF%E8%BF%9E%E6%8E%A5/"/>
+    <id>https://garywu520.github.io/blog/2019/10/15/SSH保持长连接/</id>
+    <published>2019-10-15T03:18:18.000Z</published>
+    <updated>2019-10-15T03:28:55.321Z</updated>
+    
+    <content type="html"><![CDATA[<h5 id="场景："><a href="#场景：" class="headerlink" title="场景："></a>场景：</h5><p>跳板机从阿里云北京到阿里云其他地方，过一会儿总出现无响应的问题。</p><h5 id="方案一：服务端配置"><a href="#方案一：服务端配置" class="headerlink" title="方案一：服务端配置"></a>方案一：服务端配置</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/ssh/sshd_config  #添加如下两行</span><br><span class="line"></span><br><span class="line">ClientAliveInterval 60</span><br><span class="line">ClientAliveCountMax 1</span><br></pre></td></tr></table></figure><p> SSH Server 每 60 秒就会自动发送一个信号给 Client，而等待 Client 回应， 如果客户端没有回应，会记录下来直到记录数超过 ClientAliveCountMax 的值时，才会断开连接。 </p><a id="more"></a><h5 id="方案二：客户端配置"><a href="#方案二：客户端配置" class="headerlink" title="方案二：客户端配置"></a>方案二：客户端配置</h5><p>如果由于某些原因，不能控制服务器，也可以在客户端实现</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/ssh/ssh_config</span><br><span class="line"></span><br><span class="line">TCPKeepAlive yes</span><br><span class="line">ServerAliveInterval 30</span><br></pre></td></tr></table></figure><p>参数：</p><ul><li>TCPKeepAlive yes    开启TCP保持连接 </li><li>ServerAliveInterval 30   每过30秒发一个数据包到服务器证明“我还活着” </li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h5 id=&quot;场景：&quot;&gt;&lt;a href=&quot;#场景：&quot; class=&quot;headerlink&quot; title=&quot;场景：&quot;&gt;&lt;/a&gt;场景：&lt;/h5&gt;&lt;p&gt;跳板机从阿里云北京到阿里云其他地方，过一会儿总出现无响应的问题。&lt;/p&gt;
+&lt;h5 id=&quot;方案一：服务端配置&quot;&gt;&lt;a href=&quot;#方案一：服务端配置&quot; class=&quot;headerlink&quot; title=&quot;方案一：服务端配置&quot;&gt;&lt;/a&gt;方案一：服务端配置&lt;/h5&gt;&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;vim /etc/ssh/sshd_config  #添加如下两行&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;ClientAliveInterval 60&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;ClientAliveCountMax 1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt; SSH Server 每 60 秒就会自动发送一个信号给 Client，而等待 Client 回应， 如果客户端没有回应，会记录下来直到记录数超过 ClientAliveCountMax 的值时，才会断开连接。 &lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="SSH" scheme="https://garywu520.github.io/blog/tags/SSH/"/>
+    
+      <category term="Keepalive" scheme="https://garywu520.github.io/blog/tags/Keepalive/"/>
+    
+      <category term="sshd" scheme="https://garywu520.github.io/blog/tags/sshd/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Bash 5.0编译</title>
     <link href="https://garywu520.github.io/blog/2019/10/14/Bash-5-0%E7%BC%96%E8%AF%91/"/>
     <id>https://garywu520.github.io/blog/2019/10/14/Bash-5-0编译/</id>
     <published>2019-10-14T07:34:29.000Z</published>
-    <updated>2019-10-14T07:35:32.877Z</updated>
+    <updated>2019-10-14T09:49:28.879Z</updated>
     
-    <content type="html"><![CDATA[<p>CentOS7安装的Bash版本是 V4.2.46，而Bash目前已经发不了5.0 Beta，编译玩玩</p><p>Bash: <a href="https://www.gnu.org/software/bash/" target="_blank" rel="noopener">Download</a></p><h5 id="一、编译安装Bash-5-0"><a href="#一、编译安装Bash-5-0" class="headerlink" title="一、编译安装Bash 5.0"></a>一、编译安装Bash 5.0</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">安装C编译器,make程序,内核头文件</span></span><br><span class="line">yum install -y gcc make kernel-headers</span><br></pre></td></tr></table></figure><a id="more"></a><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget http://ftp.gnu.org/gnu/bash/bash-5.0-beta2.tar.gz</span><br><span class="line">tar -zxf bash-5.0-beta2.tar.gz</span><br><span class="line">cd bash-5.0-beta2</span><br></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=/usr/local/bash5.0</span><br><span class="line">make</span><br><span class="line">make test</span><br><span class="line">make install</span><br><span class="line">/usr/local/bash5.0/bin/bash --version</span><br></pre></td></tr></table></figure><h5 id="二、使用新版本的Bash-Shell"><a href="#二、使用新版本的Bash-Shell" class="headerlink" title="二、使用新版本的Bash Shell"></a>二、使用新版本的Bash Shell</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv /bin/bash /bin/bash.bak &amp;&amp; ln -sv /usr/local/bash5.0/bin/bash /bin/bash</span><br></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# bash --version</span><br><span class="line">GNU bash, version 5.0.0(1)-beta2 (x86_64-pc-linux-gnu)</span><br><span class="line">Copyright (C) 2018 Free Software Foundation, Inc.</span><br><span class="line">License GPLv3+: GNU GPL version 3 or later &lt;http://gnu.org/licenses/gpl.html&gt;</span><br><span class="line"></span><br><span class="line">This is free software; you are free to change and redistribute it.</span><br><span class="line">There is NO WARRANTY, to the extent permitted by law.</span><br></pre></td></tr></table></figure>]]></content>
+    <content type="html"><![CDATA[<p>CentOS7安装的Bash版本是 V4.2.46，而Bash目前已经发不了5.0 Beta，编译玩玩</p><p>Bash: <a href="https://www.gnu.org/software/bash/" target="_blank" rel="noopener">Download</a></p><h5 id="一、编译安装Bash-5-0"><a href="#一、编译安装Bash-5-0" class="headerlink" title="一、编译安装Bash 5.0"></a>一、编译安装Bash 5.0</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>安装C编译器,make程序,内核头文件</span><br><span class="line">yum install -y gcc make kernel-headers</span><br></pre></td></tr></table></figure><a id="more"></a><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget http://ftp.gnu.org/gnu/bash/bash-5.0-beta2.tar.gz</span><br><span class="line">tar -zxf bash-5.0-beta2.tar.gz</span><br><span class="line">cd bash-5.0-beta2</span><br></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=/usr/local/bash5.0</span><br><span class="line">make</span><br><span class="line">make test</span><br><span class="line">make install</span><br><span class="line">/usr/local/bash5.0/bin/bash --version</span><br></pre></td></tr></table></figure><h5 id="二、使用新版本的Bash-Shell"><a href="#二、使用新版本的Bash-Shell" class="headerlink" title="二、使用新版本的Bash Shell"></a>二、使用新版本的Bash Shell</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mv /bin/bashbug /bin/bashbug.bak &amp;&amp; ln -sv /usr/local/bash5.0/bin/bashbug /usr/bashbug</span><br><span class="line">mv /bin/bash /bin/bash.bak &amp;&amp; ln -sv /usr/local/bash5.0/bin/bash /bin/bash</span><br></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# bash --version</span><br><span class="line">GNU bash, version 5.0.0(1)-beta2 (x86_64-pc-linux-gnu)</span><br><span class="line">Copyright (C) 2018 Free Software Foundation, Inc.</span><br><span class="line">License GPLv3+: GNU GPL version 3 or later &lt;http://gnu.org/licenses/gpl.html&gt;</span><br><span class="line"></span><br><span class="line">This is free software; you are free to change and redistribute it.</span><br><span class="line">There is NO WARRANTY, to the extent permitted by law.</span><br></pre></td></tr></table></figure>]]></content>
     
     <summary type="html">
     
       &lt;p&gt;CentOS7安装的Bash版本是 V4.2.46，而Bash目前已经发不了5.0 Beta，编译玩玩&lt;/p&gt;
 &lt;p&gt;Bash: &lt;a href=&quot;https://www.gnu.org/software/bash/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Download&lt;/a&gt;&lt;/p&gt;
-&lt;h5 id=&quot;一、编译安装Bash-5-0&quot;&gt;&lt;a href=&quot;#一、编译安装Bash-5-0&quot; class=&quot;headerlink&quot; title=&quot;一、编译安装Bash 5.0&quot;&gt;&lt;/a&gt;一、编译安装Bash 5.0&lt;/h5&gt;&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;bash&quot;&gt;安装C编译器,make程序,内核头文件&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;yum install -y gcc make kernel-headers&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h5 id=&quot;一、编译安装Bash-5-0&quot;&gt;&lt;a href=&quot;#一、编译安装Bash-5-0&quot; class=&quot;headerlink&quot; title=&quot;一、编译安装Bash 5.0&quot;&gt;&lt;/a&gt;一、编译安装Bash 5.0&lt;/h5&gt;&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;#&lt;/span&gt;安装C编译器,make程序,内核头文件&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;yum install -y gcc make kernel-headers&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
     
     </summary>
     
@@ -128,9 +155,9 @@
     
       <category term="MySQL" scheme="https://garywu520.github.io/blog/tags/MySQL/"/>
     
-      <category term="慢查询" scheme="https://garywu520.github.io/blog/tags/%E6%85%A2%E6%9F%A5%E8%AF%A2/"/>
-    
       <category term="pt-query-digest" scheme="https://garywu520.github.io/blog/tags/pt-query-digest/"/>
+    
+      <category term="慢查询" scheme="https://garywu520.github.io/blog/tags/%E6%85%A2%E6%9F%A5%E8%AF%A2/"/>
     
       <category term="分析" scheme="https://garywu520.github.io/blog/tags/%E5%88%86%E6%9E%90/"/>
     
@@ -590,31 +617,6 @@
       <category term="traceroute" scheme="https://garywu520.github.io/blog/tags/traceroute/"/>
     
       <category term="besttrace" scheme="https://garywu520.github.io/blog/tags/besttrace/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>zabbix报警邮件内容带附件-解决方法</title>
-    <link href="https://garywu520.github.io/blog/2019/08/15/zabbix%E6%8A%A5%E8%AD%A6%E9%82%AE%E4%BB%B6%E5%86%85%E5%AE%B9%E5%B8%A6%E9%99%84%E4%BB%B6-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/"/>
-    <id>https://garywu520.github.io/blog/2019/08/15/zabbix报警邮件内容带附件-解决方法/</id>
-    <published>2019-08-15T02:32:47.000Z</published>
-    <updated>2019-08-15T02:44:46.898Z</updated>
-    
-    <content type="html"><![CDATA[<p>zabbix设置邮件脚本报警的后，测试发现，邮件正文内容变成了tcmime.1278.1278.1724.bin 或 ATT00001.bin</p><h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><h5 id="1-安装dos2unix"><a href="#1-安装dos2unix" class="headerlink" title="1. 安装dos2unix"></a>1. 安装dos2unix</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">wget http://mirror.centos.org/centos/7/os/x86_64/Packages/dos2unix-6.0.3-7.el7.x86_64.rpm</span><br><span class="line">rpm -Uvh dos2unix-6.0.3-7.el7.x86_64.rpm</span><br></pre></td></tr></table></figure><a id="more"></a><h5 id="2-修改sendmail-sh"><a href="#2-修改sendmail-sh" class="headerlink" title="2. 修改sendmail.sh"></a>2. 修改sendmail.sh</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/lib/zabbix/alertscripts/</span><br></pre></td></tr></table></figure><p>vim sendmail.sh</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash">export.UTF-8      //解决发送的中文变成了乱码的问题</span></span><br><span class="line">FILE=/tmp/mailtmp.txt </span><br><span class="line">echo "$3" &gt;$FILE</span><br><span class="line">/bin/dos2unix -k $FILE   //解决了发送的邮件内容变成附件的问题。</span><br><span class="line">/bin/mail -s "$2" $1 &lt; $FILE</span><br></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">touch /tmp/mailtmp.txt</span><br><span class="line">chown zabbix.zabbix /tmp/mailtmp.txt</span><br><span class="line">ls -lh /tmp/mailtmp.txt</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;zabbix设置邮件脚本报警的后，测试发现，邮件正文内容变成了tcmime.1278.1278.1724.bin 或 ATT00001.bin&lt;/p&gt;
-&lt;h4 id=&quot;解决方案&quot;&gt;&lt;a href=&quot;#解决方案&quot; class=&quot;headerlink&quot; title=&quot;解决方案&quot;&gt;&lt;/a&gt;解决方案&lt;/h4&gt;&lt;h5 id=&quot;1-安装dos2unix&quot;&gt;&lt;a href=&quot;#1-安装dos2unix&quot; class=&quot;headerlink&quot; title=&quot;1. 安装dos2unix&quot;&gt;&lt;/a&gt;1. 安装dos2unix&lt;/h5&gt;&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;wget http://mirror.centos.org/centos/7/os/x86_64/Packages/dos2unix-6.0.3-7.el7.x86_64.rpm&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;rpm -Uvh dos2unix-6.0.3-7.el7.x86_64.rpm&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-    
-      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
-    
-      <category term="zabbix" scheme="https://garywu520.github.io/blog/tags/zabbix/"/>
-    
-      <category term="报警" scheme="https://garywu520.github.io/blog/tags/%E6%8A%A5%E8%AD%A6/"/>
     
   </entry>
   
