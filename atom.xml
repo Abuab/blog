@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://garywu520.github.io/blog/"/>
-  <updated>2019-10-15T03:28:55.321Z</updated>
+  <updated>2019-10-16T03:23:19.494Z</updated>
   <id>https://garywu520.github.io/blog/</id>
   
   <author>
@@ -17,13 +17,53 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>免费SSL证书-申请更新脚本</title>
+    <link href="https://garywu520.github.io/blog/2019/10/16/%E5%85%8D%E8%B4%B9SSL%E8%AF%81%E4%B9%A6-%E7%94%B3%E8%AF%B7%E6%9B%B4%E6%96%B0%E8%84%9A%E6%9C%AC/"/>
+    <id>https://garywu520.github.io/blog/2019/10/16/免费SSL证书-申请更新脚本/</id>
+    <published>2019-10-16T03:18:55.000Z</published>
+    <updated>2019-10-16T03:23:19.494Z</updated>
+    
+    <content type="html"><![CDATA[<p> <strong>acme.sh</strong> 实现了 <code>acme</code> 协议, 可以从 letsencrypt 生成免费的证书</p><p>环境：Nginx</p><h5 id="一、安装acme-sh"><a href="#一、安装acme-sh" class="headerlink" title="一、安装acme.sh"></a>一、安装acme.sh</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">curl  https://get.acme.sh | sh</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">把 acme.sh 安装到root目录下</span></span><br><span class="line">~/.acme.sh/</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">并创建 一个 bash 的 <span class="built_in">alias</span>, 方便你的使用</span></span><br><span class="line">alias acme.sh=~/.acme.sh/acme.sh</span><br></pre></td></tr></table></figure><p> 安装过程不会污染已有的系统任何功能和文件, 所有的修改都限制在安装目录中: <code>~/.acme.sh/</code> </p><a id="more"></a><h5 id="二、SSL证书自动更新脚本"><a href="#二、SSL证书自动更新脚本" class="headerlink" title="二、SSL证书自动更新脚本"></a>二、SSL证书自动更新脚本</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash">自动更新SSL证书,crontab每30天强制更新一次</span></span><br><span class="line"></span><br><span class="line">DIR=/root/.acme.sh</span><br><span class="line">SSLDIR=/etc/nginx/ssl</span><br><span class="line">DOMAIN=xx.xx.net</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">强制更新证书</span></span><br><span class="line">cd $DIR </span><br><span class="line">if [ -f dhparam.pem ];then</span><br><span class="line">   rm -f ./dhparam.pem</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">更新acme.sh到最新版</span></span><br><span class="line">./acme.sh --upgrade</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">生成新key和pem</span></span><br><span class="line"><span class="meta">#</span><span class="bash">强制更新证书并指定nginx Root根目录[自动添加验证文件]</span></span><br><span class="line">./acme.sh --issue --force  -d $DOMAIN --webroot /usr/share/nginx</span><br><span class="line">sleep 2</span><br><span class="line">openssl dhparam -dsaparam -out dhparam.pem 4096</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">拷贝新证书覆盖ssl目录</span></span><br><span class="line">\cp $DIR/$DOMAIN/$DOMAIN.cer $SSLDIR/</span><br><span class="line">\cp $DIR/$DOMAIN/$DOMAIN.key $SSLDIR/</span><br><span class="line">\cp $DIR/dhparam.pem $SSLDIR/</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">重启nginx服务</span></span><br><span class="line">/bin/systemctl restart nginx</span><br></pre></td></tr></table></figure><p>GitHub: <a href="[https://github.com/Neilpang/acme.sh/wiki/%E8%AF%B4%E6%98%8E](https://github.com/Neilpang/acme.sh/wiki/说明)">项目地址</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt; &lt;strong&gt;acme.sh&lt;/strong&gt; 实现了 &lt;code&gt;acme&lt;/code&gt; 协议, 可以从 letsencrypt 生成免费的证书&lt;/p&gt;
+&lt;p&gt;环境：Nginx&lt;/p&gt;
+&lt;h5 id=&quot;一、安装acme-sh&quot;&gt;&lt;a href=&quot;#一、安装acme-sh&quot; class=&quot;headerlink&quot; title=&quot;一、安装acme.sh&quot;&gt;&lt;/a&gt;一、安装acme.sh&lt;/h5&gt;&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;curl  https://get.acme.sh | sh&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;bash&quot;&gt;把 acme.sh 安装到root目录下&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;~/.acme.sh/&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;bash&quot;&gt;并创建 一个 bash 的 &lt;span class=&quot;built_in&quot;&gt;alias&lt;/span&gt;, 方便你的使用&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;alias acme.sh=~/.acme.sh/acme.sh&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt; 安装过程不会污染已有的系统任何功能和文件, 所有的修改都限制在安装目录中: &lt;code&gt;~/.acme.sh/&lt;/code&gt; &lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Nginx" scheme="https://garywu520.github.io/blog/tags/Nginx/"/>
+    
+      <category term="crt" scheme="https://garywu520.github.io/blog/tags/crt/"/>
+    
+      <category term="SSL" scheme="https://garywu520.github.io/blog/tags/SSL/"/>
+    
+      <category term="pem" scheme="https://garywu520.github.io/blog/tags/pem/"/>
+    
+      <category term="证书" scheme="https://garywu520.github.io/blog/tags/%E8%AF%81%E4%B9%A6/"/>
+    
+      <category term="key" scheme="https://garywu520.github.io/blog/tags/key/"/>
+    
+      <category term="acme.sh" scheme="https://garywu520.github.io/blog/tags/acme-sh/"/>
+    
+      <category term="dhparam.pem" scheme="https://garywu520.github.io/blog/tags/dhparam-pem/"/>
+    
+      <category term="letsencrypt" scheme="https://garywu520.github.io/blog/tags/letsencrypt/"/>
+    
+  </entry>
+  
+  <entry>
     <title>SSH保持长连接</title>
     <link href="https://garywu520.github.io/blog/2019/10/15/SSH%E4%BF%9D%E6%8C%81%E9%95%BF%E8%BF%9E%E6%8E%A5/"/>
     <id>https://garywu520.github.io/blog/2019/10/15/SSH保持长连接/</id>
     <published>2019-10-15T03:18:18.000Z</published>
-    <updated>2019-10-15T03:28:55.321Z</updated>
+    <updated>2019-10-15T03:30:26.257Z</updated>
     
-    <content type="html"><![CDATA[<h5 id="场景："><a href="#场景：" class="headerlink" title="场景："></a>场景：</h5><p>跳板机从阿里云北京到阿里云其他地方，过一会儿总出现无响应的问题。</p><h5 id="方案一：服务端配置"><a href="#方案一：服务端配置" class="headerlink" title="方案一：服务端配置"></a>方案一：服务端配置</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/ssh/sshd_config  #添加如下两行</span><br><span class="line"></span><br><span class="line">ClientAliveInterval 60</span><br><span class="line">ClientAliveCountMax 1</span><br></pre></td></tr></table></figure><p> SSH Server 每 60 秒就会自动发送一个信号给 Client，而等待 Client 回应， 如果客户端没有回应，会记录下来直到记录数超过 ClientAliveCountMax 的值时，才会断开连接。 </p><a id="more"></a><h5 id="方案二：客户端配置"><a href="#方案二：客户端配置" class="headerlink" title="方案二：客户端配置"></a>方案二：客户端配置</h5><p>如果由于某些原因，不能控制服务器，也可以在客户端实现</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/ssh/ssh_config</span><br><span class="line"></span><br><span class="line">TCPKeepAlive yes</span><br><span class="line">ServerAliveInterval 30</span><br></pre></td></tr></table></figure><p>参数：</p><ul><li>TCPKeepAlive yes    开启TCP保持连接 </li><li>ServerAliveInterval 30   每过30秒发一个数据包到服务器证明“我还活着” </li></ul>]]></content>
+    <content type="html"><![CDATA[<h5 id="场景："><a href="#场景：" class="headerlink" title="场景："></a>场景：</h5><p>跳板机从阿里云北京到阿里云其他地方，过一会儿总出现无响应的问题。</p><h5 id="方案一：服务端配置"><a href="#方案一：服务端配置" class="headerlink" title="方案一：服务端配置"></a>方案一：服务端配置</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/ssh/sshd_config  #添加如下两行</span><br><span class="line"></span><br><span class="line">ClientAliveInterval 60</span><br><span class="line">ClientAliveCountMax 1</span><br></pre></td></tr></table></figure><p> SSH Server 每 60 秒就会自动发送一个信号给 Client，而等待 Client 回应， 如果客户端没有回应，会记录下来直到记录数超过 ClientAliveCountMax 的值时，才会断开连接。 </p><a id="more"></a><h5 id="方案二：客户端配置"><a href="#方案二：客户端配置" class="headerlink" title="方案二：客户端配置"></a>方案二：客户端配置</h5><p>如果由于某些原因，不能控制服务器，也可以在客户端实现</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/ssh/ssh_config      #注意：这里的文件是ssh_config</span><br><span class="line"></span><br><span class="line">TCPKeepAlive yes</span><br><span class="line">ServerAliveInterval 30</span><br></pre></td></tr></table></figure><p>参数：</p><ul><li>TCPKeepAlive yes    开启TCP保持连接 </li><li>ServerAliveInterval 30   每过30秒发一个数据包到服务器证明“我还活着” </li></ul>]]></content>
     
     <summary type="html">
     
@@ -50,13 +90,13 @@
     <published>2019-10-14T07:34:29.000Z</published>
     <updated>2019-10-14T09:49:28.879Z</updated>
     
-    <content type="html"><![CDATA[<p>CentOS7安装的Bash版本是 V4.2.46，而Bash目前已经发不了5.0 Beta，编译玩玩</p><p>Bash: <a href="https://www.gnu.org/software/bash/" target="_blank" rel="noopener">Download</a></p><h5 id="一、编译安装Bash-5-0"><a href="#一、编译安装Bash-5-0" class="headerlink" title="一、编译安装Bash 5.0"></a>一、编译安装Bash 5.0</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>安装C编译器,make程序,内核头文件</span><br><span class="line">yum install -y gcc make kernel-headers</span><br></pre></td></tr></table></figure><a id="more"></a><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget http://ftp.gnu.org/gnu/bash/bash-5.0-beta2.tar.gz</span><br><span class="line">tar -zxf bash-5.0-beta2.tar.gz</span><br><span class="line">cd bash-5.0-beta2</span><br></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=/usr/local/bash5.0</span><br><span class="line">make</span><br><span class="line">make test</span><br><span class="line">make install</span><br><span class="line">/usr/local/bash5.0/bin/bash --version</span><br></pre></td></tr></table></figure><h5 id="二、使用新版本的Bash-Shell"><a href="#二、使用新版本的Bash-Shell" class="headerlink" title="二、使用新版本的Bash Shell"></a>二、使用新版本的Bash Shell</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mv /bin/bashbug /bin/bashbug.bak &amp;&amp; ln -sv /usr/local/bash5.0/bin/bashbug /usr/bashbug</span><br><span class="line">mv /bin/bash /bin/bash.bak &amp;&amp; ln -sv /usr/local/bash5.0/bin/bash /bin/bash</span><br></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# bash --version</span><br><span class="line">GNU bash, version 5.0.0(1)-beta2 (x86_64-pc-linux-gnu)</span><br><span class="line">Copyright (C) 2018 Free Software Foundation, Inc.</span><br><span class="line">License GPLv3+: GNU GPL version 3 or later &lt;http://gnu.org/licenses/gpl.html&gt;</span><br><span class="line"></span><br><span class="line">This is free software; you are free to change and redistribute it.</span><br><span class="line">There is NO WARRANTY, to the extent permitted by law.</span><br></pre></td></tr></table></figure>]]></content>
+    <content type="html"><![CDATA[<p>CentOS7安装的Bash版本是 V4.2.46，而Bash目前已经发不了5.0 Beta，编译玩玩</p><p>Bash: <a href="https://www.gnu.org/software/bash/" target="_blank" rel="noopener">Download</a></p><h5 id="一、编译安装Bash-5-0"><a href="#一、编译安装Bash-5-0" class="headerlink" title="一、编译安装Bash 5.0"></a>一、编译安装Bash 5.0</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">安装C编译器,make程序,内核头文件</span></span><br><span class="line">yum install -y gcc make kernel-headers</span><br></pre></td></tr></table></figure><a id="more"></a><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget http://ftp.gnu.org/gnu/bash/bash-5.0-beta2.tar.gz</span><br><span class="line">tar -zxf bash-5.0-beta2.tar.gz</span><br><span class="line">cd bash-5.0-beta2</span><br></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=/usr/local/bash5.0</span><br><span class="line">make</span><br><span class="line">make test</span><br><span class="line">make install</span><br><span class="line">/usr/local/bash5.0/bin/bash --version</span><br></pre></td></tr></table></figure><h5 id="二、使用新版本的Bash-Shell"><a href="#二、使用新版本的Bash-Shell" class="headerlink" title="二、使用新版本的Bash Shell"></a>二、使用新版本的Bash Shell</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mv /bin/bashbug /bin/bashbug.bak &amp;&amp; ln -sv /usr/local/bash5.0/bin/bashbug /usr/bashbug</span><br><span class="line">mv /bin/bash /bin/bash.bak &amp;&amp; ln -sv /usr/local/bash5.0/bin/bash /bin/bash</span><br></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# bash --version</span><br><span class="line">GNU bash, version 5.0.0(1)-beta2 (x86_64-pc-linux-gnu)</span><br><span class="line">Copyright (C) 2018 Free Software Foundation, Inc.</span><br><span class="line">License GPLv3+: GNU GPL version 3 or later &lt;http://gnu.org/licenses/gpl.html&gt;</span><br><span class="line"></span><br><span class="line">This is free software; you are free to change and redistribute it.</span><br><span class="line">There is NO WARRANTY, to the extent permitted by law.</span><br></pre></td></tr></table></figure>]]></content>
     
     <summary type="html">
     
       &lt;p&gt;CentOS7安装的Bash版本是 V4.2.46，而Bash目前已经发不了5.0 Beta，编译玩玩&lt;/p&gt;
 &lt;p&gt;Bash: &lt;a href=&quot;https://www.gnu.org/software/bash/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Download&lt;/a&gt;&lt;/p&gt;
-&lt;h5 id=&quot;一、编译安装Bash-5-0&quot;&gt;&lt;a href=&quot;#一、编译安装Bash-5-0&quot; class=&quot;headerlink&quot; title=&quot;一、编译安装Bash 5.0&quot;&gt;&lt;/a&gt;一、编译安装Bash 5.0&lt;/h5&gt;&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;#&lt;/span&gt;安装C编译器,make程序,内核头文件&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;yum install -y gcc make kernel-headers&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h5 id=&quot;一、编译安装Bash-5-0&quot;&gt;&lt;a href=&quot;#一、编译安装Bash-5-0&quot; class=&quot;headerlink&quot; title=&quot;一、编译安装Bash 5.0&quot;&gt;&lt;/a&gt;一、编译安装Bash 5.0&lt;/h5&gt;&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;bash&quot;&gt;安装C编译器,make程序,内核头文件&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;yum install -y gcc make kernel-headers&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
     
     </summary>
     
@@ -585,38 +625,6 @@
       <category term="nginx" scheme="https://garywu520.github.io/blog/tags/nginx/"/>
     
       <category term="nginx下载" scheme="https://garywu520.github.io/blog/tags/nginx%E4%B8%8B%E8%BD%BD/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>shell脚本监控TraceRoute</title>
-    <link href="https://garywu520.github.io/blog/2019/08/15/shell%E8%84%9A%E6%9C%AC%E7%9B%91%E6%8E%A7TraceRoute/"/>
-    <id>https://garywu520.github.io/blog/2019/08/15/shell脚本监控TraceRoute/</id>
-    <published>2019-08-15T06:28:32.000Z</published>
-    <updated>2019-08-15T06:53:21.463Z</updated>
-    
-    <content type="html"><![CDATA[<h5 id="shell脚本逻辑："><a href="#shell脚本逻辑：" class="headerlink" title="shell脚本逻辑："></a>shell脚本逻辑：</h5><ul><li>不能以 trace命令返回值作为成功或失败的依据，不可达的地址返回值也是0</li><li>取文本的最后一跳信息，当最后一跳包含$IP，则视为Trace正常。若$IP的检索结果等于0，则视为Trace失败。</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">!/bin/env bash</span><br><span class="line">IP=xx.xx.xx.xx</span><br><span class="line">FILE=/tmp/besttrace.txt</span><br><span class="line">EMAIL=xxx@xx.com</span><br><span class="line"></span><br><span class="line">/sbin/besttrace -q 1 $IP &gt;$FILE</span><br><span class="line">NUM=`grep "$IP" $FILE|awk NR==2|wc -l`</span><br><span class="line">if [ $NUM -lt 1 ];then</span><br><span class="line">   INFO=`cat $FILE`</span><br><span class="line"><span class="meta">   #</span><span class="bash">发送告警邮件 </span></span><br><span class="line">   echo -e "邮件发自$HOSTNAME\n详情如下:\n\n$INFO"|mail -s "TraceRoute告警" $EMAIL</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h5 id=&quot;shell脚本逻辑：&quot;&gt;&lt;a href=&quot;#shell脚本逻辑：&quot; class=&quot;headerlink&quot; title=&quot;shell脚本逻辑：&quot;&gt;&lt;/a&gt;shell脚本逻辑：&lt;/h5&gt;&lt;ul&gt;
-&lt;li&gt;不能以 trace命令返回值作为成功或失败的依据，不可达的地址返
-      
-    
-    </summary>
-    
-    
-      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
-    
-      <category term="shell" scheme="https://garywu520.github.io/blog/tags/shell/"/>
-    
-      <category term="MTR" scheme="https://garywu520.github.io/blog/tags/MTR/"/>
-    
-      <category term="traceroute" scheme="https://garywu520.github.io/blog/tags/traceroute/"/>
-    
-      <category term="besttrace" scheme="https://garywu520.github.io/blog/tags/besttrace/"/>
     
   </entry>
   
