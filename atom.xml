@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://garywu520.github.io/blog/"/>
-  <updated>2019-10-30T09:29:50.344Z</updated>
+  <updated>2019-11-08T13:03:03.960Z</updated>
   <id>https://garywu520.github.io/blog/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>为https站点启用http2特性</title>
+    <link href="https://garywu520.github.io/blog/2019/11/08/%E4%B8%BAhttps%E7%AB%99%E7%82%B9%E5%90%AF%E7%94%A8http2%E7%89%B9%E6%80%A7/"/>
+    <id>https://garywu520.github.io/blog/2019/11/08/为https站点启用http2特性/</id>
+    <published>2019-11-08T12:59:58.000Z</published>
+    <updated>2019-11-08T13:03:03.960Z</updated>
+    
+    <content type="html"><![CDATA[<h5 id="1-HTTP-2简介"><a href="#1-HTTP-2简介" class="headerlink" title="1. HTTP/2简介"></a>1. HTTP/2简介</h5><p> <code>HTTP/2</code>（超文本传输协议第2版，最初命名为 HTTP 2.0），是HTTP协议的的第二个主要版本，使用于万维网。<code>HTTP/2</code> 是 HTTP 协议自 1999 年 HTTP 1.1 发布后的首个更新，主要基于 SPDY 协议。它由互联网工程任务组 (IETF) 的 <code>Hypertext Transfer Protocol Bis</code> (httpbis) 工作小组进行开发。该组织于2014年12月将 <code>HTTP/2</code> 标准提议递交至IESG进行讨论，于2015年2月17日被批准。<code>HTTP/2</code> 标准于2015年5月以 <code>RFC 7540</code> 正式发表。 </p><a id="more"></a><h5 id="2-HTTP-2特点"><a href="#2-HTTP-2特点" class="headerlink" title="2. HTTP/2特点"></a>2. HTTP/2特点</h5><ul><li>采用二进制格式传输数据，而非文本格式。二进制格式在协议的解析和优化扩展上带来更多的优势和可能。</li><li>对消息头进行压缩传输，能够节省消息头占用的网络的流量，而 <code>HTTP 1.1</code> 每次请求，都会携带大量冗余头信息，浪费了很多带宽资源，头压缩能够很好的解决该问题。</li><li>多路复用，就是多个请求都是通过一个 TCP 连接并发完成， <code>HTTP 1.1</code> 虽然通过 <code>pipeline</code> 也能并发请求，但是多个请求之间的响应会被阻塞的，所以 <code>pipeline</code> 至今也没有被普及应用，而 <code>HTTP/2</code> 做到了真正的并发请求，同时流还支持优先级和流量控制。</li><li>服务器推送，服务端能够更快的把资源推送给客户端，例如服务端可以主动把 <code>JS</code> 和 <code>CSS</code> 文件推送给客户端，而不需要客户端解析 HTML 再发送这些请求，当客户端需要的时候，它已经在客户端了。</li></ul><h5 id="3-HTTP-2站点的优势"><a href="#3-HTTP-2站点的优势" class="headerlink" title="3.  HTTP/2站点的优势"></a>3.  <strong>HTTP/2站点的优势</strong></h5><ul><li>提升网站访问速度。</li><li>降低服务器压力。</li><li>部分替代异步加载的使用。</li><li>保护网站安全。</li></ul><h5 id="4-硬核要求"><a href="#4-硬核要求" class="headerlink" title="4. 硬核要求"></a>4. 硬核要求</h5><ul><li>Nginx ＞1.9.5</li><li>OpenSSL＞1.0.2</li><li>因为 <code>HTTP/2</code> 不仅需要Web服务器还需要一个扩展支持，目前可以用的有 <code>ALPN</code> 和 <code>NPN</code> 两种(Chrome 已经移除了对 <code>NPN</code> 的支持)。只有 OpenSSL 1.0.2 以上版本才开始支持 <code>ALPN</code> 。 </li><li>仅支持HTTPS</li></ul><h5 id="5-在Nginx上启用HTTP-2"><a href="#5-在Nginx上启用HTTP-2" class="headerlink" title="5. 在Nginx上启用HTTP/2"></a>5. 在Nginx上启用HTTP/2</h5><p> 配置 Nginx 开启 <code>HTTP/2</code> 特别简单，在 <code>server</code> 配置段中的 <code>listen</code> 后增加 <code>http2</code> 即可 </p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> vim /usr/<span class="built_in">local</span>/nginx/conf/nginx.conf</span></span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">  listen 443 ssl http2;</span><br><span class="line">  server_name www.hi-linux.com;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p> 重启 Nginx 后，让配置生效。 </p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -s reload</span><br></pre></td></tr></table></figure><h5 id="6-命令验证HTTP-2"><a href="#6-命令验证HTTP-2" class="headerlink" title="6. 命令验证HTTP/2"></a>6. 命令验证HTTP/2</h5><p>升级curl</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">下载release</span></span><br><span class="line">rpm -Uvh  http://www.city-fan.org/ftp/contrib/yum-repo/rhel6/x86_64/city-fan.org-release-2-1.rhel6.noarch.rpm</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">查看最新版本</span></span><br><span class="line">yum --showduplicates list curl --disablerepo="*" --enablerepo="city*"</span><br></pre></td></tr></table></figure><p> vi /etc/yum.repos.d/city-fan.org.repo </p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">将[city-fan.org]组的<span class="built_in">enable</span>值改为1,保存</span></span><br></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> yum install curl</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> curl -V</span></span><br><span class="line">curl 7.67.0</span><br></pre></td></tr></table></figure><p>验证网站是否支持HTTP/2</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl --http2 -I https://xxx.net</span></span><br><span class="line">HTTP/2 200</span><br></pre></td></tr></table></figure><p>web检测是否支持HTTP/2:</p><ul><li><strong>KeyCDN: <a href="https://tools.keycdn.com/http2-test" target="_blank" rel="noopener">http2-test</a></strong></li><li><strong>MySSL: <a href="https://myssl.com/http2_check.html" target="_blank" rel="noopener">http2_check</a></strong></li></ul><h5 id="7-浏览器支持"><a href="#7-浏览器支持" class="headerlink" title="7. 浏览器支持"></a>7. 浏览器支持</h5><p>目前支持 HTTP/2 浏览器列表</p><ul><li><p>Google Chrome、Mozilla Firefox、Microsoft Edge和Opera已支持HTTP/2，并默认启用。</p></li><li><p>Internet Explorer自IE 11开始支持HTTP/2，并预设激活</p></li></ul><p>​    更详细的浏览器列表可参考：<a href="http://caniuse.com/#feat=http2" target="_blank" rel="noopener">http://caniuse.com/#feat=http2</a> </p><p>部分文章参考：<a href="https://www.hi-linux.com/posts/24162.html" target="_blank" rel="noopener">运维之美</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h5 id=&quot;1-HTTP-2简介&quot;&gt;&lt;a href=&quot;#1-HTTP-2简介&quot; class=&quot;headerlink&quot; title=&quot;1. HTTP/2简介&quot;&gt;&lt;/a&gt;1. HTTP/2简介&lt;/h5&gt;&lt;p&gt; &lt;code&gt;HTTP/2&lt;/code&gt;（超文本传输协议第2版，最初命名为 HTTP 2.0），是HTTP协议的的第二个主要版本，使用于万维网。&lt;code&gt;HTTP/2&lt;/code&gt; 是 HTTP 协议自 1999 年 HTTP 1.1 发布后的首个更新，主要基于 SPDY 协议。它由互联网工程任务组 (IETF) 的 &lt;code&gt;Hypertext Transfer Protocol Bis&lt;/code&gt; (httpbis) 工作小组进行开发。该组织于2014年12月将 &lt;code&gt;HTTP/2&lt;/code&gt; 标准提议递交至IESG进行讨论，于2015年2月17日被批准。&lt;code&gt;HTTP/2&lt;/code&gt; 标准于2015年5月以 &lt;code&gt;RFC 7540&lt;/code&gt; 正式发表。 &lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Nginx" scheme="https://garywu520.github.io/blog/tags/Nginx/"/>
+    
+      <category term="HTTPS" scheme="https://garywu520.github.io/blog/tags/HTTPS/"/>
+    
+      <category term="HTTP" scheme="https://garywu520.github.io/blog/tags/HTTP/"/>
+    
+      <category term="http1.1" scheme="https://garywu520.github.io/blog/tags/http1-1/"/>
+    
+      <category term="http2" scheme="https://garywu520.github.io/blog/tags/http2/"/>
+    
+  </entry>
   
   <entry>
     <title>zimbra邮件服务器</title>
@@ -589,35 +617,6 @@
       <category term="redis" scheme="https://garywu520.github.io/blog/tags/redis/"/>
     
       <category term="CONFIG" scheme="https://garywu520.github.io/blog/tags/CONFIG/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>SFTP上传下载命令</title>
-    <link href="https://garywu520.github.io/blog/2019/09/10/SFTP%E4%B8%8A%E4%BC%A0%E4%B8%8B%E8%BD%BD%E5%91%BD%E4%BB%A4/"/>
-    <id>https://garywu520.github.io/blog/2019/09/10/SFTP上传下载命令/</id>
-    <published>2019-09-10T08:20:36.000Z</published>
-    <updated>2019-09-10T08:34:55.169Z</updated>
-    
-    <content type="html"><![CDATA[<p>SFTP顾名思义，即它是基于SSH的上传与下载功能。它是lrzsz之外的另一选择。不需要服务器部署FTP服务</p><p>Mac端由于无法使用lrzsz，故SFTP是个不错的选择</p><a id="more"></a><h5 id="1-ssh配置文件"><a href="#1-ssh配置文件" class="headerlink" title="1. ssh配置文件"></a>1. ssh配置文件</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Port 22</span><br><span class="line">Protocol 2</span><br><span class="line">RSAAuthentication yes</span><br><span class="line">PubkeyAuthentication yes</span><br><span class="line">AuthorizedKeysFile  .ssh/authorized_keys</span><br><span class="line">PasswordAuthentication no</span><br><span class="line">PermitEmptyPasswords no</span><br><span class="line">UsePAM  yes</span><br><span class="line">PrintMotd no</span><br><span class="line">PrintLastLog no</span><br><span class="line">UseDNS no</span><br><span class="line">Subsystem   sftp  /usr/libexec/openssh/sftp-server </span><br><span class="line"></span><br><span class="line">ListenAddress 0.0.0.0:22</span><br><span class="line">ListenAddress xx.xx.xx.xx:22</span><br></pre></td></tr></table></figure><p>注：需要确保 sftp配置的/usr/libexec/openssh/sftp-server 文件是存在的，重启sshd服务</p><h5 id="2-Xshell连接SFTP"><a href="#2-Xshell连接SFTP" class="headerlink" title="2.  Xshell连接SFTP"></a>2.  Xshell连接SFTP</h5><p>​    连接需要指定密钥</p><h5 id="3-上传与下载"><a href="#3-上传与下载" class="headerlink" title="3. 上传与下载"></a>3. 上传与下载</h5><ul><li><p>单个文件下载</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> get remote-file [<span class="built_in">local</span>-file]</span></span><br></pre></td></tr></table></figure></li><li><p>单个文件上传</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> put </span></span><br><span class="line">打开本地目录选择文件后上传</span><br></pre></td></tr></table></figure></li><li><p>中断连接</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> <span class="built_in">bye</span></span></span><br></pre></td></tr></table></figure></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;SFTP顾名思义，即它是基于SSH的上传与下载功能。它是lrzsz之外的另一选择。不需要服务器部署FTP服务&lt;/p&gt;
-&lt;p&gt;Mac端由于无法使用lrzsz，故SFTP是个不错的选择&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
-    
-      <category term="sftp" scheme="https://garywu520.github.io/blog/tags/sftp/"/>
-    
-      <category term="lrzsz" scheme="https://garywu520.github.io/blog/tags/lrzsz/"/>
-    
-      <category term="mac" scheme="https://garywu520.github.io/blog/tags/mac/"/>
-    
-      <category term="上传下载" scheme="https://garywu520.github.io/blog/tags/%E4%B8%8A%E4%BC%A0%E4%B8%8B%E8%BD%BD/"/>
     
   </entry>
   
