@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://garywu520.github.io/blog/"/>
-  <updated>2019-11-08T13:10:08.567Z</updated>
+  <updated>2019-11-12T08:41:44.517Z</updated>
   <id>https://garywu520.github.io/blog/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>nginx代理websocket配置</title>
+    <link href="https://garywu520.github.io/blog/2019/11/12/nginx%E4%BB%A3%E7%90%86websocket%E9%85%8D%E7%BD%AE/"/>
+    <id>https://garywu520.github.io/blog/2019/11/12/nginx代理websocket配置/</id>
+    <published>2019-11-12T08:39:25.000Z</published>
+    <updated>2019-11-12T08:41:44.517Z</updated>
+    
+    <content type="html"><![CDATA[<h5 id="1-nginx配置"><a href="#1-nginx配置" class="headerlink" title="1. nginx配置"></a>1. nginx配置</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"> #</span><span class="bash">注：7010为研发上线的websockt服务端口</span></span><br><span class="line"> location /wsfuture/ &#123;</span><br><span class="line">        proxy_pass http://127.0.0.1:7010;</span><br><span class="line"></span><br><span class="line">        proxy_http_version 1.1;</span><br><span class="line">        proxy_set_header Upgrade $http_upgrade;</span><br><span class="line">        proxy_set_header Connection "upgrade";</span><br><span class="line">         </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">注：这里的wsfuture指的是研发提供的websocket服务程序的顶级目录，因为如果在此基础上添加二级目录访问出现404</span></span><br></pre></td></tr></table></figure><a id="more"></a><h5 id="2-本地测试"><a href="#2-本地测试" class="headerlink" title="2. 本地测试"></a>2. 本地测试</h5><ul><li><p>安装nodejs和npm[略]</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node -v</span><br><span class="line">npm -v</span><br></pre></td></tr></table></figure></li><li><p>初始化npm</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">初始化npm来生成package.json文件</span></span><br><span class="line">npm init --yes</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">安装ws模块</span></span><br><span class="line">npm install ws --save</span><br><span class="line">npm install websocket --save</span><br></pre></td></tr></table></figure></li><li><p>本地连接测试</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">出现如下提示，说明连接正常</span></span><br><span class="line"><span class="meta">$</span><span class="bash">wscat --connect ws://127.0.0.1/wsfuture/IdglKTUUecw=</span></span><br><span class="line">Connected (press CTRL+C to quit)</span><br><span class="line">&lt;</span><br></pre></td></tr></table></figure><p>如果出现错误：error: Unexpected server response: 404 说明nginx代理路径设置不正确。</p></li></ul><h5 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h5><ul><li>如果以上项目测试失败，需要linux模拟websocket服务端和客户端，来验证nginx代理websocket的功能的话，参考如下</li></ul><p>参考：<a href="https://yq.aliyun.com/articles/481455" target="_blank" rel="noopener">云栖社区</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h5 id=&quot;1-nginx配置&quot;&gt;&lt;a href=&quot;#1-nginx配置&quot; class=&quot;headerlink&quot; title=&quot;1. nginx配置&quot;&gt;&lt;/a&gt;1. nginx配置&lt;/h5&gt;&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt; #&lt;/span&gt;&lt;span class=&quot;bash&quot;&gt;注：7010为研发上线的websockt服务端口&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; location /wsfuture/ &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        proxy_pass http://127.0.0.1:7010;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        proxy_http_version 1.1;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        proxy_set_header Upgrade $http_upgrade;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        proxy_set_header Connection &quot;upgrade&quot;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;         &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;bash&quot;&gt;注：这里的wsfuture指的是研发提供的websocket服务程序的顶级目录，因为如果在此基础上添加二级目录访问出现404&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+    
+      <category term="nginx" scheme="https://garywu520.github.io/blog/tags/nginx/"/>
+    
+      <category term="websocket" scheme="https://garywu520.github.io/blog/tags/websocket/"/>
+    
+      <category term="ws" scheme="https://garywu520.github.io/blog/tags/ws/"/>
+    
+      <category term="wss" scheme="https://garywu520.github.io/blog/tags/wss/"/>
+    
+      <category term="nodejs" scheme="https://garywu520.github.io/blog/tags/nodejs/"/>
+    
+      <category term="wscat" scheme="https://garywu520.github.io/blog/tags/wscat/"/>
+    
+  </entry>
   
   <entry>
     <title>为https站点启用http2特性</title>
@@ -592,31 +622,6 @@
       <category term="expire" scheme="https://garywu520.github.io/blog/tags/expire/"/>
     
       <category term="过期时间" scheme="https://garywu520.github.io/blog/tags/%E8%BF%87%E6%9C%9F%E6%97%B6%E9%97%B4/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>redis 参数动态配置</title>
-    <link href="https://garywu520.github.io/blog/2019/09/16/redis-%E5%8F%82%E6%95%B0%E5%8A%A8%E6%80%81%E9%85%8D%E7%BD%AE/"/>
-    <id>https://garywu520.github.io/blog/2019/09/16/redis-参数动态配置/</id>
-    <published>2019-09-16T06:51:33.000Z</published>
-    <updated>2019-09-16T06:53:11.081Z</updated>
-    
-    <content type="html"><![CDATA[<p>redis提供了CONFIG SET 动态配置命令，部分参数支持配置热修改而无需重启redis服务。</p><h5 id="1-redis动态修改配置"><a href="#1-redis动态修改配置" class="headerlink" title="1. redis动态修改配置"></a>1. redis动态修改配置</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 列出所有支持动态配置的参数</span><br><span class="line">127.0.0.1:6379&gt; config get *</span><br><span class="line">  1) &quot;dbfilename&quot;</span><br><span class="line">  2) &quot;dump.rdb&quot;</span><br><span class="line">     ......</span><br><span class="line">     ......</span><br><span class="line">213) &quot;bind&quot;</span><br><span class="line">214) &quot;127.0.0.1&quot;</span><br></pre></td></tr></table></figure><a id="more"></a><p>使用CONFIG SET 动态配置示例：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; config get appendonly   #查看当前设置</span><br><span class="line">1) &quot;appendonly&quot;</span><br><span class="line">2) &quot;no&quot;</span><br><span class="line">127.0.0.1:6379&gt; </span><br><span class="line">127.0.0.1:6379&gt; config set appendonly yes  #修改设置(立刻生效)</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; config get appendonly   #查看当前设置</span><br><span class="line">1) &quot;appendonly&quot;</span><br><span class="line">2) &quot;yes&quot;</span><br><span class="line">127.0.0.1:6379&gt; config rewrite  #保存到配置文件</span><br><span class="line">ok</span><br></pre></td></tr></table></figure><p>注：如果 执行config rewrite命令出现ERR CONFIG REWRITE failed: Permission denied错误，则说明redis启动的时候没有指定redis.conf文件</p><h5 id="2-其他：动态更新监听地址-bind参数配置"><a href="#2-其他：动态更新监听地址-bind参数配置" class="headerlink" title="2. 其他：动态更新监听地址-bind参数配置"></a>2. 其他：动态更新监听地址-bind参数配置</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; config set bind &quot;127.0.0.1 11.12.13.14&quot;</span><br><span class="line">(error) ERR Unsupported CONFIG parameter: bind</span><br></pre></td></tr></table></figure><p>出现上面的错误 是因为并不是所有配置都可以在线修改，比如pidfile，port, 以及bind 这些参数是不允许修改的</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;redis提供了CONFIG SET 动态配置命令，部分参数支持配置热修改而无需重启redis服务。&lt;/p&gt;
-&lt;h5 id=&quot;1-redis动态修改配置&quot;&gt;&lt;a href=&quot;#1-redis动态修改配置&quot; class=&quot;headerlink&quot; title=&quot;1. redis动态修改配置&quot;&gt;&lt;/a&gt;1. redis动态修改配置&lt;/h5&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;# 列出所有支持动态配置的参数&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;127.0.0.1:6379&amp;gt; config get *&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  1) &amp;quot;dbfilename&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  2) &amp;quot;dump.rdb&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     ......&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     ......&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;213) &amp;quot;bind&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;214) &amp;quot;127.0.0.1&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-    
-      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
-    
-      <category term="redis" scheme="https://garywu520.github.io/blog/tags/redis/"/>
-    
-      <category term="CONFIG" scheme="https://garywu520.github.io/blog/tags/CONFIG/"/>
     
   </entry>
   
