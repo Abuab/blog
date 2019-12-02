@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://garywu520.github.io/blog/"/>
-  <updated>2019-12-02T05:52:58.634Z</updated>
+  <updated>2019-12-02T11:06:48.414Z</updated>
   <id>https://garywu520.github.io/blog/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用Dockerfile制作trojan镜像</title>
+    <link href="https://garywu520.github.io/blog/2019/12/02/%E4%BD%BF%E7%94%A8Dockerfile%E5%88%B6%E4%BD%9Ctrojan%E9%95%9C%E5%83%8F/"/>
+    <id>https://garywu520.github.io/blog/2019/12/02/使用Dockerfile制作trojan镜像/</id>
+    <published>2019-12-02T11:00:33.000Z</published>
+    <updated>2019-12-02T11:06:48.414Z</updated>
+    
+    <content type="html"><![CDATA[<p>此Dockerfile文件具有参考意义，为制作其他服务镜像打好基础。比如容器内的服务如何在启动容器后，自动运行。</p><h5 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h5><ul><li>安装好docker</li><li>docker pull 好centos基础镜像</li></ul><h5 id="1-创建Dockerfile空白文件"><a href="#1-创建Dockerfile空白文件" class="headerlink" title="1. 创建Dockerfile空白文件"></a>1. 创建Dockerfile空白文件</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir /opt/docker_trojan</span><br><span class="line">cd /opt/docker_trojan</span><br><span class="line">touch Dockerfile</span><br></pre></td></tr></table></figure><p>cat Dockerfile</p><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">From</span> centos:centos7.<span class="number">7.1908</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> mkdir /etc/trojan</span></span><br><span class="line"><span class="keyword">ADD</span><span class="bash"> ./trojan/ /etc/trojan</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> chmod +x /etc/trojan/trojan</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">1080</span></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="bash">  [<span class="string">"/etc/trojan/trojan"</span>,<span class="string">"-c"</span>,<span class="string">"/etc/trojan/client.json"</span>]</span></span><br></pre></td></tr></table></figure><p>注：</p><ol><li><p>把需要拷贝到容器的源目录，与Dockerfile放在同级目录</p></li><li><p>使用ADD指令拷贝目录的时候，需要保证目标目录已存在</p></li><li><p>ENTRYPOINT 指令,当容器启动时，自动启动容器内服务</p></li></ol><h5 id="2-制作镜像"><a href="#2-制作镜像" class="headerlink" title="2. 制作镜像"></a>2. 制作镜像</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t trojan:v2 .</span><br></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">内容输出</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> docker build -t trojan:v2 .</span></span><br><span class="line">Sending build context to Docker daemon  4.023MB</span><br><span class="line">Step 1/5 : From centos:centos7.7.1908</span><br><span class="line"><span class="meta"> ---&gt;</span><span class="bash"> 08d05d1d5859</span></span><br><span class="line">Step 2/5 : RUN mkdir /etc/trojan</span><br><span class="line"><span class="meta"> ---&gt;</span><span class="bash"> Running <span class="keyword">in</span> 0d72b0e1963c</span></span><br><span class="line">Removing intermediate container 0d72b0e1963c</span><br><span class="line"><span class="meta"> ---&gt;</span><span class="bash"> ecc12edb1e6f</span></span><br><span class="line">Step 3/5 : ADD ./trojan/ /etc/trojan</span><br><span class="line"><span class="meta"> ---&gt;</span><span class="bash"> 64b8fc8bcacd</span></span><br><span class="line">Step 4/5 : RUN chmod +x /etc/trojan/trojan</span><br><span class="line"><span class="meta"> ---&gt;</span><span class="bash"> Running <span class="keyword">in</span> 9bd8d38d634d</span></span><br><span class="line">Removing intermediate container 9bd8d38d634d</span><br><span class="line"><span class="meta"> ---&gt;</span><span class="bash"> e236ceda286d</span></span><br><span class="line">Step 5/5 : CMD /etc/trojan/trojan -c /etc/trojan/client.json</span><br><span class="line"><span class="meta"> ---&gt;</span><span class="bash"> Running <span class="keyword">in</span> 17b302a27bc1</span></span><br><span class="line">Removing intermediate container 17b302a27bc1</span><br><span class="line"><span class="meta"> ---&gt;</span><span class="bash"> f476f8cd236b</span></span><br><span class="line">Successfully built f476f8cd236b</span><br><span class="line">Successfully tagged trojan:v2</span><br></pre></td></tr></table></figure><h5 id="3-查看新镜像"><a href="#3-查看新镜像" class="headerlink" title="3. 查看新镜像"></a>3. 查看新镜像</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@test docker_trojan]# docker images</span><br><span class="line">REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">trojan              v2                  316c01516fdb        3 minutes ago       212MB</span><br><span class="line">centos              centos7.7.1908      08d05d1d5859        2 weeks ago         204MB</span><br></pre></td></tr></table></figure><h5 id="4-使用新镜像启动docker"><a href="#4-使用新镜像启动docker" class="headerlink" title="4. 使用新镜像启动docker"></a>4. 使用新镜像启动docker</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -v /etc/trojan:/etc/trojan -p 1080:1080 --name trojan -d trojan:v2</span><br></pre></td></tr></table></figure><p>进入容器</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it trojan /bin/bash</span><br><span class="line"></span><br><span class="line">[root@4f0251ab9801 /]# ps -ef|grep trojan</span><br><span class="line">root 1  0  0 10:57 ?   00:00:00 /etc/trojan/trojan -c /etc/trojan/client.json</span><br></pre></td></tr></table></figure><p>Dockerfile语法参考： <a href="https://garywu520.github.io/blog/2019/12/02/%E4%BD%BF%E7%94%A8Dockerfile%E5%88%B6%E4%BD%9C%E9%95%9C%E5%83%8F/#more">使用Dockerfile制作镜像</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;此Dockerfile文件具有参考意义，为制作其他服务镜像打好基础。比如容器内的服务如何在启动容器后，自动运行。&lt;/p&gt;
+&lt;h5 id=&quot;环境&quot;&gt;&lt;a href=&quot;#环境&quot; class=&quot;headerlink&quot; title=&quot;环境&quot;&gt;&lt;/a&gt;环境&lt;/h5&gt;&lt;ul&gt;
+&lt;li&gt;
+      
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="docker" scheme="https://garywu520.github.io/blog/tags/docker/"/>
+    
+      <category term="Dockerfile" scheme="https://garywu520.github.io/blog/tags/Dockerfile/"/>
+    
+  </entry>
   
   <entry>
     <title>使用Dockerfile制作镜像</title>
@@ -578,32 +607,6 @@
       <category term="RDB" scheme="https://garywu520.github.io/blog/tags/RDB/"/>
     
       <category term="rdb备份恢复" scheme="https://garywu520.github.io/blog/tags/rdb%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>shell脚本执行redis命令</title>
-    <link href="https://garywu520.github.io/blog/2019/09/25/shell%E8%84%9A%E6%9C%AC%E6%89%A7%E8%A1%8Credis%E5%91%BD%E4%BB%A4/"/>
-    <id>https://garywu520.github.io/blog/2019/09/25/shell脚本执行redis命令/</id>
-    <published>2019-09-25T09:34:03.000Z</published>
-    <updated>2019-09-25T09:44:16.704Z</updated>
-    
-    <content type="html"><![CDATA[<p>shell脚本中执行redis命令</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli -h 192.168.1.186 -p 6380 -a test123 info</span><br></pre></td></tr></table></figure><p>或</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo "get old1" | redis-cli -h 192.168.1.186 -p 6380 -a test123</span><br></pre></td></tr></table></figure><p>参数释义：</p><ul><li>-a 指定redis密码</li><li>最后的”info” 则是想要执行的redis命令</li></ul>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;shell脚本中执行redis命令&lt;/p&gt;
-&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td cl
-      
-    
-    </summary>
-    
-    
-      <category term="redis" scheme="https://garywu520.github.io/blog/tags/redis/"/>
-    
-      <category term="shell" scheme="https://garywu520.github.io/blog/tags/shell/"/>
     
   </entry>
   
