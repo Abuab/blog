@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://garywu520.github.io/blog/"/>
-  <updated>2019-11-28T08:25:05.953Z</updated>
+  <updated>2019-12-02T05:52:58.634Z</updated>
   <id>https://garywu520.github.io/blog/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用Dockerfile制作镜像</title>
+    <link href="https://garywu520.github.io/blog/2019/12/02/%E4%BD%BF%E7%94%A8Dockerfile%E5%88%B6%E4%BD%9C%E9%95%9C%E5%83%8F/"/>
+    <id>https://garywu520.github.io/blog/2019/12/02/使用Dockerfile制作镜像/</id>
+    <published>2019-12-02T05:50:41.000Z</published>
+    <updated>2019-12-02T05:52:58.634Z</updated>
+    
+    <content type="html"><![CDATA[<p>如果我们可以把每一层修改、安装、构建、操作的命令都写入一个脚本，用这个脚本来构建、定制镜像，那么之前提及的无法重复的问题、镜像构建透明性的问题、体积的问题就都会解决。这个脚本就是 Dockerfile。</p><p>Dockerfile 是一个文本文件，其内包含了一条条的 <strong>指令(Instruction)</strong>，每一条指令构建一层，因此每一条指令的内容，就是描述该层应当如何构建。</p><p>以定制centos镜像为例，这次使用Dockerfile来定制</p><a id="more"></a><h5 id="一、创建Dockerfile空白文件"><a href="#一、创建Dockerfile空白文件" class="headerlink" title="一、创建Dockerfile空白文件"></a>一、创建Dockerfile空白文件</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir /opt/docker_centos</span><br><span class="line">cd /opt/docker_centos</span><br><span class="line">touch Dockerfile</span><br></pre></td></tr></table></figure><h5 id="二、根据Dockerfile指令，编辑定制内容"><a href="#二、根据Dockerfile指令，编辑定制内容" class="headerlink" title="二、根据Dockerfile指令，编辑定制内容"></a>二、根据Dockerfile指令，编辑定制内容</h5><p>要定制Dockerfile文件，首先要明确其各指令的作用</p><ul><li><p>FROM</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FROM centos</span><br></pre></td></tr></table></figure><p>FROM用来指定一个基础镜像，如:centos或nginx等等，FROM指令必须是第一条指令。</p><p>除了基础镜像外，Docker还存在一个特殊的镜像，名为scratch。这个镜像是虚拟的概念，并不实际存在，它表示一个空白的镜像。对于 Linux 下静态编译的程序【如Go语言】来说，并不需要有操作系统提供运行时支持，所需的一切库都已经在可执行文件里了，因此直接 <code>FROM scratch</code> 会让镜像体积更加小巧。</p></li></ul><ul><li><p>RUN</p><p><code>RUN</code> 指令是用来执行命令行命令的，其有两种格式：</p><ul><li><p>shell格式: RUN &lt;命令&gt;</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">RUN cd /root</span><br><span class="line">RUN echo "Dockerfile Test"</span><br><span class="line">RUN ls -lh</span><br></pre></td></tr></table></figure></li></ul></li><li><p>COPY  复制文件</p><p>COPY指令用于复制文件；</p><p>格式：COPY  –chown=<user>:<group>  &lt;源路径&gt;   &lt;镜像内目标路径&gt;</group></user></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">COPY ./test  /home/test/</span><br></pre></td></tr></table></figure></li><li><p>CMD 容器启动命令</p><p>CMD用来指定容器的启动命令，启动命令需要在前台运行，否则当命令启动后容器就退出了。</p><p>格式：CMD  &lt;启动命令&gt;</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">示例：</span></span><br><span class="line">CMD ["/bin/bash"]</span><br><span class="line">或</span><br><span class="line">CMD ["sh","run.sh"]</span><br></pre></td></tr></table></figure></li><li><p>ENTRYPOINT</p><p>ENTRYPOINT的格式和RUN指令格式和作用一样，都是在指定容器启动程序和参数</p><p>建议习惯性使用这个指令，而不是CMD，具体区别：<a href="https://yeasy.gitbooks.io/docker_practice/image/dockerfile/entrypoint.html" target="_blank" rel="noopener">参考</a></p></li><li><p>ENV 设置环境变量</p><p>格式：ENV <key> <value></value></key></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">示例</span></span><br><span class="line">ENV NODE_VERSION 7.2.0</span><br><span class="line"></span><br><span class="line">RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" \</span><br><span class="line">  &amp;&amp; curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \</span><br><span class="line">  &amp;&amp; gpg --batch --decrypt --output SHASUMS256.txt SHASUMS256.txt.asc</span><br></pre></td></tr></table></figure><p>当设置了环境变量之后，其他指令均可以直接在命令中调用此变量</p></li><li><p>EXPOSE 暴露端口</p><p>格式为: EXPOSE &lt;端口1&gt; [&lt;端口2&gt;…]</p><p>EXPOSE 指令是声明运行时容器提供服务端口，这仅仅是一个声明，在运行时并不会因为这个声明应用就会开启这个端口的服务。</p></li><li><p>WORKDIR 指定工作目录</p><p>格式:  WORKDIR &lt;工作目录路径&gt;</p><p>使用 <code>WORKDIR</code> 指令可以来指定工作目录（或者称为当前目录），以后各层的当前目录就被改为指定的目录，如该目录不存在，WORKDIR 会帮你建立目录。</p></li><li><p>USER指定当前用户</p><p>格式：USER &lt;用户名&gt;[:&lt;用户组&gt;]</p><p><code>USER</code> 只是帮助你切换到指定用户而已，这个用户必须是事先建立好的，否则无法切换。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">示例：</span></span><br><span class="line">RUN groupadd -r redis &amp;&amp; useradd -r -g redis redis</span><br><span class="line">USER redis</span><br><span class="line">RUN [ "redis-server" ]</span><br></pre></td></tr></table></figure></li></ul><h5 id="三、构建镜像"><a href="#三、构建镜像" class="headerlink" title="三、构建镜像"></a>三、构建镜像</h5><p>Dockerfile文件根据各自需求定制完成后，现在就可以进行构建这个镜像了。使用  docker build  命令进行镜像的构建，格式如下：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">构建镜像格式</span></span><br><span class="line">docker build [选项] &lt;上下文路径/URL/-&gt;</span><br></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">例如：</span></span><br><span class="line">docker build -t centos:v3 .</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">注意，命令最后有个“.”,表示上下文路径，并非当前目录;这里使用-t来指定最终构建后的镜像名称</span></span><br></pre></td></tr></table></figure><p><a href="https://yeasy.gitbooks.io/docker_practice/image/build.html" target="_blank" rel="noopener">什么是上下文路径？</a></p><p>构建后，镜像就可以直接使用了</p><p>参考：<a href="https://yeasy.gitbooks.io/docker_practice/" target="_blank" rel="noopener">Docker —— 从入门到实践</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;如果我们可以把每一层修改、安装、构建、操作的命令都写入一个脚本，用这个脚本来构建、定制镜像，那么之前提及的无法重复的问题、镜像构建透明性的问题、体积的问题就都会解决。这个脚本就是 Dockerfile。&lt;/p&gt;
+&lt;p&gt;Dockerfile 是一个文本文件，其内包含了一条条的 &lt;strong&gt;指令(Instruction)&lt;/strong&gt;，每一条指令构建一层，因此每一条指令的内容，就是描述该层应当如何构建。&lt;/p&gt;
+&lt;p&gt;以定制centos镜像为例，这次使用Dockerfile来定制&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="Docker" scheme="https://garywu520.github.io/blog/tags/Docker/"/>
+    
+      <category term="Dockerfile" scheme="https://garywu520.github.io/blog/tags/Dockerfile/"/>
+    
+  </entry>
   
   <entry>
     <title>部署企业级Harbor私有docker镜像仓库</title>
@@ -578,35 +604,6 @@
       <category term="redis" scheme="https://garywu520.github.io/blog/tags/redis/"/>
     
       <category term="shell" scheme="https://garywu520.github.io/blog/tags/shell/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CentOS7安装php redis扩展</title>
-    <link href="https://garywu520.github.io/blog/2019/09/25/CentOS7%E5%AE%89%E8%A3%85php-redis%E6%89%A9%E5%B1%95/"/>
-    <id>https://garywu520.github.io/blog/2019/09/25/CentOS7安装php-redis扩展/</id>
-    <published>2019-09-25T07:00:56.000Z</published>
-    <updated>2019-09-25T07:13:59.627Z</updated>
-    
-    <content type="html"><![CDATA[<h5 id="一、编译扩展"><a href="#一、编译扩展" class="headerlink" title="一、编译扩展"></a>一、编译扩展</h5><p>安装phpize</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y php-devel</span><br></pre></td></tr></table></figure><p>下载php redis包</p><p>Github项目地址：<a href="https://github.com/phpredis/phpredis/releases" target="_blank" rel="noopener">https://github.com/phpredis/phpredis/releases</a></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/phpredis/phpredis/archive/3.1.3.tar.gz</span><br><span class="line">tar -zxvf /root/3.1.3.tar.gz</span><br><span class="line">cd phpredis-3.1.3</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">使用如下命令，在源码目录中编译php扩展</span></span><br><span class="line">/usr/bin/phpize</span><br><span class="line">./configure</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure><a id="more"></a><p>由于我的操作系统是x64位，故编译完成后提示如下：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Build complete.</span><br><span class="line">Don't forget to run 'make test'.</span><br><span class="line"></span><br><span class="line">Installing shared extensions:     /usr/lib64/php/modules/</span><br></pre></td></tr></table></figure><p>PHP Redis扩展位置</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -lh  /usr/lib64/php/modules/redis.so</span><br></pre></td></tr></table></figure><h5 id="二、修改php配置"><a href="#二、修改php配置" class="headerlink" title="二、修改php配置"></a>二、修改php配置</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/php.ini    #添加如下行</span><br><span class="line">extension=/usr/lib64/php/modules/redis.so</span><br></pre></td></tr></table></figure><h5 id="三、重启Apache服务-并测试"><a href="#三、重启Apache服务-并测试" class="headerlink" title="三、重启Apache服务, 并测试"></a>三、重启Apache服务, 并测试</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart httpd</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h5 id=&quot;一、编译扩展&quot;&gt;&lt;a href=&quot;#一、编译扩展&quot; class=&quot;headerlink&quot; title=&quot;一、编译扩展&quot;&gt;&lt;/a&gt;一、编译扩展&lt;/h5&gt;&lt;p&gt;安装phpize&lt;/p&gt;
-&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;yum install -y php-devel&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;p&gt;下载php redis包&lt;/p&gt;
-&lt;p&gt;Github项目地址：&lt;a href=&quot;https://github.com/phpredis/phpredis/releases&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://github.com/phpredis/phpredis/releases&lt;/a&gt;&lt;/p&gt;
-&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;wget https://github.com/phpredis/phpredis/archive/3.1.3.tar.gz&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;tar -zxvf /root/3.1.3.tar.gz&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;cd phpredis-3.1.3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;bash&quot;&gt;使用如下命令，在源码目录中编译php扩展&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;/usr/bin/phpize&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;./configure&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;make &amp;amp;&amp;amp; make install&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-    
-      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
-    
-      <category term="redis" scheme="https://garywu520.github.io/blog/tags/redis/"/>
-    
-      <category term="php" scheme="https://garywu520.github.io/blog/tags/php/"/>
     
   </entry>
   
