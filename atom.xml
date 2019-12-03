@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://garywu520.github.io/blog/"/>
-  <updated>2019-12-02T11:26:23.511Z</updated>
+  <updated>2019-12-03T02:21:29.754Z</updated>
   <id>https://garywu520.github.io/blog/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Postwoman API接口测试</title>
+    <link href="https://garywu520.github.io/blog/2019/12/03/Postwoman-API%E6%8E%A5%E5%8F%A3%E6%B5%8B%E8%AF%95/"/>
+    <id>https://garywu520.github.io/blog/2019/12/03/Postwoman-API接口测试/</id>
+    <published>2019-12-03T02:12:34.000Z</published>
+    <updated>2019-12-03T02:21:29.754Z</updated>
+    
+    <content type="html"><![CDATA[<p>对于经常进行接口调试的同学来说，应该是比较熟悉 <code>Postman</code> 了。<code>Postman</code> 虽然功能强大，但也有很多弊端。比如：不支持 <code>Web</code> 方式，需要安装客户端软件等。如果你只想简单地测试下接口返回，就需要安装一个客户端工具就显得比较麻烦了。</p><p>为了解决这个痛点，今天就给大家推荐一个轻量级、功能强大且颜值超高的神器 <code>Postwoman</code>。<code>Postwoman</code> 是一个 <code>HTTP API</code> 测试工具，支持 <code>REST</code>、<code>SOAP</code> 和 <code>GraphQL</code> 请求，并且可以实现自动化接口测试、接口监控、模拟接口数据、生成接口文档、多人协作等功能。简单来说，<code>Postwoman</code> 是一个好用且功能非常强大的 <code>API</code> 调试工具。</p><a id="more"></a><h5 id="一、什么是postwoman？"><a href="#一、什么是postwoman？" class="headerlink" title="一、什么是postwoman？"></a>一、什么是postwoman？</h5><p><img src="https://github.com/liyasthomas/postwoman/raw/master/static/logo.png" alt="postwoman"></p><p><code>Postwoman</code> 是一个基于 <code>Vue</code> 开发的的 <code>Web</code> 项目，功能类似 <code>Poatman</code> 的免费且美观的开源替代方案，它可以帮助开发人员更快地创建请求，提升工作效率。目前，该项目在 <code>Github</code> 上的 <code>Star</code> 数已经超过 11k 了！</p><blockquote><p>项目地址：<a href="https://github.com/liyasthomas/postwoman" target="_blank" rel="noopener">https://github.com/liyasthomas/postwoman</a></p></blockquote><p><img src="https://github.com/liyasthomas/postwoman/raw/master/static/images/screenshot1.png" alt="Screenshot1"></p><h5 id="二、Postwoman功能介绍"><a href="#二、Postwoman功能介绍" class="headerlink" title="二、Postwoman功能介绍"></a>二、Postwoman功能介绍</h5><ol><li>Postwoman 相关特性</li></ol><ul><li>采用简约的 UI 设计，简单的设计是最好的设计</li><li>响应速度更快，软件使用更轻量、更简洁</li><li>实时发送请求并获取/复制响应</li></ul><p>Postwoman 支持的方法</p><ul><li>GET</li><li>HEAD</li><li>POST</li><li>PUT</li><li>DELETE</li><li>OPTIONS</li><li>PATCH</li></ul><p>Postwoman 支持界面定制</p><ul><li>支持主题选择：Kinda Dark（默认）、Clearly White、Just Black 和 System 主题</li><li>支持自定义强调颜色：绿色（默认）、黄色、粉红色、红色、紫色、橙色、青色和蓝色</li></ul><p>其它支持的特性</p><ul><li>支持以 <code>PWA</code> 方式进行安装</li><li>支持离线使用</li><li>内存和 <code>CPU</code> 使用率非常低</li><li>支持多平台、多设备</li><li>支持 <code>WebSocket</code></li><li>支持 <code>GraphQL</code></li><li>支持多种 <code>HTTP</code> 认证方式</li><li>……</li></ul><h5 id="三、如何使用Postwoman"><a href="#三、如何使用Postwoman" class="headerlink" title="三、如何使用Postwoman"></a>三、如何使用Postwoman</h5><p><code>Postwoman</code> 既然是一个 <code>Web</code> 项目，使用起来也就非常简单，你只需直接访问其官网地址即可直接使用。</p><blockquote><p>官网地址：<a href="https://postwoman.io/" target="_blank" rel="noopener">https://postwoman.io/</a></p></blockquote><p>如果你想在本地自行搭建也是可以的，Docker部署方式如下：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 拉取 Postwoman 相关镜像</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker pull liyasthomas/postwoman</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 运行一个 Postwoman 的容器</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker run -p 3000:3000 liyasthomas/postwoman:latest</span></span><br></pre></td></tr></table></figure><p>搭建成功后，你只需打开浏览器访问对应主机 <code>IP</code> 的 <code>3000</code> 端口即可访问本地的 Postwoman 环境。</p><p>如果你觉得 <code>Postman</code> 不够好用或者确实是想要使用一个界面更加好看的接口调试工具，那么 <code>Postwoman</code> 将是你最佳的选择！</p><p>参考：<a href="https://mp.weixin.qq.com/s/dkLgcE3u88v8N4Prdt6vCQ" target="_blank" rel="noopener">微信公众号：运维之美</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;对于经常进行接口调试的同学来说，应该是比较熟悉 &lt;code&gt;Postman&lt;/code&gt; 了。&lt;code&gt;Postman&lt;/code&gt; 虽然功能强大，但也有很多弊端。比如：不支持 &lt;code&gt;Web&lt;/code&gt; 方式，需要安装客户端软件等。如果你只想简单地测试下接口返回，就需要安装一个客户端工具就显得比较麻烦了。&lt;/p&gt;
+&lt;p&gt;为了解决这个痛点，今天就给大家推荐一个轻量级、功能强大且颜值超高的神器 &lt;code&gt;Postwoman&lt;/code&gt;。&lt;code&gt;Postwoman&lt;/code&gt; 是一个 &lt;code&gt;HTTP API&lt;/code&gt; 测试工具，支持 &lt;code&gt;REST&lt;/code&gt;、&lt;code&gt;SOAP&lt;/code&gt; 和 &lt;code&gt;GraphQL&lt;/code&gt; 请求，并且可以实现自动化接口测试、接口监控、模拟接口数据、生成接口文档、多人协作等功能。简单来说，&lt;code&gt;Postwoman&lt;/code&gt; 是一个好用且功能非常强大的 &lt;code&gt;API&lt;/code&gt; 调试工具。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="postman" scheme="https://garywu520.github.io/blog/tags/postman/"/>
+    
+      <category term="postwoman" scheme="https://garywu520.github.io/blog/tags/postwoman/"/>
+    
+      <category term="API" scheme="https://garywu520.github.io/blog/tags/API/"/>
+    
+      <category term="接口测试" scheme="https://garywu520.github.io/blog/tags/%E6%8E%A5%E5%8F%A3%E6%B5%8B%E8%AF%95/"/>
+    
+  </entry>
   
   <entry>
     <title>使用Dockerfile制作trojan镜像</title>
@@ -578,34 +605,6 @@
       <category term="mcrypt" scheme="https://garywu520.github.io/blog/tags/mcrypt/"/>
     
       <category term="extension" scheme="https://garywu520.github.io/blog/tags/extension/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Redis RDB数据备份恢复流程</title>
-    <link href="https://garywu520.github.io/blog/2019/09/25/Redis-RDB%E6%95%B0%E6%8D%AE%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D%E6%B5%81%E7%A8%8B/"/>
-    <id>https://garywu520.github.io/blog/2019/09/25/Redis-RDB数据备份恢复流程/</id>
-    <published>2019-09-25T11:04:06.000Z</published>
-    <updated>2019-09-25T11:06:20.930Z</updated>
-    
-    <content type="html"><![CDATA[<h5 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h5><ul><li>appendonly为no，仅有RDB持久化</li><li>架构：Redis 一主两从+sentinel哨兵</li><li>Redis使用supervisor管理</li></ul><a id="more"></a><h5 id="正确的数据备份与恢复流程"><a href="#正确的数据备份与恢复流程" class="headerlink" title="正确的数据备份与恢复流程"></a>正确的数据备份与恢复流程</h5><h5 id="1-备份"><a href="#1-备份" class="headerlink" title="1. 备份"></a>1. 备份</h5><ul><li>找到当前的Master节点，执行SAVE命令将最新的key写入磁盘</li><li>拷贝备份文件[/usr/local/redis/data/dump.rdb]到/root/目录下</li></ul><h5 id="2-恢复"><a href="#2-恢复" class="headerlink" title="2. 恢复"></a>2. 恢复</h5><ul><li><p>supervisorctl stop所有节点的sentinel服务</p></li><li><p>supervisorctl stop 两个slave服务</p></li><li><p>redis主节点的supervisor redis配置文件 临时 注释以下两行</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">autostart=<span class="literal">true</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">autorestart=<span class="literal">true</span></span></span><br></pre></td></tr></table></figure></li><li><p>优雅关闭Master</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">redis-cli -c -h 192.168.1.168 -p 6380 -a "test123"</span><br><span class="line"><span class="meta">redis&gt;</span><span class="bash"> SHUTDOWN</span></span><br></pre></td></tr></table></figure></li><li><p>数据拷贝</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /root/dump.rdb /usr/local/redis/data/</span><br></pre></td></tr></table></figure></li><li><p>启动Master节点</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">supervisorctl start redis</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">验证导入的数据</span></span><br><span class="line">redis-cli -c -h 192.168.1.168 -p 6380 -a "test123"</span><br><span class="line"><span class="meta">redis&gt;</span><span class="bash"> dbsize</span></span><br></pre></td></tr></table></figure></li><li><p>redis主节点取消supervisor redis配置文件的注释, 并重启master</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">autostart=true</span><br><span class="line">autorestart=true</span><br></pre></td></tr></table></figure><p>supervisorctl restart redis</p></li><li><p>启动两个Slave</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">supervisorctl start redis</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">验证Slave从库同步</span></span><br><span class="line">登录redis slave </span><br><span class="line"><span class="meta">redis&gt;</span><span class="bash"> dbsize</span></span><br></pre></td></tr></table></figure></li><li><p>启动三个节点的sentinel</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">supervisorctl start redis-sentinel</span><br></pre></td></tr></table></figure></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h5 id=&quot;环境&quot;&gt;&lt;a href=&quot;#环境&quot; class=&quot;headerlink&quot; title=&quot;环境&quot;&gt;&lt;/a&gt;环境&lt;/h5&gt;&lt;ul&gt;
-&lt;li&gt;appendonly为no，仅有RDB持久化&lt;/li&gt;
-&lt;li&gt;架构：Redis 一主两从+sentinel哨兵&lt;/li&gt;
-&lt;li&gt;Redis使用supervisor管理&lt;/li&gt;
-&lt;/ul&gt;
-    
-    </summary>
-    
-    
-      <category term="Redis" scheme="https://garywu520.github.io/blog/tags/Redis/"/>
-    
-      <category term="RDB" scheme="https://garywu520.github.io/blog/tags/RDB/"/>
-    
-      <category term="rdb备份恢复" scheme="https://garywu520.github.io/blog/tags/rdb%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/"/>
     
   </entry>
   
