@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://garywu520.github.io/blog/"/>
-  <updated>2019-12-10T08:39:40.527Z</updated>
+  <updated>2019-12-11T07:34:06.901Z</updated>
   <id>https://garywu520.github.io/blog/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用阿里云免费的Docker私有仓库</title>
+    <link href="https://garywu520.github.io/blog/2019/12/11/%E4%BD%BF%E7%94%A8%E9%98%BF%E9%87%8C%E4%BA%91%E5%85%8D%E8%B4%B9%E7%9A%84Docker%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93/"/>
+    <id>https://garywu520.github.io/blog/2019/12/11/使用阿里云免费的Docker私有仓库/</id>
+    <published>2019-12-11T07:30:13.000Z</published>
+    <updated>2019-12-11T07:34:06.901Z</updated>
+    
+    <content type="html"><![CDATA[<p>貌似只要购买了ECC云服务器，就可以免费开通这个服务。</p><h5 id="1-访问-阿里云容器镜像服务"><a href="#1-访问-阿里云容器镜像服务" class="headerlink" title="1. 访问 阿里云容器镜像服务"></a>1. 访问 阿里云容器镜像服务</h5><p>链接：<a href="https://cr.console.aliyun.com/cn-hongkong/instances/repositories" target="_blank" rel="noopener">https://cr.console.aliyun.com/cn-hongkong/instances/repositories</a></p><p>首先要设置一个叫做Registry密码，这个密码用来推送/拉取Docker镜像使用</p><h5 id="2-创建私有镜像仓库"><a href="#2-创建私有镜像仓库" class="headerlink" title="2. 创建私有镜像仓库"></a>2. 创建私有镜像仓库</h5><p>默认实例 —&gt; 镜像仓库 —&gt; 创建镜像仓库</p><p>可以选择镜像仓库的地域，这里开通的是香港节点的私有仓库</p><a id="more"></a><h5 id="3-推送本地Docker镜像到阿里云私有仓库"><a href="#3-推送本地Docker镜像到阿里云私有仓库" class="headerlink" title="3. 推送本地Docker镜像到阿里云私有仓库"></a>3. 推送本地Docker镜像到阿里云私有仓库</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">登录阿里云Docker Registry[按照提示输入Registry密码]</span></span><br><span class="line">docker login --username=xxxxxx@1009xxx8864439 registry.cn-hongkong.aliyuncs.com</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">设置镜像Tag</span></span><br><span class="line">sudo docker tag [Image Id] registry.cn-hongkong.aliyuncs.com/qst_images/qst_store:[镜像名_版本号]</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">推送镜像</span></span><br><span class="line">docker push registry.cn-hongkong.aliyuncs.com/qst_images/qst_store:[镜像名_版本号]</span><br></pre></td></tr></table></figure><h5 id="4-拉取阿里云私有仓库镜像"><a href="#4-拉取阿里云私有仓库镜像" class="headerlink" title="4. 拉取阿里云私有仓库镜像"></a>4. 拉取阿里云私有仓库镜像</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">登录阿里云Docker Registry</span></span><br><span class="line">docker login --username=--username=xxxxxx@1009xxx8864439 registry.cn-hongkong.aliyuncs.com</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">拉取镜像</span></span><br><span class="line">docker pull registry.cn-hongkong.aliyuncs.com/qst_images/qst_store:[镜像名_版本号]</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;貌似只要购买了ECC云服务器，就可以免费开通这个服务。&lt;/p&gt;
+&lt;h5 id=&quot;1-访问-阿里云容器镜像服务&quot;&gt;&lt;a href=&quot;#1-访问-阿里云容器镜像服务&quot; class=&quot;headerlink&quot; title=&quot;1. 访问 阿里云容器镜像服务&quot;&gt;&lt;/a&gt;1. 访问 阿里云容器镜像服务&lt;/h5&gt;&lt;p&gt;链接：&lt;a href=&quot;https://cr.console.aliyun.com/cn-hongkong/instances/repositories&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://cr.console.aliyun.com/cn-hongkong/instances/repositories&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;首先要设置一个叫做Registry密码，这个密码用来推送/拉取Docker镜像使用&lt;/p&gt;
+&lt;h5 id=&quot;2-创建私有镜像仓库&quot;&gt;&lt;a href=&quot;#2-创建私有镜像仓库&quot; class=&quot;headerlink&quot; title=&quot;2. 创建私有镜像仓库&quot;&gt;&lt;/a&gt;2. 创建私有镜像仓库&lt;/h5&gt;&lt;p&gt;默认实例 —&amp;gt; 镜像仓库 —&amp;gt; 创建镜像仓库&lt;/p&gt;
+&lt;p&gt;可以选择镜像仓库的地域，这里开通的是香港节点的私有仓库&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="Docker" scheme="https://garywu520.github.io/blog/tags/Docker/"/>
+    
+      <category term="阿里云" scheme="https://garywu520.github.io/blog/tags/%E9%98%BF%E9%87%8C%E4%BA%91/"/>
+    
+      <category term="镜像仓库" scheme="https://garywu520.github.io/blog/tags/%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93/"/>
+    
+  </entry>
   
   <entry>
     <title>Maven私服部署-Docker安装nexus3</title>
@@ -233,9 +263,9 @@
     
       <category term="docker" scheme="https://garywu520.github.io/blog/tags/docker/"/>
     
-      <category term="harbor" scheme="https://garywu520.github.io/blog/tags/harbor/"/>
-    
       <category term="镜像仓库" scheme="https://garywu520.github.io/blog/tags/%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93/"/>
+    
+      <category term="harbor" scheme="https://garywu520.github.io/blog/tags/harbor/"/>
     
   </entry>
   
@@ -569,28 +599,6 @@
       <category term="Keepalive" scheme="https://garywu520.github.io/blog/tags/Keepalive/"/>
     
       <category term="sshd" scheme="https://garywu520.github.io/blog/tags/sshd/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Bash 5.0编译</title>
-    <link href="https://garywu520.github.io/blog/2019/10/14/Bash-5-0%E7%BC%96%E8%AF%91/"/>
-    <id>https://garywu520.github.io/blog/2019/10/14/Bash-5-0编译/</id>
-    <published>2019-10-14T07:34:29.000Z</published>
-    <updated>2019-10-14T09:49:28.879Z</updated>
-    
-    <content type="html"><![CDATA[<p>CentOS7安装的Bash版本是 V4.2.46，而Bash目前已经发不了5.0 Beta，编译玩玩</p><p>Bash: <a href="https://www.gnu.org/software/bash/" target="_blank" rel="noopener">Download</a></p><h5 id="一、编译安装Bash-5-0"><a href="#一、编译安装Bash-5-0" class="headerlink" title="一、编译安装Bash 5.0"></a>一、编译安装Bash 5.0</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">安装C编译器,make程序,内核头文件</span></span><br><span class="line">yum install -y gcc make kernel-headers</span><br></pre></td></tr></table></figure><a id="more"></a><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget http://ftp.gnu.org/gnu/bash/bash-5.0-beta2.tar.gz</span><br><span class="line">tar -zxf bash-5.0-beta2.tar.gz</span><br><span class="line">cd bash-5.0-beta2</span><br></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=/usr/local/bash5.0</span><br><span class="line">make</span><br><span class="line">make test</span><br><span class="line">make install</span><br><span class="line">/usr/local/bash5.0/bin/bash --version</span><br></pre></td></tr></table></figure><h5 id="二、使用新版本的Bash-Shell"><a href="#二、使用新版本的Bash-Shell" class="headerlink" title="二、使用新版本的Bash Shell"></a>二、使用新版本的Bash Shell</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mv /bin/bashbug /bin/bashbug.bak &amp;&amp; ln -sv /usr/local/bash5.0/bin/bashbug /usr/bashbug</span><br><span class="line">mv /bin/bash /bin/bash.bak &amp;&amp; ln -sv /usr/local/bash5.0/bin/bash /bin/bash</span><br></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# bash --version</span><br><span class="line">GNU bash, version 5.0.0(1)-beta2 (x86_64-pc-linux-gnu)</span><br><span class="line">Copyright (C) 2018 Free Software Foundation, Inc.</span><br><span class="line">License GPLv3+: GNU GPL version 3 or later &lt;http://gnu.org/licenses/gpl.html&gt;</span><br><span class="line"></span><br><span class="line">This is free software; you are free to change and redistribute it.</span><br><span class="line">There is NO WARRANTY, to the extent permitted by law.</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;CentOS7安装的Bash版本是 V4.2.46，而Bash目前已经发不了5.0 Beta，编译玩玩&lt;/p&gt;
-&lt;p&gt;Bash: &lt;a href=&quot;https://www.gnu.org/software/bash/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Download&lt;/a&gt;&lt;/p&gt;
-&lt;h5 id=&quot;一、编译安装Bash-5-0&quot;&gt;&lt;a href=&quot;#一、编译安装Bash-5-0&quot; class=&quot;headerlink&quot; title=&quot;一、编译安装Bash 5.0&quot;&gt;&lt;/a&gt;一、编译安装Bash 5.0&lt;/h5&gt;&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;bash&quot;&gt;安装C编译器,make程序,内核头文件&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;yum install -y gcc make kernel-headers&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-    
-      <category term="bash" scheme="https://garywu520.github.io/blog/tags/bash/"/>
     
   </entry>
   
