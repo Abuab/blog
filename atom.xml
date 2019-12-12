@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://garywu520.github.io/blog/"/>
-  <updated>2019-12-11T07:34:06.901Z</updated>
+  <updated>2019-12-12T09:04:34.310Z</updated>
   <id>https://garywu520.github.io/blog/</id>
   
   <author>
@@ -15,6 +15,40 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>给zookeeper添加ACL基本认证</title>
+    <link href="https://garywu520.github.io/blog/2019/12/12/%E7%BB%99zookeeper%E6%B7%BB%E5%8A%A0%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%81/"/>
+    <id>https://garywu520.github.io/blog/2019/12/12/给zookeeper添加基本认证/</id>
+    <published>2019-12-12T08:58:01.000Z</published>
+    <updated>2019-12-12T09:04:34.310Z</updated>
+    
+    <content type="html"><![CDATA[<ol><li><p>添加一个认证用户</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">密码为明文</span></span><br><span class="line">addauth digest user1:'password1'</span><br></pre></td></tr></table></figure></li><li><p>设置权限</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setAcl / auth:user1:password1:cdrwa</span><br></pre></td></tr></table></figure></li><li><p>查看ACL设置</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getAcl /path</span><br></pre></td></tr></table></figure><a id="more"></a></li><li><p>连接示例</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> zkCli.sh -server 127.0.0.1:12181</span></span><br><span class="line">[zk: 127.0.0.1:12181(CONNECTED) 1] ls /</span><br><span class="line">Authentication is not valid : /</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash">[zk: 127.0.0.1:12181(CONNECTED) 2] getAcl /</span></span><br><span class="line">'digest,'zhaiwei:xuyC1IT8ZYcNgdrRrz+l5XtaUog=</span><br><span class="line">: cdrwa</span><br><span class="line">[zk: 127.0.0.1:12181(CONNECTED) 3] addauth digest zhaiwei:'ZY&#123;NvST4EC/v8/Q&lt;t?RC'</span><br><span class="line"></span><br><span class="line">[zk: 127.0.0.1:12181(CONNECTED) 4] ls /</span><br><span class="line">[zookeeper]</span><br></pre></td></tr></table></figure><p>参考：<a href="https://cloud.tencent.com/developer/article/1047819" target="_blank" rel="noopener">阿里云社区</a></p></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      &lt;ol&gt;
+&lt;li&gt;&lt;p&gt;添加一个认证用户&lt;/p&gt;
+&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;bash&quot;&gt;密码为明文&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;addauth digest user1:&#39;password1&#39;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;设置权限&lt;/p&gt;
+&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;setAcl / auth:user1:password1:cdrwa&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;查看ACL设置&lt;/p&gt;
+&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;getAcl /path&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="zookeeper" scheme="https://garywu520.github.io/blog/tags/zookeeper/"/>
+    
+      <category term="zk" scheme="https://garywu520.github.io/blog/tags/zk/"/>
+    
+      <category term="ACL" scheme="https://garywu520.github.io/blog/tags/ACL/"/>
+    
+  </entry>
   
   <entry>
     <title>使用阿里云免费的Docker私有仓库</title>
@@ -572,33 +606,6 @@
       <category term="dhparam.pem" scheme="https://garywu520.github.io/blog/tags/dhparam-pem/"/>
     
       <category term="letsencrypt" scheme="https://garywu520.github.io/blog/tags/letsencrypt/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>SSH保持长连接</title>
-    <link href="https://garywu520.github.io/blog/2019/10/15/SSH%E4%BF%9D%E6%8C%81%E9%95%BF%E8%BF%9E%E6%8E%A5/"/>
-    <id>https://garywu520.github.io/blog/2019/10/15/SSH保持长连接/</id>
-    <published>2019-10-15T03:18:18.000Z</published>
-    <updated>2019-10-15T03:30:26.257Z</updated>
-    
-    <content type="html"><![CDATA[<h5 id="场景："><a href="#场景：" class="headerlink" title="场景："></a>场景：</h5><p>跳板机从阿里云北京到阿里云其他地方，过一会儿总出现无响应的问题。</p><h5 id="方案一：服务端配置"><a href="#方案一：服务端配置" class="headerlink" title="方案一：服务端配置"></a>方案一：服务端配置</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/ssh/sshd_config  #添加如下两行</span><br><span class="line"></span><br><span class="line">ClientAliveInterval 60</span><br><span class="line">ClientAliveCountMax 1</span><br></pre></td></tr></table></figure><p> SSH Server 每 60 秒就会自动发送一个信号给 Client，而等待 Client 回应， 如果客户端没有回应，会记录下来直到记录数超过 ClientAliveCountMax 的值时，才会断开连接。 </p><a id="more"></a><h5 id="方案二：客户端配置"><a href="#方案二：客户端配置" class="headerlink" title="方案二：客户端配置"></a>方案二：客户端配置</h5><p>如果由于某些原因，不能控制服务器，也可以在客户端实现</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/ssh/ssh_config      #注意：这里的文件是ssh_config</span><br><span class="line"></span><br><span class="line">TCPKeepAlive yes</span><br><span class="line">ServerAliveInterval 30</span><br></pre></td></tr></table></figure><p>参数：</p><ul><li>TCPKeepAlive yes    开启TCP保持连接 </li><li>ServerAliveInterval 30   每过30秒发一个数据包到服务器证明“我还活着” </li></ul>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h5 id=&quot;场景：&quot;&gt;&lt;a href=&quot;#场景：&quot; class=&quot;headerlink&quot; title=&quot;场景：&quot;&gt;&lt;/a&gt;场景：&lt;/h5&gt;&lt;p&gt;跳板机从阿里云北京到阿里云其他地方，过一会儿总出现无响应的问题。&lt;/p&gt;
-&lt;h5 id=&quot;方案一：服务端配置&quot;&gt;&lt;a href=&quot;#方案一：服务端配置&quot; class=&quot;headerlink&quot; title=&quot;方案一：服务端配置&quot;&gt;&lt;/a&gt;方案一：服务端配置&lt;/h5&gt;&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;vim /etc/ssh/sshd_config  #添加如下两行&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;ClientAliveInterval 60&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;ClientAliveCountMax 1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;p&gt; SSH Server 每 60 秒就会自动发送一个信号给 Client，而等待 Client 回应， 如果客户端没有回应，会记录下来直到记录数超过 ClientAliveCountMax 的值时，才会断开连接。 &lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="SSH" scheme="https://garywu520.github.io/blog/tags/SSH/"/>
-    
-      <category term="Keepalive" scheme="https://garywu520.github.io/blog/tags/Keepalive/"/>
-    
-      <category term="sshd" scheme="https://garywu520.github.io/blog/tags/sshd/"/>
     
   </entry>
   
