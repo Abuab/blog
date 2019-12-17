@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://garywu520.github.io/blog/"/>
-  <updated>2019-12-16T07:01:48.864Z</updated>
+  <updated>2019-12-17T09:41:30.950Z</updated>
   <id>https://garywu520.github.io/blog/</id>
   
   <author>
@@ -17,28 +17,28 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>docker目录映射问题</title>
-    <link href="https://garywu520.github.io/blog/2019/12/16/docker%E7%9B%AE%E5%BD%95%E6%98%A0%E5%B0%84%E9%97%AE%E9%A2%98/"/>
-    <id>https://garywu520.github.io/blog/2019/12/16/docker目录映射问题/</id>
-    <published>2019-12-16T06:52:37.000Z</published>
-    <updated>2019-12-16T07:01:48.864Z</updated>
+    <title>docker数据持久化</title>
+    <link href="https://garywu520.github.io/blog/2019/12/17/docker%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96/"/>
+    <id>https://garywu520.github.io/blog/2019/12/17/docker数据持久化/</id>
+    <published>2019-12-17T09:25:43.000Z</published>
+    <updated>2019-12-17T09:41:30.950Z</updated>
     
-    <content type="html"><![CDATA[<p>假设我们写了一个Dockerfile</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">From centos:centos7.7.1908</span><br><span class="line"></span><br><span class="line">RUN mkdir /etc/trojan</span><br><span class="line">ADD ./trojan/ /etc/trojan</span><br><span class="line">RUN chmod +x /etc/trojan/trojan</span><br><span class="line">EXPOSE 1080</span><br><span class="line">ENTRYPOINT  ["/etc/trojan/trojan","-c","/etc/trojan/client.json"]</span><br></pre></td></tr></table></figure><p>可以看到，容器程序的工作目录在/etc/trojan目录</p><p>当打包完镜像，准备运行容器的过程中，如果映射目录 -v /etc/trojan:/etc/trojan ，启动容器会报Dockerfile最后一条启动命令不存在或找不到启动命令文件的错误。具体原因不详，不过我们可以很快的解决它</p><a id="more"></a><p>目录映射的目的是便于与宿主机进行文件共享，或者是替换容器配置，重载服务。</p><p>解决方法是映射一个 非启动文件所在的目录即可，如: -v  /opt/trojan:/opt/trojan</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">如：</span></span><br><span class="line">docker run --privileged=true -v /opt/trojan:/opt/trojan -p 1080:1080 --name trojan -d trojan:v2</span><br></pre></td></tr></table></figure><p><strong>注：–privileged=true 参数是解决映射目录带来的访问权限问题，最好后面紧跟 -v参数</strong></p>]]></content>
+    <content type="html"><![CDATA[<h5 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h5><p>对于业务首先考虑清楚，docker容器服务数据是存放在哪个目录的，那么就持久化这个目录或子目录即可。</p><p>而对于二进制启动文件与数据目录[如log目录]在同目录下，那么只需持久化log子目录即可。需要使用–privileged=true参数用来防止目录没有权限</p><h5 id="二、创建数据卷"><a href="#二、创建数据卷" class="headerlink" title="二、创建数据卷"></a>二、创建数据卷</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">Dockerfile声明数据卷</span></span><br><span class="line">VOLUME /var/lib/mysql</span><br></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">docker run过程中创建数据卷</span></span><br><span class="line">docker run --name nginx-data -v /data/A/mysql:/var/lib/mysql mysql</span><br></pre></td></tr></table></figure><p><strong>注：</strong></p><ul><li>Docker会自动生成一个目录作为挂载的目录。</li><li><strong>即使容器被删除，宿主机中的目录也不会被删除。</strong></li></ul><h5 id="三、查看删除数据卷"><a href="#三、查看删除数据卷" class="headerlink" title="三、查看删除数据卷"></a>三、查看删除数据卷</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">查看docker容器数据卷</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker inspect 容器ID</span></span><br></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">删除数据卷</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker rm -v 容器ID</span></span><br></pre></td></tr></table></figure>]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;假设我们写了一个Dockerfile&lt;/p&gt;
-&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;From centos:centos7.7.1908&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;RUN mkdir /etc/trojan&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;ADD ./trojan/ /etc/trojan&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;RUN chmod +x /etc/trojan/trojan&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;EXPOSE 1080&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;ENTRYPOINT  [&quot;/etc/trojan/trojan&quot;,&quot;-c&quot;,&quot;/etc/trojan/client.json&quot;]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;p&gt;可以看到，容器程序的工作目录在/etc/trojan目录&lt;/p&gt;
-&lt;p&gt;当打包完镜像，准备运行容器的过程中，如果映射目录 -v /etc/trojan:/etc/trojan ，启动容器会报Dockerfile最后一条启动命令不存在或找不到启动命令文件的错误。具体原因不详，不过我们可以很快的解决它&lt;/p&gt;
+      
+      
+        &lt;h5 id=&quot;一、前言&quot;&gt;&lt;a href=&quot;#一、前言&quot; class=&quot;headerlink&quot; title=&quot;一、前言&quot;&gt;&lt;/a&gt;一、前言&lt;/h5&gt;&lt;p&gt;对于业务首先考虑清楚，docker容器服务数据是存放在哪个目录的，那么就持久化这个目录或子目录即可。&lt;/p&gt;
+&lt;p&gt;而对于二
+      
     
     </summary>
     
     
-      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+      <category term="Docker" scheme="https://garywu520.github.io/blog/tags/Docker/"/>
     
-      <category term="docker" scheme="https://garywu520.github.io/blog/tags/docker/"/>
+      <category term="持久化" scheme="https://garywu520.github.io/blog/tags/%E6%8C%81%E4%B9%85%E5%8C%96/"/>
     
   </entry>
   
