@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://garywu520.github.io/blog/"/>
-  <updated>2019-12-17T09:41:30.950Z</updated>
+  <updated>2019-12-18T06:47:31.481Z</updated>
   <id>https://garywu520.github.io/blog/</id>
   
   <author>
@@ -17,21 +17,42 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>docker部署网盘seafile</title>
+    <link href="https://garywu520.github.io/blog/2019/12/18/docker%E9%83%A8%E7%BD%B2%E7%BD%91%E7%9B%98seafile/"/>
+    <id>https://garywu520.github.io/blog/2019/12/18/docker部署网盘seafile/</id>
+    <published>2019-12-18T06:37:19.000Z</published>
+    <updated>2019-12-18T06:47:31.481Z</updated>
+    
+    <content type="html"><![CDATA[<h5 id="1-Github项目"><a href="#1-Github项目" class="headerlink" title="1. Github项目"></a>1. Github项目</h5><ul><li><a href="https://github.com/haiwen/seafile-docker" target="_blank" rel="noopener">seafile docker</a></li></ul><a id="more"></a><h5 id="2-运行seafile"><a href="#2-运行seafile" class="headerlink" title="2. 运行seafile"></a>2. 运行seafile</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name seafile \</span><br><span class="line">  -e SEAFILE_SERVER_HOSTNAME=cloud.qst.com \</span><br><span class="line">  -e SEAFILE_ADMIN_EMAIL=admin@xxx.com \</span><br><span class="line">  -e SEAFILE_ADMIN_PASSWORD=passworld \</span><br><span class="line">  -v /data/A/seafile:/shared \</span><br><span class="line">  -p 9003:80 \</span><br><span class="line">  seafileltd/seafile:latest</span><br></pre></td></tr></table></figure><p><strong>注：使用如下参数设定管理员账号密码</strong></p><ul><li><p>-e SEAFILE_SERVER_HOSTNAME  这里不能写IP，必须写域名</p></li><li><p>-e SEAFILE_ADMIN_EMAIL=admin@xxx.com  </p></li><li><p>-e SEAFILE_ADMIN_PASSWORD=passworld </p></li></ul><h5 id="3-访问"><a href="#3-访问" class="headerlink" title="3. 访问"></a>3. 访问</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.1.8:9003</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h5 id=&quot;1-Github项目&quot;&gt;&lt;a href=&quot;#1-Github项目&quot; class=&quot;headerlink&quot; title=&quot;1. Github项目&quot;&gt;&lt;/a&gt;1. Github项目&lt;/h5&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/haiwen/seafile-docker&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;seafile docker&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+    
+      <category term="docker" scheme="https://garywu520.github.io/blog/tags/docker/"/>
+    
+      <category term="seafile" scheme="https://garywu520.github.io/blog/tags/seafile/"/>
+    
+  </entry>
+  
+  <entry>
     <title>docker数据持久化</title>
     <link href="https://garywu520.github.io/blog/2019/12/17/docker%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96/"/>
     <id>https://garywu520.github.io/blog/2019/12/17/docker数据持久化/</id>
     <published>2019-12-17T09:25:43.000Z</published>
-    <updated>2019-12-17T09:41:30.950Z</updated>
+    <updated>2019-12-18T06:38:12.778Z</updated>
     
-    <content type="html"><![CDATA[<h5 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h5><p>对于业务首先考虑清楚，docker容器服务数据是存放在哪个目录的，那么就持久化这个目录或子目录即可。</p><p>而对于二进制启动文件与数据目录[如log目录]在同目录下，那么只需持久化log子目录即可。需要使用–privileged=true参数用来防止目录没有权限</p><h5 id="二、创建数据卷"><a href="#二、创建数据卷" class="headerlink" title="二、创建数据卷"></a>二、创建数据卷</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">Dockerfile声明数据卷</span></span><br><span class="line">VOLUME /var/lib/mysql</span><br></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">docker run过程中创建数据卷</span></span><br><span class="line">docker run --name nginx-data -v /data/A/mysql:/var/lib/mysql mysql</span><br></pre></td></tr></table></figure><p><strong>注：</strong></p><ul><li>Docker会自动生成一个目录作为挂载的目录。</li><li><strong>即使容器被删除，宿主机中的目录也不会被删除。</strong></li></ul><h5 id="三、查看删除数据卷"><a href="#三、查看删除数据卷" class="headerlink" title="三、查看删除数据卷"></a>三、查看删除数据卷</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">查看docker容器数据卷</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker inspect 容器ID</span></span><br></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">删除数据卷</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker rm -v 容器ID</span></span><br></pre></td></tr></table></figure>]]></content>
+    <content type="html"><![CDATA[<h5 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h5><p>对于业务首先考虑清楚，docker容器服务数据是存放在哪个目录的，那么就持久化这个目录或子目录即可。</p><p>而对于二进制启动文件与数据目录[如log目录]在同目录下，那么只需持久化log子目录即可。需要使用–privileged=true参数用来防止目录没有权限</p><a id="more"></a><h5 id="二、创建数据卷"><a href="#二、创建数据卷" class="headerlink" title="二、创建数据卷"></a>二、创建数据卷</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">Dockerfile声明数据卷</span></span><br><span class="line">VOLUME /var/lib/mysql</span><br></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">docker run过程中创建数据卷</span></span><br><span class="line">docker run --name nginx-data -v /data/A/mysql:/var/lib/mysql mysql</span><br></pre></td></tr></table></figure><p><strong>注：</strong></p><ul><li>Docker会自动生成一个目录作为挂载的目录。</li><li><strong>即使容器被删除，宿主机中的目录也不会被删除。</strong></li></ul><h5 id="三、查看删除数据卷"><a href="#三、查看删除数据卷" class="headerlink" title="三、查看删除数据卷"></a>三、查看删除数据卷</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">查看docker容器数据卷</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker inspect 容器ID</span></span><br></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">删除数据卷</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker rm -v 容器ID</span></span><br></pre></td></tr></table></figure>]]></content>
     
     <summary type="html">
     
-      
-      
-        &lt;h5 id=&quot;一、前言&quot;&gt;&lt;a href=&quot;#一、前言&quot; class=&quot;headerlink&quot; title=&quot;一、前言&quot;&gt;&lt;/a&gt;一、前言&lt;/h5&gt;&lt;p&gt;对于业务首先考虑清楚，docker容器服务数据是存放在哪个目录的，那么就持久化这个目录或子目录即可。&lt;/p&gt;
-&lt;p&gt;而对于二
-      
+      &lt;h5 id=&quot;一、前言&quot;&gt;&lt;a href=&quot;#一、前言&quot; class=&quot;headerlink&quot; title=&quot;一、前言&quot;&gt;&lt;/a&gt;一、前言&lt;/h5&gt;&lt;p&gt;对于业务首先考虑清楚，docker容器服务数据是存放在哪个目录的，那么就持久化这个目录或子目录即可。&lt;/p&gt;
+&lt;p&gt;而对于二进制启动文件与数据目录[如log目录]在同目录下，那么只需持久化log子目录即可。需要使用–privileged=true参数用来防止目录没有权限&lt;/p&gt;
     
     </summary>
     
@@ -562,36 +583,6 @@
       <category term="zabbix server" scheme="https://garywu520.github.io/blog/tags/zabbix-server/"/>
     
       <category term="zabbix agent" scheme="https://garywu520.github.io/blog/tags/zabbix-agent/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MySQL缓存参数优化</title>
-    <link href="https://garywu520.github.io/blog/2019/10/24/MySQL%E4%B8%A4%E4%B8%AA%E6%A0%B8%E5%BF%83%E5%8F%82%E6%95%B0%E4%BC%98%E5%8C%96/"/>
-    <id>https://garywu520.github.io/blog/2019/10/24/MySQL两个核心参数优化/</id>
-    <published>2019-10-24T09:38:36.000Z</published>
-    <updated>2019-10-24T09:41:56.056Z</updated>
-    
-    <content type="html"><![CDATA[<p>表缓存与查询缓存</p><h5 id="1-表缓存"><a href="#1-表缓存" class="headerlink" title="1. 表缓存"></a>1. 表缓存</h5><p>MySQL table_open_cache优化</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; set global table_open_cache = 3072; </span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; show global variables like &apos;table_open_cache&apos;;</span><br><span class="line">+------------------+-------+</span><br><span class="line">| Variable_name    | Value |</span><br><span class="line">+------------------+-------+</span><br><span class="line">| table_open_cache | 3072  |</span><br><span class="line">+------------------+-------+</span><br><span class="line">1 row in set (0.01 sec)</span><br></pre></td></tr></table></figure><a id="more"></a><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show global status like &apos;open%tables%&apos;;</span><br><span class="line">+---------------+-------+</span><br><span class="line">| Variable_name | Value |</span><br><span class="line">+---------------+-------+</span><br><span class="line">| Open_tables   | 132   |</span><br><span class="line">| Opened_tables | 139   |</span><br><span class="line">+---------------+-------+</span><br><span class="line">2 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure><p>配置文件修改【永久生效】</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">table_open_cache = 3072</span><br></pre></td></tr></table></figure><p>Open_tables会根据table_open_cache的限制进行表缓存，当open_tables等于table_open_cache的时候，open_tables会清理较早时间的表缓存来为新缓存腾出空间，一直反复，在此过程中，mysql的这个操作会消耗一定的系统内存和cpu资源。所以有必要对table_open_cache进行适当优化。</p><p>注：table_open_cache务必要小于open_file_limit的值，否则可能出现客户端由于文件描述符不足而连接失败，对应unix系统的ulimit值。</p><hr><h5 id="2-查询缓存"><a href="#2-查询缓存" class="headerlink" title="2. 查询缓存"></a>2. 查询缓存</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show variables like &apos;%query_cache%&apos;;</span><br><span class="line">+------------------------------+---------+</span><br><span class="line">| Variable_name                | Value   |</span><br><span class="line">+------------------------------+---------+</span><br><span class="line">| have_query_cache             | YES     |</span><br><span class="line">| query_cache_limit            | 1048576 |</span><br><span class="line">| query_cache_min_res_unit     | 4096    |</span><br><span class="line">| query_cache_size             | 1048576 |</span><br><span class="line">| query_cache_type             | OFF     |</span><br><span class="line">| query_cache_wlock_invalidate | ON      |</span><br><span class="line">+------------------------------+---------+</span><br><span class="line"></span><br><span class="line">mysql&gt; set global query_cache_type = 1;</span><br><span class="line">ERROR 1651 (HY000): Query cache is disabled; restart the server with query_cache_type=1 to enable it</span><br></pre></td></tr></table></figure><p>参数释义：</p><p>have_query_cache YES 表示数据库支持查询缓存功能[不代表已开启查询缓存]</p><p>query_cache_type: ON 表示启用查询缓存</p><p>query_cache_limit表示单条查询缓存的最大值，默认1M</p><p> query_cache_min_res_unit 表示缓存内存的最小单元，默认4k</p><p>query_cache_wlock_invalidate: 表示查询语句所查询的表如果被写锁锁定，是否仍然使用缓存返回结果。OFF表示使用缓存返回结果，ON表示关闭此功能。我们来描述一个场景：因为写锁是独占的，排他的，所以当写锁施加在对应表上的时候，如果对当前表发起查询请求，那么查询操作则需要等到写锁释放后才能进行。可是如果对于的查询语句正好命中了这张表的缓存，查询请求是否就不用继续等待写锁释放而直接从缓存中获取结果？默认值是OFF，也就是说当值为OFF时，即使表被施加了写锁，查询语句如果命中了对于的缓存，则会直接从缓存获取结果。换句话说，如果此值设置为ON，如果表被施加了写锁，那么当写锁释放时，数据可能发生了改变，所以在表被施加写锁期间，即使有查询命中了查询缓存，也不能从缓存获取结果。那么我们可以得出结论：当值设置为ON时，更加安全，保证了数据的一致性。</p><p>查询缓存：<a href="https://www.zsythink.net/archives/1111" target="_blank" rel="noopener">参考: 朱双印博客</a></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;表缓存与查询缓存&lt;/p&gt;
-&lt;h5 id=&quot;1-表缓存&quot;&gt;&lt;a href=&quot;#1-表缓存&quot; class=&quot;headerlink&quot; title=&quot;1. 表缓存&quot;&gt;&lt;/a&gt;1. 表缓存&lt;/h5&gt;&lt;p&gt;MySQL table_open_cache优化&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;mysql&amp;gt; set global table_open_cache = 3072; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Query OK, 0 rows affected (0.00 sec)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;mysql&amp;gt; show global variables like &amp;apos;table_open_cache&amp;apos;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;+------------------+-------+&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;| Variable_name    | Value |&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;+------------------+-------+&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;| table_open_cache | 3072  |&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;+------------------+-------+&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;1 row in set (0.01 sec)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-    
-      <category term="MySQL" scheme="https://garywu520.github.io/blog/tags/MySQL/"/>
-    
-      <category term="表缓存" scheme="https://garywu520.github.io/blog/tags/%E8%A1%A8%E7%BC%93%E5%AD%98/"/>
-    
-      <category term="查询缓存" scheme="https://garywu520.github.io/blog/tags/%E6%9F%A5%E8%AF%A2%E7%BC%93%E5%AD%98/"/>
-    
-      <category term="table_open_cache" scheme="https://garywu520.github.io/blog/tags/table-open-cache/"/>
-    
-      <category term="query_cache" scheme="https://garywu520.github.io/blog/tags/query-cache/"/>
     
   </entry>
   
