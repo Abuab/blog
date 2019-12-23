@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://garywu520.github.io/blog/"/>
-  <updated>2019-12-18T06:47:31.481Z</updated>
+  <updated>2019-12-23T08:35:19.238Z</updated>
   <id>https://garywu520.github.io/blog/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Nginx获取CDN上用户的真实IP地址</title>
+    <link href="https://garywu520.github.io/blog/2019/12/23/Nginx%E8%8E%B7%E5%8F%96CDN%E4%B8%8A%E7%94%A8%E6%88%B7%E7%9A%84%E7%9C%9F%E5%AE%9EIP%E5%9C%B0%E5%9D%80/"/>
+    <id>https://garywu520.github.io/blog/2019/12/23/Nginx获取CDN上用户的真实IP地址/</id>
+    <published>2019-12-23T08:18:42.000Z</published>
+    <updated>2019-12-23T08:35:19.238Z</updated>
+    
+    <content type="html"><![CDATA[<h5 id="一、场景"><a href="#一、场景" class="headerlink" title="一、场景"></a>一、场景</h5><blockquote><p>Nginx配置的域名使用了Cloudflare CDN服务，Nginx日志获取到的客户端IP不是用户的真实IP地址，进而不能对相关接口服务做访问限制。</p></blockquote><h5 id="二、一般情况获取用户真实IP"><a href="#二、一般情况获取用户真实IP" class="headerlink" title="二、一般情况获取用户真实IP"></a>二、一般情况获取用户真实IP</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">在location区段加入以下配置</span></span><br><span class="line">proxy_set_header Host $host; </span><br><span class="line">proxy_set_header X-Real-IP $remote_addr; </span><br><span class="line">proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br></pre></td></tr></table></figure><h5 id="三、获取CDN上用户的真实IP"><a href="#三、获取CDN上用户的真实IP" class="headerlink" title="三、获取CDN上用户的真实IP"></a>三、获取CDN上用户的真实IP</h5><ul><li><p><strong>确认Nginx是否支持</strong></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> nginx -V  </span></span><br><span class="line"><span class="meta">#</span><span class="bash">确认有没有 --with-http_realip_module模块，有表示支持，没有可能需要编译</span></span><br></pre></td></tr></table></figure></li></ul><p><strong>编译</strong></p><ol><li>进入nginx 源码安装包目录下</li><li>configure  的参数就和原来保持一样，只是增加一个–with-http_realip_module </li><li>例如：–prefix=/usr/local/nginx  –with-http_stub_status_module  –with-http_realip_module</li><li>make &amp;&amp; make install </li><li>至于平滑升级，可直接执行 killall -s USR2 nginx</li></ol><ul><li><p><strong>接下来编辑location区段，加入以下信息</strong></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">Cloudflare CDN IP段</span></span><br><span class="line">set_real_ip_from 131.0.72.0/22;</span><br><span class="line">set_real_ip_from 131.0.72.0/22;</span><br><span class="line">......</span><br><span class="line">real_ip_header  X-Forwarded-For;</span><br><span class="line">real_ip_recursive on;</span><br></pre></td></tr></table></figure><p>注：set_real_ip_from要填写CDN真实的IP或IP段</p><p><strong>Cloudflare CDN IP段: <a href="https://www.cloudflare.com/ips/" target="_blank" rel="noopener">https://www.cloudflare.com/ips/</a></strong></p></li></ul><p>到此配置完成，结合allow/deny规则 即可对客户端IP做访问限制了。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h5 id=&quot;一、场景&quot;&gt;&lt;a href=&quot;#一、场景&quot; class=&quot;headerlink&quot; title=&quot;一、场景&quot;&gt;&lt;/a&gt;一、场景&lt;/h5&gt;&lt;blockquote&gt;
+&lt;p&gt;Nginx配置的域名使用了Cloudflare CDN服务，Nginx日志获取到的客户端IP不是用
+      
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="Nginx" scheme="https://garywu520.github.io/blog/tags/Nginx/"/>
+    
+      <category term="CDN" scheme="https://garywu520.github.io/blog/tags/CDN/"/>
+    
+      <category term="IP" scheme="https://garywu520.github.io/blog/tags/IP/"/>
+    
+  </entry>
   
   <entry>
     <title>docker部署网盘seafile</title>
@@ -558,31 +588,6 @@
       <category term="key" scheme="https://garywu520.github.io/blog/tags/key/"/>
     
       <category term="清理" scheme="https://garywu520.github.io/blog/tags/%E6%B8%85%E7%90%86/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>zabbix server监控zabbix agent存活</title>
-    <link href="https://garywu520.github.io/blog/2019/10/29/zabbix-server%E7%9B%91%E6%8E%A7zabbix-agent%E5%AD%98%E6%B4%BB/"/>
-    <id>https://garywu520.github.io/blog/2019/10/29/zabbix-server监控zabbix-agent存活/</id>
-    <published>2019-10-29T07:34:00.000Z</published>
-    <updated>2019-10-29T08:01:12.270Z</updated>
-    
-    <content type="html"><![CDATA[<p>正常逻辑</p><p>如果按照正常部署方式，一般是创建zabbix-agent模板，通过net.tcp.listen[port] 或 自定义key，触发器≠1就告警，最后将模板应用到所有agent主机。</p><a id="more"></a><p>实际情况</p><p>如果你细心点就会发现，当某台机器的zabbix-agent 服务stop后，监控数据就取不到了，紧接着就是zabbix断图，此时，触发器≠1由于没有获取到任何值而不会触发告警，所以也就监控不到某个机器的zabbix agent服务何时异常退出或机器宕机，这看起来是很严重的问题。</p><p>解决思路</p><p>在zabbix server端的模板中，通过配置 net.tcp.listen[ip,port]  简单检查，来获取不同agent的运行状态。</p><p>缺点：由于每台机器的IP地址都不相同，故每台机器都需要添加一个监控项+触发器，对于上百台机器来说，这是很繁琐的工作。至于用什么方法简化自己繁琐的工作，这是一个脑力活儿</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;正常逻辑&lt;/p&gt;
-&lt;p&gt;如果按照正常部署方式，一般是创建zabbix-agent模板，通过net.tcp.listen[port] 或 自定义key，触发器≠1就告警，最后将模板应用到所有agent主机。&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="监控" scheme="https://garywu520.github.io/blog/tags/%E7%9B%91%E6%8E%A7/"/>
-    
-      <category term="zabbix server" scheme="https://garywu520.github.io/blog/tags/zabbix-server/"/>
-    
-      <category term="zabbix agent" scheme="https://garywu520.github.io/blog/tags/zabbix-agent/"/>
     
   </entry>
   
