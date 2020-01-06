@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://garywu520.github.io/blog/"/>
-  <updated>2019-12-23T09:05:53.544Z</updated>
+  <updated>2020-01-06T06:35:16.721Z</updated>
   <id>https://garywu520.github.io/blog/</id>
   
   <author>
@@ -15,6 +15,37 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>docker固定容器IP</title>
+    <link href="https://garywu520.github.io/blog/2020/01/06/docker%E5%9B%BA%E5%AE%9A%E5%AE%B9%E5%99%A8IP/"/>
+    <id>https://garywu520.github.io/blog/2020/01/06/docker固定容器IP/</id>
+    <published>2020-01-06T06:17:59.000Z</published>
+    <updated>2020-01-06T06:35:16.721Z</updated>
+    
+    <content type="html"><![CDATA[<h5 id="1-Docker三种网络模式"><a href="#1-Docker三种网络模式" class="headerlink" title="1. Docker三种网络模式"></a>1. Docker三种网络模式</h5><p>docker安装后，默认会创建三种网络类型，bridge、host和none</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> docker network ls</span><br><span class="line">NETWORK ID          NAME                DRIVER              SCOPE</span><br><span class="line">631fadbc4865        bridge              bridge              local</span><br><span class="line">2fe72a388b82        host                host                local</span><br><span class="line">09474b45c7bf        none                null                local</span><br></pre></td></tr></table></figure><ul><li>bridge:网络桥接[默认模式]<br>默认情况下启动、创建容器都是用该模式，所以每次docker容器重启时会按照顺序获取对应ip地址，这就导致容器每次重启，ip都发生变化</li><li>none：无指定网络<br>启动容器时，可以通过–network=none,docker容器不会分配局域网ip</li><li>host：主机网络<br>docker容器的网络会附属在主机上，两者是互通的。</li></ul><a id="more"></a><h5 id="2-配置固定IP的容器"><a href="#2-配置固定IP的容器" class="headerlink" title="2. 配置固定IP的容器"></a>2. 配置固定IP的容器</h5><ul><li><p>创建自定义网络,并指定一个子网网段</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">docker network create --subnet=172.18.0.0/16 docker_net</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> docker network ls</span><br><span class="line">NETWORK ID          NAME                DRIVER              SCOPE</span><br><span class="line">631fadbc4865        bridge              bridge              local</span><br><span class="line">e41e337d212b        docker_net          bridge              local</span><br><span class="line">2fe72a388b82        host                host                local</span><br><span class="line">09474b45c7bf        none                null                local</span><br></pre></td></tr></table></figure></li><li><p>运行Docker容器【指定IP地址】</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -itd --name centos_test --network docker_net --ip 172.18.0.2 centos:latest /bin/bash</span><br></pre></td></tr></table></figure><p><strong>注：</strong></p><ul><li><p>必须在自定义网络上给容器指定IP地址</p></li><li><p>由于我们创建了一个自定义网络，通过ip address可以看到新网卡名称为br-e41e337d212b，故还需要在iptables中添加此网卡的转发规则</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>docker_net </span><br><span class="line">iptables -A FORWARD -i br-e41e337d212b -o eth0 -j ACCEPT</span><br><span class="line">iptables -A FORWARD -i eth0 -o br-e41e337d212b -j ACCEPT</span><br><span class="line">iptables -A FORWARD -i br-e41e337d212b -o br-e41e337d212b -j ACCEPT</span><br></pre></td></tr></table></figure></li></ul></li></ul><pre><code>允许br-e41e337d212b与eth0物理网卡转发，允许br-e41e337d212b网络的容器间转发</code></pre><p>  <strong>docker 与 iptables网络转发:</strong> <a href="[https://garywu520.github.io/blog/2019/12/03/Docker%E4%B8%8Eiptables%E9%98%B2%E7%81%AB%E5%A2%99/](https://garywu520.github.io/blog/2019/12/03/Docker与iptables防火墙/)">参考</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h5 id=&quot;1-Docker三种网络模式&quot;&gt;&lt;a href=&quot;#1-Docker三种网络模式&quot; class=&quot;headerlink&quot; title=&quot;1. Docker三种网络模式&quot;&gt;&lt;/a&gt;1. Docker三种网络模式&lt;/h5&gt;&lt;p&gt;docker安装后，默认会创建三种网络类型，bridge、host和none&lt;/p&gt;
+&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;#&lt;/span&gt; docker network ls&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;NETWORK ID          NAME                DRIVER              SCOPE&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;631fadbc4865        bridge              bridge              local&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2fe72a388b82        host                host                local&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;09474b45c7bf        none                null                local&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;ul&gt;
+&lt;li&gt;bridge:网络桥接[默认模式]&lt;br&gt;默认情况下启动、创建容器都是用该模式，所以每次docker容器重启时会按照顺序获取对应ip地址，这就导致容器每次重启，ip都发生变化&lt;/li&gt;
+&lt;li&gt;none：无指定网络&lt;br&gt;启动容器时，可以通过–network=none,docker容器不会分配局域网ip&lt;/li&gt;
+&lt;li&gt;host：主机网络&lt;br&gt;docker容器的网络会附属在主机上，两者是互通的。&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="Docker" scheme="https://garywu520.github.io/blog/tags/Docker/"/>
+    
+      <category term="固定IP" scheme="https://garywu520.github.io/blog/tags/%E5%9B%BA%E5%AE%9AIP/"/>
+    
+  </entry>
   
   <entry>
     <title>Nginx获取CDN上用户的真实IP地址</title>
@@ -250,9 +281,9 @@
     <link href="https://garywu520.github.io/blog/2019/12/03/Docker%E4%B8%8Eiptables%E9%98%B2%E7%81%AB%E5%A2%99/"/>
     <id>https://garywu520.github.io/blog/2019/12/03/Docker与iptables防火墙/</id>
     <published>2019-12-03T03:21:55.000Z</published>
-    <updated>2019-12-03T03:40:18.327Z</updated>
+    <updated>2020-01-06T05:59:33.531Z</updated>
     
-    <content type="html"><![CDATA[<p>假设已有服务器已经配置了iptables，这个时候安装并运行docker容器后，docker会自动向iptables添加 FORWARD规则来实现与宿主机的网络通信。</p><p>一旦不小心，直接在iptables中新开放了端口操作，重载iptables规则后，docker添加的规则会被覆盖，这就导致了docker服务的网络异常。怎么解决？</p><a id="more"></a><h5 id="1-首先要在防火墙配置文件里面添加docker-FORWARD规则"><a href="#1-首先要在防火墙配置文件里面添加docker-FORWARD规则" class="headerlink" title="1. 首先要在防火墙配置文件里面添加docker FORWARD规则"></a>1. 首先要在防火墙配置文件里面添加docker FORWARD规则</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">Docker</span></span><br><span class="line">iptables -A FORWARD -i docker0 -o eth0 -j ACCEPT</span><br><span class="line">iptables -A FORWARD -i eth0 -o docker0 -j ACCEPT</span><br></pre></td></tr></table></figure><h5 id="2-修改docker服务启动配置"><a href="#2-修改docker服务启动配置" class="headerlink" title="2. 修改docker服务启动配置"></a>2. 修改docker服务启动配置</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 通过此命令获取docker systemd的启动配置文件，接下来要修改</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> systemctl status docker</span></span><br><span class="line">/usr/lib/systemd/system/docker.service</span><br></pre></td></tr></table></figure><p>vim  /usr/lib/systemd/system/docker.service</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">找到如下行并添加参数：--iptables=<span class="literal">false</span>,意思是启动docker的时候不自动向iptables添加规则</span></span><br><span class="line">ExecStart=/usr/bin/dockerd -H fd:// --iptables=false --containerd=/run/containerd/containerd.sock</span><br></pre></td></tr></table></figure><h5 id="3-重启服务"><a href="#3-重启服务" class="headerlink" title="3. 重启服务"></a>3. 重启服务</h5><ul><li><p>重载iptables规则</p></li><li><p>首先stop掉已有容器</p></li><li><p>重启docker</p><p>systemctl daemon-reload  &amp;&amp; systemctl  restart  docker</p></li><li><p>启动docker容器</p></li></ul><p>这个时候，在iptables中再开启端口的时候，就不怕docker容器服务的网络会出现问题了。</p>]]></content>
+    <content type="html"><![CDATA[<p>假设已有服务器已经配置了iptables，这个时候安装并运行docker容器后，docker会自动向iptables添加 FORWARD规则来实现与宿主机的网络通信。</p><p>一旦不小心，直接在iptables中新开放了端口操作，重载iptables规则后，docker添加的规则会被覆盖，这就导致了docker服务的网络异常。怎么解决？</p><a id="more"></a><h5 id="开启内核转发"><a href="#开启内核转发" class="headerlink" title="开启内核转发"></a>开启内核转发</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sysctl net.ipv4.ip_forward</span></span><br><span class="line">net.ipv4.ip_forward = 1</span><br></pre></td></tr></table></figure><h5 id="1-首先要在防火墙配置文件里面添加docker-FORWARD规则"><a href="#1-首先要在防火墙配置文件里面添加docker-FORWARD规则" class="headerlink" title="1. 首先要在防火墙配置文件里面添加docker FORWARD规则"></a>1. 首先要在防火墙配置文件里面添加docker FORWARD规则</h5><p>iptables需要允许docker转发及容器间通信</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">Docker</span></span><br><span class="line">iptables -A FORWARD -i docker0 -o eth0 -j ACCEPT</span><br><span class="line">iptables -A FORWARD -i eth0 -o docker0 -j ACCEPT</span><br><span class="line">iptables -A FORWARD -i docker0 -o docker0 -j ACCEPT</span><br></pre></td></tr></table></figure><h5 id="2-修改docker服务启动配置"><a href="#2-修改docker服务启动配置" class="headerlink" title="2. 修改docker服务启动配置"></a>2. 修改docker服务启动配置</h5><p>其次, ，在docker启动配置中，把docker自定义iptables规则移除</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 通过此命令获取docker systemd的启动配置文件，接下来要修改</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> systemctl status docker</span></span><br><span class="line">/usr/lib/systemd/system/docker.service</span><br></pre></td></tr></table></figure><p>vim  /usr/lib/systemd/system/docker.service</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">找到如下行并添加参数：--iptables=<span class="literal">false</span>,意思是启动docker的时候不自动向iptables添加规则</span></span><br><span class="line">ExecStart=/usr/bin/dockerd -H fd:// --iptables=false --containerd=/run/containerd/containerd.sock</span><br></pre></td></tr></table></figure><h5 id="3-重启服务"><a href="#3-重启服务" class="headerlink" title="3. 重启服务"></a>3. 重启服务</h5><ul><li><p>重载iptables规则</p></li><li><p>首先stop掉已有容器</p></li><li><p>重启docker</p><p>systemctl daemon-reload  &amp;&amp; systemctl  restart  docker</p></li><li><p>启动docker容器</p></li></ul><p>这个时候，在iptables中再开启端口的时候，就不怕docker容器服务的网络会出现问题了。</p>]]></content>
     
     <summary type="html">
     
@@ -559,34 +590,6 @@
       <category term="邮件服务器" scheme="https://garywu520.github.io/blog/tags/%E9%82%AE%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
     
       <category term="ZCS" scheme="https://garywu520.github.io/blog/tags/ZCS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>redis key批量清理</title>
-    <link href="https://garywu520.github.io/blog/2019/10/29/redis-key%E6%89%B9%E9%87%8F%E6%B8%85%E7%90%86/"/>
-    <id>https://garywu520.github.io/blog/2019/10/29/redis-key批量清理/</id>
-    <published>2019-10-29T08:04:32.000Z</published>
-    <updated>2019-10-29T08:06:32.039Z</updated>
-    
-    <content type="html"><![CDATA[<p>获取key到文件</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli -h 127.0.0.1 -p 6379 -a "password" keys kline_* &gt;/root/keys.log</span><br></pre></td></tr></table></figure><p>删除key</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">while read LINE</span><br><span class="line">do</span><br><span class="line">    redis-cli -h 127.0.0.1 -p 6379 -a "password" del $LINE</span><br><span class="line">done &lt; /root/keys.log</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;获取key到文件&lt;/p&gt;
-&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code
-      
-    
-    </summary>
-    
-    
-      <category term="redis key清理" scheme="https://garywu520.github.io/blog/tags/redis-key%E6%B8%85%E7%90%86/"/>
-    
-      <category term="key" scheme="https://garywu520.github.io/blog/tags/key/"/>
-    
-      <category term="清理" scheme="https://garywu520.github.io/blog/tags/%E6%B8%85%E7%90%86/"/>
     
   </entry>
   
