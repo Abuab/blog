@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://garywu520.github.io/blog/"/>
-  <updated>2020-02-13T08:00:52.954Z</updated>
+  <updated>2020-02-13T09:18:30.967Z</updated>
   <id>https://garywu520.github.io/blog/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>zabbix断图问题解决</title>
+    <link href="https://garywu520.github.io/blog/2020/02/13/zabbix%E6%96%AD%E5%9B%BE%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/"/>
+    <id>https://garywu520.github.io/blog/2020/02/13/zabbix断图问题解决/</id>
+    <published>2020-02-13T09:15:32.000Z</published>
+    <updated>2020-02-13T09:18:30.967Z</updated>
+    
+    <content type="html"><![CDATA[<p>zabbix最近开始断图了…解决方法如下：</p><p>cat /etc/zabbix/zabbix_server.conf </p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">适当增大如下参数</span></span><br><span class="line"></span><br><span class="line">CacheSize=1024M</span><br><span class="line">StartPollers=100</span><br><span class="line">StartPollersUnreachable=30</span><br><span class="line">Timeout=30</span><br><span class="line">UnreachablePeriod=120</span><br><span class="line">UnavailableDelay=60</span><br><span class="line">UnreachableDelay=5</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;zabbix最近开始断图了…解决方法如下：&lt;/p&gt;
+&lt;p&gt;cat /etc/zabbix/zabbix_server.conf &lt;/p&gt;
+&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;
+      
+    
+    </summary>
+    
+    
+      <category term="高级运维" scheme="https://garywu520.github.io/blog/tags/%E9%AB%98%E7%BA%A7%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="zabbix" scheme="https://garywu520.github.io/blog/tags/zabbix/"/>
+    
+      <category term="zabbix 断图" scheme="https://garywu520.github.io/blog/tags/zabbix-%E6%96%AD%E5%9B%BE/"/>
+    
+  </entry>
   
   <entry>
     <title>zabbix监控docker容器及资源占用情况</title>
@@ -599,34 +628,6 @@
       <category term="Docker" scheme="https://garywu520.github.io/blog/tags/Docker/"/>
     
       <category term="Dockerfile" scheme="https://garywu520.github.io/blog/tags/Dockerfile/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>部署企业级Harbor私有docker镜像仓库</title>
-    <link href="https://garywu520.github.io/blog/2019/11/28/%E9%83%A8%E7%BD%B2%E4%BC%81%E4%B8%9A%E7%BA%A7Harbor%E7%A7%81%E6%9C%89docker%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93/"/>
-    <id>https://garywu520.github.io/blog/2019/11/28/部署企业级Harbor私有docker镜像仓库/</id>
-    <published>2019-11-28T08:22:35.000Z</published>
-    <updated>2019-11-28T08:25:05.953Z</updated>
-    
-    <content type="html"><![CDATA[<p>Docker本地镜像可以满足单机使用docker镜像的需求，而在生产环境上，需要将镜像发布到几时/上百台节点上，这时候本地镜像显得心有余而力不足。就需要部署一套开源私有仓库来统一管理镜像！</p><p><img src="https://github.com/goharbor/harbor/raw/master/docs/img/harbor_logo.png" alt="Harbor"></p><p>Habor是由VMWare公司开源的容器镜像仓库，它基于Docker-compose部署</p><p>官方地址： <a href="https://vmware.github.io/" target="_blank" rel="noopener">https://vmware.github.io/</a> </p><p>Github:  <a href="https://github.com/goharbor/harbor" target="_blank" rel="noopener">https://github.com/goharbor/harbor</a> </p><a id="more"></a><h5 id="一、-Harbor主要功能"><a href="#一、-Harbor主要功能" class="headerlink" title="一、 Harbor主要功能"></a>一、 Harbor主要功能</h5><ul><li>基于角色访问控制</li><li>镜像复制</li><li>LDAP</li><li>镜像删除与空间回收</li><li>图形界面管理-原生中文支持</li><li>审计</li><li>REST API</li></ul><h5 id="二、Harbor组件"><a href="#二、Harbor组件" class="headerlink" title="二、Harbor组件"></a>二、Harbor组件</h5><table><thead><tr><th align="center">组件</th><th align="center">功能</th></tr></thead><tbody><tr><td align="center">harbor-adminserver</td><td align="center">配置管理中心</td></tr><tr><td align="center">harbor-db</td><td align="center">MySQL数据库</td></tr><tr><td align="center">harbor-jobservice</td><td align="center">负责镜像复制</td></tr><tr><td align="center">harbor-log</td><td align="center">记录操作日志</td></tr><tr><td align="center">harbor-ui</td><td align="center">Web管理页面和API</td></tr><tr><td align="center">nginx</td><td align="center">前端代理,负责页面和镜像上传/下载/转发</td></tr><tr><td align="center">redis</td><td align="center">会话</td></tr><tr><td align="center">registry</td><td align="center">镜像存储</td></tr></tbody></table><p>Harbor 3种安装方式：</p><ul><li>在线安装： 从Docker Hub下载Harbor相关镜像，因此安装软件包非常小 </li><li>离线安装： 安装包包含部署的相关镜像，因此安装包比较大 </li><li>OVA安装程序： 当用户具有VMware vCenter环境时，使用此安装程序，在部署OVA后启动Harbor </li></ul><h5 id="三、Harbor离线部署"><a href="#三、Harbor离线部署" class="headerlink" title="三、Harbor离线部署"></a>三、Harbor离线部署</h5><p> <a href="https://github.com/goharbor/harbor/releases/download/v1.9.3/harbor-offline-installer-v1.9.3.tgz" target="_blank" rel="noopener">harbor-offline-installer-v1.9.3.tgz</a>  下载地址：<a href="https://github.com/vmware/harbor/releases" target="_blank" rel="noopener">https://github.com/vmware/harbor/releases</a> </p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf harbor-offline-installer-v1.9.3.tgz</span><br><span class="line">cd harbor</span><br></pre></td></tr></table></figure><p>HTTPS方式部署</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">hostname:</span> <span class="string">reg.mydomain.com</span>  <span class="comment">#域名或IP，这里是0.0.0.0</span></span><br><span class="line"><span class="attr">http:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">80</span></span><br><span class="line"><span class="attr">https:</span></span><br><span class="line"><span class="attr">   port:</span> <span class="number">443</span></span><br><span class="line"><span class="attr">   certificate:</span> <span class="string">/etc/ssl/harbor/server.crt</span></span><br><span class="line"><span class="attr">   private_key:</span> <span class="string">/etc/ssl/harbor/server.key</span></span><br><span class="line"><span class="attr">harbor_admin_password:</span> <span class="string">Harbor12345</span>   </span><br><span class="line"><span class="string">......</span></span><br><span class="line"><span class="attr">database:</span></span><br><span class="line"><span class="attr">  password:</span> <span class="string">root123</span></span><br></pre></td></tr></table></figure><p>准备自签SSL证书</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /etc/ssl/harbor</span><br><span class="line">cd /etc/ssl/harbor</span><br></pre></td></tr></table></figure><p>cat ssl.sh</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">if [ $# != 1 ];then</span><br><span class="line">   echo "USAGE: sh $0 IP"</span><br><span class="line">   exit 1;</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">CNIP=$1</span><br><span class="line"></span><br><span class="line">echo "3秒后,开始生成根证书...."</span><br><span class="line">sleep 3</span><br><span class="line">openssl genrsa -out cakey.pem 4096</span><br><span class="line">openssl req -new -x509 -key cakey.pem -out cacert.pem -subj "/C=HK/ST=Hongkong/L=Hongkong/O=NASA/OU=Dev/CN=$CNIP/emailAddress=hk_dev@nasa.com"</span><br><span class="line"></span><br><span class="line">echo "3秒后,开始生成csr以及证书签署..."</span><br><span class="line">sleep 3</span><br><span class="line">openssl genrsa -out server.key 4096</span><br><span class="line">openssl req -new -key server.key -out server.csr -subj "/C=HK/ST=Hongkong/L=Hongkong/O=NASA/OU=Dev/CN=$CNIP/emailAddress=hk_dev@nasa.com"</span><br><span class="line">openssl x509 -req -in server.csr -CA cacert.pem -CAkey cakey.pem -CAcreateserial -out server.crt -days 3650</span><br><span class="line"></span><br><span class="line">echo "自签证书已完成,详情如下:..."</span><br><span class="line">ls -lh server*</span><br></pre></td></tr></table></figure><p> 生成Harbor的配置文件</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /root/harbor</span><br><span class="line">./prepare</span><br></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">依赖于docker-compose</span></span><br><span class="line">curl -L "https://github.com/docker/compose/releases/download/1.25.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose</span><br><span class="line">chmod +x /usr/local/bin/docker-compose</span><br><span class="line">ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose</span><br><span class="line">docker-compose --version</span><br></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd /root/harbor</span><br><span class="line">./install.sh</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">查看运行状态</span></span><br><span class="line">docker-compose ps</span><br></pre></td></tr></table></figure><h5 id="四、Web访问"><a href="#四、Web访问" class="headerlink" title="四、Web访问"></a>四、Web访问</h5><p> <a href="https://IP" target="_blank" rel="noopener">https://IP</a></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">账号：admin  密码：Harbor12345</span><br></pre></td></tr></table></figure><p>具体使用-请参考:  <a href="https://www.linuxidc.com/Linux/2019-07/159463.htm" target="_blank" rel="noopener">Linux公社</a></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Docker本地镜像可以满足单机使用docker镜像的需求，而在生产环境上，需要将镜像发布到几时/上百台节点上，这时候本地镜像显得心有余而力不足。就需要部署一套开源私有仓库来统一管理镜像！&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://github.com/goharbor/harbor/raw/master/docs/img/harbor_logo.png&quot; alt=&quot;Harbor&quot;&gt;&lt;/p&gt;
-&lt;p&gt;Habor是由VMWare公司开源的容器镜像仓库，它基于Docker-compose部署&lt;/p&gt;
-&lt;p&gt;官方地址： &lt;a href=&quot;https://vmware.github.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://vmware.github.io/&lt;/a&gt; &lt;/p&gt;
-&lt;p&gt;Github:  &lt;a href=&quot;https://github.com/goharbor/harbor&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://github.com/goharbor/harbor&lt;/a&gt; &lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="docker" scheme="https://garywu520.github.io/blog/tags/docker/"/>
-    
-      <category term="镜像仓库" scheme="https://garywu520.github.io/blog/tags/%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93/"/>
-    
-      <category term="harbor" scheme="https://garywu520.github.io/blog/tags/harbor/"/>
     
   </entry>
   
